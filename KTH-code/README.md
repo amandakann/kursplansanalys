@@ -49,12 +49,14 @@ syllabuses have to be downloaded from KTH and processed by WebbGranska.
 
 Olika debug-värden:
 
--d 25 matar ut särskild behörighet för EECS-kurser
--d 26 matar ut mål för exjobbskurser
--d 199 matar ut SBC-ämneskod
--d 10 > bad_ILOs.txt 
-Sedan kan dåliga ILOs plockas bort med:
-./filter_bad_ILOs bad_ILOs.txt
+`-d 25` matar ut särskild behörighet för EECS-kurser
+
+`-d 26` matar ut mål för exjobbskurser
+
+`-d 199` matar ut SBC-ämneskod
+
+`-d 10 > bad_ILOs.txt` matar ut dåliga lärandemål. Sedan kan kända dåliga ILOs filtreras bort med
+```./filter_bad_ILOs bad_ILOs.txt```
 
 # How to run ResultsCreator
 
