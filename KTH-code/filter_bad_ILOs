@@ -1,0 +1,4 @@
+# Call with:
+# java -cp bin:lib/commons-lang3-3.5.jar:lib/jsoup-1.10.2.jar KTHoriginal.GetSyllabus -d 10 -a -ct 2023:2 -o raw_data.csv > bad_ILOs.txt
+# ./filter_bad_ILOs bad_ILOs.txt
+egrep -vi ' (visa|uppvisa|känna till|förstå|förståelse|kännedom|kunskap|baskunskap|grundkunskap|kunskaper|färdighet|färdigheter|förhållandesätt|värderingsförmåga|förmåga|insikt|bemästra|veta|behärska|uppfylla|läsa in|förtrogen|förtrogenhet|tänka|vara bekant|vara medveten|erhålla|se|tillgodogöra|läsa|följa|träna|lära sig|sätta sig in i|orientera sig|öva|få träning|orientering|uppfattning|inta|inblick|vara orienterad|erfarenhet|tillägna sig|inse|vara inspirerad|få möjlighet) ' $1
