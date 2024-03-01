@@ -14,7 +14,7 @@ while ResultsCreator performs further classification according to the specificat
 
 To compile the programs, the following command should be run (in this folder):
 
-```javac -d bin -encoding UTF-8 -cp "lib/commons-lang3-3.5.jar:lib/jsoup-1.10.2.jar" src/KTHoriginal/*.java```
+```javac -d bin -encoding UTF-8 -cp "lib/commons-lang3-3.5.jar:lib/jsoup-1.10.2.jar" src/original/*.java```
 
 The binaries will appear in the `bin/KTHoriginal` folder.
 
@@ -84,10 +84,16 @@ the command is:
 
 ```https://api.kth.se/api/kopps/v1/```
 
+# Filer i katalogen data
+
 I katalogen data ligger data-filer som läses av GetSyllabus.java
 
 `course_subjects.csv`          Huvudområden för varje kurs 2019 (ingår tyvärr inte i KTH-API, inte uppdaterad)
+
 `bloom_revised_all_words.txt`  Verb kategoriserade i nivåer enligt Blooms reviderade taxonomi
-`bloom_tvetydiga.txt`	       Verb i bloom_revised_all_words.txt som ligger på flera nivåer
+
+`bloom_tvetydiga.txt`	       Verb i bloom_revised_all_words.txt som ligger på flera nivåer (läses inte av GetSyllabus)
+
 `swedish_trigrams.txt`         Vanligaste bokstavstrigrammen i svenska; används för språkidentifiering
+
 `english_trigrams.txt`         Vanligaste bokstavstrigrammen i engelska; används för språkidentifiering
