@@ -199,6 +199,9 @@ def extractGoals(c):
 
     iloList = {}
     
+    iSyfteExp = re.compile("<p>\s*i\s+syfte\s+att", re.I)
+    forAttExp = re.compile("<p>\s*för\s+att", re.I)
+    
     htmlListExp = re.compile("<li>(.*?)(?:</?li>)", re.I)
     pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)", re.I)
     brListExp = re.compile("<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*(.*?)\s*(?:<)", re.I)
@@ -217,6 +220,14 @@ def extractGoals(c):
 
     found = 0
 
+    m = iSyfteExp.search(sv)
+    if m:
+        sv = iSyfteExp.split(sv)[0] # remove everything from "i syfte att" and forward
+    else:
+        m = forAtt.search(sv)
+        if m:
+            sv = forAttExp.split(sv)[0]  # remove everything from "för att" and forward
+    
     m = htmlListExp.search(sv)
     if m:
         found = 1
