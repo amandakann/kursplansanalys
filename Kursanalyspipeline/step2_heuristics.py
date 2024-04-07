@@ -8,16 +8,20 @@ import sys
 ### check system arguments ###
 ##############################
 doXX = 0
+logging = 0
 for i in range(1, len(sys.argv)):
     if sys.argv[i] == "-lev" or sys.argv[i] == "-l":
         doXX = 1
     elif sys.argv[i] == "-nl":
         doXX = 0
+    elif sys.argv[i] == "-log":
+        logging = 1
     else:
         print ("\nReads JSON from stdin, uses heuristics to extract goals from free text\nand to update GXX/AXX level tags based on prerequisites free text,\nprints result as JSON to stdout.")
         print ("\nusage options:")
-        print ("     -l  update GXX/AXX tags where possible")
-        print ("     -n  do not update GXX/AXX, only extract goals\n")
+        print ("     -l     update GXX/AXX tags where possible")
+        print ("     -n     do not update GXX/AXX, only extract goals")
+        print ("     -log   log debug information to " + sys.argv[0] + ".log\n")
         sys.exit(0)
 
 ############################
@@ -31,8 +35,9 @@ for line in sys.stdin:
 
 try:
     data = json.loads(text)
-except:
-    print("No input data?")
+except Exception as e:
+    print("No input data or non-JSON data?")
+    print(str(e))
     sys.exit(0)
 
 #####################################################################
@@ -44,6 +49,7 @@ def cleanStr(s):
     res = re.sub("[.][.][.]*", ".", res)
     res = re.sub("</?\\w*/?>", " ", res)
     res = re.sub("\s\s\s*", " ", res)
+    res = re.sub("^–\s*", "", res)
     res = res.strip()
     return res
 
@@ -52,6 +58,33 @@ def cleanUp(c):
 
     c["Prerequisites"] = cleanStr(c["Prerequisites"])
     c["ILO-sv"] = cleanStr(c["ILO-sv"])
+
+###############
+### Logging ###
+###############
+if logging:
+    logf = open(sys.argv[0] + ".log", "w")
+    
+def logLs(s, ls):
+    if not logging:
+        return
+    
+    logf.write(s)
+    logf.write("\n")
+
+    for m in ls:
+        logf.write("  ")
+        logf.write(str(m))
+        logf.write("\n")
+
+def log(s, S):
+    if not logging:
+        return
+
+    logf.write(s)
+    logf.write(" ")
+    logf.write(str(S))
+    logf.write("\n")
 
 #########################################################################
 ### See if 'Prerequisites' free text has information that can be used ###
@@ -198,28 +231,13 @@ def extractGoals(c):
     sv = sv.replace("\n -", "\n–").replace("\n-", "\n–").replace("\n−", "\n–").replace(u"\uF095", "–")
 
     iloList = {}
-    
+
+    ###################################################################
+    ### Remove motivation for having these goals from the goal text ###
+    ###################################################################
     iSyfteExp = re.compile("<p>\s*i\s+syfte\s+att", re.I)
     forAttExp = re.compile("<p>\s*för\s+att", re.I)
     
-    htmlListExp = re.compile("<li>(.*?)(?:</?li>)", re.I)
-    pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)", re.I)
-    brListExp = re.compile("<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*(.*?)\s*(?:<)", re.I)
-
-    dotListExp = re.compile("[•*·–…]\s*[0-9]*[.]?\s*([^•*·–…\n]*)\s*", re.I)
-    newlineListExp = re.compile("\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)", re.I)
-    romanListExp = re.compile("\n[IVX][IVX]*\s*[.]\s\s*([^\n]*)", re.I)
-    arabicListExp = re.compile("\n[0-9][0-9]*\s*[).]\s*([^\n]*)", re.I)
-    parListExp = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)", re.I)
-
-    skaKunnaExp = re.compile("[Kk]unna(.*?)[.\n]", re.I)
-    kanExp = re.compile("\skan\s(.*?)[.]", re.I)
-    fortrogenExp = re.compile("\sförtrogen\s*i\s(.*?)[.]", re.I)
-    formagaExp = re.compile("visa.*?\sförmåga.*?att\s*(.*?)[.]", re.I)
-    kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
-
-    found = 0
-
     m = iSyfteExp.search(sv)
     if m:
         sv = iSyfteExp.split(sv)[0] # remove everything from "i syfte att" and forward
@@ -227,13 +245,98 @@ def extractGoals(c):
         m = forAttExp.search(sv)
         if m:
             sv = forAttExp.split(sv)[0]  # remove everything from "för att" and forward
+
+    #######################################################################
+    ### Regular expressions to capture different ways goals are written ###
+    #######################################################################
+
+    ### KTH courses often use HTML <li>-lists for goals
+    ###  "<p>Efter avslutad kurs skall studenten kunna:</p><ul><li>förklara grundläggande koncept av ... </li><li>..."
+    ### (example course KTH SG2226)
+    htmlListExp = re.compile("<li>(.*?)(?:</?li>)", re.I)
+
+    ### KTH courses can use HTML <p>-elements for goals
+    ###   "<p>Efter genomförd kurs ska studenten kunna</p><p>• upprätta resurser för ... ,</p><p>\u2022 utföra spaning ..."
+    ###   (example course KTH FEP3370)
+    pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)", re.I)
+
+    ### KTH courses can use HTML <BR> breaks to list goals
+    ###   "Efter kursen ska du kunna:<br />• Beräkna hur att uppföra och driva olika processer inom hållbar vatten- och avloppsrening.<br />• Applicera kemiska och biologiska kunskaper ..."
+    ###   (example course KTH AE2302)
+    brListExp = re.compile("<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*(.*?)\s*(?:<)", re.I)
+
+    ### Courses can use various dots/hyphens/stars as markers for goals
+    ###   "Efter genomförd kurs ska du kunna * identifiera grundläggande begrepp, ... inom reinforcement learning * utveckla och systematiskt testa ... inom reinforcement learning * experimentellt ..."
+    ###   (example course KTH FDD3359)
+    dotListExp = re.compile("[•*·–…]\s*[0-9]*[.]?\s*([^•*·–…\n]*)\s*", re.I)
     
+    ### Courses can list each goal on a separate line
+    ###   "Efter att ha genomgått kursen förväntas studenten:
+    ###    • Förstå principerna för nationalräkenskapernas uppläggning och för beräkningar av BNP
+    ###    • Kunna tolka innebörden av makroekonomisk statistik
+    ###    ... "
+    ###   (example course SU EC1212)
+    newlineListExp = re.compile("\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)", re.I)
+
+    ### Some courses enumerate goals with Roman numerals
+    ###   "För godkänt resultat skall studenten kunna:
+    ###     I.     kritiskt granska statistiska undersökningar utifrån ett vetenskapligt perspektiv,
+    ###     II.    formulera statistiska modeller för elementära problem inom olika tillämpningsområden,
+    ###     ... "
+    ###   (example course SU ST111G)
+    romanListExp = re.compile("\n[IVX][IVX]*\s*[.]\s\s*([^\n]*)", re.I)
+
+    ### Some courses enumerate goals with Arabic numerals
+    ###    "För godkänt resultat på kursen ska studenten kunna:
+    ###     <i>Kunskap och förståelse</i>
+    ###     1. Redogöra för relevanta begrepp för att beskriva omfattningen av sjukdomar i den allmänna befolkningen
+    ###     2. Beskriva våra vanligaste folkhälsoproblem och folksjukdomar och redogöra för förekomst och sjukdomsorsaker
+    ###     ... "
+    ###   (example course SU PH03G0)
+    arabicListExp = re.compile("\n[0-9][0-9]*\s*[).]\s*([^\n]*)", re.I)
+
+    ### Some courses enumerate goals with (a), (b), or (1), (2), etc. 
+    ###    "Kursen syftar till (a) att öka deltagarnas förståelse ... ; (b) att ge de färdigheter som behövs för tillämpad dataanalys ... ; och (c) att ge träning i ... "
+    ###   (example course SU PSMT15)
+    parListExp = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)", re.I)
+
+    ### Some courses specify goals with lines like "ska ... kunna ..."
+    ###   "Den studerande skall efter genomgången kurs kunna
+    ###   identifiera samt, såväl muntligt som skriftligt, redogöra
+    ###   för hur förhållandet mellan människa och natur avspeglas och
+    ###   gestaltas i de senaste hundra årens svenska barnlitteratur.
+    ###   Detta inbegriper förtrogenhet med den barnlitterära
+    ###   konventionen och en förmåga att relatera iakttagelserna till
+    ###   en vidare samhällelig och kulturell kontext."
+    ###  (example course SU LV1011)
+    skaKunnaExp = re.compile("[Kk]unna(.*?)[.\n]", re.I)
+
+    ### Some courses write goals as "Efter kursen kan ... " (less common than "ska kunna")
+    ###   "Studenten kan tillämpa grundläggande arbetsmarknadsekonomiska begrepp ..."
+    ###   (example course SU ATF012)
+    kanExp = re.compile("\skan\s(.*?)[.]", re.I)
+
+    ### Goals can be written as "studenten ska vara förtrogen med" or
+    ### "studenten ska ha förmåga att"
+    ###   "Efter genomgången kurs ska studenten
+    ###    1)      vara förtrogen med begreppen kultur, mångkulturalism och andra för kunskapsområdet centrala begrepp som exkluderings- och inkluderingprocesser präglar relationer mellan majoritets- och minoritetsbefolkningen samt aktuella teorier kring mångkulturalism och etnicitet
+    ###    2)      ha förmåga att integrera relevanta teorier och metoder om mångkulturalism i en vägledningssituation samt kunna reflektera över hur kulturella normer, värderingar och tankemönster påverkar förhållningssätt till människor i andra etniska grupper
+    ###   (example course SU UC119F)
+    fortrogenExp = re.compile("\sförtrogen\s*i\s(.*?)[.]", re.I)
+    formagaExp = re.compile("visa.*?\sförmåga.*?att\s*(.*?)[.]", re.I)
+
+    ### Many courses have goals stated as "ska kunna:" and then one goal per line.
+    kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
+
+    found = 0
+
     m = htmlListExp.search(sv)
     if m:
         found = 1
         ls = htmlListExp.findall(sv)
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("htmlListExp", l.strip())
     
     m = pListExp.search(sv)
     if m:
@@ -244,6 +347,7 @@ def extractGoals(c):
 
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("pListExp", l.strip())
 
     m = brListExp.search(sv)
     if m:
@@ -254,6 +358,7 @@ def extractGoals(c):
 
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("brListExp", l.strip())
 
     m = dotListExp.search(sv)
     if m:
@@ -264,6 +369,7 @@ def extractGoals(c):
 
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("dotListExp", l.strip())
 
     m = newlineListExp.search(sv)
     if m:
@@ -274,6 +380,7 @@ def extractGoals(c):
 
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("newlineListExp", l.strip())
 
     m = romanListExp.search(sv)
     if m:
@@ -284,6 +391,7 @@ def extractGoals(c):
 
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("romanListExp", l.strip())
 
     m = arabicListExp.search(sv)
     if m:
@@ -293,7 +401,12 @@ def extractGoals(c):
             ls[l] = cleanStr(ls[l])
 
         for l in ls: # remove duplicates
-            iloList[l.strip()] = 1
+            tmp = l.strip()
+            if tmp[-2:] == "hp":
+                pass # skip lines like "1. Tysk lingvistik, 6 hp" (sub-parts of a course)
+            else:
+                iloList[tmp] = 1
+                log("arabicListExp", tmp)
 
     m = parListExp.search(sv)
     if m:
@@ -304,6 +417,7 @@ def extractGoals(c):
 
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("parListExp", l.strip())
 
     m = skaKunnaExp.search(sv)
     if m:
@@ -314,7 +428,8 @@ def extractGoals(c):
             
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
-
+            log("skaKunnaExp", l.strip())
+            
     m = fortrogenExp.search(sv)
     if m:
         found = 1
@@ -324,6 +439,7 @@ def extractGoals(c):
             
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("fortrogenExp", l.strip())
 
     m = formagaExp.search(sv)
     if m:
@@ -334,6 +450,7 @@ def extractGoals(c):
             
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("formagaExp", l.strip())
             
     m = kanExp.search(sv)
     if m:
@@ -344,6 +461,7 @@ def extractGoals(c):
             
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("kanExp", l.strip())
             
     p = sv.find("unna:\n\n")
     ls = []
@@ -361,6 +479,7 @@ def extractGoals(c):
             
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("unna:", l.strip())
             
     p = kunnaColonExp.search(sv)
     ls = []
@@ -381,6 +500,7 @@ def extractGoals(c):
             
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log("kunnaColonExp", l.strip())
         
     p = sv.find(":</p>")
     if p > 0:
@@ -401,10 +521,12 @@ def extractGoals(c):
             
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
+            log(":<p>", l.strip())
         
     if not found: # If not found, add the whole text ?
         if sv and len(sv) > 1:
             iloList[sv] = 1
+            log("Add everything", sv)
 
     ls = []
     content = re.compile("[a-zA-ZåäöÅÄÖ]")
@@ -428,10 +550,11 @@ def dupcheck(ls):
             ss = res[i]
             if s.find(ss) >= 0 or ss.find(s) >= 0:
                 skip = 1
-                if len(s) < len(ss):
+                if len(s) > len(ss): # prefer the longer match
                     res[i] = s
 
         if not skip and len(s) > 0:
+            log("dupcheck", s)
             res.append(s)
     return res
 
