@@ -224,7 +224,7 @@ def extractGoals(c):
     if m:
         sv = iSyfteExp.split(sv)[0] # remove everything from "i syfte att" and forward
     else:
-        m = forAtt.search(sv)
+        m = forAttExp.search(sv)
         if m:
             sv = forAttExp.split(sv)[0]  # remove everything from "för att" and forward
     
