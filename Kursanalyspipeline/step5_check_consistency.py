@@ -153,8 +153,10 @@ for cl in data:
                         level = bloom[2]
                         if exp in ambig:
                             print(c["CourseCode"], "ambiguous Bloom: '" + exp + "' " + str(ambig[exp]) + " in:", thisGoal)
+                            printed = 1
+
                             
         if printed:
-            print ("-"*30, "\n\n")
+            print ("\n", "-"*30, "\n")
 
     print(len(data[cl]), "courses in data")
