@@ -1,0 +1,39 @@
+aktivt attackera problem inom kursens område både genom eget arbete och genom sökning av relevant information
+beakta hållfasthetsegenskaper och brottfenomen för trä stål och armerade betongkonstruktioner vid dimensionering
+beakta utmattning vid dimensionering enligt Eurocode EC3
+bekräfta experimentellt förekomsten av mörk materia genom observationer med radioteleskop
+bibehålla närvaro i nätverk efter avbrott
+effektivt nyttja muntliga och skriftliga kommunikationsfärdigheter beslutsfattandeförmåga och ledarskapskompetenser i omvandlingen av nya idéer till affärslösningar inom området hållbar urban transport och mobilitet
+erkänna effekterna av medicinsk teknik i digital hälsoomvandling
+etablera initialt fotfäste i nätverk och system
+fatta välgrundade beslut om hur man ska gå vidare med riskhanteringsprocessen
+framlägga argument baserade på vetenskapliga resultat
+förbättra elkraftsystemens stabilitet baserat på grundläggande kontrollalgoritmer
+förflytta sig lateralt i datornätverk
+förhålla sig till samhälleliga målsättningar gällande t ex hållbarhet vilka är relevanta för projektet samt utvecklad produkt och produktanvändning
+förvalta given programkod
+ge en introduktion till martingaler i diskret tid och martingalkonvergenssatsen
+ge en nyanserad framställning av olika möjliga förhållningssätt till specifika forskningsetiska problem
+göra enklare investeringsbedömningar
+göra frekvensuppdelning FFT av vektorer ljud och matriser bilder
+inkludera etiska samhällsrelaterade och hållbarhetsrelaterade aspekter i utvecklingen av en ny produkt teknologi eller affärslösning
+konfigurera en SDN-vänlig nätverksemulator
+konfigurera enklare nätverk med routrar och switchar
+konfigurera ett exempel på en tjänst med användning av SDN och NFV
+kritiskt förhålla sig till resultatet av en förenklad livscykelanalys av en produkts energiförbrukning och C02-avtryck
+lagarbeta och samverka i grupper med olika sammansättning
+lyfta in tillämpad etisk teori och analys i praktisk ingenjörs eller teknikanknuten verksamhet
+minimera materialförbrukningen i konstruktionsdelar för minskad miljöpåverkan och ökad hållbarhet
+möta tidsgränser
+placera såväl abonnent som gruppcentraler inklusive kanalisationer
+pröva hypoteser med hjälp av simuleringar
+rationalisera experimentella data som erhållits om komplexa system i form av enkla atomistiska modeller
+recensera en vetenskaplig bok för en vetenskaplig tidskrift eller årsbok
+reglera spänningar och effektflöden i elkraftsystem utifrån dessa matematiska modeller och kontrollstrategier
+sammankoppla aktuella samhällsproblem med ingenjörskonst och forskning
+styra datormiljön via kommandoraden
+ställa relevanta och kreativa historiska frågor
+sätta in dagsaktuella händelser på energiområdet i ett geopolitiskt och historiskt perspektiv
+tillse att nanoteknikrelaterade mål för hållbar utveckling enligt FNs rekommendationer uppfylls
+visa varför och på vilket sätt entreprenöriellt ledarskap entreprenörsteam och rekrytering kan vara avgörande för att framgångsrikt starta och driva företag
+övertygande lägga fram en forskningsidé med referenser till relevant publicerad forskning
