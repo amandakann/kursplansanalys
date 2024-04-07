@@ -6,6 +6,8 @@ import html
 import datetime
 import json
 
+import time
+
 #######################################
 #### Set default semester to "now" ####
 #######################################
@@ -45,9 +47,10 @@ def getRounds(sem):
                     if (haveCCall or courseCode == atts["courseCode"]):
                         result.append([atts["courseCode"], sem, atts["roundId"]])
                 else:
-                    print ("WARNING: Courseround does not have all needed fields?", cr)
+                    log("WARNING: Courseround does not have all needed fields?")
+                    log(str(cr))
     else:
-        print ("WARNING: Could not retrieve course rounds: " + "https://api.kth.se/api/kopps/v1/courseRounds/" + sem) 
+        log("WARNING: Could not retrieve course rounds: " + "https://api.kth.se/api/kopps/v1/courseRounds/" + sem)
 
     return result
 
@@ -67,8 +70,34 @@ for a in atts:
 def getOneCourse(sem, cc, roundId):
 
     plan = {"goals":{}, "elig":{}}
-    url = "https://api.kth.se/api/kopps/v1/course/" + cc + "/plan/" + sem # /{language (en|sv)}
-    r = requests.get(url)
+    url = "https://api.kth.se/api/kopps/v1/course/" + cc + "/plan/" + sem
+
+    log("getOneCourse(" + sem + ", " + cc + ", " + roundId +")\n")
+    log("url: " + url +")\n")
+    logFlush()
+    time.sleep(delaySeconds)
+
+    triesSoFar = 0
+    GiveUpAfterXTries = 5
+    failed = 1
+    while triesSoFar < GiveUpAfterXTries:
+        triesSoFar += 1
+        try:
+            r = requests.get(url)
+            failed = 0
+        except Exception as e:
+            log("Failed getting " + url + "\n")
+            log(str(e))
+            if triesSoFar < GiveUpAfterXTries:
+                time.sleep(60 * delayMinutes) # wait 15 minutes and see if the server replies
+
+    if failed:
+        log("Failed to get " + url + ", giving up.\n")
+        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
+    
+    log("status: ")
+    log(str(r.status_code))
+
     if (str(r.status_code) == "200"): # everything went fine
 
         xml = XML.fromstring(r.text + "\n")
@@ -93,12 +122,32 @@ def getOneCourse(sem, cc, roundId):
                     except:
                         plan["elig"][atts[langAttr]] = el.text
     else:
-        print ("WARNING: Could not fetch '" + url + "'")
+        log("WARNING: Could not fetch '" + url + "'")
+        r.close()
+        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
+
     r.close()
+    time.sleep(delaySeconds)
 
     course = ""
-    url = "https://api.kth.se/api/kopps/v1/course/" + cc # + "/{language (en|sv)}
-    r =  requests.get(url)
+    url = "https://api.kth.se/api/kopps/v1/course/" + cc
+
+    failed = 1
+    while triesSoFar < GiveUpAfterXTries:
+        triesSoFar += 1
+        try:
+            r = requests.get(url)
+            failed = 0
+        except Exception as e:
+            log("Failed getting " + url + "\n")
+            log(str(e))
+            if triesSoFar < GiveUpAfterXTries:
+                time.sleep(60*15) # wait 15 minutes and see if the server replies
+
+    if failed:
+        log("Failed to get " + url + ", giving up.\n")
+        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
+    
     if (str(r.status_code) == "200"): # everything went fine
         course = {"title":{}, "subjectCode":""}
         xml = XML.fromstring(r.text)
@@ -108,9 +157,12 @@ def getOneCourse(sem, cc, roundId):
             except:
                 course["subjectCode"] = el.text
     else:
-        print ("WARNING: Could not fetch '" + url + "'")
-    r.close()
+        log ("WARNING: Could not fetch '" + url + "'")
+        r.close()
+        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
 
+    r.close()
+    
     # Decide "level" based on the information in the course code
     level = ""
     if cc[5] == "X":
@@ -143,6 +195,7 @@ def getOneCourse(sem, cc, roundId):
         scb = course["subjectCode"]
     else:
         scb = ""
+
     return {"University":"KTH", # (Miun, UmU, SU, KTH)
             "CourseCode":cc,
             "ValidFrom":sem,
@@ -162,6 +215,11 @@ haveCCall = 0
 haveTime = 0
 haveOut = 0
 haveFullYear = 0
+cacheFile = ""
+noCache = 0
+delaySeconds = 5
+delayMinutes = 15
+logging = 0
 
 for i in range(1, len(sys.argv)):
     if (sys.argv[i] == "-a"):
@@ -169,8 +227,8 @@ for i in range(1, len(sys.argv)):
     elif (sys.argv[i] == "-cc" and i + 1 < len(sys.argv)):
         haveCC = 1
         courseCode = sys.argv[i+1]
-        # if (len(courseCode) != 6):
-        #     print ("WARNING:", courseCode, "does not seem to be a correctly formatted course code.")
+        if (len(courseCode) != 6):
+            log("WARNING:", courseCode, "does not seem to be a correctly formatted course code.")
     elif (sys.argv[i] == "-ct" and i + 1 < len(sys.argv)):
         haveTime = 1
         haveFullYear = 0
@@ -187,19 +245,71 @@ for i in range(1, len(sys.argv)):
             print ("WARNING:", timeSpan, "does not seem to be a correctly formatted year/semester.")
             haveCC = 0 # force 'print help'
             haveCCall = 0
+    elif (sys.argv[i] == "-cacheFile" or sys.argv[i] == "-cf") and i + 1 < len(sys.argv):
+        cacheFile = sys.argv[i + 1]
+    elif sys.argv[i] == "-noCache" or sys.argv[i] == "-nc":
+        noCache = 1
+    elif (sys.argv[i] == "-delay") and i + 1 < len(sys.argv):
+        delaySeconds = sys.argv[i + 1]
+    elif (sys.argv[i] == "-retry") and i + 1 < len(sys.argv):
+        delayMinutes = sys.argv[i + 1]
+    elif sys.argv[i] == "-log":
+        logging = 1
+
+if noCache:
+    cacheFile = ""
+else:
+    if cacheFile == "":
+        cacheFile = sys.argv[0] + ".cache"
 
 if (not haveCC and not haveCCall) or (haveCC and haveCCall):
     print ("\nFetch course information from the KTH API, print result as JSON to stdout\n")
-    print ("usage options: [-a] [-cc <CODE>] [-ct <SEMESTER>] [-o <FILE_NAME>] [-r] [-d <level>]")
-    print ("Flags: -a              Classify all courses.");
-#    print ("       -s              Output the syllabus (code, name, ILOs, contents).");
-    print ("       -cc <CODE>      Course code (usually six alphanumeric characters).");
-    print ("       -ct <SEMESTER>  Course semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester);
-    print ("       -cy <SEMESTER>  Course year/semester in the format YYYY:T (e.g. 2016:2). Default is " + defaultSemester);
-#    print ("       -o <FILE_NAME>  Output file name (default is \"output.csv\").");
-#    print ("       -d <level>      Set debug level, for example 10, 20, 100.");
-    print ("\nNote: EITHER -a OR -cc must be used (not both).\n");
+    print ("usage options: [-a] [-cc <CODE>] [-ct <SEMESTER>] [-cacheFile <FILE_NAME>] [-noCache] [-delay <SECONDS>] [-retry <MINUTES>] [-log]")
+    print ("Flags: -a                      Classify all courses.")
+    print ("       -cc <CODE>              Course code (usually six alphanumeric characters).")
+    print ("       -ct <SEMESTER>          Course semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester + ".")
+    print ("       -cy <SEMESTER>          Course year/semester in the format YYYY:T (e.g. 2016:2). Default is " + defaultSemester + ".")
+#    print ("       -o <FILE_NAME>  Output file name (default is \"output.csv\").")
+#    print ("       -d <level>      Set debug level, for example 10, 20, 100.")
+    print ("       -cacheFile <FILENAME>   Use data in file <FILENAME>, only fetch data not alreadt in the file. Adds new data to the")
+    print ("                                   same file. [-cf] can be used as short form. (If -cacheFile is not specified, ")
+    print ("                                   " + sys.argv[0] + ".cache will be used.")
+    print ("       -noCache                Do not save downloaded data for future use, only output result. [-nc] can be used as a short form.")
+    print ("       -delay <SECONDS>        How many seconds to wait between each call to the server. If not specified, " + str(delaySeconds) + " seconds.")
+    print ("       -retry <MINUTES>        How many minutes to wait before trying again when there are problems contacting the server. If not specified, " + str(delayMinutes) + " minutes.")
+    print ("       -log                    Log debug information to " + sys.argv[0] + ".log.")    
+    print ("\nNote: EITHER -a OR -cc must be used (not both).\n")
     sys.exit(0)
+
+
+###############
+### Logging ###
+###############
+if logging:
+    logF = open(sys.argv[0] + ".log", "w")
+
+def log(s):
+    if not logging:
+        return
+    logF.write(str(s))
+    logF.write("\n")
+
+def logFlush():
+    if not logging:
+        return
+    logF.flush()
+
+###################################
+#### Read data from cache file ####
+###################################
+cache = {}
+if cacheFile != "":
+    try:
+        f = open(cacheFile)
+        cache = json.load(f)
+        f.close()
+    except:
+        cache = {}
 
 ########################################
 #### Build list of courses to fetch ####
@@ -212,10 +322,34 @@ listOfCourses = []
 for semester in listOfSemesters:
     listOfCourses.extend(getRounds(semester))
 
+log(str(len(listOfCourses)) + " courses to fetch\n")
+    
 listOfResults = []
 for i in range(len(listOfCourses)):
-    tmp = getOneCourse(listOfCourses[i][1], listOfCourses[i][0], listOfCourses[i][2])
+    tmp = 0
+    if cacheFile and listOfCourses[i][0] in cache:
+        ctmp = cache[listOfCourses[i][0]]
+        for c in ctmp:
+            if c[0] == listOfCourses[i][1] and c[1] == listOfCourses[i][2]:
+                log("Cache hit for " + listOfCourses[i][0])
+                tmp = c[2]
+    if not tmp:
+        tmp = getOneCourse(listOfCourses[i][1], listOfCourses[i][0], listOfCourses[i][2])
 
+        if cacheFile and not "Failed" in tmp:
+            if not cache:
+                cache = {}
+            if not listOfCourses[i][0] in cache:
+                cache[listOfCourses[i][0]] = [[listOfCourses[i][1], listOfCourses[i][2], tmp]]
+            else:
+                cache[listOfCourses[i][0]].append([listOfCourses[i][1], listOfCourses[i][2], tmp])
+            f = open(cacheFile, "w")
+            f.write(json.dumps(cache))
+            f.close()
+
+    if "Failed" in tmp:
+        continue
+    
     # check for duplicates
     dup = 0
     for i in range(len(listOfResults)):
@@ -230,9 +364,6 @@ for i in range(len(listOfCourses)):
                 break
     if not dup:
         listOfResults.append(tmp)
-
-    # if len(listOfResults) > 150:
-    #     break
 
 ##############################
 ### Print result to stdout ###
