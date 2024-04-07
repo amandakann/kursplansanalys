@@ -16,19 +16,19 @@ The scripts are written for Python 3. Older versions of python may not work.
 The scripts generally read data from the standard input and writes the
 results to the standard output, so you can chain them together.
 
-```python3 step1_KTH_fetch_from_API.py -cc ED2246 -cy 2023:2 | python3 step2_heuristics.py | python3 step3_PoS_and_spelling.py -ns | python3 step4_Bloom_verbs.py data/bloom_revised_all_words.txt | python3 step5_check_consistency.py -a -b data/bloom_revised_all_words.txt```
+```python3 step1_KTH_fetch_from_API.py -cc DD2350 -cy 2023:2 | python3 step2_heuristics.py | python3 step3_PoS_and_spelling.py -ns | python3 step4_Bloom_verbs.py data/bloom_revised_all_words.txt | python3 step5_check_consistency.py -a -b data/bloom_revised_all_words.txt```
 
 It is also possible to do one step at a time, saving the data to files.
 
-```python3 step1_KTH_fetch_from_API.py -cc ED2246 -cy 2023:2 > kth.ED2246.json```
+```python3 step1_KTH_fetch_from_API.py -cc DD2350 -cy 2023:2 > kth.DD2350.json```
 
-```python3 step2_heuristics.py < kth.ED2246.json > kth.ED2246.heuristics.json```
+```python3 step2_heuristics.py < kth.DD2350.json > kth.DD2350.heuristics.json```
 
-```python3 step3_PoS_and_spelling.py -ns < kth.ED2246.heuristics.json > kth.ED2246.pos.json```
+```python3 step3_PoS_and_spelling.py -ns < kth.DD2350.heuristics.json > kth.DD2350.pos.json```
 
-```python3 step4_Bloom_verbs.py data/bloom_revised_all_words.txt < kth.ED2246.pos.json > kth.ED2246.bloom.json```
+```python3 step4_Bloom_verbs.py data/bloom_revised_all_words.txt < kth.DD2350.pos.json > kth.DD2350.bloom.json```
 
-```python3 step5_check_consistency.py -a -b data/bloom_revised_all_words.txt < kth.ED2246.bloom.json```
+```python3 step5_check_consistency.py -a -b data/bloom_revised_all_words.txt < kth.DD2350.bloom.json```
 
 # Options
 
