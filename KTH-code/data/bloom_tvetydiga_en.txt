@@ -1,0 +1,97 @@
+abstract 1 (5)         abstrahera 1
+adapt 2 (5)            anpassa 2
+arrange (1 3) 5
+calculate 2 (3)		beräkna 2
+categorize (1 3) 5	kategorisera (1 3) 5
+characterize (1) 3	karakterisera (1) 3
+choose (2) 4 (5)  men välja (0) 3 (4)
+choose an appropriate estimator and estimate such a model, using high level programming language and mathematical software libraries
+choose a reduced form or structural econometric model for a given research question
+choose appropriate model or strategy for a new machine learning task
+
+cite 0 (1)	   citera 0
+classify 1 (2 3)    klassificera 1
+collect 2 (5) 	    samla in 2   (samla saknas i listan!)
+compare (1 3) 4	    jämföra (1 3) 4
+compute (1) 2 	    beräkna 2
+conclude 1 (3 4)    konkludera 1, sluta sig till 1
+construct (2) 5     konstruera 5
+contrast (1 3) 4    kontrastera (1) 4
+defend (1) 4   	    försvara (1) 4
+demonstrate (1) 2   demonstrera 2
+describe (0) 1	    beskriva (0) 1
+detect 3 (4) 	    upptäcka 2 (4)  SKILLNAD!
+determine 2 (4)	    bestämma 2
+devise (3) 5	    planera 5, utforma 5
+diagram 1 (3)	    rita 1
+differentiate (1) 3 differentiera 3
+discover (0 1) 2    upptäcka 2 (4)  SKILLNAD!
+discriminate 3 (4)  skilja 3   urskilja 3
+distinguish (1) 3 (4)	   karakterisera (1) 3, dela in 3, dela upp 3
+draw (0) 2  	  rita 1, dra slutsats 5    SKILLNAD!
+draw bode-plots (magnitude and phase)
+draw independent conclusions about possible results following implementation of Swedish environmental objectives and the global sustainability goals
+estimate (1 3) 4 uppskatta 4
+evaluate (3) 4 	 utvärdera 4
+examine (0 2) 3	   undersöka 3 (4), granska 3 (4)    SKILLNAD!
+experiment 2 (3 4) experimentera 2
+explain 1 (2 3 4 5)		 förklara 1 (4 5)
+explore (2) 3  	 utforska 3
+express (1 2)	 uttrycka 5, uttala sig 1       SKILLNAD! bör justeras
+express a professional attitude in all the phases of the design process
+Express themselves functionally, with a satisfactory pronunciation which listeners easily can understand
+ledigt och stringent uttrycka sig i skrift
+skriftligen uttrycka betydelsefulla samband mellan systemet människa, teknik och organisation för ett hållbart arbetsliv
+factor (1) 2	     faktorisera 2
+generalize (1 2) 5   generalisera (1) 5
+group (1) 3   	     dela in 3
+handle 2 (5)	     hantera 2
+hypothesize (4) 5    ställa upp hypotes 5
+identify 0 (1 3)     identifiera 0 (3)
+illustrate 1 (2 3)   illustrera 1 (3)
+indicate 0 (1)	     ange 0 (3), påvisa 1 (4)
+infer 1 (2 3)	     sluta sig till 1
+integrate 3 (5)	     integrera 2 (3)    SKILLNAD!
+interpret (1 2) 4    tolka (1) 4 (5)
+investigate (2) 3    undersöka 3 (4)    SKILLNAD!
+judge (1) 4 	     bedöma 4, fälla omdöme 4
+list 0 (2)	     lista 0
+manage 3 (5)	     hantera 2, handha 2, behandla 2, organisera 2 (3 5) SKILLNAD!
+design and manage products, processes and systems while taking into account the circumstances and needs of individuals and the targets for economically, socially and ecologically sustainable development set by the community
+use their ability to manage the electromagnetic laws to, in simpler situations, set up a computational model and perform the necessary calculations
+Manage important issues faced when starting a new firm
+match (0) 1	 	matcha (0) 1
+modify 2 (5)		modifiera 2 (5)
+observe (0) 1		beakta?     KOLLA!
+within the frame of the specific degree project identify which issues that need to be answered in order to observe relevant dimensions of sustainable development
+order (1) 3 (4)	        ordna 3     FÖREKOMMER INTE
+organize 2 (3 5)	organisera 2 (3 5)
+outline (0 1 2) 3 (5)	skissera (2) 3 (5)
+plan (3) 5   	  planera 5
+predict (1 2) 4	  förutse (1 2) 5  SKILLNAD!
+prepare 2 (5) 	  förbereda 2
+prescribe 4 (5)	  ordinera   FÖREKOMMER INTE
+produce 2 (5)	  producera 2 (5)
+rearrange (1) 5
+relate (1 2) 3 (5)	relatera (2 3) 4 (5) SKILLNAD!
+report (0) 1   		rapportera 1
+review (0 1) 4		ge översikt 5   SKILLNAD!
+rewrite 1 (5)		skriva om 1
+given a mathematical model for a technical or scientific problem, identify and classify the mathematical subproblems that need to be solved, rewrite them in a form suitable for treatment with numerical methods and select appropriate numerical methods
+select (0 1) 3 (4)   	välja (0) 3 (4)
+show (0) 1 (2) 		redovisa 1
+simulate 2 (5)		simulera 2
+solve 2 (5)		lösa 2
+summarize 1 (4 5)	sammanfatta 1 (4 5)
+support 4 (5)  		stödja 4
+tabulate 0 (2)		göra tabell    FÖREKOMMER INTE
+test (3) 4 (5)		testa (2) 4
+trace 0 (1)		markera 0, rita 1
+transform 1 (3)		transformera 2, omsätta 1
+transform coordinates between different reference systems
+transform time and space between observer that move relative to each other and realize how these transformations lead to length contraction
+Analytical and critically transform the research into a written text
+translate 1 (2)		  översätta 0 (1)  SKILLNAD!
+validate 4 (5)		  validera 4
+visualize (0) 1		  visualisera 1, åskådliggöra 1
+write (0 2) 5 		  skriva 5
