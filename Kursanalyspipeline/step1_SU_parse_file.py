@@ -131,12 +131,14 @@ for lineno in range(1, len(lines)):
     if fields[1] == 1:
         continue
 
+    cc = fields[4].replace('"', '') # new version has quotes, old does not
+
     # if we are to use only one CC, skip the other courses
-    if haveCC and fields[4] != courseCode:
+    if haveCC and cc != courseCode:
         continue
 
     # if the course is not from the correct time span, skip
-    start = fields[9]
+    start = fields[9].replace('"', '') # new version of data has quotes, old does not
     tmp = start.split("-")
     year = int(tmp[0])
     month = int(tmp[1])
@@ -159,27 +161,48 @@ for lineno in range(1, len(lines)):
     else:
         continue
         
-
-    cc = fields[4]
     goals = fields[20]
     elig = fields[13]
-    sc = fields[14]
-    level = fields[16]
+    sc = fields[14].replace('"', '') # new version has quotes, old does not
+    level = fields[16].replace('"', '') # new version has quotes, old does not
 #    title = {'sv':fields[5], 'en':fields[6]}
-#    credit = fields[7]
+    credit = fields[7].replace('"', '') # new version has quotes, old does not
+
 #    descr = fields[19]
 #    exam = fields[22]
-#    misc = fields[26]
+    misc = fields[26].lower()
+
+    ctype = ""
+    title = fields[5].lower()
+    if "uppdragsutbildning" in title or "commissioned education" in fields[6]:
+        ctype = "uppdragsutbildning"
+    elif "uppdragsutbildning" in misc:
+        ctype = "uppdragsutbildning"
+    elif "vidareutbildning" in title or "vidareutbildning" in misc:
+        ctype = "vidareutbildning"
+    else:
+        ctype = "grundutbildning"
     
-    r = {"startdate":start, # used to determine which duplicate to use, should not be printed
-         "University":"SU", # (Miun, UmU, SU, KTH)
-         "CourseCode":cc,
-         "ValidFrom":term,
-         "ILO-sv":goals,
-         "ILO-en":"",
-         "SCB-ID":sc, # SCB-ID   [SCBs lista]
-         "CourseLevel-ID":level,         #  (G1N, G1F, G1E, G2F, G2E, A1N, A1F, A1E, A2E, GXX, AXX) [SUHF]
-         "Prerequisites":elig
+    r = {
+        "startdate":start, # used to determine which duplicate to use, should not be printed
+    
+        "University":"SU", # one of (Miun, UmU, SU, KTH)
+        
+        "CourseCode":cc,
+        "ECTS-credits":credit,
+        "ValidFrom":term,
+        "ILO-sv":goals,
+        "ILO-en":"",
+        "SCB-ID":sc,
+
+        "CourseLevel-ID":level,
+        # one of (G1N, G1F, G1E, G2F, G2E, A1N, A1F, A1E, A2E, GXX, AXX)
+         
+        "Prerequisites-sv":elig,
+        "Prerequisites-en":"",
+        
+        "CourseType":ctype
+        # one of: (vidareutbildning/uppdragsutbildning/förberedande utbildning/grundutbildning/forskarutbildning)
     }
     
     # check for duplicates
