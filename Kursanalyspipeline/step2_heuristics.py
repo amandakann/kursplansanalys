@@ -56,7 +56,7 @@ def cleanStr(s):
 def cleanUp(c):
     # Fix weirdness that some KTH texts have
 
-    c["Prerequisites"] = cleanStr(c["Prerequisites"])
+    c["Prerequisites-sv"] = cleanStr(c["Prerequisites-sv"])
     c["ILO-sv"] = cleanStr(c["ILO-sv"])
 
 ###############
@@ -94,15 +94,15 @@ def updateLevelAttribute(c):
     if not "CourseLevel-ID" in c or not c["CourseLevel-ID"] or len(c["CourseLevel-ID"]) < 3 or c["CourseLevel-ID"][1] != "X":
         return
     
-    if "Prerequisites" in c:
-        if c["CourseLevel-ID"] == "GXX" and not c["Prerequisites"]:
+    if "Prerequisites-sv" in c:
+        if c["CourseLevel-ID"] == "GXX" and not c["Prerequisites-sv"]:
             # if no prerequisites are listed at all, G1N?
             c["CourseLevel-ID"] = "G1N"
             return
         
-    if "Prerequisites" in c and c["Prerequisites"]:
+    if "Prerequisites-sv" in c and c["Prerequisites-sv"]:
         
-        pr = c["Prerequisites"]
+        pr = c["Prerequisites-sv"]
         
         if c["CourseLevel-ID"] == "GXX": # If "Grundläggande behörighet" then G1N
             if re.search("grundläggande.?(högskole)*behörighet", pr, re.I):
@@ -278,6 +278,14 @@ def extractGoals(c):
     ###   (example course SU EC1212)
     newlineListExp = re.compile("\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)", re.I)
 
+    ### Some courses list goals on one long line with " - " as a marker for each goal
+    ###   "ska studenten kunna 1. Kunskap och förståelse - Redogöra
+    ###   för teorier om demokratisering och autokratisering på ett
+    ###   samhällsvetenskapligt sätt, både muntligt och skriftligt
+    ###   (kunskap) - Förstå och med egna ord förklara teorier ..."
+    ###   (example course SU SV7098)
+    inlineHyphenListExp = re.compile(" - ([^-]*) - ")
+    
     ### Some courses enumerate goals with Roman numerals
     ###   "För godkänt resultat skall studenten kunna:
     ###     I.     kritiskt granska statistiska undersökningar utifrån ett vetenskapligt perspektiv,
@@ -325,6 +333,13 @@ def extractGoals(c):
     fortrogenExp = re.compile("\sförtrogen\s*i\s(.*?)[.]", re.I)
     formagaExp = re.compile("visa.*?\sförmåga.*?att\s*(.*?)[.]", re.I)
 
+    ### Some courses list all goals on one line with arabic numerals enumerating, starting with "... kunna 1."
+    ###   "... ska studenten kunna 1.Redovisa, diskutera och jämföra olika
+    ###   historiskt kriminologiska studier. 2.Beskriva, ..."
+    ###   (example course SU AKA132)
+    kunna1exp = re.compile("kunna.*1[.].*2[.]")
+
+    
     ### Many courses have goals stated as "ska kunna:" and then one goal per line.
     kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
 
@@ -382,6 +397,36 @@ def extractGoals(c):
             iloList[l.strip()] = 1
             log("newlineListExp", l.strip())
 
+    m = inlineHyphenListExp.search(sv)
+    if m:
+        found = 1
+        parts = sv.split(" - ")
+        ls = []
+        for i in range(1, len(parts)):
+            ls.append(cleanStr(parts[i]))
+
+        for l in ls: # remove duplicates
+            iloList[l.strip()] = 1
+            log("inlineHyphenListExp", l.strip())
+
+    if not found:
+        m = kunna1exp.search(sv)
+    else:
+        m = 0 # if some other type of list has been found, these things are likely to be subsection headings, not goals
+    if m:
+        found = 1
+
+        part = sv[m.start()-2:]
+        parts = re.split("[0-9][0-9]*[.]", part)
+
+        ls = []
+        for i in range(1, len(parts)):
+            ls.append(cleanStr(parts[i]))
+            
+        for l in ls: # remove duplicates
+            iloList[l.strip()] = 1
+            log("kunna1exo", l.strip())
+            
     m = romanListExp.search(sv)
     if m:
         found = 1
