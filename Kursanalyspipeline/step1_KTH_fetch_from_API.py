@@ -92,10 +92,21 @@ def getOneCourse(sem, cc, roundId):
                 time.sleep(60 * delayMinutes) # wait 15 minutes and see if the server replies
 
     if failed:
-        log("Failed to get " + url + ", giving up.\n")
-        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
+        log("Failed to get round info " + url + ", giving up.\n")
+        return {"Failed":1,
+                "University":"KTH",
+                "CourseCode":"",
+                "ECTS-credits":"",
+                "ValidFrom":"",
+                "ILO-sv":"",
+                "ILO-en":"",
+                "SCB-ID":"",
+                "CourseLevel-ID":"",
+                "Prerequisites-sv":"",
+                "Prerequisites-en":"",
+                "CourseType":""}
     
-    log("status: ")
+    log("goal status: ")
     log(str(r.status_code))
 
     if (str(r.status_code) == "200"): # everything went fine
@@ -124,7 +135,18 @@ def getOneCourse(sem, cc, roundId):
     else:
         log("WARNING: Could not fetch '" + url + "'")
         r.close()
-        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
+        return {"Failed":1,
+                "University":"KTH",
+                "CourseCode":"",
+                "ECTS-credits":"",
+                "ValidFrom":"",
+                "ILO-sv":"",
+                "ILO-en":"",
+                "SCB-ID":"",
+                "CourseLevel-ID":"",
+                "Prerequisites-sv":"",
+                "Prerequisites-en":"",
+                "CourseType":""}
 
     r.close()
     time.sleep(delaySeconds)
@@ -133,6 +155,7 @@ def getOneCourse(sem, cc, roundId):
     url = "https://api.kth.se/api/kopps/v1/course/" + cc
 
     failed = 1
+    triesSoFar = 0
     while triesSoFar < GiveUpAfterXTries:
         triesSoFar += 1
         try:
@@ -145,9 +168,24 @@ def getOneCourse(sem, cc, roundId):
                 time.sleep(60*15) # wait 15 minutes and see if the server replies
 
     if failed:
-        log("Failed to get " + url + ", giving up.\n")
-        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
+        log("Failed to get course info: " + url + ", giving up.\n")
+        return {"Failed":1,
+                "University":"KTH",
+                "CourseCode":"",
+                "ECTS-credits":"",
+                "ValidFrom":"",
+                "ILO-sv":"",
+                "ILO-en":"",
+                "SCB-ID":"",
+                "CourseLevel-ID":"",
+                "Prerequisites-sv":"",
+                "Prerequisites-en":"",
+                "CourseType":""}
     
+    log("subj.code status: ")
+    log(str(r.status_code))
+
+    hp = ""
     if (str(r.status_code) == "200"): # everything went fine
         course = {"title":{}, "subjectCode":""}
         xml = XML.fromstring(r.text)
@@ -156,10 +194,27 @@ def getOneCourse(sem, cc, roundId):
                 course["subjectCode"] = html.unescape(el.text.replace("&nbsp;", " "))
             except:
                 course["subjectCode"] = el.text
+        for el in xml.iter('credits'):
+            if hp == "":
+                hp = el.text
+            else:
+                if hp != el.text:
+                    log("WARNING: two different values for ECTS-credits: " + hp + " and " + el.text)
     else:
         log ("WARNING: Could not fetch '" + url + "'")
         r.close()
-        return {"Failed":1, "University":"KTH", "CourseCode":"", "ValidFrom":"", "ILO-sv":"", "ILO-en":"", "SCB-ID":"", "CourseLevel-ID":"", "Prerequisites":""}
+        return {"Failed":1,
+                "University":"KTH",
+                "CourseCode":"",
+                "ECTS-credits":"",
+                "ValidFrom":"",
+                "ILO-sv":"",
+                "ILO-en":"",
+                "SCB-ID":"",
+                "CourseLevel-ID":"",
+                "Prerequisites-sv":"",
+                "Prerequisites-en":"",
+                "CourseType":""}
 
     r.close()
     
@@ -187,23 +242,52 @@ def getOneCourse(sem, cc, roundId):
         ilosv = plan["goals"]["sv"]
     else:
         ilosv = ""
+        
     if "sv" in plan["elig"]:
         eligsv = plan["elig"]["sv"]
     else:
         eligsv = ""
+    if "en" in plan["elig"]:
+        eligen = plan["elig"]["en"]
+    else:
+        eligen = ""
+        
     if "subjectCode" in course:
         scb = course["subjectCode"]
     else:
         scb = ""
 
+    ctype = ""
+    if cc[-1:] == "U":
+        ctype = "uppdragsutbildning"
+    elif cc[0] == "F":
+        ctype = "forskarutbildning"
+    elif cc[-1:] == "V":
+        ctype = "vidareutbildning"
+    elif cc[2] == "0":
+        ctype = "förberedande utbildning"
+        level = "" # Should not have a level such as GXX
+    else:
+        ctype = "grundutbildning"
+    
     return {"University":"KTH", # (Miun, UmU, SU, KTH)
             "CourseCode":cc,
+
+            "ECTS-credits":hp,
+            
             "ValidFrom":sem,
             "ILO-sv":ilosv,
             "ILO-en":iloen,
-            "SCB-ID":scb, # SCB-ID   [SCBs lista]
-            "CourseLevel-ID":level,         #  (G1N, G1F, G1E, G2F, G2E, A1N, A1F, A1E, A2E, GXX, AXX) [SUHF]
-            "Prerequisites":eligsv
+            "SCB-ID":scb,
+
+            "CourseLevel-ID":level,
+            # (G1N, G1F, G1E, G2F, G2E, A1N, A1F, A1E, A2E, GXX, AXX) [SUHF]
+
+            "Prerequisites-sv":eligsv,
+            "Prerequisites-en":eligen,
+
+            "CourseType":ctype
+            # (vidareutbildning/uppdragsutbildning/förberedande utbildning/grundutbildning/forskarutbildning)
     }
 
 ####################################
@@ -303,7 +387,7 @@ def logFlush():
 #### Read data from cache file ####
 ###################################
 cache = {}
-if cacheFile != "":
+if not noCache and cacheFile != "":
     try:
         f = open(cacheFile)
         cache = json.load(f)
@@ -327,7 +411,7 @@ log(str(len(listOfCourses)) + " courses to fetch\n")
 listOfResults = []
 for i in range(len(listOfCourses)):
     tmp = 0
-    if cacheFile and listOfCourses[i][0] in cache:
+    if not noCache and cache and listOfCourses[i][0] in cache:
         ctmp = cache[listOfCourses[i][0]]
         for c in ctmp:
             if c[0] == listOfCourses[i][1] and c[1] == listOfCourses[i][2]:
@@ -336,7 +420,7 @@ for i in range(len(listOfCourses)):
     if not tmp:
         tmp = getOneCourse(listOfCourses[i][1], listOfCourses[i][0], listOfCourses[i][2])
 
-        if cacheFile and not "Failed" in tmp:
+        if not noCache and cacheFile and not "Failed" in tmp:
             if not cache:
                 cache = {}
             if not listOfCourses[i][0] in cache:
