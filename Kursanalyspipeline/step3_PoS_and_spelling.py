@@ -9,17 +9,53 @@ import json
 ### check system arguments ###
 ##############################
 doSpell = 0
+logging = 0
+useCache = 0
 for i in range(1, len(sys.argv)):
     if sys.argv[i] == "-s":
         doSpell = 1
     elif sys.argv[i] == "-ns":
         doSpell = 0
+    elif sys.argv[i] == "-log":
+        logging = 1
+    elif sys.argv[i] == "-cache":
+        useCache = 1
     else:
         print ("\nReads JSON from stdin, adds part-of-speech tagging, prints JSON to stdout.")
         print ("\nusage options:")
-        print ("     -s  do spelling error correction and part-of-speech tagging")
-        print ("     -ns no spelling, just tagging\n")
+        print ("     -s       do spelling error correction and part-of-speech tagging")
+        print ("     -ns      no spelling, just tagging")
+        print ("     -log     log debug data to " + sys.argv[0] + ".log")
+        print ("     -cache   use a local cache of sentences already tagged\n")
         sys.exit(0)
+
+
+#################
+#### Logging ####
+#################
+
+if logging:
+    logF = open(sys.argv[0] + ".log", "w")
+
+def log(s):
+    if logging:
+        logF.write(s)
+        logF.write("\n")
+
+###############
+#### Cache ####
+###############
+
+if useCache:
+    cacheF = open(sys.argv[0] + ".cache", "w")
+
+    cache = {}
+    try:
+        f = open(cacheFile)
+        cache = json.load(f)
+        f.close()
+    except:
+        cache = {}
 
 ########################################################
 #### Granska stuff (part-of-speech, lemma, spelling ####
@@ -30,6 +66,11 @@ for i in range(1, len(sys.argv)):
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
 ###########################################################################
 def postag(text):
+    if useCache:
+        if cache and text in cache:
+            log("cache hit for: " + text)
+            return cache[text]
+    
     if len(text.strip()) > 0:
         url = "https://skrutten.csc.kth.se/granskaapi/wtl.php"
         x = requests.post(url, data = {"coding":"json", "text":text})
@@ -45,11 +86,16 @@ def postag(text):
                         s = []
                 if len(s) > 0:
                     res.append(s)
+
+                if useCache:
+                    if cache:
+                        cache[text] = res
+
                 return res
             except:
-                print ("WARNING: could not parse JSON:\n\n", x.text, "\n\n")
+                log ("WARNING: could not parse JSON:\n\n", x.text, "\n\n")
         else:
-            print ("WARNING: could not PoS-tag sentence.")
+            log ("WARNING: could not PoS-tag sentence.")
     return []
 
 ###########################################################################
@@ -57,6 +103,11 @@ def postag(text):
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
 ###########################################################################
 def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
+    if useCache:
+        if cache and text in cache:
+            log("cache hit for: " + text)
+            return cache[text]
+    
     if len(text.strip()) > 0:
         url = "https://skrutten.csc.kth.se/granskaapi/scrutinize.php"
         x = requests.post(url, data = {"text":text})
@@ -66,7 +117,7 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
             try:
                 xml = XML.fromstring(t)
             except:
-                print ("WARNING: XML parsing failed:\n\n", t, "\n\n")
+                log ("WARNING: XML parsing failed:\n\n", t, "\n\n")
                 return postag(text)
             
             # Find all sentences
@@ -130,9 +181,15 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
                 return postag(newText)
             else:
                 # if nothing changed, return word-tag-lemma info
-                return convertTags(xml)
+                res = convertTags(xml)
+
+                if useCache:
+                    if cache:
+                        cache[text] = res
+
+                return res
         else:
-            print ("WARNING: could not PoS-tag sentence.")
+            log ("WARNING: could not PoS-tag sentence.")
             return []
     return []
 ################################################################################################################
@@ -187,8 +244,9 @@ for line in sys.stdin:
 
 try:
     data = json.loads(text)
-except:
-    print("No input data?")
+except Exception as e:
+    print("No input data or non-JSON data?")
+    print(str(e))
     sys.exit(0)
 
 #################################################################
