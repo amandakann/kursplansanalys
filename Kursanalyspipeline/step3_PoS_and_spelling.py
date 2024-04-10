@@ -33,7 +33,7 @@ for i in range(1, len(sys.argv)):
 #################
 #### Logging ####
 #################
-
+logF = ""
 if logging:
     logF = open(sys.argv[0] + ".log", "w")
 
@@ -45,9 +45,10 @@ def log(s):
 ###############
 #### Cache ####
 ###############
-
+cache = {}
 if useCache:
-    cacheF = open(sys.argv[0] + ".cache", "w")
+    log("load cached data")
+    cacheFile = sys.argv[0] + ".cache"
 
     cache = {}
     try:
@@ -56,6 +57,8 @@ if useCache:
         f.close()
     except:
         cache = {}
+
+    log(str(len(cache.keys())) + " cached items found.")
 
 ########################################################
 #### Granska stuff (part-of-speech, lemma, spelling ####
@@ -66,9 +69,10 @@ if useCache:
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
 ###########################################################################
 def postag(text):
+    global cache
     if useCache:
         if cache and text in cache:
-            log("cache hit for: " + text)
+            log("cache hit")
             return cache[text]
     
     if len(text.strip()) > 0:
@@ -76,7 +80,7 @@ def postag(text):
         x = requests.post(url, data = {"coding":"json", "text":text})
         if x.ok:
             try:
-                ls = json.loads(x.text)
+                ls = json.loads(str(x.text))
                 res = []
                 s = []
                 for w in ls:
@@ -88,12 +92,17 @@ def postag(text):
                     res.append(s)
 
                 if useCache:
-                    if cache:
-                        cache[text] = res
+                    if not cache:
+                        cache = {}
+
+                    cache[text] = res
+                    f = open(cacheFile, "w")
+                    f.write(json.dumps(cache))
+                    f.close()
 
                 return res
-            except:
-                log ("WARNING: could not parse JSON:\n\n", x.text, "\n\n")
+            except Exception as e:
+                log ("WARNING: could not parse JSON:\n\n" + str(e) + "\n\n" + x.text + "\n\n")
         else:
             log ("WARNING: could not PoS-tag sentence.")
     return []
@@ -103,9 +112,10 @@ def postag(text):
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
 ###########################################################################
 def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
+    global cache
     if useCache:
         if cache and text in cache:
-            log("cache hit for: " + text)
+            log("cache hit")
             return cache[text]
     
     if len(text.strip()) > 0:
@@ -116,8 +126,8 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
 
             try:
                 xml = XML.fromstring(t)
-            except:
-                log ("WARNING: XML parsing failed:\n\n", t, "\n\n")
+            except Exception as e:
+                log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n")
                 return postag(text)
             
             # Find all sentences
@@ -184,8 +194,14 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
                 res = convertTags(xml)
 
                 if useCache:
-                    if cache:
-                        cache[text] = res
+                    if not cache:
+                        cache = {}
+                        
+                    cache[text] = res
+
+                    f = open(cacheFile, "w")
+                    f.write(json.dumps(cache))
+                    f.close()
 
                 return res
         else:
