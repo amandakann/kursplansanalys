@@ -69,7 +69,7 @@ for a in atts:
 ############################################
 def getOneCourse(sem, cc, roundId):
 
-    plan = {"goals":{}, "elig":{}}
+    plan = {}
     url = "https://api.kth.se/api/kopps/v1/course/" + cc + "/plan/" + sem
 
     log("getOneCourse(" + sem + ", " + cc + ", " + roundId +")\n")
@@ -116,7 +116,7 @@ def getOneCourse(sem, cc, roundId):
             if(el.attrib):
                 atts = el.attrib
                 if langAttr in atts:
-                    if not "goals" in plan:
+                    if not "goals" in plan and el.text:
                         plan["goals"] = {}
                     try:
                         plan["goals"][atts[langAttr]] = html.unescape(el.text.replace("&nbsp;", " "))
@@ -125,7 +125,7 @@ def getOneCourse(sem, cc, roundId):
         for el in xml.iter('eligibility'):
             if(el.attrib):
                 atts = el.attrib
-                if langAttr in atts:
+                if langAttr in atts and el.text:
                     if not "elig" in plan:
                         plan["elig"] = {}
                     try:
@@ -242,12 +242,12 @@ def getOneCourse(sem, cc, roundId):
         ilosv = plan["goals"]["sv"]
     else:
         ilosv = ""
-        
-    if "sv" in plan["elig"]:
+
+    if "elig" in plan and "sv" in plan["elig"]:
         eligsv = plan["elig"]["sv"]
     else:
         eligsv = ""
-    if "en" in plan["elig"]:
+    if "elig" in plan and "en" in plan["elig"]:
         eligen = plan["elig"]["en"]
     else:
         eligen = ""
@@ -392,6 +392,8 @@ if not noCache and cacheFile != "":
         f = open(cacheFile)
         cache = json.load(f)
         f.close()
+
+        log("Loaded " + str(len(cache.keys())) + " cache items.")
     except:
         cache = {}
 
