@@ -308,6 +308,14 @@ def extractGoals(c):
     ###   (example course SU PSMT15)
     parListExp = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)", re.I)
 
+    ### Some courses enumerate goals with X
+    ###    "... Xvisa fördjupad kunskap om och förståelse för
+    ###    skadeståndsrättens begrepp och principer , Xvisa fördjupad
+    ###    kunskap om och förståelse för skadeståndsrättens struktur
+    ###    och systematik samt Xvisa fördjupad kunskap ..."
+    ###   (example course SU JU369A)
+    xListExp = re.compile("\sX\s*(.*)\sX*", re.I)
+
     ### Some courses specify goals with lines like "ska ... kunna ..."
     ###   "Den studerande skall efter genomgången kurs kunna
     ###   identifiera samt, såväl muntligt som skriftligt, redogöra
@@ -338,7 +346,6 @@ def extractGoals(c):
     ###   historiskt kriminologiska studier. 2.Beskriva, ..."
     ###   (example course SU AKA132)
     kunna1exp = re.compile("kunna.*1[.].*2[.]")
-
     
     ### Many courses have goals stated as "ska kunna:" and then one goal per line.
     kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
@@ -397,6 +404,18 @@ def extractGoals(c):
             iloList[l.strip()] = 1
             log("newlineListExp", l.strip())
 
+    m = xListExp.search(sv)
+    if m:
+        parts = sv.split(" X")
+        ls = []
+        for i in range(1, len(parts)):
+            ls.append(cleanStr(parts[i]))
+            found = 1
+
+        for l in ls: # remove duplicates
+            iloList[l.strip()] = 1
+            log("xListExp", l.strip())
+
     m = inlineHyphenListExp.search(sv)
     if m:
         found = 1
@@ -409,24 +428,6 @@ def extractGoals(c):
             iloList[l.strip()] = 1
             log("inlineHyphenListExp", l.strip())
 
-    if not found:
-        m = kunna1exp.search(sv)
-    else:
-        m = 0 # if some other type of list has been found, these things are likely to be subsection headings, not goals
-    if m:
-        found = 1
-
-        part = sv[m.start()-2:]
-        parts = re.split("[0-9][0-9]*[.]", part)
-
-        ls = []
-        for i in range(1, len(parts)):
-            ls.append(cleanStr(parts[i]))
-            
-        for l in ls: # remove duplicates
-            iloList[l.strip()] = 1
-            log("kunna1exo", l.strip())
-            
     m = romanListExp.search(sv)
     if m:
         found = 1
@@ -464,16 +465,17 @@ def extractGoals(c):
             iloList[l.strip()] = 1
             log("parListExp", l.strip())
 
-    m = skaKunnaExp.search(sv)
-    if m:
-        found = 1
-        ls = skaKunnaExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
+    if not found:
+        m = skaKunnaExp.search(sv)
+        if m:
+            found = 1
+            ls = skaKunnaExp.findall(sv)
+            for l in range(len(ls)):
+                ls[l] = cleanStr(ls[l])
             
-        for l in ls: # remove duplicates
-            iloList[l.strip()] = 1
-            log("skaKunnaExp", l.strip())
+            for l in ls: # remove duplicates
+                iloList[l.strip()] = 1
+                log("skaKunnaExp", l.strip())
             
     m = fortrogenExp.search(sv)
     if m:
@@ -518,6 +520,23 @@ def extractGoals(c):
             tmpLs = tmp.split("\n\n")
 
             ls += tmpLs
+            
+    if not found:
+        m = kunna1exp.search(sv)
+    else:
+        m = 0 # if some other type of list has been found, these things are likely to be subsection headings, not goals
+    if m:
+        part = sv[m.start()-2:]
+        parts = re.split("[0-9][0-9]*[.]", part)
+
+        ls = []
+        for i in range(1, len(parts)):
+            ls.append(cleanStr(parts[i]))
+            found = 1
+            
+        for l in ls: # remove duplicates
+            iloList[l.strip()] = 1
+            log("kunna1exo", l.strip())
             
     if len(ls):
         found = 1
