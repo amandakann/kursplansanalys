@@ -18,6 +18,15 @@ checkNonBloomVerbs = 0
 checkType = 0
 bloomFile = ""
 unknown = 0
+
+printEachCourse = 0
+
+ignoreF = 0
+ignoreFB = 0
+ignoreV = 0
+ignoreU = 0
+ignoreG = 0
+
 for i in range(1, len(sys.argv)):
     if sys.argv[i] == "-en":
         checkEN = 1
@@ -43,6 +52,20 @@ for i in range(1, len(sys.argv)):
         checkCreds = 1
         checkNonBloomVerbs = 1
         checkType = 1
+        
+    elif sys.argv[i] == "-pa":
+        printEachCourse = 1
+        
+    elif sys.argv[i] == "-igF":
+        ignoreF = 1
+    elif sys.argv[i] == "-igFB":
+        ignoreFB = 1
+    elif sys.argv[i] == "-igV":
+        ignoreV = 1
+    elif sys.argv[i] == "-igU":
+        ignoreU = 1
+    elif sys.argv[i] == "-igG":
+        ignoreG = 1
     else:
         if(sys.argv[i-1] != "-b"):
             unknown = 1
@@ -59,7 +82,16 @@ if unknown or (checkSCB + checkLev + checkEN + checkILO + checkBloom) < 1 or (ch
     print ("     -c    Check if ESCB-credits is present and seems OK")
     print ("     -v    Check for verbs that cannot be classified in the Bloom taxonomy")
     print ("     -b <filename>  Check Bloom verbs")
-    print ("     -a    Check everything except Bloom verbs (-ilo -en -lev -SCB -c -v)\n")
+    print ("     -a    Check everything except Bloom verbs (-ilo -en -lev -SCB -c -v)")
+    print ()
+    print ("     -pc   Print each course and its problems")
+    print ()
+    print ("     -igF  Ignore all courses of type \"forskarutbildning\"")
+    print ("     -igFB Ignore all courses of type \"förberedande utbildning\"")
+    print ("     -igU  Ignore all courses of type \"uppdragsutbildning\"")
+    print ("     -igV  Ignore all courses of type \"vidareutbildning\"")
+    print ("     -igG  Ignore all courses of type \"grundutbildning\"")
+    print ()
     sys.exit(0)
 
 print ()
@@ -163,8 +195,11 @@ def printStats():
     print ("\n","-"*15, "Problems and Courses", "-"*15)
     for label in ccs:
         print ("-"*5, label, "-"*5)
+        ccstr = ""
         for cc in ccs[label]:
-            print ("  ", cc)
+            ccstr += cc
+            ccstr += " "
+        print ("  ", ccstr)
 
     if typeCounts:
         print ("\n","-"*15, "Course types", "-"*15)
@@ -197,6 +232,9 @@ def printBloom():
         print ("{0: <35}: {1: >5}".format(v, ambiguousVerbs[v]))
     
 def printNonBloom():
+    if not checkNonBloomVerbs:
+        return
+
     tot = 0
     vs = 0
     for v in nonBloomVerbs:
@@ -208,8 +246,13 @@ def printNonBloom():
     print ("-"*10)
     for v in nonBloomVerbsInfo:
         for ex in nonBloomVerbsInfo[v]:
-            print (v, "in course ", ex[1], "goal text: ", ex[0])
-        
+            print ("**", v, "** in course ", ex[1], "goal text: ", ex[0])
+
+
+def cPrint(s):
+    if printEachCourse:
+        print(s)
+
 ###################################################
 ### For each course, check for ambiguities etc. ###
 ###################################################
@@ -219,61 +262,71 @@ for cl in data:
     for c in data[cl]:
         printed = 0
 
+        thisType = "No CourseType"
+        if "CourseType" in c:
+            thisType = c["CourseType"]
+
+        if (ignoreF and thisType == "forskarutbildning") or (ignoreV and thisType == "vidareutbildning") or (ignoreU and thisType == "uppdragsutbildning") or (ignoreFB and thisType == "förberedande utbildning") or (ignoreG and thisType == "grundutbildning"):
+
+            addType(thisType + " (skipped)")
+            continue
+        else:
+            addType(thisType)
+
         if checkILO:
             if not "ILO-sv" in c or c["ILO-sv"].strip() == "":
                 if "ILO-en" in c:
-                    print(c["CourseCode"], "has no ILO-sv but has English:", c["ILO-en"])
+                    cPrint(c["CourseCode"] + " has no ILO-sv but has English: " + c["ILO-en"])
                 else:
-                    print(c["CourseCode"], "has no ILO-sv")
+                    cPrint(c["CourseCode"] + " has no ILO-sv")
                 printed = 1
                 add("No ILO-sv", c["CourseCode"])
             elif not "ILO-list-sv" in c or len(c["ILO-list-sv"]) < 1:
-                print(c["CourseCode"], "has empty ILO-list-sv", c["ILO-sv"])
+                cPrint(c["CourseCode"] + " has empty ILO-list-sv: " + c["ILO-sv"])
                 printed = 1
                 add("No ILO list", c["CourseCode"])
             elif not "Bloom-list" in c or len(c["Bloom-list"]) < 1:
-                print(c["CourseCode"], "has empty Bloom-list", c["ILO-list-sv"])
+                cPrint(c["CourseCode"] + " has empty Bloom-list: " + c["ILO-list-sv"])
                 printed = 1
                 add("No Bloom-list", c["CourseCode"])
             
-        if checkEN and (not "Prerequisites-en" in c or c["Prerequisites-en"].strip() == ""):
-            print(c["CourseCode"], "has no Prerequisites-en")
+        if checkEN and (not "Prerequisites-en" in c or not c["Prerequisites-en"] or c["Prerequisites-en"].strip() == ""):
+            cPrint(c["CourseCode"] + " has no Prerequisites-en")
             printed = 1
             add("Missing English prerequisites", c["CourseCode"])
-
         if checkEN and (not "ILO-en" in c or c["ILO-en"].strip() == ""):
-            print(c["CourseCode"], "has no ILO-en")#, c)
+            cPrint(c["CourseCode"] + " has no ILO-en")
             printed = 1
             add("Missing English ILO", c["CourseCode"])
 
         if checkLev:
             if not "CourseLevel-ID" in c:
                 if not "CourseType" in c or c["CourseType"] != "förberedande utbildning":
-                    print(c["CourseCode"], "has no CourseLevel-ID")
+                    cPrint(c["CourseCode"] + " has no CourseLevel-ID")
                     printed = 1
                     add("Missing course level", c["CourseCode"])
             elif "XX" in c["CourseLevel-ID"]:
-                print(c["CourseCode"], "has uninformative Course Level: ", c["CourseLevel-ID"], c["Prerequisites-sv"])
+                cPrint(c["CourseCode"] + " has uninformative Course Level: " + c["CourseLevel-ID"] + " " + c["Prerequisites-sv"])
                 printed = 1
                 add("Uninformative course level", c["CourseCode"])
 
             if not checkType and "CourseLevel-ID" in c and "CourseType" in c and c["CourseType"] == "förberedande utbildning" and c["CourseLevel-ID"] != "":
-                print(c["CourseCode"], "has non-empty CourseLevel-ID when it should be empty:", c["CourseType"], c["CourseLevel-ID"])
+                cPrint(c["CourseCode"] + " has non-empty CourseLevel-ID when it should be empty: " + c["CourseType"] + " " + c["CourseLevel-ID"])
                 printed = 1
                 add("Course level not empty for 'förberedande kurs'", c["CourseCode"])
 
         if checkSCB and not "SCB-ID" in c:
-            print(c["CourseCode"], "has no SCB-ID")#, c)
+            cPrint(c["CourseCode"] + " has no SCB-ID")
             printed = 1
             add("Missng SCB", c["CourseCode"])
 
         if checkCreds:
             if not "ECTS-credits" in c:
-                print(c["CourseCode"], "has no ECTS-credits field")
+                cPrint(c["CourseCode"] + " has no ECTS-credits field")
                 printed = 1
                 add("Missng credits", c["CourseCode"])
             elif c["ECTS-credits"] == "":
-                print(c["CourseCode"], "has empty ECTS-credits field")
+                cPrint(c["CourseCode"] + " has empty ECTS-credits field")
                 printed = 1
                 add("Missng credits", c["CourseCode"])
             else:
@@ -281,7 +334,7 @@ for cl in data:
                     tmp = c["ECTS-credits"].replace(",", ".")
                     tmp = str(tmp)
                 except:
-                    print(c["CourseCode"], ", ECTS-credits value invalid? ", c["ECTS-credits"])
+                    cPrint(c["CourseCode"] + ", ECTS-credits value invalid? " + c["ECTS-credits"])
                     printed = 1
                     add("Invalid credits", c["CourseCode"])
                 
@@ -297,10 +350,11 @@ for cl in data:
                     for i in range(len(s)):
                         wtl = s[i]
 
-                        if wtl["t"][:2] == "vb":
+                        if wtl["t"][:2] == "vb" and not (wtl["t"][-3:] == "aux" or wtl["t"][-3:] == "kop" or wtl["t"][-3:] == "mod"):
                             found = 0
                             w = wtl["l"]
-                            if w == "ska" or w == "kunna":
+                            stoplist = {"ska":1, "kunna":1, "ske":1}
+                            if w in stoplist:
                                 continue
 
                             for bl in blooms:
@@ -312,7 +366,7 @@ for cl in data:
                                     break
                                 
                             if not found:
-                                g = ""
+                                g = "(" + wtl["t"] + ") "
                                 for ww in s:
                                     g += ww["w"]
                                     g += " "
@@ -321,29 +375,25 @@ for cl in data:
         
         if checkType:
             if not "CourseType" in c:
-                print(c["CourseCode"], "has no CourseType field")
+                cPrint(c["CourseCode"] + " has no CourseType field")
                 printed = 1
                 add("Missing course type", c["CourseCode"])
             elif c["CourseType"] == "":
-                print(c["CourseCode"], "has empty CourseType field")
+                cPrint(c["CourseCode"] + " has empty CourseType field")
                 printed = 1
                 add("Missing course type", c["CourseCode"])
             elif c["CourseType"] not in types:
-                print(c["CourseCode"], "has an unknown CourseType: ", c["CourseType"])
+                cPrint(c["CourseCode"] + " has an unknown CourseType: " + c["CourseType"])
                 printed = 1
                 add("Unrecognized course type", c["CourseCode"])
             if "CourseType" in c and c["CourseType"] == "förberedande utbildning":
                 if "CourseLevel-ID" in c and c["CourseLevel-ID"] != "":
-                    print(c["CourseCode"], "is 'förberedande utbildning' but has CourseLevel-ID: ", c["CourseLevel-ID"])
+                    cPrint(c["CourseCode"] + " is 'förberedande utbildning' but has CourseLevel-ID: " + c["CourseLevel-ID"])
                     printed = 1
                     add("Course level not empty for 'förberedande kurs'", c["CourseCode"])
-            if "CourseType" in c:
-                addType(c["CourseType"])
-            else:
-                addType("No CourseType")
         if checkBloom:
             if not checkILO and not "Bloom-list" in c or len(c["Bloom-list"]) < 1:
-                print(c["CourseCode"], "has empty Bloom-list", c["ILO-list-sv"])
+                cPrint(c["CourseCode"] + " has empty Bloom-list " + c["ILO-list-sv"])
                 printed = 1
                 add("Empty Bloom-list", c["CourseCode"])
             if "Bloom-list" in c and len(c["Bloom-list"]) >= 1:
@@ -371,13 +421,13 @@ for cl in data:
                         exp = bloom[1]
                         level = bloom[2]
                         if exp in ambig:
-                            print(c["CourseCode"], "ambiguous Bloom: '" + exp + "' " + str(ambig[exp]) + " in:", thisGoal)
+                            cPrint(c["CourseCode"] + " ambiguous Bloom: '" + exp + "' " + str(ambig[exp]) + " in: " + thisGoal)
                             printed = 1
                             addAmbig(exp)
 
         
         if printed:
-            print ("\n", "-"*30, "\n")
+            cPrint("\n " + "-"*30 + "\n")
 
     print(len(data[cl]), "courses in data")
     printStats()
