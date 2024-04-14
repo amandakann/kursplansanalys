@@ -199,6 +199,34 @@ def identifyLanguage(text):
         return "sv"
     return "en"
 
+#######################################
+### Check language of prerequisites ###
+#######################################
+def checkPre(c):
+    sv = c["Prerequisites-sv"]
+    en = c["Prerequisites-en"]
+
+    langSv = identifyLanguage(sv)
+    langEn = identifyLanguage(en)
+
+    if langSv != "sv":
+        low = sv.lower()
+        if "historia" in low or "pedagogik" in low or "ö" in low: # common error in language classification
+            langSv = "sv"
+    
+    if langSv != "sv" and len(sv):
+        log("Prerequisites-sv not Swedish?", sv)
+            
+    if (langEn == "sv" or len(en) <= 0) and langEn == "sv" and len(en):
+        c["Prerequisites-sv"] = en
+            
+    if langEn != "en" and len(en):
+        log("Prerequisites-en not English?", en)
+    
+    if (langEn != "en" or len(en) <= 0) and langSv == "en" and len(sv):
+        c["Prerequisites-en"] = sv
+    
+
 ################################################################################
 ### Use heuristics to extract sentences with goals from the ILO-sv free text ###
 ################################################################################
@@ -212,15 +240,18 @@ def extractGoals(c):
     langSv = identifyLanguage(sv)
     langEn = identifyLanguage(en)
 
-    if langSv != "sv":
-        c["ILO-sv"] = ""
-        if langEn == "sv" and len(en):
-            c["ILO-sv"] = en
+    if langSv != "sv" and len(sv):
+        log("ILO-sv not Swedish? ", sv)
+        
+    if (langSv != "sv" or len(sv) <= 0) and langEn == "sv" and len(en):
+        c["ILO-sv"] = en
             
     if langEn != "en":
-        c["ILO-en"] = ""
-        if langSv == "en" and len(sv):
-            c["ILO-en"] = sv
+        if len(en):
+            log("ILO-en not English? ", en)
+            
+    if (langEn != "en" or len(en) <= 0) and langSv == "en" and len(sv):
+        c["ILO-en"] = sv
     
     sv = c["ILO-sv"]
     en = c["ILO-en"]
@@ -656,6 +687,9 @@ for c in data["Course-list"]:
 
     if doXX:
         updateLevelAttribute(c)
+
+    checkPre(c)
+
 
 ##############################
 ### Print result to stdout ###
