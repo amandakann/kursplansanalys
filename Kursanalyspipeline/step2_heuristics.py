@@ -149,6 +149,7 @@ for line in open("data/english_trigrams.txt").readlines():
     if i >= MAXTRIGRAMS:
         break
 
+MIN_LEN_LANGUAGE = 30
 def identifyLanguage(text):
     counts = {}
     words = text.lower().strip(string.punctuation).split()
@@ -219,13 +220,16 @@ def checkPre(c):
             
     if (langEn == "sv" or len(en) <= 0) and langEn == "sv" and len(en):
         c["Prerequisites-sv"] = en
-            
+    elif langSv != "sv" and len(sv) > MIN_LEN_LANGUAGE:
+        c["Prerequisites-sv"] = ""
+        
     if langEn != "en" and len(en):
         log("Prerequisites-en not English?", en)
     
     if (langEn != "en" or len(en) <= 0) and langSv == "en" and len(sv):
         c["Prerequisites-en"] = sv
-    
+    elif langEn != "en" and len(en) > MIN_LEN_LANGUAGE:
+        c["Prerequisites-en"] = ""
 
 ################################################################################
 ### Use heuristics to extract sentences with goals from the ILO-sv free text ###
@@ -245,13 +249,17 @@ def extractGoals(c):
         
     if (langSv != "sv" or len(sv) <= 0) and langEn == "sv" and len(en):
         c["ILO-sv"] = en
-            
+    elif langSv != "sv" and len(sv) > MIN_LEN_LANGUAGE:
+        c["ILO-sv"] = ""
+        
     if langEn != "en":
         if len(en):
             log("ILO-en not English? ", en)
             
     if (langEn != "en" or len(en) <= 0) and langSv == "en" and len(sv):
         c["ILO-en"] = sv
+    elif langEn != "en" and len(en) > MIN_LEN_LANGUAGE:
+        c["ILO-en"] = ""
     
     sv = c["ILO-sv"]
     en = c["ILO-en"]
@@ -356,7 +364,7 @@ def extractGoals(c):
     ###   konventionen och en förmåga att relatera iakttagelserna till
     ###   en vidare samhällelig och kulturell kontext."
     ###  (example course SU LV1011)
-    skaKunnaExp = re.compile("[Kk]unna(.*?)[.\n]", re.I)
+    skaKunnaExp = re.compile("[Kk]unna(.*?)[\n]", re.I)
 
     ### Some courses write goals as "Efter kursen kan ... " (less common than "ska kunna")
     ###   "Studenten kan tillämpa grundläggande arbetsmarknadsekonomiska begrepp ..."
