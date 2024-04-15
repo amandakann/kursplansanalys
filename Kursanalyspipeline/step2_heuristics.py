@@ -204,6 +204,11 @@ def identifyLanguage(text):
 ### Check language of prerequisites ###
 #######################################
 def checkPre(c):
+    if not "Prerequisites-sv" in c or not c["Prerequisites-sv"]:
+        c["Prerequisites-sv"] = ""
+    if not "Prerequisites-en" in c or not c["Prerequisites-en"]:
+        c["Prerequisites-en"] = ""
+    
     sv = c["Prerequisites-sv"]
     en = c["Prerequisites-en"]
 
@@ -276,14 +281,17 @@ def extractGoals(c):
     ###################################################################
     iSyfteExp = re.compile("<p>\s*i\s+syfte\s+att", re.I)
     forAttExp = re.compile("<p>\s*för\s+att", re.I)
+    forAttGodkandExp = re.compile("<p>\s*för\s+att.*bli.*godkänd", re.I)
     
     m = iSyfteExp.search(sv)
     if m:
         sv = iSyfteExp.split(sv)[0] # remove everything from "i syfte att" and forward
     else:
         m = forAttExp.search(sv)
-        if m:
-            sv = forAttExp.split(sv)[0]  # remove everything from "för att" and forward
+        if m and m.start() > 0:
+            m2 = forAttGodkandExp.search(sv)
+            if not m2 or m2.start() < m.start():
+                sv = forAttExp.split(sv)[0]  # remove everything from "för att" and forward
 
     #######################################################################
     ### Regular expressions to capture different ways goals are written ###
@@ -389,6 +397,7 @@ def extractGoals(c):
     ### Many courses have goals stated as "ska kunna:" and then one goal per line.
     kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
 
+   
     found = 0
 
     m = htmlListExp.search(sv)
@@ -559,7 +568,14 @@ def extractGoals(c):
             tmpLs = tmp.split("\n\n")
 
             ls += tmpLs
+    if len(ls):
+        found = 1
             
+        for l in ls: # remove duplicates
+            iloList[l.strip()] = 1
+            log("unna:", l.strip())
+
+    
     if not found:
         m = kunna1exp.search(sv)
     else:
@@ -567,7 +583,7 @@ def extractGoals(c):
     if m:
         part = sv[m.start()-2:]
         parts = re.split("[0-9][0-9]*[.]", part)
-
+        
         ls = []
         for i in range(1, len(parts)):
             ls.append(cleanStr(parts[i]))
@@ -576,14 +592,7 @@ def extractGoals(c):
         for l in ls: # remove duplicates
             iloList[l.strip()] = 1
             log("kunna1exo", l.strip())
-            
-    if len(ls):
-        found = 1
-            
-        for l in ls: # remove duplicates
-            iloList[l.strip()] = 1
-            log("unna:", l.strip())
-            
+    
     p = kunnaColonExp.search(sv)
     ls = []
     while p:
@@ -626,6 +635,7 @@ def extractGoals(c):
             iloList[l.strip()] = 1
             log(":<p>", l.strip())
         
+            
     if not found: # If not found, add the whole text ?
         if sv and len(sv) > 1:
             iloList[sv] = 1
@@ -653,8 +663,19 @@ def dupcheck(ls):
             ss = res[i]
             if s.find(ss) >= 0 or ss.find(s) >= 0:
                 skip = 1
-                if len(s) > len(ss): # prefer the longer match
-                    res[i] = s
+                if len(s) > len(ss): # generally, we prefer the longer match
+
+                    m = re.match("[0-9.•*·–…]*\s*", s)
+                    if m and s[m.end():] == ss: # same text, with something that is probably a list heading first
+                        res[i] = ss
+                    else:
+                        res[i] = s
+                else:
+                    m = re.search("[0-9.•*·–…]*\s*", ss)
+                    if m and ss[m.end():] == s: # same text, with something that is probably a list heading first
+                        res[i] = s
+                    else:
+                        res[i] = ss
 
         if not skip and len(s) > 0:
             log("dupcheck", s)
