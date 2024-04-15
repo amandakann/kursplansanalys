@@ -234,25 +234,25 @@ def getOneCourse(sem, cc, roundId):
     if level == "":
         pass # skip this course ??
 
-    if "en" in plan["goals"]:
+    if "en" in plan["goals"] and plan["goals"]["en"]:
         iloen = plan["goals"]["en"]
     else:
         iloen = ""
-    if "sv" in plan["goals"]:
+    if "sv" in plan["goals"] and plan["goals"]["sv"]:
         ilosv = plan["goals"]["sv"]
     else:
         ilosv = ""
 
-    if "elig" in plan and "sv" in plan["elig"]:
+    if "elig" in plan and "sv" in plan["elig"] and plan["elig"]["sv"]:
         eligsv = plan["elig"]["sv"]
     else:
         eligsv = ""
-    if "elig" in plan and "en" in plan["elig"]:
+    if "elig" in plan and "en" in plan["elig"] and plan["elig"]["en"]:
         eligen = plan["elig"]["en"]
     else:
         eligen = ""
         
-    if "subjectCode" in course:
+    if "subjectCode" in course and course["subjectCode"]:
         scb = course["subjectCode"]
     else:
         scb = ""
