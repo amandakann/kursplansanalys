@@ -312,13 +312,13 @@ for i in range(1, len(sys.argv)):
         haveCC = 1
         courseCode = sys.argv[i+1]
         if (len(courseCode) != 6):
-            log("WARNING:", courseCode, "does not seem to be a correctly formatted course code.")
+            log("WARNING:' " + courseCode + "' does not seem to be a correctly formatted course code.")
     elif (sys.argv[i] == "-ct" and i + 1 < len(sys.argv)):
         haveTime = 1
         haveFullYear = 0
         timeSpan = sys.argv[i+1]
         if (not timeSpanExp.fullmatch(timeSpan)):
-            print ("WARNING:", timeSpan, "does not seem to be a correctly formatted year/semester.")
+            print ("WARNING: '" + timeSpan + "' does not seem to be a correctly formatted year/semester.")
             haveCC = 0 # force 'print help'
             haveCCall = 0
     elif (sys.argv[i] == "-cy" and i + 1 < len(sys.argv)):
@@ -326,7 +326,7 @@ for i in range(1, len(sys.argv)):
         haveFullYear = 1
         timeSpan = sys.argv[i+1]
         if (not timeSpanExp.fullmatch(timeSpan)):
-            print ("WARNING:", timeSpan, "does not seem to be a correctly formatted year/semester.")
+            print ("WARNING: '" + timeSpan + "' does not seem to be a correctly formatted year/semester.")
             haveCC = 0 # force 'print help'
             haveCCall = 0
     elif (sys.argv[i] == "-cacheFile" or sys.argv[i] == "-cf") and i + 1 < len(sys.argv):
