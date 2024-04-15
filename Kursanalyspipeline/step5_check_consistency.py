@@ -439,7 +439,7 @@ for cl in data:
                 add("No ILO list", c["CourseCode"])
                 
             elif not "Bloom-list" in c or len(c["Bloom-list"]) < 1:
-                cPrint(c["CourseCode"] + " has empty Bloom-list: " + c["ILO-list-sv"])
+                cPrint(c["CourseCode"] + " has empty Bloom-list: " + str(c["ILO-list-sv"]))
                 printed = 1
                 add("No Bloom-list", c["CourseCode"])
             
@@ -547,7 +547,7 @@ for cl in data:
                     add("Course level not empty for 'förberedande kurs'", c["CourseCode"])
         if checks["bloom"]:
             if not checks["ilo"] and not "Bloom-list" in c or len(c["Bloom-list"]) < 1:
-                cPrint(c["CourseCode"] + " has empty Bloom-list " + c["ILO-list-sv"])
+                cPrint(c["CourseCode"] + " has empty Bloom-list " + str(c["ILO-list-sv"]))
                 printed = 1
                 add("Empty Bloom-list", c["CourseCode"])
             if "Bloom-list" in c and len(c["Bloom-list"]) >= 1:
