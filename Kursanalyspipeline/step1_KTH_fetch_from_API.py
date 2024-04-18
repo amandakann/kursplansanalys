@@ -311,8 +311,8 @@ for i in range(1, len(sys.argv)):
     elif (sys.argv[i] == "-cc" and i + 1 < len(sys.argv)):
         haveCC = 1
         courseCode = sys.argv[i+1]
-        if (len(courseCode) != 6):
-            log("WARNING:' " + courseCode + "' does not seem to be a correctly formatted course code.")
+        # if (len(courseCode) != 6):
+        #     print("WARNING:' " + courseCode + "' does not seem to be a correctly formatted course code.")
     elif (sys.argv[i] == "-ct" and i + 1 < len(sys.argv)):
         haveTime = 1
         haveFullYear = 0
