@@ -4,6 +4,7 @@ import requests
 import html
 import xml.etree.ElementTree as XML
 import json
+import time
 
 ##############################
 ### check system arguments ###
@@ -46,6 +47,10 @@ def log(s):
 #### Cache ####
 ###############
 cache = {}
+newReqsNotInFile = 0
+totNew=0
+totHits=0
+WHEN_TO_WRITE=200
 if useCache:
     log("load cached data")
     cacheFile = sys.argv[0] + ".cache"
@@ -69,16 +74,23 @@ if useCache:
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
 ###########################################################################
 def postag(text):
-    global cache
-    if useCache:
-        if cache and text in cache:
-            log("cache hit")
-            return cache[text]
+    if text in cache:
+        global totHits
+        totHits += 1
+        return cache[text]
     
     if len(text.strip()) > 0:
         url = "https://skrutten.csc.kth.se/granskaapi/wtl.php"
-        x = requests.post(url, data = {"coding":"json", "text":text})
-        if x.ok:
+        tries = 0
+        while tries < 5:
+            try:
+                x = requests.post(url, data = {"coding":"json", "text":text})
+            except Exception as e:
+                log("Excpetion when using Granska: " + str(e))
+                tries += 1
+                time.sleep(15) # wait 15 seconds and see if the server is back again
+                
+        if tries < 5 and x.ok:
             try:
                 ls = json.loads(str(x.text))
                 res = []
@@ -91,15 +103,18 @@ def postag(text):
                 if len(s) > 0:
                     res.append(s)
 
+                cache[text] = res
                 if useCache:
-                    if not cache:
-                        cache = {}
+                    global newReqsNotInFile
+                    newReqsNotInFile += 1
 
-                    cache[text] = res
-                    f = open(cacheFile, "w")
-                    f.write(json.dumps(cache))
-                    f.close()
-
+                    if newReqsNotInFile > WHEN_TO_WRITE:
+                        f = open(cacheFile, "w")
+                        f.write(json.dumps(cache))
+                        f.close()
+                        totNew += newReqsNotInFile
+                        newReqsNotInFile = 0
+                            
                 return res
             except Exception as e:
                 log ("WARNING: could not parse JSON:\n\n" + str(e) + "\n\n" + x.text + "\n\n")
@@ -112,16 +127,23 @@ def postag(text):
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
 ###########################################################################
 def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
-    global cache
-    if useCache:
-        if cache and text in cache:
-            log("cache hit")
-            return cache[text]
+    if text in cache:
+        global totHits
+        totHits += 1
+        return cache[text]
     
     if len(text.strip()) > 0:
         url = "https://skrutten.csc.kth.se/granskaapi/scrutinize.php"
-        x = requests.post(url, data = {"text":text})
-        if x.ok:
+        tries = 0
+        while tries < 5:
+            try:
+                x = requests.post(url, data = {"text":text})
+            except Exception as e:
+                log("Excpetion when using Granska: " + str(e))
+                tries += 1
+                time.sleep(15) # wait 15 seconds and see if the server is back again
+                
+        if tries < 5 and x.ok:
             t = html.unescape(x.text).replace("&", "&amp;").replace('"""', '"&quot;"').replace('>"<', '>&quot;<')
 
             try:
@@ -193,15 +215,17 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
                 # if nothing changed, return word-tag-lemma info
                 res = convertTags(xml)
 
+                cache[text] = res
                 if useCache:
-                    if not cache:
-                        cache = {}
-                        
-                    cache[text] = res
+                    global newReqsNotInFile
+                    newReqsNotInFile += 1
 
-                    f = open(cacheFile, "w")
-                    f.write(json.dumps(cache))
-                    f.close()
+                    if newReqsNotInFile > WHEN_TO_WRITE:
+                        f = open(cacheFile, "w")
+                        f.write(json.dumps(cache))
+                        f.close()
+                        totNew += newReqsNotInFile
+                        newReqsNotInFile = 0
 
                 return res
         else:
@@ -268,20 +292,42 @@ except Exception as e:
 #################################################################
 ### For each course, part-of-speech tag the ILO-list-sv field ###
 #################################################################
+tagAllTogether = 0
 for c in data["Course-list"]:
     ls = c["ILO-list-sv"]
 
-    text = ""
-    for s in ls:
-        text += "\n"
-        text += s
-    if doSpell:
-        wtl = granska(text)        
+    if tagAllTogether:
+        text = ""
+        for s in ls:
+            text += "\n"
+            text += s
+        if doSpell:
+            wtl = granska(text)        
+        else:
+            wtl = postag(text)
     else:
-        wtl = postag(text)
+        res = []
+        for s in ls:
+            if doSpell:
+                wtl = granska(s)        
+            else:
+                wtl = postag(s)
+                
+            res += wtl
+        wtl = res
     c["ILO-list-sv-tagged"] = wtl
 
 ##############################
 ### Print result to stdout ###
 ##############################
+if useCache:
+    if newReqsNotInFile > 0:
+        f = open(cacheFile, "w")
+        f.write(json.dumps(cache))
+        f.close()
+        totNew += newReqsNotInFile
+
+log("Cache hits: " + str(totHits))
+log("New entries in cache file: " + str(totNew))
+
 print(json.dumps(data))
