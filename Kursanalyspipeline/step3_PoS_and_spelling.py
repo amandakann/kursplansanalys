@@ -12,6 +12,7 @@ import time
 doSpell = 0
 logging = 0
 useCache = 0
+tagAllTogether = 1
 for i in range(1, len(sys.argv)):
     if sys.argv[i] == "-s":
         doSpell = 1
@@ -21,13 +22,19 @@ for i in range(1, len(sys.argv)):
         logging = 1
     elif sys.argv[i] == "-cache":
         useCache = 1
+    elif sys.argv[i] == "-sendAll":
+        tagAllTogether = 1
+    elif sys.argv[i] == "-sendEach":
+        tagAllTogether = 0
     else:
         print ("\nReads JSON from stdin, adds part-of-speech tagging, prints JSON to stdout.")
         print ("\nusage options:")
-        print ("     -s       do spelling error correction and part-of-speech tagging")
-        print ("     -ns      no spelling, just tagging")
-        print ("     -log     log debug data to " + sys.argv[0] + ".log")
-        print ("     -cache   use a local cache of sentences already tagged\n")
+        print ("     -s          do spelling error correction and part-of-speech tagging")
+        print ("     -ns         no spelling, just tagging")
+        print ("     -log        log debug data to " + sys.argv[0] + ".log")
+        print ("     -sendAll    PoS-tag all goal texts at once (one call to Granska)")
+        print ("     -sendEach   PoS-tag each goal separately (many calls to Granska)")
+        print ("     -cache      use a local cache of sentences already tagged\n")
         sys.exit(0)
 
 
@@ -292,7 +299,6 @@ except Exception as e:
 #################################################################
 ### For each course, part-of-speech tag the ILO-list-sv field ###
 #################################################################
-tagAllTogether = 0
 for c in data["Course-list"]:
     ls = c["ILO-list-sv"]
 
