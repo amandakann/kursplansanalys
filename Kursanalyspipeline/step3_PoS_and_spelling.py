@@ -92,6 +92,7 @@ def postag(text):
         while tries < 5:
             try:
                 x = requests.post(url, data = {"coding":"json", "text":text})
+                break
             except Exception as e:
                 log("Excpetion when using Granska: " + str(e))
                 tries += 1
@@ -145,6 +146,7 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
         while tries < 5:
             try:
                 x = requests.post(url, data = {"text":text})
+                break
             except Exception as e:
                 log("Excpetion when using Granska: " + str(e))
                 tries += 1
