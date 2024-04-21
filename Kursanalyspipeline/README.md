@@ -28,7 +28,7 @@ It is also possible to do one step at a time, saving the data to files.
 
 ```python3 step4_Bloom_verbs.py data/bloom_revised_all_words.txt < kth.DD2350.pos.json > kth.DD2350.bloom.json```
 
-```python3 step5_check_consistency.py -a -b data/bloom_revised_all_words.txt < kth.DD2350.bloom.json```
+```python3 step5_check_consistency.py -b data/bloom_revised_all_words.txt < kth.DD2350.bloom.json```
 
 # Options
 
@@ -55,23 +55,34 @@ The scripts can output a short description of available options:
 **Step 3**: Step three adds part-of-speech tags and can also correct
   spelling errors at the same time. The options `-s` (correct spelling
   errors) and `-ns` (ignore spelling errors) can be used. The default
-  behavior is to ignore spelling errors.
+  behavior is to ignore spelling errors. The options `-sendAll` and
+  `-sendEach` can be used to specify if a separate call should be made
+  to the Granska API server with each goal text or all texts for a
+  course should be sent at once. `-cache` can be used to store results
+  locally, which makes later calls on the same courses or courses with
+  similar goals much faster.
 
 **Step 4**: Step four needs a reference to a file with Bloom verbs and
   the levels for the Bloom verbs, but takes no other options.
 
-**Step 5**: Step five currently checks the data for inconsistencies
-  and ambiguities. The following flags can be used: `-ilo` (check that
-  the ILO information is there and contains Bloom verbs), `-en` (check
-  if goals are available in English), `-lev` (check for courses with
-  GXX or AXX as course level), `-SCB` (check that the SCB information
-  is present), `-b <Bloom verb file>` (check for ambiguous Bloom
-  verbs).
+**Step 5**: Step five checks the data for inconsistencies and
+  ambiguities. It also counts Bloom classified verbs and collects
+  other statistics. It uses a config file `step5.config` to specify
+  what data to collect and what to print. For some options, the data
+  file with the Bloom verb classifications is used and should then be
+  specified with the option `-b data/bloom_revised_all_words.txt`
+
+  The config file has one option per row and the options are commented
+  with short explanations. For example `+printErrorTypeLists` means
+  "do print (plus sign) a list of course codes for each error type"
+  and `-printAmbiguousVerbs` means "do NOT (minus sign) print info on
+  ambiguous verbs"
 
 Some steps take a LOT of time. Downloading a lot of course information
 from the KTH API in *Step 1* can take a long time. *Step 3* can take a
-lot of time since contacting the Granska API server takes time. The
-other steps are typically fast.
+lot of time (to part-of-speech tag a few thousand courses, it could
+take several hours) since contacting the Granska API server takes
+time. The other steps are typically fast.
 
 # Data files
 
