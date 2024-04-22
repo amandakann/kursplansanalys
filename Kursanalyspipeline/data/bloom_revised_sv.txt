@@ -169,7 +169,6 @@ installera
 härleda
 invertera
 dimensionera
-beakta * vid dimensionering
 måttsätta
 anpassa
 monteringsanpassa
