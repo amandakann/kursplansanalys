@@ -20,20 +20,25 @@ bloomFile = ""
 configFile = "step5.config"
 unknown = 0
 
+moreInputs = []
+
 for i in range(1, len(sys.argv)):
     if sys.argv[i] == "-b" and i+1 < len(sys.argv):
         bloomFile = sys.argv[i+1]
     elif sys.argv[i] == "-c" and i+1 < len(sys.argv):
         configFile = sys.argv[i+1]
+    elif sys.argv[i] == "-inp" and i+1 < len(sys.argv):
+        moreInputs.extend(sys.argv[i+1].split())
     else:
-        if sys.argv[i-1] != "-b" and sys.argv[i-1] != "-c":
+        if sys.argv[i-1] != "-b" and sys.argv[i-1] != "-c" and sys.argv[i-1] != "-inp":
             unknown = 1
 
 if unknown:
     print ("\nCheck courses for problems or ambiguities, collect stats. Reads JSON from stdin.")
     print ("usage options:")
-    print ("     -b <filename>  File with Bloom verb data")
-    print ("     -c <filename>  Config file")
+    print ("     -b <filename>                 File with Bloom verb data")
+    print ("     -c <filename>                 Config file")
+    print ("     -inp \"<filename1> ...    \"  More input files")
     print ()
     print ("Check the config file (\"" + configFile + "\") to see possible options.")
     print ()
@@ -221,7 +226,7 @@ if checks["bloom"]:
         bloomFile = ""
     for v in ambig:
         ambig[v] = [bloomLex[v]] + ambig[v] 
-        
+
 ############################
 ### read JSON from stdin ###
 ############################
@@ -232,6 +237,20 @@ for line in sys.stdin:
     text += line
 
 data = json.loads(text)
+
+#######################
+### Read more data. ###
+#######################
+for i in range(len(moreInputs)):
+    try:
+        f = open(moreInputs[i])
+        tmp = json.load(f)
+
+        if tmp and "Course-list" in tmp:
+            data["Course-list"].extend(tmp["Course-list"])
+        f.close()
+    except:
+        print("Could not read data from:", moreInputs[i])
 
 #######################
 ### Statistics etc. ###
@@ -252,20 +271,28 @@ nonBloomVerbs = {}
 nonBloomVerbsInfo = {}
 ambiguousVerbs = {}
 
-bloomStats = {"all":{}, "scb":{}, "level":{}, "type":{}}
-def addBloomList(ls, scb, level, ctype):
+bloomStats = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}
+def addBloomList(ls, scb, level, ctype, uni):
     if not ctype in bloomStats["type"]:
-        bloomStats["type"][ctype] = {}
+        bloomStats["type"][ctype] = {"verbCounts":{}}
     if not level in bloomStats["level"]:
-        bloomStats["level"][level] = {}
+        bloomStats["level"][level] = {"verbCounts":{}}
     if not scb in bloomStats["scb"]:
-        bloomStats["scb"][scb] = {}
+        bloomStats["scb"][scb] = {"verbCounts":{}}
+    if not uni in bloomStats["uni"]:
+        bloomStats["uni"][uni] = {"verbCounts":{}}
 
     flat = []
     for goal in ls:
         for verb in goal:
-            flat.append(verb[2])            
-        
+            flat.append(verb[2])
+
+            for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["uni"][uni]]:
+                if not verb[1] in lex["verbCounts"]:
+                    lex["verbCounts"][verb[1]] = 1
+                else:
+                    lex["verbCounts"][verb[1]] += 1
+    
     if len(flat) > 0:
         mn = 10
         mx = -1
@@ -292,7 +319,7 @@ def addBloomList(ls, scb, level, ctype):
                 vm = votes[vv]
                 v = vv
         
-        for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["all"]]:
+        for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["all"], bloomStats["uni"][uni]]:
             if not "max" in lex:
                 lex["max"] = {}
             if not mx in lex["max"]:
@@ -337,7 +364,7 @@ def addBloomList(ls, scb, level, ctype):
                     lex["val"][b] += 1
 
     else:
-        for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["all"]]:
+        for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["all"], bloomStats["uni"][uni]]:
 
             if not "nVerbs" in lex:
                 lex["nVerbs"] = {}
@@ -442,13 +469,14 @@ def printBloomStats():
             print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
     print (tmp, "courses in data")
 
-    for tmp in [["SCB", bloomStats["scb"]], ["CourseLevel", bloomStats["level"]], ["CourseType", bloomStats["type"]]]:
+    for tmp in [["University", bloomStats["uni"]], ["SCB", bloomStats["scb"]], ["CourseLevel", bloomStats["level"]], ["CourseType", bloomStats["type"]]]:
         label = tmp[0]
         lex = tmp[1]
-        if (label == "SCB" and prints["perSCB"]) or (label == "CourseLevel" and prints["perLevel"]) or (label == "CourseType" and prints["perType"]):
+        if (label == "University") or (label == "SCB" and prints["perSCB"]) or (label == "CourseLevel" and prints["perLevel"]) or (label == "CourseType" and prints["perType"]):
             print("-"*10, label, "-"*10)
 
             printBloomHelper("max", "max Bloom", lex, 6)
+
             printBloomHelper("min", "min Bloom", lex, 6)
 
             ls = []
@@ -480,10 +508,22 @@ def printBloomStats():
                     s += "{0: >5} ".format(0)
                 print (s)
             print()
-            
 
-            printBloomHelper("common", "most common Bloom level", lex, 6)
+            print("-"*10, "Most common verbs", "-"*10)
+            for uni in lex:
+                ls = []
+                for v in lex[uni]["verbCounts"]:
+                    ls.append([lex[uni]["verbCounts"][v], v])
+                ls.sort(reverse=True)
+                print ("--->", uni)
+                for vi in range(len(ls)):
+                    print ("{0: >5}: {1:}".format(ls[vi][0], ls[vi][1]))
+                    if vi >= 10:
+                        break
+            print()
+
             
+            printBloomHelper("common", "most common Bloom level", lex, 6)
 
             ls = []
             rowLabel = "Verbs per Bloom level"
@@ -684,11 +724,12 @@ def printBloom():
             print ("{0: >2}: {1: >5}".format(c, bloomLevelCounts[c]))
         else:
             print ("{0: >2}: {1: >5}".format(c, 0))
-    print ("\n","-"*15, "Most commob verbs", "-"*15)
+    print ("\n","-"*15, "Most common verbs", "-"*15)
     for i in range(len(ls)):
         print ("{0: >5}: {1:}".format(ls[i][0], ls[i][1]))
-        if i > 10:
+        if i >= 10:
             break
+
     print ("-"*30)
     atot = 0
     avs = 0
@@ -823,7 +864,7 @@ for cl in data:
         addSCB(scb)
 
         if "Bloom-list" in c:
-            addBloomList(c["Bloom-list"], scb, level, thisType)
+            addBloomList(c["Bloom-list"], scb, level, thisType, c["University"])
         
         if checks["ilo"]:
             if not "ILO-sv" in c or c["ILO-sv"].strip() == "":
