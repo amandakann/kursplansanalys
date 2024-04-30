@@ -669,10 +669,13 @@ def printStats():
 def printBloom():
     tot = 0
     vs = 0
+    ls = []
     for v in verbCounts:
         tot += verbCounts[v]
         vs += 1
-
+        ls.append([verbCounts[v], v])
+    ls.sort(reverse=True)
+    
     print ("\n","-"*15, "VERBS", "-"*15)
     print (vs, "different verbs seen,", tot, "total occurences of these verbs.")
     print("Number of Bloom classifications of each level:")
@@ -681,6 +684,11 @@ def printBloom():
             print ("{0: >2}: {1: >5}".format(c, bloomLevelCounts[c]))
         else:
             print ("{0: >2}: {1: >5}".format(c, 0))
+    print ("\n","-"*15, "Most commob verbs", "-"*15)
+    for i in range(len(ls)):
+        print ("{0: >5}: {1:}".format(ls[i][0], ls[i][1]))
+        if i > 10:
+            break
     print ("-"*30)
     atot = 0
     avs = 0
@@ -688,8 +696,12 @@ def printBloom():
         atot += ambiguousVerbs[v]
         avs += 1
     print (avs, "different ambiguous verbs seen,", atot, "total occurences of these verbs.")
+    ls = []
     for v in ambiguousVerbs:
-        print ("{0: <35}: {1: >5}".format(v, ambiguousVerbs[v]))
+        ls.append([ambiguousVerbs[v], v])
+    ls.sort(reverse=True)
+    for vv in ls:
+        print ("{0: <35}: {1: >5}".format(vv[1],vv[0]))
     
 def printNonBloom():
     if not checks["nonBloom"]:
@@ -707,10 +719,15 @@ def printNonBloom():
     print (vs, "verbs found that did not get a Bloom classification.")
     print (tot, "total occurences of these verbs.")
     print ("-"*10)
+    ls = []
     for v in nonBloomVerbsInfo:
         for ex in nonBloomVerbsInfo[v]:
-            print ("**", v, "** in course ", ex[1], "goal text: ", ex[0])
-
+            s = "** " + v + " ** in course " + ex[1] + ", goal text:\n" + ex[0] + "\n"
+            ls.append(s)
+            #print ("**", v, "** in course ", ex[1], "goal text:\n", ex[0], "\n")
+    ls.sort()
+    for s in ls:
+        print(s)
 
 def cPrint(s):
     if prints["courses"]:
@@ -910,7 +927,7 @@ for cl in data:
                     for i in range(len(s)):
                         wtl = s[i]
 
-                        if wtl["t"][:2] == "vb" and not (wtl["t"][-3:] == "aux" or wtl["t"][-3:] == "kop" or wtl["t"][-3:] == "mod"):
+                        if wtl["t"][:2] == "vb" and wtl["t"][-4:] != ".sfo" and not (wtl["t"][-3:] == "aux" or wtl["t"][-3:] == "kop" or wtl["t"][-3:] == "mod"):
                             found = 0
                             w = wtl["l"]
                             stoplist = {"ska":1, "kunna":1, "ske":1}
@@ -927,8 +944,11 @@ for cl in data:
                                 
                             if not found:
                                 g = "(" + wtl["t"] + ") "
-                                for ww in s:
+                                for wwi in range(len(s)):
+                                    ww = s[wwi]
                                     g += ww["w"]
+                                    if wwi == i:
+                                        g += " (" + wtl["t"].upper() + ")"
                                     g += " "
                                 g.strip()
                                 addNonBloom(w, g, c["CourseCode"])
