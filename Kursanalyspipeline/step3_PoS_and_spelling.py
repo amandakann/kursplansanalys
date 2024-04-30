@@ -49,6 +49,7 @@ def log(s):
     if logging:
         logF.write(s)
         logF.write("\n")
+        logF.flush()
 
 ###############
 #### Cache ####
@@ -57,7 +58,7 @@ cache = {}
 newReqsNotInFile = 0
 totNew=0
 totHits=0
-WHEN_TO_WRITE=200
+WHEN_TO_WRITE=500
 if useCache:
     log("load cached data")
     cacheFile = sys.argv[0] + ".cache"
@@ -117,19 +118,27 @@ def postag(text):
                     newReqsNotInFile += 1
 
                     if newReqsNotInFile > WHEN_TO_WRITE:
-                        f = open(cacheFile, "w")
-                        f.write(json.dumps(cache))
-                        f.close()
-                        totNew += newReqsNotInFile
-                        newReqsNotInFile = 0
-                            
+                        writeCache()
                 return res
             except Exception as e:
-                log ("WARNING: could not parse JSON:\n\n" + str(e) + "\n\n" + x.text + "\n\n")
+                log ("WARNING: could not parse JSON:\n\n" + str(e) + "\n\n" + x.text + "\n\n" + text + "\n\n")
+                writeCache()
+                if x.text.lower().find("granska error"):
+                    time.sleep(5*60) # sleep 5 minutes and wait for the Granska server to come back
         else:
             log ("WARNING: could not PoS-tag sentence.")
     return []
 
+def writeCache():
+    global totNew
+    global newReqsNotInFile
+    f = open(cacheFile, "w")
+    f.write(json.dumps(cache))
+    f.close()
+    totNew += newReqsNotInFile
+    newReqsNotInFile = 0
+    log("new cached items: " + str(totNew))
+    
 ###########################################################################
 # Does spelling error correction and part-of-speech tagging.            ###
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
@@ -158,7 +167,10 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
             try:
                 xml = XML.fromstring(t)
             except Exception as e:
-                log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n")
+                log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n" + text + "\n\n")
+                writeCache()
+                if t.lower().find("granska error"):
+                    time.sleep(5*60) # sleep 5 minutes and wait for the Granska server to come back
                 return postag(text)
             
             # Find all sentences
@@ -230,12 +242,7 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
                     newReqsNotInFile += 1
 
                     if newReqsNotInFile > WHEN_TO_WRITE:
-                        f = open(cacheFile, "w")
-                        f.write(json.dumps(cache))
-                        f.close()
-                        totNew += newReqsNotInFile
-                        newReqsNotInFile = 0
-
+                        writeCache()
                 return res
         else:
             log ("WARNING: could not PoS-tag sentence.")
@@ -301,7 +308,10 @@ except Exception as e:
 #################################################################
 ### For each course, part-of-speech tag the ILO-list-sv field ###
 #################################################################
-for c in data["Course-list"]:
+cs = len(data["Course-list"])
+for idx in range(cs):
+#for c in data["Course-list"]:
+    c = data["Course-list"][idx]
     ls = c["ILO-list-sv"]
 
     if tagAllTogether:
@@ -325,15 +335,14 @@ for c in data["Course-list"]:
         wtl = res
     c["ILO-list-sv-tagged"] = wtl
 
+    if idx % 100 == 0:
+        log("Courses: " + str(idx) + " of " + str(cs) + " done, " + str(totNew + newReqsNotInFile) + " non-cache items.")
 ##############################
 ### Print result to stdout ###
 ##############################
 if useCache:
     if newReqsNotInFile > 0:
-        f = open(cacheFile, "w")
-        f.write(json.dumps(cache))
-        f.close()
-        totNew += newReqsNotInFile
+        writeCache()
 
 log("Cache hits: " + str(totHits))
 log("New entries in cache file: " + str(totNew))
