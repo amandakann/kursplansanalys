@@ -47,21 +47,23 @@ clexp1 = re.compile("^[0-9.•*·–…]*\s*")
 clexp2 = re.compile("\s*[0-9.•*·–…]*\s*[.]*\s*$")
 hpExp = re.compile("[A-ZÅÄÖ][a-zåäö, ]*, [0-9][0-9,.]*\s*hp[.]?")
 def cleanStr(s):
-    res = s.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", "")
+    res = s.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ")
     res = re.sub("<\\s*br\\s*/*\\s*>", "\n", res, re.I)
     res = re.sub("[.][.][.]*", ".", res)
     res = re.sub("</?\\w*/?>", " ", res)
     res = re.sub("\s\s\s*", " ", res)
-    res = re.sub("^–\s*", "", res)
+    res = re.sub("^–\s*", " ", res)
     res = res.strip()
-    res = clexp1.sub("", res)
-    res = clexp2.sub("", res)
+    res = clexp1.sub(" ", res)
+    res = clexp2.sub(" ", res)
     res = res.replace(" - ", " ")
-    res = res.strip()
+    res = res.replace(" - ", " ")
+    res = re.sub(" [ ]*", " ", res)
     if hpExp.match(res):
         res = ""
     if len(res) < SHORTEST_GOAL:
         res = ""
+    res = res.strip()
     return res
 
 def cleanUp(c):
@@ -304,13 +306,13 @@ romanListExp = re.compile("\n[IVX][IVX]*\s*[.]\s\s*([^\n]*)", re.I)
 ###   (example course SU PH03G0)
 arabicListExp = re.compile("\n[0-9][0-9]*\s*[).]\s*([^\n]*)", re.I)
 
-arabicListExp2 = re.compile("[0-9][0-9]*\s*[).]\s*(.*?)\s*\\(?[0-9]*[0-9][.)]", re.I)
+arabicListExp2 = re.compile("[0-9][0-9]*\s*[).]\s*(....*?)\s*\\(?[0-9]*[0-9][.)]", re.I)
 
 ### Some courses enumerate goals with (a), (b), or (1), (2), etc. 
 ###    "Kursen syftar till (a) att öka deltagarnas förståelse ... ; (b) att ge de färdigheter som behövs för tillämpad dataanalys ... ; och (c) att ge träning i ... "
 ###   (example course SU PSMT15)
 parListExp = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)", re.I)
-parListExp2 = re.compile("\s[0-9a-zA-Z]\\)\s*([^\\)]*)", re.I)
+parListExp2 = re.compile("\s[0-9a-zA-Z]\\)\s*([^\\)][^\\)]*)", re.I)
 
 ### Some courses enumerate goals with X
 ###    "... Xvisa fördjupad kunskap om och förståelse för
@@ -318,7 +320,7 @@ parListExp2 = re.compile("\s[0-9a-zA-Z]\\)\s*([^\\)]*)", re.I)
 ###    kunskap om och förståelse för skadeståndsrättens struktur
 ###    och systematik samt Xvisa fördjupad kunskap ..."
 ###   (example course SU JU369A)
-xListExp = re.compile("\sX\s*(.*)\sX*", re.I)
+xListExp = re.compile("\sX\s*(..*)\sX*", re.I)
 
 ### Some courses specify goals with lines like "ska ... kunna ..."
 ###   "Den studerande skall efter genomgången kurs kunna
@@ -329,12 +331,12 @@ xListExp = re.compile("\sX\s*(.*)\sX*", re.I)
 ###   konventionen och en förmåga att relatera iakttagelserna till
 ###   en vidare samhällelig och kulturell kontext."
 ###  (example course SU LV1011)
-skaKunnaExp = re.compile("[Kk]unna(.*?)[\n]", re.I)
+skaKunnaExp = re.compile("[Kk]unna(..*?)[\n]", re.I)
 
 ### Some courses write goals as "Efter kursen kan ... " (less common than "ska kunna")
 ###   "Studenten kan tillämpa grundläggande arbetsmarknadsekonomiska begrepp ..."
 ###   (example course SU ATF012)
-kanExp = re.compile("\skan\s(.*\s.*?)[.]", re.I)
+kanExp = re.compile("\skan\s(..*\s..*?)[.]", re.I)
 
 ### Goals can be written as "studenten ska vara förtrogen med" or
 ### "studenten ska ha förmåga att"
@@ -378,6 +380,8 @@ tillfalleExp = re.compile("tillfälle\s*att\s*([^•*·–….]*)\s*[•*·–�
 traningExp = re.compile("träning\s*i\s*att\s*([^.]*)\s*[.]", re.I)
 
 ## maletExp = re.compile("målet.*är\s*att\s*([^.]*)\s*[.]", re.I) ### Skip this type of goal? Not well written.
+
+parHeadingsExp = re.compile("\\([A-ZÅÄÖ]\w*:?\s*([0-9][0-9]*,?\s*(och)*(;\sEPA)*\s*)*\s*[0-9][0-9]*\s*\\)")
 
 ############################################################
 ### Expressions for removing motivation (not goals) text ###
@@ -424,9 +428,24 @@ def extractGoals(c):
     #####################################################
     sv = sv.replace("\n -", "\n–").replace("\n-", "\n–").replace("\n−", "\n–").replace(u"\uF095", "–")
     sv = sv.replace("\t", " ")
+
+
+    sv = parHeadingsExp.sub(" ", sv) # remove things like "(Lärande mål 3 och 4)" or "(Modul 5, 6, och 7)"
+    
+    
+    ##############################
+    ### Fix some weird codings ###
+    ##############################
+    sv = sv.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ")
+    sv = sv.replace("&eacute;", "é")
+    sv = sv.strip()
+    if len(sv) and sv[0] == '"':
+        sv = sv[1:]
+        if sv[-1] == '"':
+            sv = sv[:-1]
     
     iloList = {}
-
+   
     ###################################################################
     ### Remove motivation for having these goals from the goal text ###
     ###################################################################
@@ -551,6 +570,8 @@ def extractGoals(c):
             tmp = l
             if tmp[-2:] == "hp":
                 pass # skip lines like "1. Tysk lingvistik, 6 hp" (sub-parts of a course)
+            elif tmp.find("Moment ") >= 0 or tmp.find("Modul") >= 0:
+                pass # skipe lines like "Moment 1. ..."
             elif len(l):
                 iloList[tmp] = 1
                 log("arabicListExp", tmp)
@@ -770,9 +791,14 @@ def extractGoals(c):
         
         for l in ls: # remove duplicates
             if len(l):
-                iloList[l] = 1
-                log("kunnaCapExp", l)
-                found = 1
+                if l[-2:] == "hp":
+                    pass
+                elif l.find("Moment ") >= 0 or l.find("Modul") >= 0:
+                    pass # skipe lines like "Moment 1. ..."
+                else:
+                    iloList[l] = 1
+                    log("kunnaCapExp", l)
+                    found = 1
             
     m = kunnaHypExp.search(sv)
     if m:
