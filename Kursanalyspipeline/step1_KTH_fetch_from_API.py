@@ -20,7 +20,7 @@ else:
     defaultSemester += ":2"
 timeSpan = defaultSemester
 
-courseCode = "all"
+CCs = {}
 
 def nextSemester(sem):
     y, t = sem.split(":")
@@ -44,7 +44,7 @@ def getRounds(sem):
             if (cr.tag == "courseRound"):
                 atts = cr.attrib
                 if(atts and ("courseCode" in atts) and ("roundId" in atts)):
-                    if (haveCCall or courseCode == atts["courseCode"]):
+                    if (haveCCall or atts["courseCode"] in CCs):
                         result.append([atts["courseCode"], sem, atts["roundId"]])
                 else:
                     log("WARNING: Courseround does not have all needed fields?")
@@ -234,11 +234,11 @@ def getOneCourse(sem, cc, roundId):
     if level == "":
         pass # skip this course ??
 
-    if "en" in plan["goals"] and plan["goals"]["en"]:
+    if "goals" in plan and "en" in plan["goals"] and plan["goals"]["en"]:
         iloen = plan["goals"]["en"]
     else:
         iloen = ""
-    if "sv" in plan["goals"] and plan["goals"]["sv"]:
+    if "goals" in plan and "sv" in plan["goals"] and plan["goals"]["sv"]:
         ilosv = plan["goals"]["sv"]
     else:
         ilosv = ""
@@ -310,9 +310,12 @@ for i in range(1, len(sys.argv)):
         haveCCall = 1
     elif (sys.argv[i] == "-cc" and i + 1 < len(sys.argv)):
         haveCC = 1
-        courseCode = sys.argv[i+1]
-        # if (len(courseCode) != 6):
-        #     print("WARNING:' " + courseCode + "' does not seem to be a correctly formatted course code.")
+        CCs[sys.argv[i+1]] = 1
+    elif (sys.argv[i] == "-ccs" and i + 1 < len(sys.argv)):
+        haveCC = 1
+        courseCodes = sys.argv[i+1].split()
+        for c in courseCodes:
+            CCs[c] = 1
     elif (sys.argv[i] == "-ct" and i + 1 < len(sys.argv)):
         haveTime = 1
         haveFullYear = 0
@@ -349,20 +352,21 @@ else:
 if (not haveCC and not haveCCall) or (haveCC and haveCCall):
     print ("\nFetch course information from the KTH API, print result as JSON to stdout\n")
     print ("usage options: [-a] [-cc <CODE>] [-ct <SEMESTER>] [-cacheFile <FILE_NAME>] [-noCache] [-delay <SECONDS>] [-retry <MINUTES>] [-log]")
-    print ("Flags: -a                      Classify all courses.")
-    print ("       -cc <CODE>              Course code (usually six alphanumeric characters).")
-    print ("       -ct <SEMESTER>          Course semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester + ".")
-    print ("       -cy <SEMESTER>          Course year/semester in the format YYYY:T (e.g. 2016:2). Default is " + defaultSemester + ".")
+    print ("Flags: -a                              Classify all courses.")
+    print ("       -cc <CODE>                      Course code (usually six alphanumeric characters).")
+    print ("       -ccs \"<CODE1> <CODE2> ....\"   Course codes (six alphanumeric characters).");
+    print ("       -ct <SEMESTER>                  Course semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester + ".")
+    print ("       -cy <SEMESTER>                  Course year/semester in the format YYYY:T (e.g. 2016:2). Default is " + defaultSemester + ".")
 #    print ("       -o <FILE_NAME>  Output file name (default is \"output.csv\").")
 #    print ("       -d <level>      Set debug level, for example 10, 20, 100.")
-    print ("       -cacheFile <FILENAME>   Use data in file <FILENAME>, only fetch data not alreadt in the file. Adds new data to the")
-    print ("                                   same file. [-cf] can be used as short form. (If -cacheFile is not specified, ")
-    print ("                                   " + sys.argv[0] + ".cache will be used.")
-    print ("       -noCache                Do not save downloaded data for future use, only output result. [-nc] can be used as a short form.")
-    print ("       -delay <SECONDS>        How many seconds to wait between each call to the server. If not specified, " + str(delaySeconds) + " seconds.")
-    print ("       -retry <MINUTES>        How many minutes to wait before trying again when there are problems contacting the server. If not specified, " + str(delayMinutes) + " minutes.")
-    print ("       -log                    Log debug information to " + sys.argv[0] + ".log.")    
-    print ("\nNote: EITHER -a OR -cc must be used (not both).\n")
+    print ("       -cacheFile <FILENAME>           Use data in file <FILENAME>, only fetch data not alreadt in the file. Adds new data to the")
+    print ("                                       same file. [-cf] can be used as short form. (If -cacheFile is not specified, ")
+    print ("                                       " + sys.argv[0] + ".cache will be used.")
+    print ("       -noCache                        Do not save downloaded data for future use, only output result. [-nc] can be used as a short form.")
+    print ("       -delay <SECONDS>                How many seconds to wait between each call to the server. If not specified, " + str(delaySeconds) + " seconds.")
+    print ("       -retry <MINUTES>                How many minutes to wait before trying again when there are problems contacting the server. If not specified, " + str(delayMinutes) + " minutes.")
+    print ("       -log                            Log debug information to " + sys.argv[0] + ".log.")    
+    print ("\nNote: One of -a OR -cc OR -ccs must be used.\n")
     sys.exit(0)
 
 

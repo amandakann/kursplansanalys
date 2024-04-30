@@ -16,13 +16,13 @@ else:
     defaultSemester += ":2"
 timeSpan = defaultSemester
 
-courseCode = ""
 outputFile = ""
 timeSpanExp = re.compile("[0-9][0-9][0-9][0-9]:[0-9]")
 
 ####################################
 #### Get command line arguments ####
 ####################################
+CCs = {}
 haveCC = 0
 haveCCall = 0
 haveTime = 0
@@ -33,9 +33,12 @@ for i in range(2, len(sys.argv)):
         haveCCall = 1
     elif (sys.argv[i] == "-cc" and i + 1 < len(sys.argv)):
         haveCC = 1
-        courseCode = sys.argv[i+1]
-        # if (len(courseCode) != 6):
-        #     print ("WARNING:", courseCode, "does not seem to be a correctly formatted course code.")
+        CCs[sys.argv[i+1]] = 1
+    elif (sys.argv[i] == "-ccs" and i + 1 < len(sys.argv)):
+        haveCC = 1
+        courseCodes = sys.argv[i+1].split()
+        for c in courseCodes:
+            CCs[c] = 1
     elif (sys.argv[i] == "-ct" and i + 1 < len(sys.argv)):
         haveTime = 1
         haveFullYear = 0
@@ -55,12 +58,13 @@ for i in range(2, len(sys.argv)):
 if (not haveCC and not haveCCall) or (haveCC and haveCCall):
     print ("\nParse Excel (CSV) file and output course information as JSON\n")
     print ("usage options: <INPUT_FILE_NAME> [-cc <CODE>] [-ct <SEMESTER>]")
-    print ("Flags: -a              Classify all courses.");
-    print ("       -cc <CODE>      Course code (six alphanumeric characters).");
-    print ("       -ct <SEMESTER>  Course semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester);
-    print ("       -cy <SEMESTER>  Course year/semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester);
+    print ("Flags: -a                              Classify all courses.");
+    print ("       -cc <CODE>                      Course code (six alphanumeric characters).");
+    print ("       -ccs \"<CODE1> <CODE2> ....\"   Course code (six alphanumeric characters).");
+    print ("       -ct <SEMESTER>                  Course semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester);
+    print ("       -cy <SEMESTER>                  Course year/semester in the format YYYY:T (e.g. 2016:1). Default is " + defaultSemester);
 #    print ("       -o <FILE_NAME>  Output file name (default is \"output.csv\").");
-    print ("\nNote: EITHER -a OR -cc must be used (not both).\n");
+    print ("\nNote: One of -a OR -cc OR -ccs must be used.\n");
     sys.exit(0)
 
 
@@ -134,7 +138,7 @@ for lineno in range(1, len(lines)):
     cc = fields[4].replace('"', '') # new version has quotes, old does not
 
     # if we are to use only one CC, skip the other courses
-    if haveCC and cc != courseCode:
+    if haveCC and cc not in CCs:
         continue
 
     # if the course is not from the correct time span, skip
