@@ -12,6 +12,23 @@ if len(sys.argv) < 2 or sys.argv[1][0] == "-" or sys.argv[1].lower() == "help":
     print ("    ", sys.argv[0], "<Bloom verbs filename>\n")
     sys.exit(0)
 
+###############
+### Logging ###
+###############
+logging = 0
+for i in range(len(sys.argv)):
+    if sys.argv[i] == "-log":
+        logging = 1
+if logging:
+    logf = open(sys.argv[0] + ".log", "w")
+def log(s):
+    if not logging:
+        return
+
+    logf.write(s)
+    logf.write("\n")
+    logf.flush()
+
 ############################
 ### read JSON from stdin ###
 ############################
@@ -70,7 +87,18 @@ def bloomVerbsInSentence(s):
             
         if len(tag) >= 2 and tag[:2] == "vb":
             lemma = s[i]["l"]
-            
+
+            # sometimes there are digits stuck to words, try to remove them
+            if not lemma in bloomLex and lemma[0].isdigit():
+                skip = 0
+                while lemma[skip].isdigit() and skip < len(lemma):
+                    skip += 1
+                if skip < len(lemma):
+                    lemma = lemma[skip:]
+                log("Changed '" + s[i]["l"] + "' to '" + lemma + "'")
+
+                s[i]["l"] = lemma
+                
             if lemma in bloomLex:
                 exps = bloomLex[lemma]
                 longestMatch = -1
@@ -113,7 +141,18 @@ def bloomVerbsInSentence(s):
                         # if level > highestLevel:
                         #     highestLevel = level
                 if longestIdx >= 0:
-                    bloomMatches.append( exps[longestIdx] )
+                    if tag[-4:] == ".sfo":
+                        tmp = ""
+                        for wtl in s:
+                            tmp += wtl["w"]
+                            if wtl["t"][:2] == "vb" and wtl["t"][-4:] == ".sfo":
+                                tmp += " (" +  wtl["t"].upper() + ")"
+                            tmp += " "
+                        log("matched '" + str(exps[longestIdx]) + "' in '" + tmp + "'\n")
+                    else:
+                        bloomMatches.append( exps[longestIdx] )
+
+
     return bloomMatches
 
 ##################################################################################
