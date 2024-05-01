@@ -232,12 +232,14 @@ if checks["bloom"]:
 ############################
 data = {}
 
-text = ""
-for line in sys.stdin:
-    text += line
+if not sys.stdin.isatty():
+    text = ""
+    for line in sys.stdin:
+        text += line
 
-data = json.loads(text)
-
+    data = json.loads(text)
+else:
+    data = {"Course-list":[]}    
 #######################
 ### Read more data. ###
 #######################
