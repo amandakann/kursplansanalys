@@ -35,6 +35,10 @@ for line in sys.stdin:
 
 try:
     data = json.loads(text)
+
+    if isinstance(data, list):
+        data = {"Course-list":data}
+
 except Exception as e:
     print("No input data or non-JSON data?")
     print(str(e))
