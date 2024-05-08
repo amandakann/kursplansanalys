@@ -473,118 +473,121 @@ def printBloomStats():
 
     for tmp in [["University", bloomStats["uni"]], ["SCB", bloomStats["scb"]], ["CourseLevel", bloomStats["level"]], ["CourseType", bloomStats["type"]]]:
         label = tmp[0]
-        lex = tmp[1]
         if (label == "University") or (label == "SCB" and prints["perSCB"]) or (label == "CourseLevel" and prints["perLevel"]) or (label == "CourseType" and prints["perType"]):
-            print("-"*10, label, "-"*10)
+            lex = tmp[1]
 
-            printBloomHelper("max", "max Bloom", lex, 6)
-
-            printBloomHelper("min", "min Bloom", lex, 6)
-
-            ls = []
-            rowLabel = "mean Bloom"
-            longest = len(rowLabel)
-            for row in lex:
-                ls.append(row)
-                if len(row) > longest:
-                    longest = len(row)
-            ls.sort()
-
-            s = "{0: >" + str(longest) + "}: "
-            s = s.format(rowLabel)
-            print (s)
+            if len(lex.keys()) > 1:
             
-            for row in ls:
-                s = "{0: >" + str(longest) + "}: "
-                s = s.format(row)
+                print("-"*10, label, "-"*10)
 
-                if "mean" in lex[row]:
-                    m = 0
-                    n = len(lex[row]["mean"])
-                    for v in lex[row]["mean"]:
-                        m += v
-                    if n > 0:
-                        m = m / n
-                    s += "{0: .2} ".format(m)
-                else:
-                    s += "{0: >5} ".format(0)
-                print (s)
-            print()
+                printBloomHelper("max", "max Bloom", lex, 6)
 
-            print("-"*10, "Most common verbs", "-"*10)
-            for uni in lex:
+                printBloomHelper("min", "min Bloom", lex, 6)
+
                 ls = []
-                for v in lex[uni]["verbCounts"]:
-                    ls.append([lex[uni]["verbCounts"][v], v])
-                ls.sort(reverse=True)
-                print ("--->", uni)
-                for vi in range(len(ls)):
-                    print ("{0: >5}: {1:}".format(ls[vi][0], ls[vi][1]))
-                    if vi >= 10:
-                        break
-            print()
+                rowLabel = "mean Bloom"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
 
-            
-            printBloomHelper("common", "most common Bloom level", lex, 6)
-
-            ls = []
-            rowLabel = "Verbs per Bloom level"
-            longest = len(rowLabel)
-            for row in lex:
-                ls.append(row)
-                if len(row) > longest:
-                    longest = len(row)
-            ls.sort()
-
-            s = "{0: >" + str(longest) + "}: "
-            s = s.format(rowLabel)
-            for v in range(6):
-                s += "{0: >6} ".format(v)
-            s += "{0: >9}".format("Total")
-            print ("-"*len(s))
-            print (s)
-            print ("-"*len(s))
-            
-            tots = 0
-            for row in ls:
-                tot = 0
-                for v in range(6):
-                    if "val" in lex[row] and v in lex[row]["val"]:
-                        tot += lex[row]["val"][v]
-                tots += tot
-                
-            for row in ls:
-                tot = 0
-                for v in range(6):
-                    if "val" in lex[row] and v in lex[row]["val"]:
-                        tot += lex[row]["val"][v]
-                
                 s = "{0: >" + str(longest) + "}: "
-                s = s.format(row)
-                s2 = " "*len(s)
-
-                for v in range(6):
-                    if "val" in lex[row] and v in lex[row]["val"]:
-                        c = lex[row]["val"][v]
-                        if tot > 0:
-                            proc = c / float(tot)
-                        else:
-                            proc = 0
-                            
-                        s += "{0: >6} ".format(c)
-                        s2 += "{0: >6} ".format("{0: 2.1%}".format(proc))
-                    else:
-                        s += "{0: >6} ".format(0)
-                        s2 += "{0: >6} ".format("{0: 2.1%}".format(0))
-                s += "{0: >9}".format(tot)
+                s = s.format(rowLabel)
                 print (s)
-                if tots > 0:
-                    s2 += "{: >9}".format("{0: 2.1%}".format(tot/float(tots)))
-                print (s2)
-                print ()
-            print()
 
-            printBloomHelper("nVerbs", "#verbs", lex, VERBS_BEFORE_MORE_THAN+1)
+                for row in ls:
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+
+                    if "mean" in lex[row]:
+                        m = 0
+                        n = len(lex[row]["mean"])
+                        for v in lex[row]["mean"]:
+                            m += v
+                        if n > 0:
+                            m = m / n
+                        s += "{0: .2} ".format(m)
+                    else:
+                        s += "{0: >5} ".format(0)
+                    print (s)
+                print()
+
+                print("-"*10, "Most common verbs", "-"*10)
+                for uni in lex:
+                    ls = []
+                    for v in lex[uni]["verbCounts"]:
+                        ls.append([lex[uni]["verbCounts"][v], v])
+                    ls.sort(reverse=True)
+                    print ("--->", uni)
+                    for vi in range(len(ls)):
+                        print ("{0: >5}: {1:}".format(ls[vi][0], ls[vi][1]))
+                        if vi >= 10:
+                            break
+                print()
+
+
+                printBloomHelper("common", "most common Bloom level", lex, 6)
+
+                ls = []
+                rowLabel = "Verbs per Bloom level"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
+
+                s = "{0: >" + str(longest) + "}: "
+                s = s.format(rowLabel)
+                for v in range(6):
+                    s += "{0: >6} ".format(v)
+                s += "{0: >9}".format("Total")
+                print ("-"*len(s))
+                print (s)
+                print ("-"*len(s))
+
+                tots = 0
+                for row in ls:
+                    tot = 0
+                    for v in range(6):
+                        if "val" in lex[row] and v in lex[row]["val"]:
+                            tot += lex[row]["val"][v]
+                    tots += tot
+
+                for row in ls:
+                    tot = 0
+                    for v in range(6):
+                        if "val" in lex[row] and v in lex[row]["val"]:
+                            tot += lex[row]["val"][v]
+
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+                    s2 = " "*len(s)
+
+                    for v in range(6):
+                        if "val" in lex[row] and v in lex[row]["val"]:
+                            c = lex[row]["val"][v]
+                            if tot > 0:
+                                proc = c / float(tot)
+                            else:
+                                proc = 0
+
+                            s += "{0: >6} ".format(c)
+                            s2 += "{0: >6} ".format("{0: 2.1%}".format(proc))
+                        else:
+                            s += "{0: >6} ".format(0)
+                            s2 += "{0: >6} ".format("{0: 2.1%}".format(0))
+                    s += "{0: >9}".format(tot)
+                    print (s)
+                    if tots > 0:
+                        s2 += "{: >9}".format("{0: 2.1%}".format(tot/float(tots)))
+                    print (s2)
+                    print ()
+                print()
+
+                printBloomHelper("nVerbs", "#verbs", lex, VERBS_BEFORE_MORE_THAN+1)
 
 def printBloomHelper(f, label, lex, n):
     ls = []
@@ -832,7 +835,8 @@ for cl in data:
         thisType = "No CourseType"
         if "CourseType" in c:
             thisType = c["CourseType"]
-
+        thisType = thisType.lower()
+            
         level = "No level info"
         if "CourseLevel-ID" in c:
             level = c["CourseLevel-ID"]
@@ -921,7 +925,7 @@ for cl in data:
 
         if checks["level"]:
             if not "CourseLevel-ID" in c:
-                if not "CourseType" in c or c["CourseType"] != "förberedande utbildning":
+                if not "CourseType" in c or c["CourseType"].lower() != "förberedande utbildning":
                     cPrint(c["CourseCode"] + " has no CourseLevel-ID")
                     printed = 1
                     add("Missing course level", c["CourseCode"])
@@ -930,7 +934,7 @@ for cl in data:
                 printed = 1
                 add("Uninformative course level", c["CourseCode"])
 
-            if not checks["type"] and "CourseLevel-ID" in c and "CourseType" in c and c["CourseType"] == "förberedande utbildning" and c["CourseLevel-ID"] != "":
+            if not checks["type"] and "CourseLevel-ID" in c and "CourseType" in c and c["CourseType"].lower() == "förberedande utbildning" and c["CourseLevel-ID"] != "":
                 cPrint(c["CourseCode"] + " has non-empty CourseLevel-ID when it should be empty: " + c["CourseType"] + " " + c["CourseLevel-ID"])
                 printed = 1
                 add("Course level not empty for 'förberedande kurs'", c["CourseCode"])
@@ -951,7 +955,7 @@ for cl in data:
                 add("Missing credits", c["CourseCode"])
             else:
                 try:
-                    tmp = c["ECTS-credits"].replace(",", ".")
+                    tmp = str(c["ECTS-credits"]).replace(",", ".")
                     tmp = str(tmp)
                 except:
                     cPrint(c["CourseCode"] + ", ECTS-credits value invalid? " + c["ECTS-credits"])
@@ -1005,11 +1009,11 @@ for cl in data:
                 cPrint(c["CourseCode"] + " has empty CourseType field")
                 printed = 1
                 add("Missing course type", c["CourseCode"])
-            elif c["CourseType"] not in types:
-                cPrint(c["CourseCode"] + " has an unknown CourseType: " + c["CourseType"])
+            elif c["CourseType"] not in types and c["CourseType"].lower() not in types:
+                cPrint(c["CourseCode"] + " has an unknown CourseType: '" + c["CourseType"] + "'")
                 printed = 1
                 add("Unrecognized course type", c["CourseCode"])
-            if "CourseType" in c and c["CourseType"] == "förberedande utbildning":
+            if "CourseType" in c and c["CourseType"].lower() == "förberedande utbildning":
                 if "CourseLevel-ID" in c and c["CourseLevel-ID"] != "":
                     cPrint(c["CourseCode"] + " is 'förberedande utbildning' but has CourseLevel-ID: " + c["CourseLevel-ID"])
                     printed = 1
