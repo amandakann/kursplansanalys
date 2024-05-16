@@ -91,7 +91,7 @@ The scripts can output a short description of available options:
   Step 5 can read data from **more than one source**, for example if you
   want to compare data from different universities. You can specify
   input files with `-inp "<filename 1> <filename 2> ... "`. The script
-  will also read data from stdin if there seems to be data there.
+  will also read data from stdin if there seem to be data there.
 
 Some steps take a LOT of time. Downloading a lot of course information
 from the KTH API in *Step 1* can take a long time. *Step 3* can take a
