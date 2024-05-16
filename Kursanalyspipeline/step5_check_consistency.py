@@ -22,9 +22,16 @@ unknown = 0
 
 moreInputs = []
 
+defaultSv = "data/bloom_revised_sv.txt"
+defaultEn = "data/bloom_revised_en.txt"
+
+bloomFile = defaultSv
+bloomFileEn = defaultEn
 for i in range(1, len(sys.argv)):
     if sys.argv[i] == "-b" and i+1 < len(sys.argv):
         bloomFile = sys.argv[i+1]
+    elif sys.argv[i] == "-be" and i+1 < len(sys.argv):
+        bloomFileEn = sys.argv[i+1]
     elif sys.argv[i] == "-c" and i+1 < len(sys.argv):
         configFile = sys.argv[i+1]
     elif sys.argv[i] == "-inp" and i+1 < len(sys.argv):
@@ -36,11 +43,13 @@ for i in range(1, len(sys.argv)):
 if unknown:
     print ("\nCheck courses for problems or ambiguities, collect stats. Reads JSON from stdin.")
     print ("usage options:")
-    print ("     -b <filename>                 File with Bloom verb data")
+    print ("     -b <filename>                 File with Bloom verb data for Swedish")
+    print ("     -be <filename>                File with Bloom verb data for English")
     print ("     -c <filename>                 Config file")
-    print ("     -inp \"<filename1> ...    \"  More input files")
+    print ("     -inp \"<filename1> ... \"       More input files")
     print ()
     print ("Check the config file (\"" + configFile + "\") to see possible options.")
+    print ("If no Bloom files are specified, \"" + defaultSv + "\" and \"" + defaultEn + "\" will be used.")
     print ()
     sys.exit(0)
 
@@ -192,6 +201,12 @@ if checks["bloom"]:
         except:
             print("WARNING: Could not read Bloom verb data (" + bloomFile + "), turning off Bloom verb checking.")
             checks["bloom"] = 0
+        try:
+            f = open(bloomFileEn)
+            f.read()
+            f.close()
+        except:
+            print("WARNING: Could not read Bloom verb data (" + bloomFileEn + "), turning off Bloom verb checking.")
 
 print ()
 
@@ -200,7 +215,9 @@ print ()
 ###########################################################################
 if checks["bloom"]:
     ambig = {}
+    ambigEn = {}
     bloomLex = {}
+    bloomLexEn = {}
     
     try:
         for line in open(bloomFile).readlines():
@@ -225,7 +242,37 @@ if checks["bloom"]:
     except:
         bloomFile = ""
     for v in ambig:
-        ambig[v] = [bloomLex[v]] + ambig[v] 
+        if v in bloomLex:
+            ambig[v] = [bloomLex[v]] + ambig[v]
+        else:
+            print (bloomFile + " has verb '" + v + "' with ambiguous Bloom level but no default level.\n")
+    try:
+        for line in open(bloomFileEn).readlines():
+            if line[0] == "#":
+                continue
+            if line[0:3] == "---": # new Bloom level
+                m = re.findall("---\s*\w*\s*([0-9][0-9]*)\s*---", line)
+                if len(m) == 1:
+                    bloomLevel = int(m[0])
+
+            if line[0] == "(": # ambiguous verb, not the default level of this verb
+                v = line.replace("(", "").replace(")", "").strip()
+                if v in ambigEn:
+                    ambigEn[v].append(bloomLevel)
+                else:
+                    ambigEn[v] = [bloomLevel]
+                    
+            if line[0].islower() or line[0].isupper():
+                exp = line.strip()
+
+                bloomLexEn[exp] = bloomLevel
+    except:
+        bloomFileEn = ""
+    for v in ambigEn:
+        if v in bloomLexEn:
+            ambigEn[v] = [bloomLexEn[v]] + ambigEn[v]
+        else:
+            print (bloomFileEn + " has verb '" + v + "' with ambiguous Bloom level but no default level.\n")
 
 ############################
 ### read JSON from stdin ###
@@ -237,7 +284,10 @@ if not sys.stdin.isatty():
     for line in sys.stdin:
         text += line
 
-    data = json.loads(text)
+    try:
+            data = json.loads(text)
+    except:
+        data = {}
 else:
     data = {"Course-list":[]}    
 #######################
@@ -376,6 +426,9 @@ def addBloomList(ls, scb, level, ctype, uni):
                 lex["nVerbs"][0] += 1
 
 def printBloomStats():
+    if not "all" in bloomStats or not "max" in bloomStats["all"]:
+        return
+    
     print ("-"*15, "Bloom classifications", "-"*15)
 
     print ("-"*10, "Verbs per Bloom level", "-"*10)
@@ -840,9 +893,11 @@ for cl in data:
         level = "No level info"
         if "CourseLevel-ID" in c:
             level = c["CourseLevel-ID"]
-        if level == "\\N":
+        if level == "\\N": # unify levels with no info as ""
             level = ""
-
+        if level == "-":
+            level = ""
+            
         scb = "No SCB info"
         if "SCB-ID" in c:
             scb = c["SCB-ID"]
@@ -869,8 +924,8 @@ for cl in data:
         addLevel(level)
         addSCB(scb)
 
-        if "Bloom-list" in c:
-            addBloomList(c["Bloom-list"], scb, level, thisType, c["University"])
+        if "Bloom-list-sv" in c:
+            addBloomList(c["Bloom-list-sv"], scb, level, thisType, c["University"])
         
         if checks["ilo"]:
             if not "ILO-sv" in c or c["ILO-sv"].strip() == "":
@@ -887,14 +942,14 @@ for cl in data:
                 printed = 1
                 add("No ILO list", c["CourseCode"])
                 
-            elif not "Bloom-list" in c or len(c["Bloom-list"]) < 1:
+            elif not "Bloom-list-sv" in c or len(c["Bloom-list-sv"]) < 1:
                 cPrint(c["CourseCode"] + " has empty Bloom-list: " + str(c["ILO-list-sv"]))
                 printed = 1
                 add("No Bloom-list", c["CourseCode"])
 
             else:
                 # Check if there are ridiculously many verbs
-                ls = c["Bloom-list"]
+                ls = c["Bloom-list-sv"]
                 flat = []
                 for goal in ls:
                     for verb in goal:
@@ -902,7 +957,7 @@ for cl in data:
                 n = len(flat)
                 if n > VERBS_BEFORE_WARNING:
                     tmp = ""
-                    for lsb in c["Bloom-list"]:
+                    for lsb in c["Bloom-list-sv"]:
                         for b in lsb:
                             tmp += b[1] + "(" + str(b[2]) + ") "
                     cPrint(c["CourseCode"] + " has very long Bloom-list (" + str(n) + "):\n" + tmp + "\n from \n'" + c["ILO-sv"] + "'")
@@ -923,6 +978,32 @@ for cl in data:
             printed = 1
             add("Missing English ILO", c["CourseCode"])
 
+        if checks["en"] and ("ILO-en" in c and c["ILO-en"].strip() != "") and (not "Bloom-list-en" in c or len(c["Bloom-list-en"]) <= 0):
+            cPrint(c["CourseCode"] + " has no Bloom-list-en")
+            printed = 1
+            add("No English Bloom-list", c["CourseCode"])
+
+        if checks["en"] and ("ILO-en" in c and c["ILO-en"].strip() != "") and ("Bloom-list-en" in c and len(c["Bloom-list-en"]) > 0):
+            ls = c["Bloom-list-en"]
+            flat = []
+            for goal in ls:
+                for verb in goal:
+                    flat.append(verb[2])
+            n = len(flat)
+            
+            if n > VERBS_BEFORE_WARNING:
+                tmp = ""
+                for lsb in c["Bloom-list-en"]:
+                    for b in lsb:
+                        tmp += b[1] + "(" + str(b[2]) + ") "
+                cPrint(c["CourseCode"] + " has very long English Bloom-list (" + str(n) + "):\n" + tmp + "\n from \n'" + c["ILO-sv"] + "'")
+                printed = 1
+                add("Very many English Bloom verbs in list", c["CourseCode"])
+            if n == 0:
+                cPrint(c["CourseCode"] + " has 0 English Bloom verbs:\n" + str(c["ILO-list-en"]) + "\n\n" + str(c["ILO-en"]))
+                printed = 1
+                add("0 English Bloom verbs", c["CourseCode"])
+            
         if checks["level"]:
             if not "CourseLevel-ID" in c:
                 if not "CourseType" in c or c["CourseType"].lower() != "förberedande utbildning":
@@ -966,8 +1047,8 @@ for cl in data:
             if "ILO-list-sv-tagged" in c:
                 ls = c["ILO-list-sv-tagged"]
                 blooms = []
-                if "Bloom-list" in c:
-                    blooms = c["Bloom-list"]
+                if "Bloom-list-sv" in c:
+                    blooms = c["Bloom-list-sv"]
                 for si in range(len(ls)):
                     s = ls[si]
 
@@ -1014,17 +1095,17 @@ for cl in data:
                 printed = 1
                 add("Unrecognized course type", c["CourseCode"])
             if "CourseType" in c and c["CourseType"].lower() == "förberedande utbildning":
-                if "CourseLevel-ID" in c and c["CourseLevel-ID"] != "":
+                if "CourseLevel-ID" in c and c["CourseLevel-ID"] != "" and (c["CourseLevel-ID"][0] == "A" or c["CourseLevel-ID"][0] == "G"):
                     cPrint(c["CourseCode"] + " is 'förberedande utbildning' but has CourseLevel-ID: " + c["CourseLevel-ID"])
                     printed = 1
                     add("Course level not empty for 'förberedande kurs'", c["CourseCode"])
         if checks["bloom"]:
-            if not checks["ilo"] and (not "Bloom-list" in c or len(c["Bloom-list"]) < 1):
+            if not checks["ilo"] and (not "Bloom-list-sv" in c or len(c["Bloom-list-sv"]) < 1):
                 cPrint(c["CourseCode"] + " has empty Bloom-list " + str(c["ILO-list-sv"]))
                 printed = 1
                 add("Empty Bloom-list", c["CourseCode"])
-            if "Bloom-list" in c and len(c["Bloom-list"]) >= 1:
-                bl = c["Bloom-list"]
+            if "Bloom-list-sv" in c and len(c["Bloom-list-sv"]) >= 1:
+                bl = c["Bloom-list-sv"]
                 for goal in bl:
                     thisGoal = ""
                     mx = -1
