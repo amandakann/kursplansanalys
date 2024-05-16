@@ -4,6 +4,8 @@ import re
 import string
 import sys
 
+from timeit import default_timer as timer
+
 ##############################
 ### check system arguments ###
 ##############################
@@ -35,10 +37,10 @@ for line in sys.stdin:
 
 try:
     data = json.loads(text)
-
+    
     if isinstance(data, list):
         data = {"Course-list":data}
-
+        
 except Exception as e:
     print("No input data or non-JSON data?")
     print(str(e))
@@ -55,6 +57,16 @@ def cleanStr(s):
     res = re.sub("<\\s*br\\s*/*\\s*>", "\n", res, re.I)
     res = re.sub("[.][.][.]*", ".", res)
     res = re.sub("</?\\w*/?>", " ", res)
+    res = re.sub("<br\s*/>", " ", res)
+    res = re.sub("Kunskap och förståelse-?", "", res)
+    res = re.sub("Färdighet(er)? och förmåga-?", "", res)
+    res = re.sub("Värderingsförmåga och förhållningssätt-?", "", res)
+    res = res.replace("Efter genomgången kurs förväntas studenterna kunna", "")
+    res = res.replace("Efter avslutad kurs förväntas studenterna kunna", "")
+    res = res.strip()
+    if res[-7:] == ", kunna":
+        res = res[:-7]
+    res = re.sub("För godkänd kurs ska(([^ ]| [^ ]))*", "", res)
     res = re.sub("\s\s\s*", " ", res)
     res = re.sub("^–\s*", " ", res)
     res = res.strip()
@@ -65,16 +77,27 @@ def cleanStr(s):
     res = re.sub(" [ ]*", " ", res)
     if hpExp.match(res):
         res = ""
+    res = res.strip()
+    while len(res) and res[-1] == ",":
+        res = res[:-1]
+        res = res.strip()
+
     if len(res) < SHORTEST_GOAL:
         res = ""
+    
+    return res
+
+def simpleCleanStr(s):
+    res = s.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ")
     res = res.strip()
+    
     return res
 
 def cleanUp(c):
     # Fix weirdness that some KTH texts have
 
-    c["Prerequisites-sv"] = cleanStr(c["Prerequisites-sv"])
-    c["ILO-sv"] = cleanStr(c["ILO-sv"])
+    c["Prerequisites-sv"] = simpleCleanStr(c["Prerequisites-sv"])
+    c["ILO-sv"] = simpleCleanStr(c["ILO-sv"])
 
 ###############
 ### Logging ###
@@ -102,6 +125,7 @@ def log(s, S):
     logf.write(" ")
     logf.write(str(S))
     logf.write("\n")
+    logf.flush()
 
 #########################################################################
 ### See if 'Prerequisites' free text has information that can be used ###
@@ -168,6 +192,20 @@ for line in open("data/english_trigrams.txt").readlines():
 
 MIN_LEN_LANGUAGE = 30
 def identifyLanguage(text):
+
+    # fix some common problems with mixed Swedish/English because English text quotes Swedish course names or similar things.
+    low = text.lower()
+    engWords = ["equivalent", "courses", "enrolled", "admitted", "programmes", "programming skill", "completed", "corresponding", "phd student"]
+    sweWords = ["antagen till", "doktorand", "motsvarande", "matematik", "godkänd", "historia", "pedagogik", "ö"]
+    if len(low) < MIN_LEN_LANGUAGE:
+        for w in engWords:
+            if low.find(w) >= 0:
+                return "en"
+        for w in sweWords:
+            if low.find(w) >= 0:
+                return "sv"
+    
+    
     counts = {}
     words = text.lower().strip(string.punctuation).split()
 
@@ -214,7 +252,7 @@ def identifyLanguage(text):
         totEng += distEng
 
     if totSwe <= totEng:
-        return "sv"
+        return "sv"    
     return "en"
 
 #######################################
@@ -232,11 +270,6 @@ def checkPre(c):
     langSv = identifyLanguage(sv)
     langEn = identifyLanguage(en)
 
-    if langSv != "sv":
-        low = sv.lower()
-        if "historia" in low or "pedagogik" in low or "ö" in low: # common error in language classification
-            langSv = "sv"
-    
     if langSv != "sv" and len(sv):
         log("Prerequisites-sv not Swedish?", sv)
             
@@ -260,30 +293,53 @@ def checkPre(c):
 ### KTH courses often use HTML <li>-lists for goals
 ###  "<p>Efter avslutad kurs skall studenten kunna:</p><ul><li>förklara grundläggande koncept av ... </li><li>..."
 ### (example course KTH SG2226)
-htmlListExp = re.compile("<li>(.*?)(?:</?li>)", re.I)
+htmlListExpWrap = re.compile("(<[Pp]>)?[^<>]*kunna:?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
+htmlListExpWrap2 = re.compile("<.[Ll]>.*?</.[Ll]>", re.S)
+htmlListExp = re.compile("<[lL][Ii]>(.*?)(?:</?[Ll][Ii]>)", re.S)
+
+htmlListExpWrapEn = re.compile("(<[Pp]>)?[^<>]*((know\s*how)|(able))\s*to:?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
+
+htmlListExpWrap3 = re.compile("(<[Pp]>)?[^<>]*kunna\s*([^<>]{4,}):?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
+htmlListExpWrapEn3 = re.compile("(<[Pp]>)?[^<>]*((know\s*how)|(able))\s*to\s*([^<>]{4,}):?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
+
+
+htmlListExpIndicator = re.compile("<[lL][Ii]>")
 
 ### KTH courses can use HTML <p>-elements for goals
 ###   "<p>Efter genomförd kurs ska studenten kunna</p><p>• upprätta resurser för ... ,</p><p>\u2022 utföra spaning ..."
 ###   (example course KTH FEP3370)
-pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)", re.I)
+pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)", re.S)
+pListExpWrap = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?kunna:?\s*(</\s*p>)?(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>)+", re.S)
+pListExpWrapEn = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?((know\s*how)|(able))\s*to:?\s*(</\s*p>)?(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>)+", re.S)
+
 
 ### KTH courses can use HTML <BR> breaks to list goals
 ###   "Efter kursen ska du kunna:<br />• Beräkna hur att uppföra och driva olika processer inom hållbar vatten- och avloppsrening.<br />• Applicera kemiska och biologiska kunskaper ..."
 ###   (example course KTH AE2302)
-brListExp = re.compile("<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*(.*?)\s*(?:<)", re.I)
+brListExp = re.compile("<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*([^<]*)\s*", re.S)
+brListExpWrap = re.compile("[A-ZÅÄÖ][^<>]*?[kK]unna:?\s*(<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*([^<]*)\s*)+", re.S)
+brListExpWrap2 = re.compile("(<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*([^<]*)\s*)+", re.S)
+brListExpWrapEn = re.compile("[A-Z][^<>]*?((know\s*how)|(able))\s*to:?\s*(<?br\s*/?>\s*[-o•*·–]\s*[0-9]*[.]?\s*([^<]*)\s*)+", re.S)
+brListIndicator = re.compile("br\s*/?>")
+
+### Courses can list each goal on a separate line
+###   "Efter avslutad kurs ska den studerande ha  
+###    - förvärvat grundläggande kunskaper om Sara Lidmans författarskap.
+###    - studerat och analyserat ett representativt urval texter ur Sara Lidmans författarskap.
+###    - fått en första orientering om samt teoretiska och litteraturhistoriska redskap för att förstå den samtida norrländska litteraturen."
+###   (example course UMU 1LV033)
+newlineListExp = re.compile("\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)", re.I)
+newlineListExpWrap = re.compile("(\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)){2,}", re.I)
 
 ### Courses can use various dots/hyphens/stars as markers for goals
 ###   "Efter genomförd kurs ska du kunna * identifiera grundläggande begrepp, ... inom reinforcement learning * utveckla och systematiskt testa ... inom reinforcement learning * experimentellt ..."
 ###   (example course KTH FDD3359)
-dotListExp = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*([^•*·–…;\n]*)\s*", re.I)
+dotListExp = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*(([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})", re.S)
+dotListExpWrap = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–])){4,}(\s*.*?[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})+", re.S)
 
-### Courses can list each goal on a separate line
-###   "Efter att ha genomgått kursen förväntas studenten:
-###    • Förstå principerna för nationalräkenskapernas uppläggning och för beräkningar av BNP
-###    • Kunna tolka innebörden av makroekonomisk statistik
-###    ... "
-###   (example course SU EC1212)
-newlineListExp = re.compile("\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)", re.I)
+###    (example course UMU 2PS273)
+oListExp = re.compile("[.\s][oO]\s(.*?)\\.")
+oListExpWrap = re.compile("([.\s][oO]\s.*){3,}")
 
 ### Some courses list goals on one long line with " - " as a marker for each goal
 ###   "ska studenten kunna 1. Kunskap och förståelse - Redogöra
@@ -291,7 +347,9 @@ newlineListExp = re.compile("\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)", re
 ###   samhällsvetenskapligt sätt, både muntligt och skriftligt
 ###   (kunskap) - Förstå och med egna ord förklara teorier ..."
 ###   (example course SU SV7098)
-inlineHyphenListExp = re.compile(" - (.*?) - ", re.MULTILINE + re.DOTALL)
+inlineHyphenListExp = re.compile(" - +(([^ ]|( [^- ]))+)", re.S)
+inlineHyphenListExpWrap = re.compile("( - +([^ ]|( [^- ])){4,})((\s{2,}[^-]*)?( - +([^ ]|( [^- ])){4,}))*", re.S)
+inlineHyphenIndicator = re.compile(" - ")
 
 ### Some courses enumerate goals with Roman numerals
 ###   "För godkänt resultat skall studenten kunna:
@@ -299,7 +357,11 @@ inlineHyphenListExp = re.compile(" - (.*?) - ", re.MULTILINE + re.DOTALL)
 ###     II.    formulera statistiska modeller för elementära problem inom olika tillämpningsområden,
 ###     ... "
 ###   (example course SU ST111G)
-romanListExp = re.compile("\n[IVX][IVX]*\s*[.]\s\s*([^\n]*)", re.I)
+romanListExp = re.compile("[IVX]+\s*[.]\s+([^IVX]*)", re.S)
+romanListExpWrap = re.compile("([A-ZÅÄÖ].*?kunna:?\s*)(\s*I\s*[.]\s+([^IVX ]|( [^IVX ]))+)(\s*[IVX]+\s*[.]\s+([^IVX ]|( [^IVX ]))+)*", re.S)
+
+romanListIndicator = re.compile("kunna:?\s*I")
+romanListIndicatorEn = re.compile("((know\s*how)|(able))\s*to:?\s*I")
 
 ### Some courses enumerate goals with Arabic numerals
 ###    "För godkänt resultat på kursen ska studenten kunna:
@@ -308,23 +370,20 @@ romanListExp = re.compile("\n[IVX][IVX]*\s*[.]\s\s*([^\n]*)", re.I)
 ###     2. Beskriva våra vanligaste folkhälsoproblem och folksjukdomar och redogöra för förekomst och sjukdomsorsaker
 ###     ... "
 ###   (example course SU PH03G0)
-arabicListExp = re.compile("\n[0-9][0-9]*\s*[).]\s*([^\n]*)", re.I)
+arabicListExp = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}))", re.S)
+arabicListExpWrap = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}(\s*\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,})*", re.S)
+delkursExp = re.compile("Delkurs([^\\-•*·–…;]*?)hp")
+delkursExp2 = re.compile("Delkurs\s[0-9]+[.]?,?(\s*[^A-ZÅÄÖ\\-,•*·–…;\n]*)")
 
-arabicListExp2 = re.compile("[0-9][0-9]*\s*[).]\s*(....*?)\s*\\(?[0-9]*[0-9][.)]", re.I)
 
 ### Some courses enumerate goals with (a), (b), or (1), (2), etc. 
 ###    "Kursen syftar till (a) att öka deltagarnas förståelse ... ; (b) att ge de färdigheter som behövs för tillämpad dataanalys ... ; och (c) att ge träning i ... "
 ###   (example course SU PSMT15)
-parListExp = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)", re.I)
-parListExp2 = re.compile("\s[0-9a-zA-Z]\\)\s*([^\\)][^\\)]*)", re.I)
+parListExp = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)") # not very common
+parListExpWrap = parListExp
 
-### Some courses enumerate goals with X
-###    "... Xvisa fördjupad kunskap om och förståelse för
-###    skadeståndsrättens begrepp och principer , Xvisa fördjupad
-###    kunskap om och förståelse för skadeståndsrättens struktur
-###    och systematik samt Xvisa fördjupad kunskap ..."
-###   (example course SU JU369A)
-xListExp = re.compile("\sX\s*(..*)\sX*", re.I)
+parListExp2 = re.compile("[\s\.][0-9a-hA-H]{1,2}\\)\s*((([^\s\\)<>])|(\s[^a-zA-Z0-9\s<>])|(\s[a-zA-Z0-9][^\\)])){4,}([^\\)\s</>\.0-9]){2})", re.S) # mainly this pattern is used
+parListExpWrap2 = parListExp2
 
 ### Some courses specify goals with lines like "ska ... kunna ..."
 ###   "Den studerande skall efter genomgången kurs kunna
@@ -335,12 +394,14 @@ xListExp = re.compile("\sX\s*(..*)\sX*", re.I)
 ###   konventionen och en förmåga att relatera iakttagelserna till
 ###   en vidare samhällelig och kulturell kontext."
 ###  (example course SU LV1011)
-skaKunnaExp = re.compile("[Kk]unna(..*?)[\n]", re.I)
+skaKunnaExp = re.compile("[Kk]unna(\s*[^0-9\s]((([^\s])|([^\n][^\s])){4,}))")
+skaKunnaExpEn = re.compile("[Aa]ble\s*to(.{4,}?)[\n]")
 
 ### Some courses write goals as "Efter kursen kan ... " (less common than "ska kunna")
 ###   "Studenten kan tillämpa grundläggande arbetsmarknadsekonomiska begrepp ..."
 ###   (example course SU ATF012)
-kanExp = re.compile("\skan\s(..*\s..*?)[.]", re.I)
+kanExp = re.compile("\skan\s(([a-zåäö]*[^s]\s[^.]+)[\.]|(\s\s)|\n)", re.I)
+kanExpEn = re.compile("\s(((know\s*how)|(able))\s*to\s(([^.]+\s[^.]+)[\.]|(\s\s)|\n))", re.I)
 
 ### Goals can be written as "studenten ska vara förtrogen med" or
 ### "studenten ska ha förmåga att"
@@ -348,44 +409,187 @@ kanExp = re.compile("\skan\s(..*\s..*?)[.]", re.I)
 ###    1)      vara förtrogen med begreppen kultur, mångkulturalism och andra för kunskapsområdet centrala begrepp som exkluderings- och inkluderingprocesser präglar relationer mellan majoritets- och minoritetsbefolkningen samt aktuella teorier kring mångkulturalism och etnicitet
 ###    2)      ha förmåga att integrera relevanta teorier och metoder om mångkulturalism i en vägledningssituation samt kunna reflektera över hur kulturella normer, värderingar och tankemönster påverkar förhållningssätt till människor i andra etniska grupper
 ###   (example course SU UC119F)
-fortrogenExp = re.compile("\sförtrogen\s*i\s(.*?)[.]", re.I)
-formagaExp = re.compile("visa.*?\sförmåga.*?att\s*(.*?)[.]", re.I)
+fortrogenExp = re.compile("\sförtrogen\s*med\s(([^.]{4,}?)(\.|\s\s))", re.I)
+formagaExp = re.compile("\sförmåga.*?att\s*(([^.]{4,}?)(\.|\s\s))", re.I)
+
+fortrogenExpEn = re.compile("\scomfortable\s*with\s(([^.]{4,}?)(\.|\s\s))", re.I)
+formagaExpEn = re.compile("\sability.*?to\s*(([^.]{4,}?)(\.|\s\s))", re.I)
 
 ### Some courses list all goals on one line with arabic numerals enumerating, starting with "... kunna 1."
 ###   "... ska studenten kunna 1.Redovisa, diskutera och jämföra olika
 ###   historiskt kriminologiska studier. 2.Beskriva, ..."
 ###   (example course SU AKA132)
-kunna1exp = re.compile("kunna.*1[. ].*2[. ]")
+kunna1exp = re.compile("[0-9]+[. ]\s*([^0-9]{4,})")
+kunna1expWrap = re.compile("kunna.*1[. ].*2[. ][^0-9]{4,}([0-9][. ][^0-9]{4,})*")
+kunna1expWrapEn = re.compile("((know\s*how)|(able))\s*to.*1[. ].*2[. ][^0-9]{4,}([0-9][. ][^0-9]{4,})*")
 
-### Many courses have goals stated as "ska kunna:" and then one goal per line.
-kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
+kunna1sub = re.compile("(,?\s*Efter avslutad kurs ska studenten)*\s*för betyget (.*?) kunna")
 
 ### Courses can have lists where each item starts with a Capital
 ### letter but not other wise noted:
 ###    "Efter avslutad kurs ska studenten kunna Visa goda kunskaper
 ###    ... konsekvenser. Analysera och tolka händelser ... "
 ###   (example course KTH MJ2416)
-kunnaCapExp = re.compile("kunna:?\s*[A-ZÅÄÖ]", re.I)
+kunnaCapExp = re.compile("[\s>]([A-ZÅÄÖ](([^\s<\n])|([^<\n][^\s<\n])){4,})", re.S)
+kunnaCapExpWrap = re.compile("kunna:?\s*[A-ZÅÄÖ][^\n]*", re.S)
+kunnaCapExpWrapEn = re.compile("((know\s*how)|(able))\s*to:?\s*[A-ZÅÄÖ].*", re.S)
 
-kunnaHypExp = re.compile("kunna:?\s* -[a-zåäöA-ZÅÄÖ]", re.I)
-kunnaHypExpM = re.compile(" -([a-zA-ZåäöÅÄÖ].*?)[.\n\"]", re.I)
+kunnaHypExp = re.compile(" -([a-zåäöA-ZÅÄÖ][^\-<]*[^\-<\s])", re.S)
+kunnaHypExpWrap = re.compile("[A-ZÅÄÖ][^A-ZÅÄÖ]*?((\sska)|(kunna))[^-]*:?(\s+-[a-zåäöA-ZÅÄÖ][^\-<]*[^\-<\s])+", re.S)
+kunnaHypExpWrapEn = re.compile("[A-Z][^A-Z]*?((know\s*how)|(able))\s*to:?\s*(\s+ -[a-zA-Z][^\-<]*[^\-<\s])+", re.S)
 
-### Some courses have goals stated as "ska kunna ... VERB <list of objects for VERB>
-###   "Efter godkänd kurs ska studenten kunna självständigt och på ett strukturerat sätt skapa
-###    - parametriserade detaljmodeller
-###    - sammanställningsmodeller ..."
-###   (example course KTH MG1028)
-verbThenObjectsExp = re.compile("kunna[^a-zåäöA-ZÅÄÖ<]*(<[^>]*>)*([^\n•*·–…<:]*)\s*[\n•*·–…<:]", re.I)
+kunnaHypExpWrap2 = re.compile("([^a-zåäöA-ZÅÄÖ]-[a-zåäöA-ZÅÄÖ][^\-<]*[^\-<\s])+", re.S)
+
+# Courses can have lists using HTML <p>-tags for list items but not be
+# captured by the more precise pattern above. For example the course
+# KTH IE1205 which has "<p>- "
+
+pHypListExp = re.compile("<p>-\s(.*?)\s*(?:</?p>)", re.S)
+pHypListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))[^<>]*(</\s*p>)?(<p>-\s[^<>]*</?p>)([^<>]*<p>-\s[^<>]*</?p>)+", re.S)
+pHypListExpWrapEn = re.compile("(<p>)?[^<>]*((can)|(know\s*how\s*to)|(able\s*to))[^<>]*(</\s*p>)?(<p>-\s[^<>]*</?p>)([^<>]*<p>-\s[^<>]*</?p>)+", re.S)
+
+pHypListIndicator = re.compile("<p>-")
+# Courses KTH CM2006 CM1004 has "<p>" but no dot or hyphen at all
+pRawListExp = re.compile("<p>(.*?)(?:</?p>)", re.S)
+pRawListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))\s*:?\s*(</\s*p>)?(<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+", re.S)
+pRawListExpWrapEn = re.compile("(<p>)?[^<>]*((can)|(know\s*how\s*to)|(able\s*to))\s*:?\s*(</\s*p>)?(<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+", re.S)
+
+pRawListIndicator = re.compile("((ska)|(kunna))\s*:?\s*</\s*p>")
+pRawListIndicatorEn = re.compile("((can)|(know\s*how\s*to)|(able\s*to))\s*:?\s*</\s*p>")
+
+# # Courses KTH FAG3184 FAG3185 have a set of <p>...</p> that are one
+# # goal each, and nothing else.
+# onlyPListExp = re.compile("<p>(.*?)(?:</?p>)", re.S)
+
+### Some courses only have one sentence with "studenter ska kunna ..."
+### This pattern tends to over generate, so it should be used after
+### other (more precise) patterns have failed to find anything.
+kunnaSentenceExp = re.compile("[Kk]unna[^.]{4,}\.")
+kunnaSentenceExpEn = re.compile("((([Kk]now\s*how)|([Bb]e\s*able)|([Aa]bility))\s*to[^.]{4,}\.)")
 
 ### Some courses have goals stated as "Kursens mål är att ge studenterna ett tillfälle att ... VERB"
 ###   "Teknologerna får därigenom tillfälle att tillämpa sina kunskaper ..."
 ###   (example course KTH MF2025)
-tillfalleExp = re.compile("tillfälle\s*att\s*([^•*·–….]*)\s*[•*·–….]", re.I)
-traningExp = re.compile("träning\s*i\s*att\s*([^.]*)\s*[.]", re.I)
+tillfalleExp = re.compile("[Tt]illfälle\s*att\s*([^•*·–….]*)\s*[•*·–….]", re.S)
+traningExp = re.compile("[Tt]räning\s*i\s*att\s*([^.]*)\s*[.]", re.S)
 
-## maletExp = re.compile("målet.*är\s*att\s*([^.]*)\s*[.]", re.I) ### Skip this type of goal? Not well written.
+tillfalleExpEn = re.compile("[oO]pportunity([^•*·–….]*)\s*[•*·–….]", re.S)
+traningExpEn = re.compile("[Tt]raining\s*([^.]*)\s*[.]", re.S)
 
-parHeadingsExp = re.compile("\\([A-ZÅÄÖ]\w*:?\s*([0-9][0-9]*,?\s*(och)*(;\sEPA)*\s*)*\s*[0-9][0-9]*\s*\\)")
+### Some course descriptions lists each goal on a separate line, like:
+###    "För godkänd kurs ska studenten kunna 
+###     uppvisa förståelse för människans språk betraktat som en del av hennes kognitiva utrustning 
+###     uppvisa kännedom om ..."
+###    (example course UMU 1LI034)
+kunnaNewlineExp = re.compile("\n[^<>\n]{4,}", re.S)
+kunnaNewlineExpWrap = re.compile("(kunna\s*:?\s*([Kk]unskap\s*och\s*[Ff]örståelse)?(<ol>)?(uppvisa förmåga att)?(följande)?([Ff]ärdighet och förmåga)?(\\([A-ZÅÄÖa-zåäö]+\\))?\s*(\n[^<>\n]{4,})+)", re.S)
+kunnaNewlineExpWrapEn = re.compile("((know\s*how)|(able))\s*to\s*:?\n.*", re.S)
+
+kunnaNewlineExpWrap2Indicator = re.compile("((betyget Godkänd)|(godkänd kurs))")
+kunnaNewlineExpWrap2 = re.compile("(För ((betyget Godkänd)|(godkänd kurs))\s*ska den studerande(\s*((avseende)|(kunna:?)|([^\n]*(K|k)unskap och förståelse-?)|(\\([A-ZÅÄÖa-zåäö]+\\))|(Summativ bedömning i teori och praktik)))*\s*\n.*)", re.S)
+
+
+kunnaHyphenB = re.compile("- ([^-]{4,})", re.S)
+kunnaHyphenBWrap = re.compile("(((unskap och förståelse)|(kunna))- ([^-]{4,})(- [^-]{4,}){2,})", re.S)
+kunnaHyphenBWrapEn = re.compile("(((know\s*how\s*to)|(able\s*to))- ([^-]{4,})(- [^-]{4,}){2,})", re.S)
+
+
+###    (example course UMU 1LV057)
+umuSkaHaExp = re.compile("\s{2,}(([^\s])|(\s[^\s])){4,}[^\s]", re.S)
+umuSkaHaExpWrap = re.compile("Efter avslutad kurs ska den studerande ha\s*(\s{2,}(([^\s])|(\s[^\s])){4,})+", re.S)
+umuSkaHaExp2 = re.compile("\s+((([^\s.])|(\s[^\s])){4,})\\.", re.S)
+umuSkaHaExpWrap2 = re.compile("Efter avslutad kurs ska den studerande ha\s*(\s*[a-zåäö](([^\s])|(\s[^\s])){4,}\\.)+", re.S)
+
+
+### Courses from UMU often have one goal per line, with no sentence
+### structure. Some patterns to capture such goals.
+###    (example course UMU 6PE264)
+umuNewlinesExp = re.compile("\n[^\n]{4,}")
+umuNewlinesExpWrap = re.compile("ska den studerande (avseende)*\s*kunskap och förståelse\s*\n(.*)", re.S)
+umuNewlinesExpWrap2 = re.compile("^Kunskap och förståelse\s*\n(.*)", re.S)
+umuNewlinesExpWrap3 = re.compile("För .*? ska .*? stud.*? Kunskap och förståelse\s*\n(.*)", re.S)
+
+umuNewlinesExpWrap4 = re.compile("Efter avklarad kurs ska studenterna kunna, med avseende på\s*\n(.*)", re.S)
+umuNewlinesExpWrap5 = re.compile("För godkänd kurs ska den studerande[^\n]*Practice\s*\n.*", re.S)
+
+###    (example course UMU 5MO120)
+umuHypExp = re.compile("- ([^-]{4,})")
+umuHypExpWrap = re.compile("Efter ((avslutad)|(genomgången)) kurs ska studenten- ([^-]{4,})(- [^-]{4,})+")
+
+###    (example course UMU 2SO030)
+umuEfterHyp = re.compile("-((([^\\-E0-9])|([0-9]+\\-?)|(,[^\\-E0-9])|(-,)){4,})", re.S)
+umuEfterHypWrap = re.compile("(Efter[^-]+((( -)|(- ))(([^\\-E0-9])|([0-9]+\\-?)|(EU)){4,}){2,})", re.S)
+umuEfterHypWrapSpec = re.compile("Efter[^-]+(kunna [^\s\\-]+[^-]*)((( -)|(- ))(([^\\-E0-9,])|(,[^\\-E0-9])|(-,)|([0-9]+\\-?)|(EU)){4,}){2,}", re.S)
+umuEfterHypWrapSpec2 = re.compile("De studerande skall efter avslutad kurs (förstå)\s*((( -)|(- ))(([^\\-E0-9,])|(,[^\\-E0-9])|(-,)|([0-9]+\\-?)|(EU)){4,}){2,}", re.S)
+umuEfterHypIndicator = re.compile("Efter[^-]*-[^-]*-")
+umuEfterHypNegativeIndicator = re.compile("[a-zåäö]- och")
+
+###    (example course UMU 2SV060)
+umuSamtligaMomentExp = re.compile("\n((([^\s\n])|([^\n][^\s\n])){4,})", re.S)
+umuSamtligaMomentExpWrap = re.compile("Samtliga\s*moment\s*\n(.*)", re.S)
+
+###    (example course UMU )
+umuAvseendeExp = re.compile("\n((([^\s\n])|([^\n][^\s\n])){4,})", re.S)
+umuAvseendeExpWrap = re.compile("[Aa]vseende\s+(\S+)\s+och\s+(\S+)\s*\n(([^A])|(A[^v])|(Av[^s])|(Avs[^e])){4,}", re.S)
+
+###    (example course UMU 1AR000)
+umuHaLines = re.compile("\n[a-zåäö][^\n]{4,}")
+umuHaLinesWrap = re.compile("(((kunna)|(Kunskap och förståelse)|(Kunskap, undervisning och lärande,?\s?[0-9]*h?p?))\s*\n[a-zåäö](.*)(\n[a-zåäö].*){2,}(\n[a-zåäö][^\n]*))") # at least 4 lines starting with lower case
+umuHaLinesWrapEn = re.compile("((able\s*to).*\n[a-zåäö](.*)(\n[a-zåäö].*){2,}(\n[a-zåäö][^\n]*))")
+
+###    (example course UMU )
+efterKunnaExp = re.compile("\n[^\n]{4,}")
+efterKunnaExpWrap = re.compile("((Efter avklarad kurs ska (den )?stude((rande)|(nten)|(nterna)) kunna)|(Efter avslutad kurs ska (den )?stude((rande)|(nten)|(nterna)) kunna)|(Efter genomgången kurs förväntas (den )?stude((rande)|(nten)|(nterna)))|(Efter genomgången kurs skall (den )?stude((rande)|(nten)|(nterna)) kunna))(\s*Kunskap och förståele)?(\s*,?\s*med avseende på)?([^\n]*)\n([a-zåäö].*\n){3,}.*", re.S)
+
+forGodkandExp = re.compile("\n[a-zåäö][^\n]{4,}")
+forGodkandExpWrap = re.compile("För betyget godkänd ska den studerande[^\n]*\n([a-zåäö][^\n]{4,}\n){3,}.*", re.S)
+
+forGodkandExpWrap2 = re.compile("Efter godkänd kurs ska du kunna ([a-zåäöA-ZÅÄÖ ]){4,}\\.")
+
+###    (example course MIUN KEA002F KEA005F)
+whitespacesExp = re.compile("\s{2,}((([^\s])|(\s[^\s])){4,}[^\s])")
+whitespacesExpWrap = re.compile("Efter ((avslutad)|(genomgången)) kurs.*?\s{2,}.*?\s{2,}.*", re.S)
+whitespacesExpWrapEn = re.compile("Efter ((avslutad)|(genomgången)) kurs.*?\s{2,}.*?\s{2,}.*", re.S)
+whitespacesExp2 = re.compile("((([^\s])|(\s[^\s])){4,}[^\s])")
+whitespacesExpWrap2 = re.compile(".*\s{2,}.*\s{2,}.*", re.S)
+
+###    (example course UMU 5EL272)
+vetaHurExp = re.compile("[Vv]eta\s*(hur\s*.*?)\\.", re.S)
+
+###    (example course MIUN ELA017F)
+formuleraExp = re.compile("Efter avslutad kurs ska[ a-zåäöA-ZÅÄÖ,]*formulera[^\\.\n]{4,}")
+
+kunnaAexp = re.compile(" [a-hA-h][.\\)] ((([^. ])|( [^. ])){4,})")
+kunnaAexpWrap = re.compile("kunna:?\s*\\(?[aA][.\\)].* [bB][.\\)] .*( [c-hC-H][.\\)] .*)+")
+kunnaAexpWrapEn = re.compile("able to:? \\(?[aA][.\\)].* [bB][.\\)] .*( [c-hC-H][.\\)] .*)+")
+
+
+### Many courses have goals stated as "ska kunna:" and then one goal per line.
+kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
+
+# "praktiska färdigheter att", KTH EP2120 FAE3007
+
+# "kunna [^.]*[.]"
+
+# KTH ML0022, <p>-list?
+
+# KTH AD236V, "ska studenten ha"
+# KTH HS202X, skall </p><p>Visa sig ha kunskap och kompetens för att utveckla och genomföra ett självständigt examensarbete inom området, ’Architectural Lighting Design and Health’.</p><p>Visa sig ha kapacitet att strukturera en frågeställning, problematisera och definiera en användbar relevant metod för arbetsp
+
+# KTH EF1113, praktisk erfarenhet av att
+
+
+
+#########################################################################
+### Things to remove because they interfere with the other expressions ###
+#########################################################################
+parHeadingsExp = re.compile("\\([A-ZÅÄÖ]\w{3,}:?\s*([0-9][0-9]*,?\s*(och)*(;\sEPA)*\s*)*\s*[0-9]+\s*\\)") # (<name of things>)
+parHeadingsExp2 = re.compile("\s+modul\s+[0-9]+\s+(\\([\w\\-,]+\s+([\w\\-,]+\s+)*[0-9]+\\))", re.I) # module 1 (<name of module>)
+delparExp = re.compile("\\(del\s*[0-9i]+[a-z]?(\s*(och)?,?\s*(del)?\s*[0-9i]+[a-z]?)*\\)", re.I)    # (del 1)
+ccparExp = re.compile("\\([A-Z0-9]{6,7}\\)")                                                        # (<course code>)
+betygparExp = re.compile("\\(((Betyg)|((Del)?Mål)|(Moment)|(Modul))\s*[A-F0-9]+(,?\s*(och)?(eller)?\s*[A-F0-9]+)*\\)", re.I) # (betyg D)
+momentExp = re.compile("(((Modul)|(Moment))\s*[0-9IVXA-F]+\\.?(\s*och\s*[0-9IVXA-F]+\\.?)?)")
+gradeparExp = re.compile("\\(((Grade)|(than)|((Sub)?Goal))\s*[A-F0-9]+(,?\s*(and)?(or)?\s*[A-F0-9]+)*\\)", re.I)             # (grade D)
 
 ############################################################
 ### Expressions for removing motivation (not goals) text ###
@@ -393,6 +597,8 @@ parHeadingsExp = re.compile("\\([A-ZÅÄÖ]\w*:?\s*([0-9][0-9]*,?\s*(och)*(;\sEP
 iSyfteExp = re.compile("<p>\s*i\s+syfte\s+att", re.I)
 forAttExp = re.compile("<p>\s*för\s+att", re.I)
 forAttGodkandExp = re.compile("<p>\s*för\s+att.*bli.*godkänd", re.I)
+forAttExpEn = re.compile("<p>\s*in\s+order\s+to", re.I)
+
 
 ################################################################################
 ### Use heuristics to extract sentences with goals from the ILO-sv free text ###
@@ -423,19 +629,41 @@ def extractGoals(c):
         c["ILO-en"] = sv
     elif langEn != "en" and len(en) > MIN_LEN_LANGUAGE:
         c["ILO-en"] = ""
-    
+
+    if c["ILO-sv"] == "NULL" or c["ILO-sv"] == "#NAMN?":
+        c["ILO-sv"] = ""
+    if c["ILO-en"] == "NULL":
+        c["ILO-en"] = ""
+        
     sv = c["ILO-sv"]
     en = c["ILO-en"]
 
     #####################################################
     ### unify hyphens to simplify expression matching ###
     #####################################################
+    sv = sv.replace(u"\u00A0", " ").replace(u"\u00AD", "")
+    en = en.replace(u"\u00A0", " ").replace(u"\u00AD", "")
+
     sv = sv.replace("\n -", "\n–").replace("\n-", "\n–").replace("\n−", "\n–").replace(u"\uF095", "–")
+    sv = re.sub("([0-9]{4})–([0-9]{4})", "\\1-\\2", sv)
+    sv = sv.replace(" — ", " - ")
     sv = sv.replace("\t", " ")
 
+    sv = parHeadingsExp.sub(" ", sv) # remove things like "(Lärandemål 3 och 4)" or "(Modul 5, 6, och 7)"
+    sv = parHeadingsExp2.sub(" modul", sv)
 
-    sv = parHeadingsExp.sub(" ", sv) # remove things like "(Lärande mål 3 och 4)" or "(Modul 5, 6, och 7)"
+    sv = delkursExp.sub("", sv)
+    sv = delkursExp2.sub("", sv)
+
+
+    sv = delparExp.sub("", sv)
+    sv = ccparExp.sub("", sv)
+    sv = betygparExp.sub("", sv)
+    sv = momentExp.sub("", sv)
     
+    
+    en = gradeparExp.sub("", en)
+
     
     ##############################
     ### Fix some weird codings ###
@@ -443,17 +671,18 @@ def extractGoals(c):
     sv = sv.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ")
     sv = sv.replace("&eacute;", "é")
     sv = sv.strip()
-    if len(sv) and sv[0] == '"':
+    while len(sv) and sv[0] == '"':
         sv = sv[1:]
-        if sv[-1] == '"':
-            sv = sv[:-1]
+    while len(sv) and sv[-1] == '"':
+        sv = sv[:-1]
     
-    iloList = {}
+    iloList = []
+    iloListEn = []
    
     ###################################################################
     ### Remove motivation for having these goals from the goal text ###
     ###################################################################
-    
+
     m = iSyfteExp.search(sv)
     if m:
         sv = iSyfteExp.split(sv)[0] # remove everything from "i syfte att" and forward
@@ -463,407 +692,309 @@ def extractGoals(c):
             m2 = forAttGodkandExp.search(sv)
             if not m2 or m2.start() < m.start():
                 sv = forAttExp.split(sv)[0]  # remove everything from "för att" and forward
-
-    
+    if en:
+        m = forAttExpEn.search(en)
+        if m and m.start() > 0:
+            en = forAttExpEn.split(en)[0]  # remove everything from "in order to" and forward
     
     found = 0
 
-    m = htmlListExp.search(sv)
-    if m:
-        ls = htmlListExp.findall(sv)
-        for l in ls: # remove duplicates
+    if htmlListExpIndicator.search(sv) or htmlListExpIndicator.search(en): # This expression is slow to match, so only try if a faster expression matches
+        sv, en = matchAndConsume(htmlListExpWrap, htmlListExp, sv, htmlListExpWrapEn, htmlListExp, en, "html-list", iloList, iloListEn)
+
+        sv, en = matchAndConsumeSpecial(htmlListExpWrap3, htmlListExp, sv, htmlListExpWrapEn3, htmlListExp, en, "html-list-3", iloList, iloListEn) # should run before #2
+            
+        sv, en = matchAndConsume(htmlListExpWrap2, htmlListExp, sv, htmlListExpWrap2, htmlListExp, en, "html-list-2", iloList, iloListEn)
+
+        
+    if sv.find("<p>") >= 0 or en.find("<p>") >= 0:
+        sv, en = matchAndConsume(pListExpWrap, pListExp, sv, pListExpWrapEn, pListExp, en, "p-list", iloList, iloListEn)
+
+    if brListIndicator.search(sv) or brListIndicator.search(en):
+        sv, en = matchAndConsume(brListExpWrap, brListExp, sv, brListExpWrapEn, brListExp, en, "br-list", iloList, iloListEn)
+        sv, en = matchAndConsume(brListExpWrap2, brListExp, sv, brListExpWrap2, brListExp, en, "br-list-2", iloList, iloListEn)
+
+    sv, en = matchAndConsume(newlineListExpWrap, newlineListExp, sv, newlineListExpWrap, newlineListExp, en, "newline-list", iloList, iloListEn)
+    
+    sv, en = matchAndConsume(dotListExpWrap, dotListExp, sv, dotListExpWrap, dotListExp, en, "dot-list", iloList, iloListEn)
+    
+    tmp = sv.replace(".o", ". o").replace("Färdighet och förmåga", " ").replace("Kunskap och förståelse", " ").replace("Värderingsförmåga och förhållningssätt", " ")
+    sv, en = matchAndConsume(oListExpWrap, oListExp, tmp, oListExpWrap, oListExp, en, "o-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuHaLinesWrap, umuHaLines, sv, umuHaLinesWrapEn, umuHaLines, en, "umu-ha-lines", iloList, iloListEn)
+    
+    log("+++++++++++++++++++ En before\n", en + "\n\n")
+    
+    sv, tmp = matchAndConsumeSpecial(umuEfterHypWrapSpec2, umuEfterHyp, sv, umuEfterHyp, umuEfterHyp, "", "efter-hyphen-Spec-list", iloList, iloListEn)
+    
+    if umuEfterHypIndicator.search(sv) and not umuEfterHypNegativeIndicator.search(sv):
+        sv, en = matchAndConsumeSpecial(umuEfterHypWrapSpec, umuEfterHyp, sv, umuEfterHyp, umuEfterHyp, en, "efter-hyphen-Spec-list", iloList, iloListEn)
+        sv, en = matchAndConsume(umuEfterHypWrap, umuEfterHyp, sv, umuEfterHyp, umuEfterHyp, en, "efter-hyphen-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(vetaHurExp, vetaHurExp, sv, vetaHurExp, vetaHurExp, en, "veta-hur-list", iloList, iloListEn)
+    
+    sv, tmp = matchAndConsume(formuleraExp, formuleraExp, sv, formuleraExp, formuleraExp, "", "formulera-list", iloList, iloListEn)
+    
+    if inlineHyphenIndicator.search(sv) or inlineHyphenIndicator.search(en):
+        sv, en = matchAndConsume(inlineHyphenListExpWrap, inlineHyphenListExp, sv, inlineHyphenListExpWrap, inlineHyphenListExp, en, "inline-hyphen-list", iloList, iloListEn)
+    
+    if romanListIndicator.search(sv) or romanListIndicatorEn.search(en): # This expression is slow to match, so only try if a faster expression matches
+        sv, en = matchAndConsume(romanListExpWrap, romanListExp, sv, romanListExpWrap, romanListExp, en, "roman-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(arabicListExpWrap, arabicListExp, sv, arabicListExpWrap, arabicListExp, en, "arabic-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuSkaHaExpWrap2, umuSkaHaExp2, sv, umuSkaHaExp, umuSkaHaExp, en, "umu-ska-ha-list-2", iloList, iloListEn)
+    sv, en = matchAndConsume(umuSkaHaExpWrap, umuSkaHaExp, sv, umuSkaHaExp, umuSkaHaExp, en, "umu-ska-ha-list", iloList, iloListEn)
+                             
+    sv, en = matchAndConsume(parListExpWrap, parListExp, sv, parListExpWrap, parListExp, en, "par-list", iloList, iloListEn)
+    sv, en = matchAndConsume(parListExpWrap2, parListExp2, sv, parListExpWrap2, parListExp2, en, "par-list-2", iloList, iloListEn)
+    
+    sv, en = matchAndConsume(umuAvseendeExpWrap, umuAvseendeExp, sv, umuAvseendeExp, umuAvseendeExp, en, "avseende-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuSamtligaMomentExpWrap, umuSamtligaMomentExp, sv, umuSamtligaMomentExp, umuSamtligaMomentExp, en, "Samtliga-moment-list", iloList, iloListEn)
+
+    sv, tmp = matchAndConsume(forGodkandExpWrap, forGodkandExp, sv, forGodkandExpWrap, forGodkandExp, "", "for-godkand-list", iloList, iloListEn)
+    sv, tmp = matchAndConsume(forGodkandExpWrap2, forGodkandExpWrap2, sv, forGodkandExpWrap, forGodkandExp, "", "for-godkand-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(efterKunnaExpWrap, efterKunnaExp, sv, efterKunnaExpWrap, efterKunnaExp, en, "efter-kunna-list", iloList, iloListEn)
+    
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kunnaNewlineExpWrap, kunnaNewlineExp, sv, kunnaNewlineExpWrapEn, kunnaNewlineExp, en, "kunna-newline-list", iloList, iloListEn)
+
+    if kunnaNewlineExpWrap2Indicator.search(sv):
+        sv, en = matchAndConsume(kunnaNewlineExpWrap2, kunnaNewlineExp, sv, kunnaNewlineExpWrapEn, kunnaNewlineExp, en, "kunna-newline-list-2", iloList, iloListEn)
+
+    sv, en = matchAndConsume(kunnaCapExpWrap, kunnaCapExp, sv, kunnaCapExpWrapEn, kunnaCapExp, en, "kunna-Cap-exp", iloList, iloListEn)
+
+    sv, tmp = matchAndConsume(umuNewlinesExpWrap4, umuNewlinesExp, sv, umuNewlinesExp, umuNewlinesExp, "", "umu-newlines-4", iloList, iloListEn) 
+    sv, tmp = matchAndConsume(umuNewlinesExpWrap5, umuNewlinesExp, sv, umuNewlinesExp, umuNewlinesExp, "", "umu-newlines-5", iloList, iloListEn) 
+        
+    sv, en = matchAndConsume(kunnaAexpWrap, kunnaAexp, sv, kunnaAexpWrapEn, kunnaAexp, en, "kunna-a-exp", iloList, iloListEn)
+    
+    sv, en = matchAndConsume(skaKunnaExp, skaKunnaExp, sv, skaKunnaExpEn, skaKunnaExpEn, en, "ska-kunna-list", iloList, iloListEn)
+    
+    sv, en = matchAndConsume(kunna1expWrap, kunna1exp, sv, kunna1expWrapEn, kunna1exp, en, "kunna-1-exp", iloList, iloListEn)
+
+    for i in range(len(iloList)): # this captures too much in common UMU patterns, so we add a small correction here
+        iloList[i] = kunna1sub.sub(" ", iloList[i])
+
+    sv, en = matchAndConsume(kunnaHypExpWrap, kunnaHypExp, sv, kunnaHypExpWrapEn, kunnaHypExp, en, "kunna-hyp-exp", iloList, iloListEn)
+    sv, en = matchAndConsume(kunnaHypExpWrap2, kunnaHypExp, sv, kunnaHypExpWrap2, kunnaHypExp, en, "kunna-hyp-exp-2", iloList, iloListEn)
+
+    if pHypListIndicator.search(sv) or pHypListIndicator.search(en): # faster check before slow matching
+        sv, en = matchAndConsume(pHypListExpWrap, pHypListExp, sv, pHypListExpWrapEn, pHypListExp, en, "p-hyp-list", iloList, iloListEn)
+
+    if len(iloList) <= 0 and pRawListIndicator.search(sv):
+        sv, tmp = matchAndConsume(pRawListExpWrap, pRawListExp, sv, pRawListExpWrapEn, pRawListExp, "", "p-raw-list", iloList, iloListEn)
+    if len(iloListEn) <= 0 and pRawListIndicatorEn.search(en): # faster check before slow matching
+        tmp, en = matchAndConsume(pRawListExpWrap, pRawListExp, "", pRawListExpWrapEn, pRawListExp, en, "p-raw-list", iloList, iloListEn)
+        
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kunnaSentenceExp, kunnaSentenceExp, sv, kunnaSentenceExpEn, kunnaSentenceExpEn, en, "kunna-sentence-exp", iloList, iloListEn)
+    
+    sv, en = matchAndConsume(formagaExp, formagaExp, sv, formagaExpEn, formagaExpEn, en, "formaga-exp", iloList, iloListEn)
+    
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(fortrogenExp, fortrogenExp, sv, fortrogenExpEn, fortrogenExpEn, en, "fortrogen-exp", iloList, iloListEn)
+
+        sv, en = matchAndConsume(tillfalleExp, tillfalleExp, sv, tillfalleExpEn, tillfalleExpEn, en, "tillfalle-exp", iloList, iloListEn)
+        sv, en = matchAndConsume(traningExp, traningExp, sv, traningExpEn, traningExpEn, en, "traning-exp", iloList, iloListEn)
+                    
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kunnaHyphenBWrap, kunnaHyphenB, sv, kunnaHyphenBWrapEn, kunnaHyphenB, en, "kunna-hyp-B-list", iloList, iloListEn)
+    
+    if len(iloList) <= 0:
+        sv, tmp = matchAndConsume(pRawListExp, pRawListExp, sv, pRawListExpWrapEn, pRawListExp, "", "p-raw-list", iloList, iloListEn)
+    if len(iloListEn) <= 0:
+        tmp, en = matchAndConsume(pRawListExp, pRawListExp, "", pRawListExp, pRawListExp, en, "p-raw-list", iloList, iloListEn)
+    # if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+    #     sv, en = matchAndConsume(onlyPListExp, onlyPListExp, sv, onlyPListExp, onlyPListExp, en, "p-only-list", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(umuHypExpWrap, umuHypExp, sv, umuHypExpWrap, umuHypExp, en, "umu-hypens", iloList, iloListEn) 
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(umuNewlinesExpWrap, umuNewlinesExp, sv, umuNewlinesExp, umuNewlinesExp, en, "umu-newlines", iloList, iloListEn) 
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(umuNewlinesExpWrap2, umuNewlinesExp, sv, umuNewlinesExp, umuNewlinesExp, en, "umu-newlines-2", iloList, iloListEn) 
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(umuNewlinesExpWrap3, umuNewlinesExp, sv, umuNewlinesExp, umuNewlinesExp, en, "umu-newlines-3", iloList, iloListEn) 
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(whitespacesExpWrap, whitespacesExp, sv, whitespacesExpWrapEn, whitespacesExp, en, "whitespace", iloList, iloListEn) 
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(whitespacesExpWrap2, whitespacesExp2, sv, whitespacesExpWrap2, whitespacesExp2, en, "whitespace", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kanExp, kanExp, sv, kanExpEn, kanExpEn, en, "kan-exp", iloList, iloListEn) 
+
+    ### If nothing is found, try to add the whole text ###
+    if len(iloList) <= 0:
+        sv = cleanStr(c["ILO-sv"])
+        if len(sv):
+            iloList.append(sv)
+
+    if len(iloListEn) <= 0:
+        en = cleanStr(c["ILO-en"])
+        if len(en):
+            iloListEn.append(en)
+    
+    return (iloList, iloListEn)
+
+times = {}
+def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE):
+    iloListSv = []
+    iloListEn = []
+    iloList = []
+
+    startime = timer()
+    m = allExp.search(sv)
+    
+    while m:
+        log("\nFOUND", name)
+        log("\n" + str(m.start()) + " " + str(m.end()), "'" + sv[m.start():m.end()] + "'\n")
+        found = 0
+        txt = sv[m.start():m.end()]
+        ls = goalExp.findall(txt)
+        for l in ls:
+            if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
+                l = l[0]
             ll = cleanStr(l)
             if len(ll):
-                iloList[ll] = 1
-                log("htmlListExp", ll)
+                iloListSv.append(ll)
+                log(name, ll)
                 found = 1
-    
-    m = pListExp.search(sv)
-    if m:
-        ls = pListExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
+        if found:
+            sv = sv[:m.start()] + " " + sv[m.end():]
+            m = allExp.search(sv)
+        else:
+            m = allExp.search(sv, m.end() + 1)
 
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("pListExp", l)
-                found = 1
+    if en:
+        m = allExpEn.search(en)
 
-    m = brListExp.search(sv)
-    if m:
-        ls = brListExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("brListExp", l)
-                found = 1
-
-    m = dotListExp.search(sv)
-    if m:
-        ls = dotListExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("dotListExp", l)
-                found = 1
-
-    m = newlineListExp.search(sv)
-    if m:
-        ls = newlineListExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("newlineListExp", l)
-                found = 1
-
-    m = xListExp.search(sv)
-    if m:
-        parts = sv.split(" X")
-        ls = []
-        for i in range(1, len(parts)):
-            ls.append(cleanStr(parts[i]))
-
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("xListExp", l)
-                found = 1
-
-    m = inlineHyphenListExp.search(sv)
-    if m:
-        parts = sv.split(" - ")
-        ls = []
-        for i in range(1, len(parts)):
-            ls.append(cleanStr(parts[i]))
-
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("inlineHyphenListExp", l)
-                found = 1
-
-    m = romanListExp.search(sv)
-    if m:
-        ls = romanListExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("romanListExp", l)
-                found = 1
-
-    m = arabicListExp.search(sv)
-    if m:
-        ls = arabicListExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-
-        for l in ls: # remove duplicates
-            tmp = l
-            if tmp[-2:] == "hp":
-                pass # skip lines like "1. Tysk lingvistik, 6 hp" (sub-parts of a course)
-            elif tmp.find("Moment ") >= 0 or tmp.find("Modul") >= 0:
-                pass # skipe lines like "Moment 1. ..."
-            elif len(l):
-                iloList[tmp] = 1
-                log("arabicListExp", tmp)
-                found = 1
-
-    m = parListExp.search(sv)
-    if m:
-        ls = parListExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("parListExp", l)
-                found = 1
-
-    m = parListExp2.search(sv)
-    if m:
-        ls = []
         while m:
-            ls.append(m.group(1))
-            m = parListExp2.search(sv, m.end() - 3)
-        
-        for l in range(len(ls)):
-            ll = cleanStr(ls[l])
-            if len(ll):
-                iloList[ll] = 1
-                log("parListExp2", ll)
-                found = 1
-
-    m = arabicListExp2.search(sv)
-    if m:
-        ls = []
-        while m:
-            ls.append(m.group(1))
-            m = arabicListExp2.search(sv, m.end() - 3)
-        
-        for l in range(len(ls)):
-            ll = cleanStr(ls[l])
-            if len(ll):
-                iloList[ll] = 1
-                log("arabicListExp2", ll)
-                found = 1
-
-    if not found:
-        m = skaKunnaExp.search(sv)
-        if m:
-            ls = skaKunnaExp.findall(sv)
-            for l in range(len(ls)):
-                ls[l] = cleanStr(ls[l])
+            log("\nFOUND", name + "En")
+            log(str(m.start()) + " " + str(m.end()), en[m.start():m.end()] + "\n")
             
-            for l in ls: # remove duplicates
-                if len(l):
-                    iloList[l] = 1
-                    log("skaKunnaExp", l)
-                    found = 1
+            found = 0
+            txt = en[m.start():m.end()]
             
-    m = fortrogenExp.search(sv)
-    if m:
-        ls = fortrogenExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-            
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("fortrogenExp", l)
-                found = 1
-
-    m = formagaExp.search(sv)
-    if m:
-        ls = formagaExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-            
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("formagaExp", l)
-                found = 1
-            
-    m = kanExp.search(sv)
-    if m:
-        while m: # This pattern overgenerates a lot, so we should filter out obvious mistakes
-            if sv[m.start() - 3:m.start()] != "som":
-                l = cleanStr(m.group(1))
-                if l[:6] != "därför":
-                    p = l.find(" ")
-                    if p < 0 or l[p-1] != "s": # passive form verbs are typically mistakes
-                        iloList[l] = 1
-                        log("kanExp", l)
+            ls = goalExpEn.findall(txt)
+            for l in ls:
+                if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
+                    l = l[0]
+                if l.find("able to:") < 5 and l.find("know how to:") < 0:
+                    ll = cleanStr(l)
+                    if len(ll):
+                        iloListEn.append(ll)
+                        log(name+"En", ll)
                         found = 1
-            m = kanExp.search(sv, m.end())
+            if found:
+                en = en[:m.start()] + " " + en[m.end():]
+                m = allExpEn.search(en)
+            else:
+                m = allExpEn.search(en, m.end() + 1)
 
-    m = verbThenObjectsExp.search(sv)
-    if m:
-        ls = verbThenObjectsExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l][1])
-            
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("verbThenObjectsExp", l)
-                found = 1
+    if en:
+        S = len(iloListSv)
+        E = len(iloListEn)
+        if S != E:
+            log("matchAndConsume", "WARNING: Number of matches in Swe and Eng are different! " + name)
+            log("Matches: ", str(S) + " " + str(E))
+
+        lsS.extend(iloListSv)
+        lsE.extend(iloListEn)
+    else:
+        lsS.extend(iloListSv)
+    endtime = timer()
+    if not name in times:
+        times[name] = 0
+    times[name] += endtime - startime
+    return (sv, en)
+
+
+
+def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE):
+    iloListSv = []
+    iloListEn = []
+    iloList = []
     
-    m = tillfalleExp.search(sv)
-    if m:
-        ls = tillfalleExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-            
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("tillfalleExp", l)
-                found = 1
-
-    m = traningExp.search(sv)
-    if m:
-        ls = traningExp.findall(sv)
-        for l in range(len(ls)):
-            ls[l] = cleanStr(ls[l])
-            
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l] = 1
-                log("traningExp", l)
-                found = 1
-
-    # m = maletExp.search(sv)
-    # if m:
-    #     ls = maletExp.findall(sv)
-    #     for l in range(len(ls)):
-    #         ls[l] = cleanStr(ls[l])
-            
-    #     for l in ls: # remove duplicates
-    #         if len(l):
-    #             iloList[l] = 1
-    #             log("maletExp", l)
-    #             found = 1
-    
-
-    p = sv.find("unna:\n\n")
-    ls = []
-    if p > 0:
-        p += 7
-        p2 = sv.find("\n\n", p)
-        if p2 > 0:
-            tmp = sv[p:]
-            tmpLs = tmp.split("\n\n")
-
-            ls += tmpLs
-    if len(ls):
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l.strip()] = 1
-                log("unna:", l.strip())
-                found = 1
-    
-    # if not found:
-    #     m = kunna1exp.search(sv)
-    # else:
-    #     m = 0 # if some other type of list has been found, these things are likely to be subsection headings, not goals
-    m = kunna1exp.search(sv) # These can also be section headings, but they will typically not have Bloom verbs so they will be removed later anyway
-    if m:
-        part = sv[m.start()-2:]
-        parts = re.split("[0-9][0-9]*[. ]", part)
+    startime = timer()
+    m = allExp.search(sv)
+    while m:
+        log("\nFOUND", name)
+        log(str(m.start()) + " " + str(m.end()), "'" + sv[m.start():m.end()] + "'\n")
+        found = 0
         
-        ls = []
-        for i in range(1, len(parts)):
-            ls.append(cleanStr(parts[i]))
-            
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l.strip()] = 1
-                log("kunna1exp", l.strip())
-                found = 1
-                
-    
-    p = kunnaColonExp.search(sv)
-    ls = []
-    while p:
-        p = p.span()[1]
-        p2 = sv.find("\n\n", p)
-
-        if p2 < 0:
-            p2 = len(sv)
-        tmp = sv[p:p2]
-        tmpLs = tmp.split("\n")
-
-        ls += tmpLs
-            
-        p = kunnaColonExp.search(sv, p)
-    if len(ls):
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l.strip()] = 1
-                log("kunnaColonExp", l.strip())
-                found = 1
-
-    m = kunnaCapExp.search(sv)
-    if m:
-        ls = []
-
-        p = m.end() - 1
-        p2 = p + 1
-
-        while p2 < len(sv):
-            if sv[p2].isupper():
-                ls.append(cleanStr(sv[p:p2]))
-                p = p2
-            p2 += 1
-        if p2 >= len(sv) and p2 - p > 3:
-            ls.append(cleanStr(sv[p:p2]))
+        head = ""
+        for gg in range(1, len(m.groups())):
+            g = m.group(gg)
+            if len(g) and g[0] != "<":
+                head = g.strip()
+                break
         
-        for l in ls: # remove duplicates
-            if len(l):
-                if l[-2:] == "hp":
-                    pass
-                elif l.find("Moment ") >= 0 or l.find("Modul") >= 0:
-                    pass # skipe lines like "Moment 1. ..."
-                else:
-                    iloList[l] = 1
-                    log("kunnaCapExp", l)
-                    found = 1
-            
-    m = kunnaHypExp.search(sv)
-    if m:
-        ls = []
-
-        m2 = kunnaHypExpM.search(sv, m.end() - 2)
-
-        while m2:
-            ls.append(m2.group(1))
-            m2 = kunnaHypExpM.search(sv, m2.end())
-        if len(ls):
-            for l in ls: # remove duplicates
-                if len(l):
-                    iloList[cleanStr(l)] = 1
-                    log("kunnaHypExp", l)
-                    found = 1
-
-    p = sv.find(":</p>")
-    if p > 0:
-        p = sv.find("<p>",p)
-    ls = []
-    while p > 0:
-        p += 3
-        p2 = sv.find("</p>", p)
-
-        if p2 < 0:
-            p2 = len(sv)
-
-        ls.append(sv[p:p2])
-            
-        p = sv.find("<p>",p2)
-    if len(ls):
-        for l in ls: # remove duplicates
-            if len(l):
-                iloList[l.strip()] = 1
-                log(":<p>", l.strip())
+        txt = sv[m.start():m.end()]
+        ls = goalExp.findall(txt)
+        for l in ls: 
+            if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
+                l = l[0]
+            ll = cleanStr(head + " " + l)
+            if len(ll):
+                iloListSv.append(ll)
+                log(name, ll)
                 found = 1
-        
-    if not found:
-        p = sv.find("kunna")
-        if p > 0:
-            tmp = sv[p:]
-            tmp = cleanStr(tmp)
-            iloList[tmp] = 1
-            log("Add almost everything", tmp)
-            found = 1
-            
-    if not found: # If not found, add the whole text ?
-        if sv and len(sv) > 1:
-            iloList[cleanStr(sv)] = 1
-            log("Add everything", sv)
+        if found:
+            sv = sv[:m.start()] + " " + sv[m.end():]
+            m = allExp.search(sv)
+        else:
+            m = allExp.search(sv, m.end() + 1)
 
-    ls = []
-    content = re.compile("[a-zA-ZåäöÅÄÖ]")
-    for l in iloList:
-        ll = cleanStr(l)
-        if content.search(ll):
-            ls.append(ll)
-    ls.sort()
-    
-    return ls
+    if en:
+        m = allExpEn.search(en)
+        while m:
+            log("\nFOUND", name + "EN")
+            log(str(m.start()) + " " + str(m.end()), en[m.start():m.end()] + "\n")
+            
+            found = 0
+            txt = en[m.start():m.end()]
+            head = ""
+            for g in m.groups():
+                if g and len(g) and g[0] != "<" and g != "able" and g[:4] != "know":
+                    head = g.strip()
+                    break
+            
+            ls = goalExpEn.findall(txt)
+            for l in ls:
+                if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
+                    l = l[0]
+                if l.find("able to:") < 0 and l.find("know how to:") < 0:
+                    ll = cleanStr(head + " " + l)
+                    if len(ll):
+                        iloListEn.append(ll)
+                        log(name+"En", ll)
+                        found = 1
+            if found:
+                en = en[:m.start()] + " " + en[m.end():]
+                m = allExpEn.search(en)
+            else:
+                m = allExpEn.search(en, m.end() + 1)
+
+    if en:
+        S = len(iloListSv)
+        E = len(iloListEn)
+        if S != E:
+            log("matchAndConsume", "WARNING: Number of matches in Swe and Eng are different! " + name)
+            log("Matches: ", str(S) + " " + str(E))
+
+        lsS.extend(iloListSv)
+        lsE.extend(iloListEn)
+    else:
+        lsS.extend(iloListSv)
+    endtime = timer()
+    if not name in times:
+        times[name] = 0
+    times[name] += endtime - startime
+    return (sv, en)
 
 ##########################################################################
 ### Check list for duplicates and substrings that are completely found ###
@@ -872,6 +1003,10 @@ def extractGoals(c):
 SHORTEST_GOAL=4
 def dupcheck(ls):
     res = []
+
+    tmp = []
+    for s in ls:
+        tmp.append(s) # to keep order
     
     def lenf(s):
         return len(s)
@@ -906,7 +1041,12 @@ def dupcheck(ls):
         if not skip and len(s) >= SHORTEST_GOAL:
             log("dupcheck, new goal: ", s)
             res.append(s)
-    return res
+
+    keep = []
+    for s in tmp:
+        if s in res:
+            keep.append(s)
+    return keep
 
 ######################################################################
 ### Check if a goal starts with upper or lower case. If lower case ###
@@ -917,12 +1057,45 @@ def startcheck(ls):
     res = []
     for si in range(len(ls)):
         s = ls[si]
-        for i in range(len(s)):
-            if s[i].isupper():
-                break
-            if s[i].islower():
+        if s[0].isupper():
+            pass
+        elif s[0].islower():
+            if s[:5] == "kunna":
+                s = "Hon ska " + s
+            elif s[:3] == "ha ":
+                s = "Hon ska " + s
+            else:
                 s = "Hon ska kunna " + s
-                break
+        if s[-3:] == "och":
+            s = s[:-3].strip()
+
+        p = s.find("För att bli godkänd")
+        if p > 10:
+            s = s[:p]
+        if s[-5:] == "kunna":
+            continue # most likely a faulty match, skip
+        if s[-5:] == "skall":
+            continue # most likely a faulty match, skip
+        if not s[-1] in string.punctuation:
+            s += " ."
+        res.append(s)
+    return res
+
+def startcheckEn(ls):
+    res = []
+    for si in range(len(ls)):
+        s = ls[si]
+        if s[0].isupper():
+            pass
+        elif s[0].islower():
+            if s[:2] == "to":
+                s = "You should be able " + s
+            elif s[:7] == "able to":
+                s = "You should be " + s
+            elif s[:10] == "be able to":
+                s = "You should " + s
+            else:
+                s = "You should be able to " + s
 
         if not s[-1] in string.punctuation:
             s += " ."
@@ -933,10 +1106,16 @@ def startcheck(ls):
 ### For each course, extract goals ###
 ######################################
 for c in data["Course-list"]:
-    iloList = extractGoals(c)
-    iloList = dupcheck(iloList)
-    iloList = startcheck(iloList)
+    log("New course ---------------------------------------------", c["CourseCode"])
+    iloList, iloListEn = extractGoals(c)
+
+    # iloList = dupcheck(iloList) # should not be necessary
+    iloList = startcheck(iloList)    
     c["ILO-list-sv"] = iloList
+    
+    # iloListEn = dupcheck(iloListEn) # should not be necessary
+    iloListEn = startcheckEn(iloListEn)
+    c["ILO-list-en"] = iloListEn
     
     cleanUp(c)
 
@@ -945,7 +1124,14 @@ for c in data["Course-list"]:
 
     checkPre(c)
 
+ls = []
+for name in times:
+    ls.append([times[name], name])
+ls.sort()
 
+for p in ls:
+    log(p[1], "runtime {:1.2f}".format(p[0]))
+    
 ##############################
 ### Print result to stdout ###
 ##############################
