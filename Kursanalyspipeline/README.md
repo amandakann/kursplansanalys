@@ -106,9 +106,11 @@ scripts. These are the same files used by the KTH Java version for
 analysing course information.
 
 `bloom_revised_sv.txt`         Verbs (in Swedish) and their Bloom levels
+
 `bloom_revised_en.txt`         Verbs (in English) and their Bloom levels
 
 `swedish_trigrams.txt`         Character trigrams for Swedish; used for language identification
+
 `english_trigrams.txt`         Character trigrams for English; used for language identification
 
 If you want to have a different classification of goals you can use
