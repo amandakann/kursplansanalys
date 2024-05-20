@@ -24,6 +24,7 @@ moreInputs = []
 
 defaultSv = "data/bloom_revised_sv.txt"
 defaultEn = "data/bloom_revised_en.txt"
+stoplistFile = "data/stoplist.txt"
 
 bloomFile = defaultSv
 bloomFileEn = defaultEn
@@ -36,8 +37,10 @@ for i in range(1, len(sys.argv)):
         configFile = sys.argv[i+1]
     elif sys.argv[i] == "-inp" and i+1 < len(sys.argv):
         moreInputs.extend(sys.argv[i+1].split())
+    elif sys.argv[i] == "-sl" and i + 1 < len(sys.argv):
+        stoplistFile = sys.argv[i+1]
     else:
-        if sys.argv[i-1] != "-b" and sys.argv[i-1] != "-c" and sys.argv[i-1] != "-inp":
+        if sys.argv[i-1] != "-b" and sys.argv[i-1] != "-c" and sys.argv[i-1] != "-inp" and sys.argv[i-1] != "-sl":
             unknown = 1
 
 if unknown:
@@ -273,6 +276,18 @@ if checks["bloom"]:
             ambigEn[v] = [bloomLexEn[v]] + ambigEn[v]
         else:
             print (bloomFileEn + " has verb '" + v + "' with ambiguous Bloom level but no default level.\n")
+
+#####################
+### read stoplist ###
+#####################
+stoplist = {}
+try:
+    for line in open(stoplistFile).readlines():
+        v = line.strip()
+        if len(v):
+            stoplist[v] = 1
+except:
+    log("Error reading stoplist.")
 
 ############################
 ### read JSON from stdin ###
@@ -1058,7 +1073,6 @@ for cl in data:
                         if wtl["t"][:2] == "vb" and wtl["t"][-4:] != ".sfo" and not (wtl["t"][-3:] == "aux" or wtl["t"][-3:] == "kop" or wtl["t"][-3:] == "mod"):
                             found = 0
                             w = wtl["l"]
-                            stoplist = {"ska":1, "kunna":1, "ske":1}
                             if w in stoplist:
                                 continue
 
