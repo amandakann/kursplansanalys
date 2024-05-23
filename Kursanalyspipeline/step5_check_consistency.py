@@ -16,7 +16,6 @@ prints = {"courses":1, "errorList":1, "perSCB":0, "perType":0, "perLevel":0, "am
 scbs = {"other":1}
 levels = {"":1, "A1E":1, "A1F":1, "A1N":1, "A2E":1, "AXX":1, "G1F":1, "G1N":1, "G2E":1, "G2F":1, "GXX":1}
 
-bloomFile = ""
 configFile = "step5.config"
 unknown = 0
 
@@ -304,7 +303,8 @@ if not sys.stdin.isatty():
     except:
         data = {}
 else:
-    data = {"Course-list":[]}    
+    data = {"Course-list":[]}
+
 #######################
 ### Read more data. ###
 #######################
@@ -338,28 +338,115 @@ nonBloomVerbs = {}
 nonBloomVerbsInfo = {}
 ambiguousVerbs = {}
 
-bloomStats = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}
-def addBloomList(ls, scb, level, ctype, uni):
-    if not ctype in bloomStats["type"]:
-        bloomStats["type"][ctype] = {"verbCounts":{}}
-    if not level in bloomStats["level"]:
-        bloomStats["level"][level] = {"verbCounts":{}}
-    if not scb in bloomStats["scb"]:
-        bloomStats["scb"][scb] = {"verbCounts":{}}
-    if not uni in bloomStats["uni"]:
-        bloomStats["uni"][uni] = {"verbCounts":{}}
+# bloomStats = {"course":{"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}, "goal":"course":{"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}}
+bloomStatsCC = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}
+bloomStatsGoal = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}
 
+def addBloomList(ls, scb, level, ctype, uni, ):
+    if not ctype in bloomStatsCC["type"]:
+        bloomStatsCC["type"][ctype] = {"verbCounts":{}, "goalCounts":{}}
+    if not level in bloomStatsCC["level"]:
+        bloomStatsCC["level"][level] = {"verbCounts":{}, "goalCounts":{}}
+    if not scb in bloomStatsCC["scb"]:
+        bloomStatsCC["scb"][scb] = {"verbCounts":{}, "goalCounts":{}}
+    if not uni in bloomStatsCC["uni"]:
+        bloomStatsCC["uni"][uni] = {"verbCounts":{}, "goalCounts":{}}
+
+    if not ctype in bloomStatsGoal["type"]:
+        bloomStatsGoal["type"][ctype] = {"verbCounts":{}}
+    if not level in bloomStatsGoal["level"]:
+        bloomStatsGoal["level"][level] = {"verbCounts":{}}
+    if not scb in bloomStatsGoal["scb"]:
+        bloomStatsGoal["scb"][scb] = {"verbCounts":{}}
+    if not uni in bloomStatsGoal["uni"]:
+        bloomStatsGoal["uni"][uni] = {"verbCounts":{}}
+
+    nGoals = len(ls)
+    for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"]]:
+        if not nGoals in lex:
+            lex[nGoals] = 0
+        lex[nGoals] += 1
+
+        if not "tot" in lex:
+            lex["tot"] = 0
+        lex["tot"] += nGoals
+
+        if not "N" in lex:
+            lex["N"] = 0
+        lex["N"] += 1
+        
     flat = []
     for goal in ls:
+        nVerbs = len(goal)
+        mn = 10
+        mx = -1
+        tot = 0
+        mean = 0
+        votes = {}
+
         for verb in goal:
             flat.append(verb[2])
 
-            for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["uni"][uni]]:
+            for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["uni"][uni]]:
                 if not verb[1] in lex["verbCounts"]:
                     lex["verbCounts"][verb[1]] = 1
                 else:
                     lex["verbCounts"][verb[1]] += 1
-    
+
+            bLevel = verb[2]
+            if bLevel > mx:
+                mx = bLevel
+            if bLevel < mn:
+                mn = bLevel
+            tot += 1
+            mean += bLevel
+            if not bLevel in votes:
+                votes[bLevel] = 1
+            else:
+                votes[bLevel] += 1
+                    
+        for lex in [bloomStatsGoal["all"], bloomStatsGoal["scb"][scb], bloomStatsGoal["level"][level], bloomStatsGoal["type"][ctype], bloomStatsGoal["uni"][uni]]:
+            if not "max" in lex:
+                lex["max"] = {}
+            if not mx in lex["max"]:
+                lex["max"][mx] = 1
+            else:
+                lex["max"][mx] += 1
+
+            if not "min" in lex:
+                lex["min"] = {}
+            if not mn in lex["min"]:
+                lex["min"][mn] = 1
+            else:
+                lex["min"][mn] += 1
+
+            if not "nVerbs" in lex:
+                lex["nVerbs"] = {}
+
+            if not tot in lex["nVerbs"]:
+                lex["nVerbs"][tot] = 1
+            else:
+                lex["nVerbs"][tot] += 1
+
+            if not "mean" in lex:
+                lex["mean"] = []
+            if tot > 0:
+                lex["mean"].append(mean / float(tot))
+                
+            v = -1
+            vm = 0
+            for vv in votes:
+                if votes[vv] > vm:
+                    vm = votes[vv]
+                    v = vv
+            if not "common" in lex:
+                lex["common"] = {}
+            if not v in lex["common"]:
+                lex["common"][v] = 1
+            else:
+                lex["common"][v] += 1
+            
+            
     if len(flat) > 0:
         mn = 10
         mx = -1
@@ -386,7 +473,7 @@ def addBloomList(ls, scb, level, ctype, uni):
                 vm = votes[vv]
                 v = vv
         
-        for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["all"], bloomStats["uni"][uni]]:
+        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni]]:
             if not "max" in lex:
                 lex["max"] = {}
             if not mx in lex["max"]:
@@ -431,7 +518,7 @@ def addBloomList(ls, scb, level, ctype, uni):
                     lex["val"][b] += 1
 
     else:
-        for lex in [bloomStats["scb"][scb], bloomStats["level"][level], bloomStats["type"][ctype], bloomStats["all"], bloomStats["uni"][uni]]:
+        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni]]:
 
             if not "nVerbs" in lex:
                 lex["nVerbs"] = {}
@@ -440,24 +527,38 @@ def addBloomList(ls, scb, level, ctype, uni):
             else:
                 lex["nVerbs"][0] += 1
 
+        nGoals = 0
+        for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"]]:
+            if not nGoals in lex:
+                lex[nGoals] = 0
+            lex[nGoals] += 1
+
+            if not "tot" in lex:
+                lex["tot"] = 0
+            lex["tot"] += nGoals
+
+            if not "N" in lex:
+                lex["N"] = 0
+            lex["N"] += 1
+
 def printBloomStats():
-    if not "all" in bloomStats or not "max" in bloomStats["all"]:
+    if not "all" in bloomStatsCC or not "max" in bloomStatsCC["all"]:
         return
     
     print ("-"*15, "Bloom classifications", "-"*15)
 
-    print ("-"*10, "Verbs per Bloom level", "-"*10)
+    print ("\n" + "-"*10, "Verbs per Bloom level", "-"*10)
     totCourses = 0
-    for v in bloomStats["all"]["max"]:
-        totCourses += bloomStats["all"]["max"][v]
+    for v in bloomStatsCC["all"]["max"]:
+        totCourses += bloomStatsCC["all"]["max"][v]
     totBloom = 0
     for val in range(6):
-        if val in bloomStats["all"]["val"]:
-            totBloom += bloomStats["all"]["val"][val]
+        if val in bloomStatsCC["all"]["val"]:
+            totBloom += bloomStatsCC["all"]["val"][val]
 
     for val in range(6):
-        if val in bloomStats["all"]["val"]:
-            c = bloomStats["all"]["val"][val]
+        if val in bloomStatsCC["all"]["val"]:
+            c = bloomStatsCC["all"]["val"][val]
             if totBloom > 0:
                 proc = c / float(totBloom)
             else:
@@ -466,13 +567,19 @@ def printBloomStats():
             print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
         else:
             print ("{0: >2}: {1: >5} (0%)".format(val, 0))
-    print (totBloom, "classified verbs")
+    print ("\n" + str(totBloom), "classified verbs\n")
+
+    ###############################
+    ### Print stats per course ####
+    ###############################
+    
+    print ("\n" + "-"*15, "Statistics per course", "-"*15)
     
     print ("-"*10, "Maximum Bloom level per course", "-"*10)
     tmp = 0
     for val in range(6):
-        if val in bloomStats["all"]["max"]:
-            c = bloomStats["all"]["max"][val]
+        if val in bloomStatsCC["all"]["max"]:
+            c = bloomStatsCC["all"]["max"][val]
             tmp += c
             if totCourses > 0:
                 proc = c / float(totCourses)
@@ -485,8 +592,8 @@ def printBloomStats():
     print ("-"*10, "Minimum Bloom level per course", "-"*10)
     tmp = 0
     for val in range(6):
-        if val in bloomStats["all"]["min"]:
-            c = bloomStats["all"]["min"][val]
+        if val in bloomStatsCC["all"]["min"]:
+            c = bloomStatsCC["all"]["min"][val]
             tmp += c
             if totCourses > 0:
                 proc = c / float(totCourses)
@@ -498,8 +605,8 @@ def printBloomStats():
 
     print ("-"*10, "Mean Bloom level per course", "-"*10)
     m = 0
-    n = len(bloomStats["all"]["mean"])
-    for v in bloomStats["all"]["mean"]:
+    n = len(bloomStatsCC["all"]["mean"])
+    for v in bloomStatsCC["all"]["mean"]:
         m += v
     if n > 0:
         m = m / n
@@ -508,8 +615,8 @@ def printBloomStats():
     print ("-"*10, "Most common Bloom level per course", "-"*10)
     tmp = 0
     for val in range(6):
-        if val in bloomStats["all"]["common"]:
-            c = bloomStats["all"]["common"][val]
+        if val in bloomStatsCC["all"]["common"]:
+            c = bloomStatsCC["all"]["common"][val]
             tmp += c
             if totCourses > 0:
                 proc = c / float(totCourses)
@@ -522,11 +629,11 @@ def printBloomStats():
     print ("-"*10, "Number of Bloom verbs per course", "-"*10)
     tmp = 0
     ls = []
-    for val in bloomStats["all"]["nVerbs"]:
+    for val in bloomStatsCC["all"]["nVerbs"]:
         ls.append(val)
     ls.sort()
     for val in ls:
-        c = bloomStats["all"]["nVerbs"][val]
+        c = bloomStatsCC["all"]["nVerbs"][val]
         tmp += c
         if totCourses > 0:
             proc = c / float(totCourses)
@@ -539,48 +646,100 @@ def printBloomStats():
             print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
     print (tmp, "courses in data")
 
-    for tmp in [["University", bloomStats["uni"]], ["SCB", bloomStats["scb"]], ["CourseLevel", bloomStats["level"]], ["CourseType", bloomStats["type"]]]:
+    #############################
+    ### Print stats per goal ####
+    #############################
+
+    print ("\n" + "-"*15, "Statistics per goal", "-"*15)
+
+    totGoals = 0
+    for v in bloomStatsGoal["all"]["max"]:
+        totGoals += bloomStatsGoal["all"]["max"][v]
+    
+    print ("-"*10, "Maximum Bloom level per goal", "-"*10)
+    tmp = 0
+    for val in range(6):
+        if val in bloomStatsGoal["all"]["max"]:
+            c = bloomStatsGoal["all"]["max"][val]
+            tmp += c
+            if totGoals > 0:
+                proc = c / float(totGoals)
+            procs = "{:>5}".format("{:2.1%}".format(proc))
+            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+        else:
+            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+    print (tmp, "goals with Bloom data")
+    
+    print ("-"*10, "Minimum Bloom level per goal", "-"*10)
+    tmp = 0
+    for val in range(6):
+        if val in bloomStatsGoal["all"]["min"]:
+            c = bloomStatsGoal["all"]["min"][val]
+            tmp += c
+            if totGoals > 0:
+                proc = c / float(totGoals)
+            procs = "{:>5}".format("{:2.1%}".format(proc))
+            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+        else:
+            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+    print (tmp, "goals with Bloom data")
+
+    print ("-"*10, "Mean Bloom level per goal", "-"*10)
+    m = 0
+    n = len(bloomStatsGoal["all"]["mean"])
+    for v in bloomStatsGoal["all"]["mean"]:
+        m += v
+    if n > 0:
+        m = m / n
+    print ("{0: .2}".format(m))
+        
+    print ("-"*10, "Most common Bloom level per goal", "-"*10)
+    tmp = 0
+    for val in range(6):
+        if val in bloomStatsGoal["all"]["common"]:
+            c = bloomStatsGoal["all"]["common"][val]
+            tmp += c
+            if totGoals > 0:
+                proc = c / float(totGoals)
+            procs = "{:>5}".format("{:2.1%}".format(proc))
+            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+        else:
+            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+    print (tmp, "goals with Bloom data")
+
+    print ("-"*10, "Number of Bloom verbs per goal", "-"*10)
+    tmp = 0
+    ls = []
+    for val in bloomStatsGoal["all"]["nVerbs"]:
+        ls.append(val)
+    ls.sort()
+    for val in ls:
+        c = bloomStatsGoal["all"]["nVerbs"][val]
+        tmp += c
+        if totGoals > 0:
+            proc = c / float(totGoals)
+        else:
+            proc = 0
+        procs = "{:>5}".format("{:2.1%}".format(proc))
+        if val == ls[-1]:
+            print ("{0: >3}+: {1: >5} ({2:})".format(val, c, procs))
+        else:
+            print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
+    print (tmp, "goals in data")
+
+
+    ###########################################
+    ### Print data per uni etc., per course ###
+    ###########################################
+
+    for tmp in [["University", bloomStatsCC["uni"], bloomStatsGoal["uni"]], ["SCB", bloomStatsCC["scb"], bloomStatsGoal["scb"]], ["CourseLevel", bloomStatsCC["level"], bloomStatsGoal["level"]], ["CourseType", bloomStatsCC["type"], bloomStatsGoal["type"]]]:
         label = tmp[0]
         if (label == "University") or (label == "SCB" and prints["perSCB"]) or (label == "CourseLevel" and prints["perLevel"]) or (label == "CourseType" and prints["perType"]):
             lex = tmp[1]
 
             if len(lex.keys()) > 1:
             
-                print("-"*10, label, "-"*10)
-
-                printBloomHelper("max", "max Bloom", lex, 6)
-
-                printBloomHelper("min", "min Bloom", lex, 6)
-
-                ls = []
-                rowLabel = "mean Bloom"
-                longest = len(rowLabel)
-                for row in lex:
-                    ls.append(row)
-                    if len(row) > longest:
-                        longest = len(row)
-                ls.sort()
-
-                s = "{0: >" + str(longest) + "}: "
-                s = s.format(rowLabel)
-                print (s)
-
-                for row in ls:
-                    s = "{0: >" + str(longest) + "}: "
-                    s = s.format(row)
-
-                    if "mean" in lex[row]:
-                        m = 0
-                        n = len(lex[row]["mean"])
-                        for v in lex[row]["mean"]:
-                            m += v
-                        if n > 0:
-                            m = m / n
-                        s += "{0: .2} ".format(m)
-                    else:
-                        s += "{0: >5} ".format(0)
-                    print (s)
-                print()
+                print("\n" + "-"*10, "Statistics per", label, "-"*10)
 
                 print("-"*10, "Most common verbs", "-"*10)
                 for uni in lex:
@@ -594,9 +753,6 @@ def printBloomStats():
                         if vi >= 10:
                             break
                 print()
-
-
-                printBloomHelper("common", "most common Bloom level", lex, 6)
 
                 ls = []
                 rowLabel = "Verbs per Bloom level"
@@ -655,8 +811,90 @@ def printBloomStats():
                     print ()
                 print()
 
-                printBloomHelper("nVerbs", "#verbs", lex, VERBS_BEFORE_MORE_THAN+1)
+                printBloomHelper("max", "max Bloom/course", lex, 6)
 
+                printBloomHelper("min", "min Bloom/course", lex, 6)
+
+                ls = []
+                rowLabel = "mean Bloom per course"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
+
+                s = "{0: >" + str(longest) + "}: "
+                s = s.format(rowLabel)
+                print (s)
+
+                for row in ls:
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+
+                    if "mean" in lex[row]:
+                        m = 0
+                        n = len(lex[row]["mean"])
+                        for v in lex[row]["mean"]:
+                            m += v
+                        if n > 0:
+                            m = m / n
+                        s += "{0: .2} ".format(m)
+                    else:
+                        s += "{0: >5} ".format(0)
+                    print (s)
+                print()
+
+                printBloomHelper("common", "most common Bloom level (per course)", lex, 6)
+
+                printBloomHelper("nVerbs", "#verbs/course", lex, VERBS_BEFORE_MORE_THAN+1)
+                
+            #########################################
+            ### Print data per uni etc., per goal ###
+            #########################################
+            lex = tmp[2]
+
+            if len(lex.keys()) > 1:
+
+                printBloomHelper("max", "max Bloom/goal", lex, 6)
+
+                printBloomHelper("min", "min Bloom/goal", lex, 6)
+
+                ls = []
+                rowLabel = "mean Bloom per goal"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
+
+                s = "{0: >" + str(longest) + "}: "
+                s = s.format(rowLabel)
+                print (s)
+
+                for row in ls:
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+
+                    if "mean" in lex[row]:
+                        m = 0
+                        n = len(lex[row]["mean"])
+                        for v in lex[row]["mean"]:
+                            m += v
+                        if n > 0:
+                            m = m / n
+                        s += "{0: .2} ".format(m)
+                    else:
+                        s += "{0: >5} ".format(0)
+                    print (s)
+                print()
+
+                printBloomHelper("common", "most common Bloom level (per goal)", lex, 6)
+
+                printBloomHelper("nVerbs", "#verbs/goal", lex, VERBS_BEFORE_MORE_THAN+1)
+
+    
 def printBloomHelper(f, label, lex, n):
     ls = []
     rowLabel = label
@@ -744,6 +982,18 @@ def addNonBloom(v, goal, cc):
         nonBloomVerbsInfo[v] = []
         nonBloomVerbsInfo[v].append([goal, cc])
 
+goalCounts = {"tot":0, "N":0, "max":0}
+def addGoals(ls):
+    n = len(ls)
+
+    if not n in goalCounts:
+        goalCounts[n] = 0
+    goalCounts[n] += 1
+    goalCounts["tot"] += n
+    goalCounts["N"] += 1
+    if n > goalCounts["max"]:
+        goalCounts["max"] = n
+    
 typeCounts = {}
 def addType(t):
     if not t in typeCounts:
@@ -778,6 +1028,16 @@ def printStats():
                 proc = 0
             procs = "{: >5}".format("{:2.1%}".format(proc))
             print("{0: >5} ({1:}) courses of type {2:}".format(c, procs, t))
+    if goalCounts:
+        print ("\n","-"*15, "Course Goals", "-"*15)
+        if goalCounts["N"] > 0:
+            print("{0: >5} goals in {1:} courses, averaging {2: 1.2} goals per course.".format(goalCounts["tot"], goalCounts["N"], goalCounts["tot"]/float(goalCounts["N"])))
+        else:
+            print("{0: >5} goals in {1:} courses.".format(goalCounts["tot"], goalCounts["N"]))
+
+        print("\nThe number of courses with a specific number of goals")
+        for n in range(goalCounts["max"] + 1):
+            print("{0: >2}: {1:}".format(n, goalCounts[n]))
     
 def printBloom():
     tot = 0
@@ -939,6 +1199,11 @@ for cl in data:
         addLevel(level)
         addSCB(scb)
 
+        if "ILO-list-sv" in c:
+            addGoals(c["ILO-list-sv"])
+        else:
+            addGoals([])
+            
         if "Bloom-list-sv" in c:
             addBloomList(c["Bloom-list-sv"], scb, level, thisType, c["University"])
         
