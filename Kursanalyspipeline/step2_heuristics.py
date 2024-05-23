@@ -337,6 +337,14 @@ newlineListExpWrap = re.compile("(\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)
 dotListExp = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*(([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})", re.S)
 dotListExpWrap = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–])){4,}(\s*.*?[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})+", re.S)
 
+### Courses can use X as markers for goals
+###   "Efter genomgången kurs ska deltagarna kunna XReflektera kring och diskutera ämnet hållbar utveckling och koppla begreppen till det egna ämne
+###    sområdet XPresentera hållbar utveckling som ett ämne som kräver kritisk reflektion och diskussion utifrån olika perspektiv och visa hur detta bör komma f
+###    ram i utbildningen för studenter XDesigna kursmål ..."
+###   (example course KTH LH215V)
+XxListExp = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*(([^X\n\s]|( [^X\n\s])){4,}[^X\n\s])", re.S)
+XxListExpWrap = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,}(\s*.*?[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,})+", re.S)
+
 ###    (example course UMU 2PS273)
 oListExp = re.compile("[.\s][oO]\s(.*?)\\.")
 oListExpWrap = re.compile("([.\s][oO]\s.*){3,}")
@@ -599,6 +607,11 @@ forAttExp = re.compile("<p>\s*för\s+att", re.I)
 forAttGodkandExp = re.compile("<p>\s*för\s+att.*bli.*godkänd", re.I)
 forAttExpEn = re.compile("<p>\s*in\s+order\s+to", re.I)
 
+###############################################
+### Expressions for common writing mistakes ###
+###############################################
+ochExp = re.compile("\soch([a-zåäö]+)")
+attExp = re.compile("\satt([b-df-hj-npqs-zåäö]+)")
 
 ################################################################################
 ### Use heuristics to extract sentences with goals from the ILO-sv free text ###
@@ -664,11 +677,10 @@ def extractGoals(c):
     
     en = gradeparExp.sub("", en)
 
-    
     ##############################
     ### Fix some weird codings ###
     ##############################
-    sv = sv.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ")
+    sv = sv.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ").replace(u'\uf02d', "•")
     sv = sv.replace("&eacute;", "é")
     sv = sv.strip()
     while len(sv) and sv[0] == '"':
@@ -679,6 +691,13 @@ def extractGoals(c):
     iloList = []
     iloListEn = []
    
+    ########################################
+    ### Fix some common writing mistakes ###
+    ########################################
+
+    sv = ochExp.sub(" och \\1", sv)
+    sv = attExp.sub(" och \\1", sv)
+    
     ###################################################################
     ### Remove motivation for having these goals from the goal text ###
     ###################################################################
@@ -717,13 +736,13 @@ def extractGoals(c):
     sv, en = matchAndConsume(newlineListExpWrap, newlineListExp, sv, newlineListExpWrap, newlineListExp, en, "newline-list", iloList, iloListEn)
     
     sv, en = matchAndConsume(dotListExpWrap, dotListExp, sv, dotListExpWrap, dotListExp, en, "dot-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(XxListExpWrap, XxListExp, sv, XxListExpWrap, XxListExp, en, "Xx-list", iloList, iloListEn)
     
     tmp = sv.replace(".o", ". o").replace("Färdighet och förmåga", " ").replace("Kunskap och förståelse", " ").replace("Värderingsförmåga och förhållningssätt", " ")
     sv, en = matchAndConsume(oListExpWrap, oListExp, tmp, oListExpWrap, oListExp, en, "o-list", iloList, iloListEn)
 
     sv, en = matchAndConsume(umuHaLinesWrap, umuHaLines, sv, umuHaLinesWrapEn, umuHaLines, en, "umu-ha-lines", iloList, iloListEn)
-    
-    log("+++++++++++++++++++ En before\n", en + "\n\n")
     
     sv, tmp = matchAndConsumeSpecial(umuEfterHypWrapSpec2, umuEfterHyp, sv, umuEfterHyp, umuEfterHyp, "", "efter-hyphen-Spec-list", iloList, iloListEn)
     
