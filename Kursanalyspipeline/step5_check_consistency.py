@@ -1037,7 +1037,8 @@ def printStats():
 
         print("\nThe number of courses with a specific number of goals")
         for n in range(goalCounts["max"] + 1):
-            print("{0: >2}: {1:}".format(n, goalCounts[n]))
+            if n in goalCounts:
+                print("{0: >2}: {1:}".format(n, goalCounts[n]))
     
 def printBloom():
     tot = 0
