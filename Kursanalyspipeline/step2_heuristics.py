@@ -202,6 +202,8 @@ for line in open("data/english_trigrams.txt").readlines():
 MIN_LEN_LANGUAGE = 30
 def identifyLanguage(text):
 
+    text = re.sub("<[^>]+>", " ", text) # Remove HTML tags etc. that look like English
+    
     # fix some common problems with mixed Swedish/English because English text quotes Swedish course names or similar things.
     low = text.lower()
     engWords = ["equivalent", "courses", "enrolled", "admitted", "programmes", "programming skill", "completed", "corresponding", "phd student"]
@@ -621,12 +623,14 @@ godkandExp = re.compile("[Ff]ör\s*(betyg(e[nt])?)?\s*((G)|([Gg]odkänd))")
 vgExp = re.compile("(((Förväntat)|(Efter))[^A-ZÅÄÖ<>]+)?[Ff]ör\s*(betyg(e[tn])?)?\s*((VG)|([Vv]äl\s*[Gg]odkänd)|([Hh]ögre\s*[Bb]etyg))")
 vgExp2 = re.compile("(((Förväntat)|(Efter)|(<p>))[^A-ZÅÄÖ<>]+)[Ff]ör\s*(betyg(e[tn])?)?\s*((VG)|([Vv]äl\s*[Gg]odkänd)|([Hh]ögre\s*[Bb]etyg))")
 
+
 ###############################################
 ### Expressions for common writing mistakes ###
 ###############################################
 ochExp = re.compile("\soch([a-zåäö]+)")
 attExp = re.compile("\satt([b-df-hj-npqs-zåäö]+)")
 
+htmlTrash = re.compile("(<[^>]*[-][^>]*>)|(</?w[^>]*>)|(<![^>]*>)|(</?m[^>]*>)|(X-NONE)")
 ################################################################################
 ### Use heuristics to extract sentences with goals from the ILO-sv free text ###
 ################################################################################
@@ -704,7 +708,15 @@ def extractGoals(c):
     
     iloList = []
     iloListEn = []
-   
+
+    
+    #############################
+    ### Remove some HTML tags ###
+    #############################
+    sv = htmlTrash.sub(" ", sv)
+    en = htmlTrash.sub(" ", en)
+    
+    
     ########################################
     ### Fix some common writing mistakes ###
     ########################################
