@@ -6,6 +6,9 @@ import sys
 
 from timeit import default_timer as timer
 
+
+SKIP_VG = 1 # Ignore goals that are for higher grades
+
 ##############################
 ### check system arguments ###
 ##############################
@@ -18,11 +21,17 @@ for i in range(1, len(sys.argv)):
         doXX = 0
     elif sys.argv[i] == "-log":
         logging = 1
+    elif sys.argv[i] == "-VG":
+        SKIP_VG = 0
+    elif sys.argv[i] == "-noVG":
+        SKIP_VG = 1
     else:
         print ("\nReads JSON from stdin, uses heuristics to extract goals from free text\nand to update GXX/AXX level tags based on prerequisites free text,\nprints result as JSON to stdout.")
         print ("\nusage options:")
         print ("     -l     update GXX/AXX tags where possible")
         print ("     -n     do not update GXX/AXX, only extract goals")
+        print ("     -VG    keep goals for higher grades")
+        print ("     -noVG  ignore goals for higher grades")
         print ("     -log   log debug information to " + sys.argv[0] + ".log\n")
         sys.exit(0)
 
@@ -427,9 +436,9 @@ formagaExpEn = re.compile("\sability.*?to\s*(([^.]{4,}?)(\.|\s\s))", re.I)
 ###   "... ska studenten kunna 1.Redovisa, diskutera och jämföra olika
 ###   historiskt kriminologiska studier. 2.Beskriva, ..."
 ###   (example course SU AKA132)
-kunna1exp = re.compile("[0-9]+[. ]\s*([^0-9]{4,})")
-kunna1expWrap = re.compile("kunna.*1[. ].*2[. ][^0-9]{4,}([0-9][. ][^0-9]{4,})*")
-kunna1expWrapEn = re.compile("((know\s*how)|(able))\s*to.*1[. ].*2[. ][^0-9]{4,}([0-9][. ][^0-9]{4,})*")
+kunna1exp = re.compile("[0-9]+[. ]?\s*([^0-9]{4,})")
+kunna1expWrap = re.compile("kunna.*(1.*?[^0-9]{4,}2.*?[^0-9]{4,}([0-9].*?[^0-9]{4,})*)")
+kunna1expWrapEn = re.compile("((know\s*how)|(able))\s*to.*(1.*?[^0-9]{4,}2.*?[^0-9]{4,}([0-9].*?[^0-9]{4,})*)")
 
 kunna1sub = re.compile("(,?\s*Efter avslutad kurs ska studenten)*\s*för betyget (.*?) kunna")
 
@@ -607,6 +616,11 @@ forAttExp = re.compile("<p>\s*för\s+att", re.I)
 forAttGodkandExp = re.compile("<p>\s*för\s+att.*bli.*godkänd", re.I)
 forAttExpEn = re.compile("<p>\s*in\s+order\s+to", re.I)
 
+
+godkandExp = re.compile("[Ff]ör\s*(betyg(e[nt])?)?\s*((G)|([Gg]odkänd))")
+vgExp = re.compile("(((Förväntat)|(Efter))[^A-ZÅÄÖ<>]+)?[Ff]ör\s*(betyg(e[tn])?)?\s*((VG)|([Vv]äl\s*[Gg]odkänd)|([Hh]ögre\s*[Bb]etyg))")
+vgExp2 = re.compile("(((Förväntat)|(Efter)|(<p>))[^A-ZÅÄÖ<>]+)[Ff]ör\s*(betyg(e[tn])?)?\s*((VG)|([Vv]äl\s*[Gg]odkänd)|([Hh]ögre\s*[Bb]etyg))")
+
 ###############################################
 ### Expressions for common writing mistakes ###
 ###############################################
@@ -711,6 +725,19 @@ def extractGoals(c):
             m2 = forAttGodkandExp.search(sv)
             if not m2 or m2.start() < m.start():
                 sv = forAttExp.split(sv)[0]  # remove everything from "för att" and forward
+    if SKIP_VG:
+        skip = 0
+        m = godkandExp.search(sv)
+        if m:
+            m2 = vgExp.search(sv)
+            if m2 and m2.start() > m.start():
+                skip = 1
+                sv = sv[:m2.start()]
+        else:
+            m2 = vgExp2.search(sv)
+            if m2:
+                skip = 1
+                sv = sv[:m2.start()]
     if en:
         m = forAttExpEn.search(en)
         if m and m.start() > 0:
@@ -791,7 +818,7 @@ def extractGoals(c):
     sv, en = matchAndConsume(kunnaAexpWrap, kunnaAexp, sv, kunnaAexpWrapEn, kunnaAexp, en, "kunna-a-exp", iloList, iloListEn)
     
     sv, en = matchAndConsume(skaKunnaExp, skaKunnaExp, sv, skaKunnaExpEn, skaKunnaExpEn, en, "ska-kunna-list", iloList, iloListEn)
-    
+
     sv, en = matchAndConsume(kunna1expWrap, kunna1exp, sv, kunna1expWrapEn, kunna1exp, en, "kunna-1-exp", iloList, iloListEn)
 
     for i in range(len(iloList)): # this captures too much in common UMU patterns, so we add a small correction here
