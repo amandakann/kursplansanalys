@@ -5,6 +5,9 @@ import html
 import xml.etree.ElementTree as XML
 import json
 import time
+import socket
+
+from timeit import default_timer as timer
 
 ##############################
 ### check system arguments ###
@@ -81,6 +84,146 @@ if useCache:
 # Does part-of-speech tagging.                                          ###
 # returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
 ###########################################################################
+def posParseAndSpell(text, doSpellCheck):
+
+    if text in cache:
+        global totHits
+        totHits += 1
+        return cache[text]
+
+    if len(text.strip()) > 0:
+        toSend  = ("TEXT " + text.replace("\n", " ").strip() + "\nENDQ\n").encode("latin-1", "ignore")
+        commOK = 0
+        tries = 0
+        
+        while tries < 5 and not commOK:
+            reply = ""
+            try:
+                usock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                usock.settimeout(60 * 2) # if there is no reply in 2 minutes, give up and try again
+                usock.connect(("skrutten.csc.kth.se", 6123))
+
+                usock.send(toSend) # There is a length restriction on this service, but we should always be fine with our relatively short texts.
+
+                first = 1
+                haveAll = 0
+                while not haveAll:
+                    if first:
+                        first = 0
+                        reply = usock.recv(1024*1024)
+                    else:
+                        reply += usock.recv(1024*1024)
+
+                    try:
+                        tmp = reply.decode("latin-1")
+                        if tmp.find("/Root>") >= 0:
+                            haveAll = 1
+                    except:
+                        haveAll = 0
+                usock.close()
+                commOK = 1
+
+            except Exception as e:
+                log("Exception when using Granska: " + str(e))
+                tries += 1
+                time.sleep(15) # wait 15 seconds and see if the server is back again
+
+        if commOK:
+            
+            try:
+                t = reply.decode("latin-1")
+                p = t.find("<Root>")
+                t = t[p:]
+                xml = XML.fromstring(t)
+            except Exception as e:
+                log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n" + text + "\n\n")
+                writeCache()
+                if t.lower().find("granska error"):
+                    time.sleep(5*60) # sleep 5 minutes and wait for the Granska server to come back
+                return []
+
+            if doSpellCheck:
+                return spellCheckAndTag(xml)
+            else:
+                return tagsFromXML(xml)
+def spellCheckAndTag(xml):
+    # Find all sentences
+    sentences = []
+    for elS in xml.iter("s"):
+        if elS and elS.tag == "s" and elS.attrib:
+            sentId = elS.attrib["ref"]
+            sent = []
+            for elW in elS.iter('w'):
+                sent.append(elW.text)
+            if len(sent) > 0:
+                sentences.append([sentId, sent])
+
+    # find all error reports, save the ones that are spelling errors with corrections
+    spellingSuggs = []
+    for elScrut in xml.iter('scrutinizer'):
+        for elS in elScrut.iter('s'):
+            sentId = elS.attrib["ref"]
+
+            for elErr in elS.iter('gramerror'):
+                isSpelling = 0
+                for field in elErr:
+                    if field.tag == "rule" and field.text == "stav1@stavning":
+                        isSpelling = 1
+                        break
+                suggs = []
+                if isSpelling:                        
+                    for sugg in elErr.iter('sugg'):
+                        suggs.append("".join(sugg.itertext()))
+                markFrom = -1
+                markTo = -1
+                if len(suggs):
+                    for mark in elErr.iter('mark'):
+                        attribs = mark.attrib
+                        if "begin" in attribs:
+                            markFrom = int(attribs["begin"])
+                        if "end" in attribs:
+                            markTo = int(attribs["end"])
+                if markTo >= 0 and markTo == markFrom:
+                    spellingSuggs.append([sentId, markTo, suggs])
+
+    # apply corrections
+    atLeastOneChange = 0
+    for sugg in spellingSuggs:
+        sId = sugg[0]
+        for s in range(len(sentences)):
+            if sentences[s][0] == sId:
+                markTo = sugg[1]
+                replacement = sugg[2][0]
+                sentences[s][1][markTo - 2] = replacement
+                atLeastOneChange = 1
+                break
+
+    # if something changed, run Granska on the corrected text
+    if atLeastOneChange:
+        newText = ""
+        for s in sentences:
+            sent = " ".join(s[1])
+            newText += sent
+            newText += "\n"
+        return posParseAndSpell(newText, False)
+    else:
+        return tagsFromXML(xml)
+
+def tagsFromXML(xml):
+    res = convertTags(xml)
+
+    if res:
+        cache[text] = res
+        if useCache:
+            global newReqsNotInFile
+            newReqsNotInFile += 1
+    
+            if newReqsNotInFile > WHEN_TO_WRITE:
+                writeCache()
+    return res
+
+
+
 def postag(text):
     if text in cache:
         global totHits
@@ -95,7 +238,7 @@ def postag(text):
                 x = requests.post(url, data = {"coding":"json", "text":text})
                 break
             except Exception as e:
-                log("Excpetion when using Granska: " + str(e))
+                log("Exception when using Granska: " + str(e))
                 tries += 1
                 time.sleep(15) # wait 15 seconds and see if the server is back again
                 
@@ -130,6 +273,9 @@ def postag(text):
     return []
 
 def writeCache():
+    if not useCache:
+        return
+    
     global totNew
     global newReqsNotInFile
     f = open(cacheFile, "w")
@@ -157,7 +303,7 @@ def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
                 x = requests.post(url, data = {"text":text})
                 break
             except Exception as e:
-                log("Excpetion when using Granska: " + str(e))
+                log("Exception when using Granska: " + str(e))
                 tries += 1
                 time.sleep(15) # wait 15 seconds and see if the server is back again
                 
@@ -270,11 +416,15 @@ def convertTags(granskaXML):
                     
                 if elW.attrib:
                     if "tag" in elW.attrib:
-                        tag = int(elW.attrib["tag"])
-                        if tag < len(tagLex):
-                            tmp["t"] = tagLex[tag]
+                        tagtmp = elW.attrib["tag"]
+                        if len(tagtmp) and tagtmp[0].isdigit():
+                            tag = int(tagtmp)
+                            if tag < len(tagLex):
+                                tmp["t"] = tagLex[tag]
+                            else:
+                                skip = 1
                         else:
-                            skip = 1
+                            tmp["t"] = tagtmp
                     else:
                         skip = 1
                         
@@ -319,24 +469,28 @@ for idx in range(cs):
         for s in ls:
             text += "\n"
             text += s
+        
         if doSpell:
-            wtl = granska(text)        
+            wtl = posParseAndSpell(text, True)
+            # wtl = granska(text)        
         else:
-            wtl = postag(text)
+            wtl = posParseAndSpell(text, False)
+            # wtl = postag(s)
     else:
         res = []
         for s in ls:
+            text = s
             if doSpell:
-                wtl = granska(s)        
+                wtl = posParseAndSpell(text, True)
             else:
-                wtl = postag(s)
-                
+                wtl = posParseAndSpell(text, False)
             res += wtl
         wtl = res
     c["ILO-list-sv-tagged"] = wtl
 
     if idx % 100 == 0:
         log("Courses: " + str(idx) + " of " + str(cs) + " done, " + str(totNew + newReqsNotInFile) + " non-cache items.")
+
 ##############################
 ### Print result to stdout ###
 ##############################
