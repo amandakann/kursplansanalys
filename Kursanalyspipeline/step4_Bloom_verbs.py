@@ -32,7 +32,6 @@ for i in range(1, len(sys.argv)):
         hlp = 1
     if sys.argv[i] == "help":
         hlp = 1
-
 if hlp:
     print ("\nReads JSON from stdin, extracts Bloom verbs and adds the Bloom levels, prints JSON to stdout.\n")
     print ("usage:")
@@ -146,10 +145,10 @@ def bloomVerbsInSentenceEn(s):
 
                 # log("match exp '" + str(exp) + "' in: " + str(s))
                 
-                toklen = len(tokens)
+                toklen = len(tokens) # length of rule expression
+                matchLen = 0         # length of matched text 
 
                 ii = 0
-                kk = 0
                 matchOK = 1
                 for k in range(len(tokens)):
                     if tokens[k] == "*":
@@ -165,17 +164,34 @@ def bloomVerbsInSentenceEn(s):
                             matchOK = 0
                             break
                     elif i + ii < len(s) and tokens[k].lower() == s[i + ii].lower():
-                        # log("OK for tokens[" + str(k)  + "] and s[" + str(i+ ii) + "], " + tokens[k])
                         ii += 1
                     else:
-                        # log("NOT OK for tokens[" + str(k)  + "] and s[" + str(i+ ii) + "], " + tokens[k])
                         matchOK = 0
                         break
                 if matchOK:
+                    matchLen = ii
                     log("exp was a match " + str(exp))
                     if toklen > longestMatch:
+                        # when more than one expression with this verb matches,
+                        # use the one that has more tokens
+                        # (so "göra * analys" has priority over "göra")
                         longestMatch = toklen
+                        longestMatchML = matchLen
                         longestIdx = j
+                    elif toklen == longestMatch:
+                        # when more than one expression matches, use
+                        # the one that has the tightest match so:
+                        #   "formulera * frågeställningar" matching
+                        #   "formulera frågeställningar [där molekylära
+                        #    analyser är lämpade]"
+                        # has priority over
+                        #   "formulera * analyser" matching "formulera
+                        #    frågeställningar där molekylära analyser [är
+                        #    lämpade]"
+                        if matchLen < longestMatchML:
+                            longestMatchML = matchLen
+                            longestIdx = j
+                        
             if longestIdx >= 0:
                 bloomMatches.append( exps[longestIdx] )
 
@@ -217,13 +233,9 @@ def bloomVerbsInSentence(s):
                     exp = exps[j][1]
                     tokens = exp.split()
 
-                    # log("try exp: " + str(exp) + " in " + str(s))
-                    
                     toklen = len(tokens)
-                    # level = exps[j][2]
 
                     ii = 0
-                    kk = 0
                     matchOK = 1
                     for k in range(len(tokens)):
                         if tokens[k] == "*":
@@ -244,11 +256,28 @@ def bloomVerbsInSentence(s):
                             matchOK = 0
                             break
                     if matchOK:
+                        matchLen = ii
                         if toklen > longestMatch:
+                            # when more than one expression with this verb matches,
+                            # use the one that has more tokens
+                            # (so "göra * analys" has priority over "göra")
                             longestMatch = toklen
+                            longestMatchML = matchLen
                             longestIdx = j
-                        # if level > highestLevel:
-                        #     highestLevel = level
+                        elif toklen == longestMatch:
+                            # when more than one expression matches, use
+                            # the one that has the tightest match so:
+                            #   "formulera * frågeställningar" matching
+                            #   "formulera frågeställningar [där molekylära
+                            #    analyser är lämpade]"
+                            # has priority over
+                            #   "formulera * analyser" matching "formulera
+                            #    frågeställningar där molekylära analyser [är
+                            #    lämpade]"
+                            if matchLen < longestMatchML:
+                                log("Tighter match tie-break:\nnew:" + str(exps[j]) + "\nold:" + str(exps[longestIdx]) + "\ntext: " + str(s))
+                                longestMatchML = matchLen
+                                longestIdx = j
                 if longestIdx >= 0:
                     if tag[-4:] == ".sfo":
                         tmp = ""
