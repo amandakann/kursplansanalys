@@ -2,12 +2,16 @@
 #Anderson, L. W. & Krathwohl, D.R., et al (2001). A taxonomy for
 #learning, teaching and assessing: A revision of Bloom’s taxonomy of
 #educational objectives. New York: Longman.
-#Framtagna av Viggo Kann viggo@kth.se
+#Framtagna av Viggo Kann viggo@kth.se och utvecklade inom ett samarbetsprojekt
+#mellan KTH, SU, MiUn och UmU 2024.
 #Verb som förekommer på flera nivåer står inom parentes på alla
 #nivåer utom den där dom förekommer oftast.
 --- Remember 0 ---
 definiera
 (beskriva)
+beskriva * begrepp # eg. <lemma begrepp> eller begrepp*
+beskriva * termer # eg. <lemma term> eller term*
+#beskriva <NP, huvudord singular bestämd form>
 nämna
 (välja)
 identifiera
@@ -28,8 +32,8 @@ namnge
 rubricera
 (matcha)
 (redogöra)
-översätta
 återberätta
+översätta * begrepp
 dokumentera
 uppge
 delta
@@ -38,30 +42,27 @@ presentera
 ge * beskrivning
 --- Understand 1 ---
 förklara
-(försvara)
-(utveckla)
-(generalisera)
+försvara * åsikter # eg. <lemma åsikt>
+försvara * principer # eg. <lemma princip>
+försvara * filosofin # eg. <lemma filosofi>
+generalisera * begreppet # eg. <lemma begrepp>
 ge exempel
-(förutse)
 (förutsäga)
 skriva om
 sammanfatta
-(använda)
 (tolka)
 förtydliga
 klargöra
 omformulera
-(översätta)
-(återge)
+ange * huvuddragen #eg. <lemma huvuddrag>
+återge * huvuddragen #eg. <lemma huvuddrag>
 omskriva
 representera
 exemplifiera
 illustrera
 klassificera
-(kategorisera)
 inordna
 abstrahera
-(jämföra)
 (kontrastera)
 matcha
 rapportera
@@ -71,22 +72,26 @@ beskriva
 renodla
 rita
 plotta
+(illustrera)
 referera
 summera
 sluta sig till
 konkludera
-(extrapolera)
 inflika
 lyfta in
-(kartlägga)
 para ihop
-(karakterisera)
-(karaktärisera)
 kvantisera
 åskådliggöra
+bevisa * satser # eg. <lemma sats>
+bevisa * principer # eg. <lemma princip>
+bevisa * teorem # eg. <lemma teorem>
+bevisa * formler # eg. <lemma formel>
+bevisa utvalda * resultat
+bevisa viktiga * resultat
 omsätta
-påvisa
 associera
+(skissa)
+(skissera)
 ge * skäl för
 ge * yttrande
 ge * bakgrund
@@ -104,21 +109,21 @@ tyda
 --- Apply 2 ---
 tillämpa
 beräkna
-(bevisa)
-upptäcka
-modifiera
+utifrån * upptäcka
+upptäcka * utifrån
+upptäcka * givet
+upptäcka * baserat på
 verkställa
-(förutse)
-(förutsäga)
+förutse
 förbereda
-producera
 reproducera
 bekräfta experimentellt
 (relatera)
 lösa
 använda
 nyttja
-(skissera)
+skissa
+skissera
 utföra
 genomföra
 applicera
@@ -126,17 +131,16 @@ etablera
 förverkliga
 fullfölja
 demonstrera
-(utveckla)
+utveckla * förståelse
 experimentera
-(testa)
-organisera
 programmera
 återimplementera
 fastställa
 fastslå
 fördela
 tidsintegrera
-integrera
+integrera * funktioner # eg. <lemma funktion>
+integrera och använda
 bereda
 projektera
 georeferera
@@ -227,8 +231,7 @@ handha
 montera
 exportera
 skydda
-(optimera)
-examinera
+(examinera)
 expandera
 behandla
 hantera
@@ -271,6 +274,7 @@ bemöta
 förmedla
 handleda
 samtala
+översätta
 föra * samtal
 föra * dialog
 föra * förhandling
@@ -281,30 +285,35 @@ köra * program
 exekvera * kod
 logga in
 exfiltrera
+utveckla * kompetens
+utveckla * förmåga
+utveckla * färdighet
+utveckla * tänkande
+utveckla * förhållningssätt
+utveckla * kunskap
 --- Analyze 3 ---
-(identifiera)
+givet * identifiera
+identifiera * korrekt # eg. *korrekt*
+identifiera * lämplig # eg. *lämplig*
+identifiera * relevant # eg. *relevant*
+identifiera * viktig # eg. *viktig*
 skilja
 urskilja
-(illustrera)
 peka ut
 peka på
-(relatera)
+relatera
 välja
 separera
 dela in
 dela upp
 sortera
 differentiera
-skissera
-(ange)
 bearbeta
 särskilja
 fokusera
-(organisera)
-(integrera)
-ange huvuddrag
 sätta in
 utföra * textanalys
+utveckla * analys
 ordna
 införliva
 strukturera
@@ -317,10 +326,10 @@ hitta
 analysera
 karakterisera
 karaktärisera
-(kategorisera)
+kategorisera
 systematisera 
 granska
-(jämföra)
+jämföra
 utforska
 ställa * frågor
 undersöka
@@ -344,7 +353,6 @@ göra * masterval
 indela
 avgränsa
 kartlägga
-skissa
 sammankoppla
 prioritera
 minimera
@@ -355,17 +363,17 @@ ge * förslag
 ge * nyanserad framställning
 --- Evaluate 4 ---
 värdera
-jämföra
+jämföra och värdera
+jämföra och välja
+jämföra * i relation till
 komma fram till
 kontrastera
 kritisera
 kritiskt * förhålla sig till
-(förklara)
 motivera
-(bevisa)
+bevisa att
 avgöra
-relatera
-(sammanfatta)
+(relatera)
 stödja
 försvara
 föreslå 
@@ -374,24 +382,22 @@ fatta * beslut
 tillse
 kontrollera
 koordinera
-(påvisa)
-(kartlägga)
 prova ut
 fälla * omdöme
 interpolera
 samordna
-(upptäcka)
+upptäcka
 testa
 observera
 övervaka
 bedöma
-(granska)
+kritiskt granska
 mäta
 (undersöka)
 argumentera
 framlägga argument
-(välja)
 reflektera
+integrera och reflektera
 (dra * slutsats)
 uppskatta
 rekommendera
@@ -403,7 +409,7 @@ teoretisera
 resonera
 verifiera
 evaluera
-(examinera)
+examinera
 rimlighetsbedöma
 estimera
 skatta
@@ -438,7 +444,6 @@ göra * storleksordning
 göra * storleksordningsuppskattningar
 göra * genomförbarhetsdiskussion
 --- Create 5 ---
-kategorisera
 kombinera
 ställa samman
 sammanställa
@@ -446,14 +451,10 @@ utarbeta
 lägga fram
 skapa
 konstruera
-(förklara)
 framställa
-(modifiera)
-(organisera)
+organisera
 planera
 rekonstruera
-(relatera)
-(sammanfatta)
 generera
 alstra
 frambringa
@@ -462,19 +463,17 @@ formulera
 antaga
 formge
 designa
-(skissera)
-(producera)
+producera
 kreera
 tillverka
 uppföra
 syntetisera
 generalisera
 förutsäga
-förutse
 extrapolera
 bevisa
 utveckla
-dra * slutsats
+dra * slutsats # eg. <lemma slutsats>
 (tolka)
 kommunicera
 utforma
@@ -492,8 +491,10 @@ uttrycka
 gestalta
 skriva
 sätta ihop
+integrera
 bilda
 bygga
+modifiera
 vidareutveckla
 (förbättra)
 implementera
@@ -513,3 +514,5 @@ inkludera * i utvecklingen
 ge * överblick
 ge * översikt
 ställa upp * hypotes
+översätta * metoder till
+översätta * resultat till
