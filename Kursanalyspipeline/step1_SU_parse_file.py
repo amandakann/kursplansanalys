@@ -186,6 +186,12 @@ for lineno in range(1, len(lines)):
         ctype = "vidareutbildning"
     else:
         ctype = "grundutbildning"
+
+    scbFix = { # Change some unrecognized SCB codes to codes that are listed and mean the same thing.
+        "KEA":"KE1", "JAA":"JA1", "LIA":"LV1", "BIA":"BI1", "UVA":"UV1", "FÖA":"FE1", "DSA":"IF1" #, "GVA":"GN1"
+    }
+    if sc in scbFix:
+        sc = scbFix[sc]
     
     r = {
         "startdate":start, # used to determine which duplicate to use, should not be printed
