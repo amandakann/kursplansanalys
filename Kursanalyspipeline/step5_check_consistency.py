@@ -339,10 +339,21 @@ nonBloomVerbsInfo = {}
 ambiguousVerbs = {}
 
 # bloomStats = {"course":{"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}, "goal":"course":{"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}}
-bloomStatsCC = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}
-bloomStatsGoal = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}
+bloomStatsCC = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}, "cred":{}, "levelG":{}, "scbG":{}}
+bloomStatsGoal = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}, "cred":{}, "levelG":{}, "scbG":{}}
 
-def addBloomList(ls, scb, level, ctype, uni, ):
+def median(ls):
+    l = len(ls)
+    if l == 0:
+        return 0
+    
+    if l % 2: 
+        return ls[int((l-1)/2)]
+    else:
+        return (ls[int(l / 2)] +ls[int(l/2) - 1]) / 2.0
+    
+
+def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup):
     if not ctype in bloomStatsCC["type"]:
         bloomStatsCC["type"][ctype] = {"verbCounts":{}, "goalCounts":{}}
     if not level in bloomStatsCC["level"]:
@@ -351,6 +362,12 @@ def addBloomList(ls, scb, level, ctype, uni, ):
         bloomStatsCC["scb"][scb] = {"verbCounts":{}, "goalCounts":{}}
     if not uni in bloomStatsCC["uni"]:
         bloomStatsCC["uni"][uni] = {"verbCounts":{}, "goalCounts":{}}
+    if not scbGroup in bloomStatsCC["scbG"]:
+        bloomStatsCC["scbG"][scbGroup] = {"verbCounts":{}, "goalCounts":{}}
+    if not levelGroup in bloomStatsCC["levelG"]:
+        bloomStatsCC["levelG"][levelGroup] = {"verbCounts":{}, "goalCounts":{}}
+    if not creditsGroup in bloomStatsCC["cred"]:
+        bloomStatsCC["cred"][creditsGroup] = {"verbCounts":{}, "goalCounts":{}}
 
     if not ctype in bloomStatsGoal["type"]:
         bloomStatsGoal["type"][ctype] = {"verbCounts":{}}
@@ -360,9 +377,15 @@ def addBloomList(ls, scb, level, ctype, uni, ):
         bloomStatsGoal["scb"][scb] = {"verbCounts":{}}
     if not uni in bloomStatsGoal["uni"]:
         bloomStatsGoal["uni"][uni] = {"verbCounts":{}}
+    if not scbGroup in bloomStatsGoal["scbG"]:
+        bloomStatsGoal["scbG"][scbGroup] = {"verbCounts":{}}
+    if not levelGroup in bloomStatsGoal["levelG"]:
+        bloomStatsGoal["levelG"][levelGroup] = {"verbCounts":{}}
+    if not creditsGroup in bloomStatsGoal["cred"]:
+        bloomStatsGoal["cred"][creditsGroup] = {"verbCounts":{}}
 
     nGoals = len(ls)
-    for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"]]:
+    for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"], bloomStatsCC["scbG"][scbGroup]["goalCounts"], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
         if not nGoals in lex:
             lex[nGoals] = 0
         lex[nGoals] += 1
@@ -383,11 +406,13 @@ def addBloomList(ls, scb, level, ctype, uni, ):
         tot = 0
         mean = 0
         votes = {}
-
+        s2 = 0
+        ls = []
+        
         for verb in goal:
             flat.append(verb[2])
 
-            for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["uni"][uni]]:
+            for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
                 if not verb[1] in lex["verbCounts"]:
                     lex["verbCounts"][verb[1]] = 1
                 else:
@@ -399,13 +424,18 @@ def addBloomList(ls, scb, level, ctype, uni, ):
             if bLevel < mn:
                 mn = bLevel
             tot += 1
+            s2 += bLevel*bLevel
             mean += bLevel
+            ls.append(bLevel)
+            
             if not bLevel in votes:
                 votes[bLevel] = 1
             else:
                 votes[bLevel] += 1
-                    
-        for lex in [bloomStatsGoal["all"], bloomStatsGoal["scb"][scb], bloomStatsGoal["level"][level], bloomStatsGoal["type"][ctype], bloomStatsGoal["uni"][uni]]:
+        ls.sort()
+        med = median(ls)
+        
+        for lex in [bloomStatsGoal["all"], bloomStatsGoal["scb"][scb], bloomStatsGoal["level"][level], bloomStatsGoal["type"][ctype], bloomStatsGoal["uni"][uni], bloomStatsGoal["scbG"][scbGroup], bloomStatsGoal["levelG"][levelGroup], bloomStatsGoal["cred"][creditsGroup]]:
             if not "max" in lex:
                 lex["max"] = {}
             if not mx in lex["max"]:
@@ -428,10 +458,27 @@ def addBloomList(ls, scb, level, ctype, uni, ):
             else:
                 lex["nVerbs"][tot] += 1
 
+            if not "nVerbsG" in lex:
+                lex["nVerbsG"] = {}
+            totG = numberOfVerbsGroup(tot)
+            if not totG in lex["nVerbsG"]:
+                lex["nVerbsG"][totG] = 1
+            else:
+                lex["nVerbsG"][totG] += 1
+
             if not "mean" in lex:
                 lex["mean"] = []
             if tot > 0:
                 lex["mean"].append(mean / float(tot))
+
+            if not "median" in lex:
+                lex["median"] = []
+            lex["median"].append(med)
+
+            if not "variance" in lex:
+                lex["variance"] = []
+            if tot > 0:
+                lex["variance"].append(abs((mean*mean / float(tot) - s2) / float(tot)))
                 
             v = -1
             vm = 0
@@ -445,7 +492,8 @@ def addBloomList(ls, scb, level, ctype, uni, ):
                 lex["common"][v] = 1
             else:
                 lex["common"][v] += 1
-            
+
+    flat.sort()
             
     if len(flat) > 0:
         mn = 10
@@ -453,8 +501,10 @@ def addBloomList(ls, scb, level, ctype, uni, ):
         tot = 0
         mean = 0
         votes = {}
+        s2 = 0        
         for b in flat:
             tot += b
+            s2 += b*b
             if b > mx:
                 mx = b
             if b < mn:
@@ -463,8 +513,9 @@ def addBloomList(ls, scb, level, ctype, uni, ):
                 votes[b] = 1
             else:
                 votes[b] += 1
-        mean = tot / float(len(flat))
         n = len(flat)
+        mean = tot / float(n)
+        variance = abs((tot*tot/float(n) - s2) / float(n))
 
         v = -1
         vm = 0
@@ -473,7 +524,7 @@ def addBloomList(ls, scb, level, ctype, uni, ):
                 vm = votes[vv]
                 v = vv
         
-        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni]]:
+        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
             if not "max" in lex:
                 lex["max"] = {}
             if not mx in lex["max"]:
@@ -498,6 +549,14 @@ def addBloomList(ls, scb, level, ctype, uni, ):
             else:
                 lex["nVerbs"][n] += 1
 
+            if not "nVerbsG" in lex:
+                lex["nVerbsG"] = {}
+            nG = numberOfVerbsGroup(n)
+            if not nG in lex["nVerbsG"]:
+                lex["nVerbsG"][nG] = 1
+            else:
+                lex["nVerbsG"][nG] += 1
+
             if not "common" in lex:
                 lex["common"] = {}
             if not v in lex["common"]:
@@ -508,7 +567,15 @@ def addBloomList(ls, scb, level, ctype, uni, ):
             if not "mean" in lex:
                 lex["mean"] = []
             lex["mean"].append(mean)
-            
+
+            if not "variance" in lex:
+                lex["variance"] = []
+            lex["variance"].append(variance)
+
+            if not "median" in lex:
+                lex["median"] = []
+            lex["median"].append(median(flat))
+
             if not "val" in lex:
                 lex["val"] = {}
             for b in flat:
@@ -518,7 +585,7 @@ def addBloomList(ls, scb, level, ctype, uni, ):
                     lex["val"][b] += 1
 
     else:
-        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni]]:
+        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
 
             if not "nVerbs" in lex:
                 lex["nVerbs"] = {}
@@ -527,8 +594,16 @@ def addBloomList(ls, scb, level, ctype, uni, ):
             else:
                 lex["nVerbs"][0] += 1
 
+            if not "nVerbsG" in lex:
+                lex["nVerbsG"] = {}
+            n0 = numberOfVerbsGroup(0)
+            if not n0 in lex["nVerbsG"]:
+                lex["nVerbsG"][n0] = 1
+            else:
+                lex["nVerbsG"][n0] += 1
+        
         nGoals = 0
-        for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"]]:
+        for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"], bloomStatsCC["scbG"][scbGroup]["goalCounts"], bloomStatsCC["levelG"][levelGroup]["goalCounts"], bloomStatsCC["cred"][creditsGroup]["goalCounts"]]:
             if not nGoals in lex:
                 lex[nGoals] = 0
             lex[nGoals] += 1
@@ -603,7 +678,7 @@ def printBloomStats():
             print ("{0: >2}: {1: >5} (0%)".format(val, 0))
     print (tmp, "courses with Bloom data")
 
-    print ("-"*10, "Mean Bloom level per course", "-"*10)
+    print ("-"*10, "Average Mean Bloom level per course", "-"*10)
     m = 0
     n = len(bloomStatsCC["all"]["mean"])
     for v in bloomStatsCC["all"]["mean"]:
@@ -612,6 +687,42 @@ def printBloomStats():
         m = m / n
     print ("{0: .2}".format(m))
         
+    print ("-"*10, "Average Variance in Bloom level per course", "-"*10)
+    m = 0
+    n = len(bloomStatsCC["all"]["variance"])
+    for v in bloomStatsCC["all"]["variance"]:
+        m += v
+    if n > 0:
+        m = m / n
+    print ("{0: .2}".format(m))
+
+    print ("-"*10, "Median Bloom level per course", "-"*10)
+    tmp = 0
+    tmpTot = 0
+    ls = []
+    tmpLex = {}
+    for val in bloomStatsCC["all"]["median"]:
+        if not val in tmpLex:
+            tmpLex[val] = 0
+            ls.append(val)
+        tmpLex[val] += 1
+    ls.sort()
+    
+    for val in ls:
+        if val in tmpLex:
+            c = tmpLex[val]
+            tmp += c
+            tmpTot += c*val
+            if totCourses > 0:
+                proc = c / float(totCourses)
+            procs = "{:>5}".format("{:2.1%}".format(proc))
+            print ("{0: <3}: {1: >5} ({2:})".format(val, c, procs))
+        else:
+            print ("{0: <3}: {1: >5} (0%)".format(val, 0))
+    if tmp > 0:
+        print("Average median value:", str(tmpTot / tmp))
+    print (tmp, "courses with Bloom data")
+
     print ("-"*10, "Most common Bloom level per course", "-"*10)
     tmp = 0
     for val in range(6):
@@ -646,6 +757,22 @@ def printBloomStats():
             print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
     print (tmp, "courses in data")
 
+    print ("-"*10, "Number of Bloom verbs per course (grouped)", "-"*10)
+    tmp = 0
+    ls = []
+    for val in bloomStatsCC["all"]["nVerbsG"]:
+        ls.append(val)
+    ls.sort()
+    for val in ls:
+        c = bloomStatsCC["all"]["nVerbsG"][val]
+        tmp += c
+        if totCourses > 0:
+            proc = c / float(totCourses)
+        else:
+            proc = 0
+        procs = "{:>5}".format("{:2.1%}".format(proc))
+        print ("{0: >9}: {1: >5} ({2:})".format(val, c, procs))
+    
     #############################
     ### Print stats per goal ####
     #############################
@@ -684,7 +811,7 @@ def printBloomStats():
             print ("{0: >2}: {1: >5} (0%)".format(val, 0))
     print (tmp, "goals with Bloom data")
 
-    print ("-"*10, "Mean Bloom level per goal", "-"*10)
+    print ("-"*10, "Average Mean Bloom level per goal", "-"*10)
     m = 0
     n = len(bloomStatsGoal["all"]["mean"])
     for v in bloomStatsGoal["all"]["mean"]:
@@ -693,6 +820,42 @@ def printBloomStats():
         m = m / n
     print ("{0: .2}".format(m))
         
+    print ("-"*10, "Average Variance in Bloom level per goal", "-"*10)
+    m = 0
+    n = len(bloomStatsGoal["all"]["variance"])
+    for v in bloomStatsGoal["all"]["variance"]:
+        m += v
+    if n > 0:
+        m = m / n
+    print ("{0: .2}".format(m))
+        
+    print ("-"*10, "Median Bloom level per goal", "-"*10)
+    tmp = 0
+    tmpTot = 0
+    ls = []
+    tmpLex = {}
+    for val in bloomStatsGoal["all"]["median"]:
+        if not val in tmpLex:
+            tmpLex[val] = 0
+            ls.append(val)
+        tmpLex[val] += 1
+    ls.sort()
+    
+    for val in ls:
+        if val in tmpLex:
+            c = tmpLex[val]
+            tmp += c
+            tmpTot += c*val
+            if totGoals > 0:
+                proc = c / float(totGoals)
+            procs = "{:>5}".format("{:2.1%}".format(proc))
+            print ("{0: <3}: {1: >5} ({2:})".format(val, c, procs))
+        else:
+            print ("{0: <3}: {1: >5} (0%)".format(val, 0))
+    if tmp > 0:
+        print("Average median value:", str(tmpTot / tmp))
+    print (tmp, "goals with Bloom data")
+
     print ("-"*10, "Most common Bloom level per goal", "-"*10)
     tmp = 0
     for val in range(6):
@@ -727,27 +890,47 @@ def printBloomStats():
             print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
     print (tmp, "goals in data")
 
+    print ("-"*10, "Number of Bloom verbs per goal (grouped)", "-"*10)
+    tmp = 0
+    ls = []
+    for val in bloomStatsGoal["all"]["nVerbsG"]:
+        ls.append(val)
+    ls.sort()
+    for val in ls:
+        c = bloomStatsGoal["all"]["nVerbsG"][val]
+        tmp += c
+        if totGoals > 0:
+            proc = c / float(totGoals)
+        else:
+            proc = 0
+        procs = "{:>5}".format("{:2.1%}".format(proc))
+        print ("{0: >9}: {1: >5} ({2:})".format(val, c, procs))
 
     ###########################################
     ### Print data per uni etc., per course ###
     ###########################################
 
-    for tmp in [["University", bloomStatsCC["uni"], bloomStatsGoal["uni"]], ["SCB", bloomStatsCC["scb"], bloomStatsGoal["scb"]], ["CourseLevel", bloomStatsCC["level"], bloomStatsGoal["level"]], ["CourseType", bloomStatsCC["type"], bloomStatsGoal["type"]]]:
+    for tmp in [["University", bloomStatsCC["uni"], bloomStatsGoal["uni"]], ["Credits", bloomStatsCC["cred"], bloomStatsGoal["cred"]], ["CourseLevel grouped", bloomStatsCC["levelG"], bloomStatsGoal["levelG"]], ["SCB grouped", bloomStatsCC["scbG"], bloomStatsGoal["scbG"]], ["SCB", bloomStatsCC["scb"], bloomStatsGoal["scb"]], ["CourseLevel", bloomStatsCC["level"], bloomStatsGoal["level"]], ["CourseType", bloomStatsCC["type"], bloomStatsGoal["type"]]]:
         label = tmp[0]
-        if (label == "University") or (label == "SCB" and prints["perSCB"]) or (label == "CourseLevel" and prints["perLevel"]) or (label == "CourseType" and prints["perType"]):
+        if (label == "University") or (label == "Credits") or (label == "SCB grouped") or (label == "CourseLevel grouped") or (label == "SCB" and prints["perSCB"]) or (label == "CourseLevel" and prints["perLevel"]) or (label == "CourseType" and prints["perType"]):
             lex = tmp[1]
 
             if len(lex.keys()) > 1:
             
                 print("\n" + "-"*10, "Statistics per", label, "-"*10)
 
+                cats = []
+                for cat in lex:
+                    cats.append(cat)
+                cats.sort()
+                
                 print("-"*10, "Most common verbs", "-"*10)
-                for uni in lex:
+                for cat in cats:
                     ls = []
-                    for v in lex[uni]["verbCounts"]:
-                        ls.append([lex[uni]["verbCounts"][v], v])
+                    for v in lex[cat]["verbCounts"]:
+                        ls.append([lex[cat]["verbCounts"][v], v])
                     ls.sort(reverse=True)
-                    print ("--->", uni)
+                    print ("--->", cat)
                     for vi in range(len(ls)):
                         print ("{0: >5}: {1:}".format(ls[vi][0], ls[vi][1]))
                         if vi >= 10:
@@ -816,7 +999,7 @@ def printBloomStats():
                 printBloomHelper("min", "min Bloom/course", lex, 6)
 
                 ls = []
-                rowLabel = "mean Bloom per course"
+                rowLabel = "average mean Bloom per course"
                 longest = len(rowLabel)
                 for row in lex:
                     ls.append(row)
@@ -845,9 +1028,72 @@ def printBloomStats():
                     print (s)
                 print()
 
+                ### Variance ###
+                ls = []
+                rowLabel = "average variance Bloom per course"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
+
+                s = "{0: >" + str(longest) + "}: "
+                s = s.format(rowLabel)
+                print (s)
+
+                for row in ls:
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+
+                    if "variance" in lex[row]:
+                        m = 0
+                        n = len(lex[row]["variance"])
+                        for v in lex[row]["variance"]:
+                            m += v
+                        if n > 0:
+                            m = m / n
+                        s += "{0: .2} ".format(m)
+                    else:
+                        s += "{0: >5} ".format(0)
+                    print (s)
+                print()
+                
+                ### Median ###
+                ls = []
+                rowLabel = "average median Bloom per course"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
+
+                s = "{0: >" + str(longest) + "}: "
+                s = s.format(rowLabel)
+                print (s)
+
+                for row in ls:
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+
+                    if "median" in lex[row]:
+                        m = 0
+                        n = len(lex[row]["median"])
+                        for v in lex[row]["median"]:
+                            m += v
+                        if n > 0:
+                            m = m / n
+                        s += "{0: .2} ".format(m)
+                    else:
+                        s += "{0: >5} ".format(0)
+                    print (s)
+                print()
+                
                 printBloomHelper("common", "most common Bloom level (per course)", lex, 6)
 
                 printBloomHelper("nVerbs", "#verbs/course", lex, VERBS_BEFORE_MORE_THAN+1)
+                printBloomHelper2("nVerbsG", "#verbs/course (grouped)", lex)
                 
             #########################################
             ### Print data per uni etc., per goal ###
@@ -861,7 +1107,7 @@ def printBloomStats():
                 printBloomHelper("min", "min Bloom/goal", lex, 6)
 
                 ls = []
-                rowLabel = "mean Bloom per goal"
+                rowLabel = "average mean Bloom per goal"
                 longest = len(rowLabel)
                 for row in lex:
                     ls.append(row)
@@ -890,9 +1136,72 @@ def printBloomStats():
                     print (s)
                 print()
 
+                ### Variance ###
+                ls = []
+                rowLabel = "average variance Bloom per goal"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
+
+                s = "{0: >" + str(longest) + "}: "
+                s = s.format(rowLabel)
+                print (s)
+
+                for row in ls:
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+
+                    if "variance" in lex[row]:
+                        m = 0
+                        n = len(lex[row]["variance"])
+                        for v in lex[row]["variance"]:
+                            m += v
+                        if n > 0:
+                            m = m / n
+                        s += "{0: .2} ".format(m)
+                    else:
+                        s += "{0: >5} ".format(0)
+                    print (s)
+                print()
+
+                ### Median ###
+                ls = []
+                rowLabel = "average median Bloom per goal"
+                longest = len(rowLabel)
+                for row in lex:
+                    ls.append(row)
+                    if len(row) > longest:
+                        longest = len(row)
+                ls.sort()
+
+                s = "{0: >" + str(longest) + "}: "
+                s = s.format(rowLabel)
+                print (s)
+
+                for row in ls:
+                    s = "{0: >" + str(longest) + "}: "
+                    s = s.format(row)
+
+                    if "median" in lex[row]:
+                        m = 0
+                        n = len(lex[row]["median"])
+                        for v in lex[row]["median"]:
+                            m += v
+                        if n > 0:
+                            m = m / n
+                        s += "{0: .2} ".format(m)
+                    else:
+                        s += "{0: >5} ".format(0)
+                    print (s)
+                print()
+                
                 printBloomHelper("common", "most common Bloom level (per goal)", lex, 6)
 
                 printBloomHelper("nVerbs", "#verbs/goal", lex, VERBS_BEFORE_MORE_THAN+1)
+                printBloomHelper2("nVerbsG", "#verbs/course (grouped)", lex)
 
     
 def printBloomHelper(f, label, lex, n):
@@ -958,6 +1267,74 @@ def printBloomHelper(f, label, lex, n):
         print ()
     print()
 
+def printBloomHelper2(f, label, lex):
+    ls = []
+    rowLabel = label
+    longest = len(rowLabel)
+    for row in lex:
+        ls.append(row)
+        if len(row) > longest:
+            longest = len(row)
+    ls.sort()
+
+    cats = []
+    tmp = {}
+    for row in lex:
+        for cat in lex[row][f]:
+            tmp[cat] = 1
+    for cat in tmp:
+        cats.append(cat)
+    cats.sort()
+
+    s = "{0: >" + str(longest) + "}: "
+    s = s.format(rowLabel)
+    for v in cats:
+        s += "{0: >9} ".format(v)
+            
+    s += "{0: >9}".format("Total")
+    print ("-"*len(s))
+    print (s)
+    print ("-"*len(s))
+
+    tots = 0
+    for row in ls:
+        tot = 0
+        for v in cats:
+            if f in lex[row] and v in lex[row][f]:
+                tot += lex[row][f][v]
+        tots += tot
+
+    for row in ls:
+        s = "{0: >" + str(longest) + "}: "
+        s = s.format(row)
+        s2 = " "*len(s)
+
+        tot = 0
+        for v in cats:
+            if f in lex[row] and v in lex[row][f]:
+                tot += lex[row][f][v]
+
+        for v in cats:
+            if "max" in lex[row] and v in lex[row][f]:
+                c = lex[row][f][v]
+                if tot > 0:
+                    proc = c / float(tot)
+                else:
+                    proc = 0
+                s += "{0: >9} ".format(c)
+
+                s2 += "{0: >9} ".format("{0: 2.1%}".format(proc))
+            else:
+                s += "{0: >9} ".format(0)
+                s2 += "       0% "
+        s += "{0: >9}".format(tot)
+        print (s)
+
+        if tots > 0:
+            s2 += "{: >9}".format("{0: 2.1%}".format(tot/float(tots)))
+        print (s2)
+        print ()
+    print()
 
 def addVerb(v, lev):
     if not v in verbCounts:
@@ -1124,11 +1501,31 @@ def printSCB():
     for s in ls:
         tot += scbCounts[s]
     for s in ls:
+        if len(s) > 3:
+            continue
         if tot > 0:
             procs = "{:>5}".format("{:2.1%}".format(scbCounts[s]/float(tot)))
             print ("{0: >4}: {1: >5} ({2:})".format(s, scbCounts[s], procs))
         else:
             print ("{0: >4}: {1: >5}".format(s, scbCounts[s]))
+
+    print ("\n", "."*15, "Grouped SCB","."*15)
+    
+    for s in ls:
+        if len(s) <= 3:
+            continue
+        if tot > 0:
+            procs = "{:>5}".format("{:2.1%}".format(scbCounts[s]/float(tot)))
+            print ("{0: >30}: {1: >5} ({2:})".format(s, scbCounts[s], procs))
+        else:
+            print ("{0: >30}: {1: >5}".format(s, scbCounts[s]))
+
+    if len(unknownSCB.keys()):
+        print ("\n........SCB that were not grouped........\n")
+        for k in unknownSCB:
+            print ("'" + k + "'")
+    
+    print()
     
 levCounts = {}
 def addLevel(l):
@@ -1140,7 +1537,8 @@ def printLevel():
     print ("\n", "-"*15, "Course Levels","-"*15)
     ls = []
     for l in levCounts:
-        ls.append(l)
+        if len(l) <= 3:
+            ls.append(l)
     ls.sort()
     tot = 0
     for l in ls:
@@ -1151,6 +1549,454 @@ def printLevel():
             print ("{0: >4}: {1: >5} ({2:})".format(l, levCounts[l], procs))
         else:
             print ("{0: >4}: {1: >5}".format(l, levCounts[l]))
+
+    print ("\n", "."*15, "Grouped Course Levels","."*15)
+    ls = []
+    for l in levCounts:
+        if len(l) > 3:
+            ls.append(l)
+    ls.sort()
+    tot = 0
+    for l in ls:
+        tot += levCounts[l]
+    for l in ls:
+        if tot > 0:
+            procs = "{:>5}".format("{:2.1%}".format(levCounts[l]/float(tot)))
+            print ("{0: >22}: {1: >5} ({2:})".format(l, levCounts[l], procs))
+        else:
+            print ("{0: >22}: {1: >5}".format(l, levCounts[l]))
+    
+
+#######################
+### Group SCB codes ###
+#######################
+
+# Humaniora och teologi, Juridig och samhällsvetenskap, Naturvetenskap, Teknik, Medicin och odontologi, Vård och omsorg, Konstnärligt område, Övrigt område
+
+scbLookups = {
+    "Humaniora och teologi":
+    {
+        "Historisk-filosofiska ämnen":
+        {
+	    "AK1":"Antikens kultur",
+	    "AR2":"Arkeologi",
+	    "AV1":"Arkivvetenskap",
+	    "DT2":"Dans- och teatervetenskap",
+	    "ES2":"Estetik",
+	    "ET1":"Etnologi",
+	    "FI2":"Filosofi",
+	    "FV1":"Filmvetenskap",
+	    "HI2":"Historia",
+	    "IL1":"Idé- och lärdomshistoria/Idéhistoria",
+	    "KU2":"Kulturvård",
+	    "KV1":"Konstvetenskap",
+	    "KV2":"Kulturvetenskap",
+	    "LV1":"Litteraturvetenskap",
+	    "MV2":"Musikvetenskap",
+	    "RO1":"Retorik",
+	    "HF9":"Övrigt inom historisk-filosofiska ämnen"
+        },
+	"Journalistik, kommunikation och information":
+        {
+	    "BV1":"Biblioteks- och informationsvetenskap",
+	    "JO1":"Journalistik",
+	    "MK1":"Medie- o kommunikationsvetenskap",
+	    "MP1":"Medieproduktion",
+	    "JK9":"Övrigt journalistik, kommunikation, information"
+        },
+	"Språkvetenskapliga ämnen":
+        {
+	    "AL1":"Allmän språkvetenskap/lingvistik",
+	    "AR1":"Arabiska",
+	    "AS1":"Arameiska/syriska",
+	    "BK1":"Bosniska/kroatiska/serbiska",
+	    "BU1":"Bulgariska",
+	    "DA1":"Danska",
+	    "EN1":"Engelska",
+	    "ES1":"Estniska",
+	    "FI1":"Finska",
+	    "FL1":"Flerspråkigt inriktade ämnen",
+	    "FR1":"Franska",
+	    "GR1":"Grekiska",
+	    "HE1":"Hebreiska",
+	    "HI1":"Hindi",
+	    "IN1":"Indonesiska",
+	    "IS1":"Indologi och sanskrit",
+	    "IT1":"Italienska",
+	    "JA1":"Japanska",
+	    "KI1":"Kinesiska",
+	    "KO1":"Koreanska",
+	    "KU1":"Kurdiska",
+	    "LA1":"Latin",
+	    "LE1":"Lettiska",
+	    "LI1":"Litauiska",
+	    "NE1":"Nederländska",
+	    "NG1":"Nygrekiska",
+	    "PO1":"Polska",
+	    "PR1":"Persiska",
+	    "PU1":"Portugisiska",
+	    "RU1":"Rumänska",
+	    "RY1":"Ryska",
+	    "SA1":"Samiska",
+	    "SP1":"Spanska",
+	    "SS1":"Svenska som andraspråk",
+	    "SV1":"Svenska/Nordiska Språk",
+	    "SW1":"Swahili",
+	    "TA1":"Tamil",
+	    "TE1":"Teckenspråk",
+	    "TH1":"Thai",
+	    "TI1":"Tibetanska",
+	    "TJ1":"Tjeckiska",
+	    "TO2":"Översättning och tolkning",
+	    "TY1":"Tyska",
+	    "UN1":"Ungerska",
+	    "SP2":"Övriga språk"
+        },
+	"Religionsvetenskap":
+        {
+	    "RV1":"Religionsvetenskap",
+	    "TL1":"Teologi"
+        }
+    },
+    "Juridik och samhällsvetenskap":
+    {
+        "Informatik/Data- och systemvetenskap":
+        {
+	    "IF1":"Informatik/Data- och systemvetenskap"
+        },
+	"Beteendevetenskap":
+        {
+	    "HV1":"Handikappvetenskap",
+	    "KR1":"Kriminologi",
+	    "PE1":"Pedagogik",
+	    "PS1":"Psykologi",
+	    "PY1":"Psykoterapi",
+	    "SO1":"Sociologi",
+	    "SO2":"Socialantropologi",
+	    "SS2":"Socialt arbete och social omsorg",
+	    "UV1":"Utbildningsvetenskap/didaktik allmänt",
+	    "UV2":"Utbildningsvetenskap teoretiska ämnen",
+	    "UV3":"Utbildningsvetenskap praktisk-estetiska ämnen",
+	    "BE9":"Övrigt inom beteendevetenskap"
+	},
+        "Ekonomi/administration":
+        {
+	    "AF1":"Administration och förvaltning",
+	    "EH1":"Ekonomisk historia",
+	    "FE1":"Företagsekonomi",
+	    "LO1":"Ledarskap, organisation och styrning",
+	    "NA1":"Nationalekonomi",
+	    "EK9":"Övrigt inom ekonomi och administration"
+        },
+	"Juridik":
+        {		
+	    "JU1":"Juridik och rättsvetenskap"
+        },
+	"Övriga samhällsvetenskapliga ämnen":
+	{
+	    "FU1":"Freds- och utvecklingsstudier",
+	    "KS1":"Kultur- och samhällsgeografi",
+	    "LL1":"Länderkunskap/länderstudier",
+	    "MH1":"Måltids- och  hushållskunskap",
+	    "MR1":"Mänskliga rättigheter",
+	    "SH1":"Samhällskunskap",
+	    "ST1":"Statistik",
+	    "ST2":"Statsvetenskap",
+	    "SY1":"Studie- och yrkesvägledning",
+	    "TU1":"Turism- och fritidsvetenskap",
+	    "SA9":"Övrigt inom samhällsvetenskap"
+        }
+    },
+    "Naturvetenskap":
+    {
+        "Biologi":
+        {
+	    "BI1":"Biologi",
+	    "BT1":"Bioteknik",
+	    "MB1":"Medicinsk biologi",
+	    "MV1":"Miljövetenskap",
+	    "NU1":"Nutrition"
+        },
+	"Farmaci":
+	{
+	    "FC1":"Farmaci",
+	    "FK1":"Farmakologi"
+        },
+	"Fysik":
+        {
+	    "FY1":"Fysik"
+        },
+			
+	"Geovetenskap":
+	{
+	    "GN1":"Geovetenskap och naturgeografi"
+            ,
+        },
+			
+	"Kemi":
+	{
+	    "KE1":"Kemi"
+        },
+			
+	"Lant- och skogsbruk":
+	{
+	    "FV2":"Fiske och vattenbruk",
+	    "LV2":"Lantbruksvetenskap",
+	    "SK1":"Skogsvetenskap",
+	    "TV1":"Trädgårdsvetenskap"
+        },
+			
+	"Matematik":
+	{
+	    "MA1":"Matematik",
+	    "MS1":"Matematisk statistik"
+        },
+			
+	"Övrigt":
+	{
+	    "HD1":"Husdjursvetenskap",
+	    "LM1":"Livsmedelsvetenskap",
+	    "NA9":"Övrigt inom naturvetenskap"
+        }
+    },
+    "Teknik":
+    {
+	"Arkitektur":
+	{
+	    "AR3":"Arkitektur",
+	    "LA2":"Landskapsarkitektur"
+        },
+			
+	"Byggnadsteknik/Väg- och vatten":
+	{
+	    "BY1":"Byggteknik",
+	    "VV1":"Väg- och vattenbyggnad"
+        },
+			
+	"Datateknik":
+	{
+	    "DT1":"Datateknik"
+        },
+			
+	"Elektroteknik":
+	{
+	    "EL1":"Elektronik",
+	    "EN2":"Energiteknik",
+	    "ET2":"Elektroteknik"
+        },
+			
+	"Industriell ekonomi och organisation":
+	{
+	    "IE1":"Industriell ekonomi och organisation"
+        },
+			
+	"Kemiteknik":
+	{
+	    "KT1":"Kemiteknik"
+        },
+			
+	"Lantmäteri":
+        {
+	    "GI1":"Geografisk informationsteknik och lantmäteri"
+            , "GVA":"Geovetenskap och biogeovetenskap" # From SU, not in the original list
+        },
+			
+	"Maskinteknik":
+	{
+	    "FT1":"Farkostteknik",
+	    "MT1":"Maskinteknik"
+        },
+			
+	"Samhällsbyggnadsteknik":
+	{
+	    "FP1":"Fysisk planering",
+	    "SB1":"Samhällsbyggnadsteknik"
+        },
+			
+	"Teknisk fysik":
+	{
+	    "TF1":"Teknisk fysik"
+        },
+	"Övrig teknik":
+	{
+	    "AT1":"Automatiseringsteknik",
+	    "BM1":"Berg- och mineralteknik",
+	    "MA2":"Materialteknik",
+	    "RY2":"Rymdteknik",
+	    "TT1":"Träfysik och träteknologi",
+	    "TX1":"Textilteknologi",
+	    "TE9":"Övriga tekniska ämnen"
+        }
+    },
+			
+    "Medicin och odontologi":
+    {
+    
+	"Medicin":
+	{
+	    "ME1":"Medicin"
+        },
+			
+	"Odontologi":
+        {		
+	    "OD1":"Odontologi",
+	    "TO1":"Tandteknik och oral hälsa"
+        },
+			
+	"Veterinärmedicin":
+	{
+	    "DJ1":"Djuromvårdnad",
+	    "VE1":"Veterinärmedicin"
+        },
+			
+	"Övrigt":
+	{
+	    "BL1":"Biomedicinsk laboratorievetenskap",
+	    "MT2":"Medicinska tekniker",
+	    "ME9":"Övrigt inom medicin"
+        }
+    },
+			
+    "Vård och omsorg":
+    {
+	"Omvårdnad":
+        {
+	    "FH1":"Folkhälsovetenskap",
+	    "HS1":"Hälso- och sjukvårdsutveckling",
+	    "OM1":"Omvårdnad/omvårdnadsvetenskap",
+	    "OM9":"Övrigt inom omvårdnad"
+        },
+			
+	"Rehabilitering":
+	{
+	    "TR1":"Terapi, rehabilitering och kostbehandling"
+        }
+    },		
+    "Konstnärligt område":
+    {
+	"Konst":
+	{
+	    "DE1":"Design",
+	    "FF1":"Författande",
+	    "FK2":"Fri konst",
+	    "KH1":"Konsthantverk",
+	    "KO9":"Övrigt inom konst"
+        },
+			
+	"Musik":
+	{
+	    "MU1":"Musik"
+        },
+			
+	"Teater, film och dans":
+	{
+	    "CI1":"Cirkus",
+	    "DA2":"Dans",
+	    "FM1":"Film",
+	    "KO2":"Koreografi",
+	    "MC1":"Musikdramatisk scenframställning och gestaltning",
+	    "RE1":"Regi",
+	    "SM1":"Scen och medier",
+	    "TF9":"Övrigt inom teater, film och dans"
+        }
+    },
+    "Övrigt område":
+    {
+	"Tvärvetenskap":
+	{
+	    "AE1":"Arbetsvetenskap och ergonomi",
+	    "BU2":"Barn- och ungdomsstudier",
+	    "GS1":"Genusstudier",
+	    "MM1":"Miljövård och miljöskydd",
+	    "TS1":"Teknik i samhällsperspektiv",
+	    "TV9":"Övriga tvärvetenskapliga studier"
+        },
+			
+	"Idrott och friskvård":
+	{
+	    "FV3":"Friskvård",
+	    "ID1":"Idrott/idrottsvetenskap"
+        },
+			
+	"Transport":
+        {
+	    "LF1":"Luftfart",
+	    "SJ1":"Sjöfart",
+	    "TP9":"Övrigt inom transportsektorn"
+        },
+			
+	"Militär utbildning":
+	{
+	    "KV3":"Krigsvetenskap"
+        }
+    }
+}
+
+scbToSCBGroup = {}
+scbToSCBGroupM = {}
+unknownSCB = {}
+for top in scbLookups:
+    for mid in scbLookups[top]:
+        for scb in scbLookups[top][mid]:
+            scbToSCBGroup[scb] = top
+            scbToSCBGroupM[scb] = mid
+
+######################################
+### Grouping based on CourseLevel. ###
+######################################
+def levelGroup(level):
+    if level == "No level info":
+        return "(No level info)"
+    if level in ["GXX", "G1N", "G1F", "G2F"]:
+        return "Grundnivå"
+    elif level in ["G1E", "G2E"]:
+        return "Grundnivåexjobb"
+    elif level in ["AXX", "A1N", "A1F"]:
+        return "Avancerad nivå"
+    elif level in ["A1E", "A2E"]:
+        return "Avancerad nivå exjobb"
+    elif level == "":
+        return "(No level info)"
+    else:
+        return "(Level: " + level + ")"
+    
+##################################
+### Grouping based on credits. ###
+##################################
+def creditsGroup(creds):
+    if not creds:
+        return "4: (No Credits)"
+
+    try:
+        f = float(creds.replace(",", "."))
+
+        if f >= 0 and f <= 5:
+            return "0: 0-5"
+        elif f > 5 and f <= 10:
+            return "1: 5,5-10"
+        elif f > 10 and f <= 15:
+            return "2: 10,5-15"
+        elif f > 15:
+            return "3: 15+"
+        else:
+            return "5: (Unexpected credits: " + str(f) + ")"
+    except:
+        return "4: (No Credits)"
+        
+##########################################
+### Grouping based on number of verbs. ###
+##########################################
+def numberOfVerbsGroup(n):
+    if n == 0:
+        return "0 (  0 )"
+    elif n >= 1 and n <= 4:
+        return "1 (1-4 )"
+    elif n >= 5 and n <= 10:
+        return "2 (5-10)"
+    elif n >= 11:
+        return "3 ( 11+)"
+    else:
+        return "4 (" + str(n) + ")"
 
 ###################################################
 ### For each course, check for ambiguities etc. ###
@@ -1185,7 +2031,7 @@ for cl in data:
             level = ""
         if level == "-":
             level = ""
-            
+
         scb = "No SCB info"
         if "SCB-ID" in c:
             scb = c["SCB-ID"]
@@ -1212,6 +2058,27 @@ for cl in data:
         addLevel(level)
         addSCB(scb)
 
+        if scb in scbToSCBGroup:
+            scbGr = scbToSCBGroup[scb]
+        elif scb == "":
+            scbGr = "(No SCB)"
+        else:
+            unknownSCB[scb] = 1
+            scbGr = "(Unrecognized SCB)"
+
+        creds = ""
+        if not "ECTS-credits" in c or c["ECTS-credits"] == "":
+            pass
+        else:
+            creds = c["ECTS-credits"]
+            
+        levelGr = levelGroup(level)
+
+        creditsGr = creditsGroup(creds)
+
+        addSCB(scbGr)
+        addLevel(levelGr)
+        
         UNI = ""
         if moreThanOneUni and "University" in c:
             UNI = c["University"] + " "
@@ -1222,8 +2089,10 @@ for cl in data:
             addGoals([])
             
         if "Bloom-list-sv" in c:
-            addBloomList(c["Bloom-list-sv"], scb, level, thisType, c["University"])
-        
+            addBloomList(c["Bloom-list-sv"], scb, level, thisType, c["University"], scbGr, levelGr, creditsGr)
+        else:
+            addBloomList([], scb, level, thisType, c["University"], scbGr, levelGr, creditsGr)
+            
         if checks["ilo"]:
             if not "ILO-sv" in c or c["ILO-sv"].strip() == "":
                 if "ILO-en" in c and c["ILO-en"] and len(c["ILO-en"]):
@@ -1317,11 +2186,15 @@ for cl in data:
                 printed = 1
                 add("Course level not empty for 'förberedande kurs'", c["CourseCode"])
 
-        if checks["scb"] and not "SCB-ID" in c:
+        if checks["scb"] and (not "SCB-ID" in c or c["SCB-ID"] == ""):
             cPrint(UNI + c["CourseCode"] + " has no SCB-ID")
             printed = 1
             add("Missing SCB", c["CourseCode"])
-
+        elif checks["scb"] and scbGr == "(Unrecognized SCB)":
+            cPrint(UNI + c["CourseCode"] + " has unrecognized SCB-ID: '" + c["SCB-ID"] + "'")
+            printed = 1
+            add("Unrecognized SCB", c["CourseCode"])
+            
         if checks["cred"]:
             if not "ECTS-credits" in c:
                 cPrint(UNI + c["CourseCode"] + " has no ECTS-credits field")
