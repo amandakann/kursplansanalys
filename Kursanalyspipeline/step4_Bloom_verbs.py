@@ -85,7 +85,12 @@ for line in bloom.readlines():
         continue
 
     if line[0].islower() or line[0].isupper():
-        exp = line.strip()
+        p = line.find("#")
+        if p > 0:
+            exp = line[:p].strip()
+        else:
+            exp = line.strip()
+        
         if " " in exp:
             verb = exp.split()[0]
         else:
@@ -113,7 +118,12 @@ for line in bloom.readlines():
         continue
 
     if line[0].islower() or line[0].isupper():
-        exp = line.strip()
+        p = line.find("#")
+        if p > 0:
+            exp = line[:p].strip()
+        else:
+            exp = line.strip()
+        
         if " " in exp:
             verb = exp.split()[0]
         else:
@@ -125,9 +135,11 @@ for line in bloom.readlines():
             bloomLexEn[verb] = [ [verb, exp, bloomLevel] ]
 bloom.close()
 
-##############################################
-### In a tagged sentence, find Bloom verbs ###
-##############################################
+################################################
+### In a tagged sentence, find Bloom verbs   ###
+### This version is not using part-of-speech ###
+### but should be updated to do so.          ###
+################################################
 def bloomVerbsInSentenceEn(s):
     bloomMatches = []
     for i in range(len(s)): # for each word, check if it is a verb
@@ -151,11 +163,11 @@ def bloomVerbsInSentenceEn(s):
                 ii = 0
                 matchOK = 1
                 for k in range(len(tokens)):
-                    if tokens[k] == "*":
+                    if tokens[k] == "*": # Whole token is a wildcard
                         tmp = 0
                         starOK = 0
                         while tmp + i + ii < len(s):
-                            if tokens[k + 1].lower() == s[i + ii + tmp].lower():
+                            if tokenMatch(tokens[k + 1], s[i + ii + tmp], False):
                                 ii += tmp
                                 starOK = 1
                                 break
@@ -163,11 +175,12 @@ def bloomVerbsInSentenceEn(s):
                         if not starOK:
                             matchOK = 0
                             break
-                    elif i + ii < len(s) and tokens[k].lower() == s[i + ii].lower():
-                        ii += 1
-                    else:
-                        matchOK = 0
-                        break
+                    else: # Not a wildcard token
+                        if i + ii < len(s) and tokenMatch(tokens[k], s[i + ii], False):
+                            ii += 1
+                        else:
+                            matchOK = 0
+                            break
                 if matchOK:
                     matchLen = ii
                     log("exp was a match " + str(exp))
@@ -238,11 +251,11 @@ def bloomVerbsInSentence(s):
                     ii = 0
                     matchOK = 1
                     for k in range(len(tokens)):
-                        if tokens[k] == "*":
+                        if tokens[k] == "*": # Whole token is a wildcard
                             tmp = 0
                             starOK = 0
                             while tmp + i + ii < len(s):
-                                if tokens[k + 1] == s[i + ii + tmp]["w"] or tokens[k + 1] == s[i + ii + tmp]["l"]:
+                                if tokenMatch(tokens[k + 1], s[i + ii + tmp], True):
                                     ii += tmp
                                     starOK = 1
                                     break
@@ -250,11 +263,13 @@ def bloomVerbsInSentence(s):
                             if not starOK:
                                 matchOK = 0
                                 break
-                        elif i + ii < len(s) and (tokens[k] == s[i + ii]["w"] or tokens[k] == s[i + ii]["l"]):
-                            ii += 1
-                        else:
-                            matchOK = 0
-                            break
+                        else: # Not a wildcard token
+                            if i + ii < len(s) and tokenMatch(tokens[k], s[i + ii], True):
+                                ii += 1
+                            else:
+                                matchOK = 0
+                                break
+                            
                     if matchOK:
                         matchLen = ii
                         if toklen > longestMatch:
@@ -292,6 +307,27 @@ def bloomVerbsInSentence(s):
 
     return bloomMatches
 
+def tokenMatch(tok, src, haveWTL):
+    if tok.find("*") >= 0: # Single token that contains wildcard(s)
+        r = tok.replace("*", ".*")
+        log("Regex token '" + tok + "' use regex '" + r + "'")
+        if haveWTL:
+            if re.fullmatch(r, src["w"], re.I) or re.fullmatch(r, src["l"], re.I):
+                log("Regex match: " + r + " matched " + str(src))
+                return 1
+        else: # no WTL
+            if re.fullmatch(r, src, re.I):
+                log("Regex match: " + r + " matched " + str(src))
+                return 1
+    else: # token is a regular string
+        tl = tok.lower()
+        if haveWTL:
+            if tl == src["w"].lower() or tl == src["l"].lower():
+                return 1
+        else: # no WTL
+            if tl == src.lower():
+                return 1   
+    return 0
 
 ##################################################################################
 ### For each course in the course list, add Bloom verbs and their Bloom levels ###

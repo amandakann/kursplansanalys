@@ -232,13 +232,23 @@ if checks["bloom"]:
 
             if line[0] == "(": # ambiguous verb, not the default level of this verb
                 v = line.replace("(", "").replace(")", "").strip()
+                p = line.find("#")
+                if p > 0:
+                    exp = line[:p].strip()
+                else:
+                    exp = line.strip()
+                    
                 if v in ambig:
                     ambig[v].append(bloomLevel)
                 else:
                     ambig[v] = [bloomLevel]
                     
             if line[0].islower() or line[0].isupper():
-                exp = line.strip()
+                p = line.find("#")
+                if p > 0:
+                    exp = line[:p].strip()
+                else:
+                    exp = line.strip()
 
                 bloomLex[exp] = bloomLevel
     except:
