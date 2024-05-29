@@ -177,7 +177,7 @@ experiment
 (explain)
 (explore)
 expose
-(express)
+express
 factor
 figure
 (generalize)
