@@ -543,6 +543,9 @@ umuEfterHypWrapSpec2 = re.compile("De studerande skall efter avslutad kurs (för
 umuEfterHypIndicator = re.compile("Efter[^-]*-[^-]*-")
 umuEfterHypNegativeIndicator = re.compile("[a-zåäö]- och")
 
+hypNoSpaceExp = re.compile("[^A-ZÅÄÖ]-[A-ZÅÄÖ][a-zåäö]")
+hypCommaExp = re.compile(",-")
+
 ###    (example course UMU 2SV060)
 umuSamtligaMomentExp = re.compile("\n((([^\s\n])|([^\n][^\s\n])){4,})", re.S)
 umuSamtligaMomentExpWrap = re.compile("Samtliga\s*moment\s*\n(.*)", re.S)
@@ -895,7 +898,12 @@ def extractGoals(c):
         en = cleanStr(c["ILO-en"])
         if len(en):
             iloListEn.append(en)
-    
+
+    ### Fix for some faulty matchings
+
+    iloList = iloListFixes(iloList)
+    iloListEn = iloListFixes(iloListEn)
+   
     return (iloList, iloListEn)
 
 times = {}
@@ -969,8 +977,6 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
         times[name] = 0
     times[name] += endtime - startime
     return (sv, en)
-
-
 
 def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE):
     iloListSv = []
@@ -1054,6 +1060,62 @@ def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, l
     times[name] += endtime - startime
     return (sv, en)
 
+
+def iloListFixes(iloList):
+    newLs = []
+    for goal in iloList:
+        ls = goal.split(",-")
+        if len(ls) > 1:
+            for g in ls:
+                gg = g.strip()
+                if len(gg):
+                    newLs.append(gg)
+        else:
+            newLs.append(goal)
+    if len(newLs) > len(iloList):
+        iloList = newLs
+
+    newLs = []
+    for goal in iloList:
+        ls = goal.split(".-")
+        if len(ls) > 1:
+            for g in ls:
+                gg = g.strip()
+                if len(gg):
+                    newLs.append(gg)
+        else:
+            newLs.append(goal)
+    if len(newLs) > len(iloList):
+        iloList = newLs
+
+    newLs = []
+    for goal in iloList:
+        tail = goal
+        m = hypNoSpaceExp.search(tail)
+        ls = []
+        while m:
+            tmp = tail
+            head = tail[:m.start()+1].strip()
+            tail = tail[m.end() - 2:].strip()
+            if len(head) > 20 and len(tail) > 20:
+                ls.append(head)
+                m = hypNoSpaceExp.search(tail)
+            else:
+                m = 0
+                tail = goal
+                ls = []
+        ls.append(tail)
+        if len(ls) > 2:
+            newLs.extend(ls)
+        elif len(ls) > 1 and ls[0].strip()[0] == "-":
+            newLs.extend(ls)
+        else:
+            newLs.append(goal)
+    if len(newLs) != len(iloList):
+        iloList = newLs
+    
+    return iloList
+
 ##########################################################################
 ### Check list for duplicates and substrings that are completely found ###
 ### in other strings, and remove them                                  ###
@@ -1097,7 +1159,6 @@ def dupcheck(ls):
                                 res[i] = s
                     break
         if not skip and len(s) >= SHORTEST_GOAL:
-            log("dupcheck, new goal: ", s)
             res.append(s)
 
     keep = []
@@ -1114,7 +1175,9 @@ def dupcheck(ls):
 def startcheck(ls):
     res = []
     for si in range(len(ls)):
-        s = ls[si]
+        s = ls[si].strip()
+        if s[0] == "-":
+            s = s[1:].strip()
         if s[0].isupper():
             pass
         elif s[0].islower():
