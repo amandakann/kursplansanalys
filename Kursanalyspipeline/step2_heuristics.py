@@ -75,7 +75,7 @@ def cleanStr(s):
     res = res.strip()
     if res[-7:] == ", kunna":
         res = res[:-7]
-    res = re.sub("För godkänd kurs ska(([^ ]| [^ ]))*", "", res)
+    res = re.sub("För godkänd kurs ska(([^ ]| [^ ]))*  ", "", res)
     res = re.sub("\s\s\s*", " ", res)
     res = re.sub("^–\s*", " ", res)
     res = res.strip()
@@ -347,6 +347,14 @@ newlineListExpWrap = re.compile("(\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)
 ###   (example course KTH FDD3359)
 dotListExp = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*(([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})", re.S)
 dotListExpWrap = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–])){4,}(\s*.*?[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})+", re.S)
+
+### Studenten skall efter avslutad kurs behärska en grundläggande
+### orientering i ämnesområdet teater i Sverige och kunna visa en
+### förmåga att o diskutera olika aspekter av historiografi med
+### avseende på teater i Sverige o analysera och diskutera olika
+### aspekter av svensk kultur- och teaterpolitik.
+dotListOExp = re.compile(" o ((([^ o])|( [^o])|( o[^ ])){4,}[^ o])", re.S)
+dotListOExpWrap = re.compile("(Delkurs\s[0-9]+)?( o ((([^ o])|( [^o])|( o[^ ])){4,}))+", re.S)
 
 ### Courses can use X as markers for goals
 ###   "Efter genomgången kurs ska deltagarna kunna XReflektera kring och diskutera ämnet hållbar utveckling och koppla begreppen till det egna ämne
@@ -778,6 +786,7 @@ def extractGoals(c):
     sv, en = matchAndConsume(newlineListExpWrap, newlineListExp, sv, newlineListExpWrap, newlineListExp, en, "newline-list", iloList, iloListEn)
     
     sv, en = matchAndConsume(dotListExpWrap, dotListExp, sv, dotListExpWrap, dotListExp, en, "dot-list", iloList, iloListEn)
+    sv, en = matchAndConsume(dotListOExpWrap, dotListOExp, sv, dotListOExpWrap, dotListOExp, en, "dot-list-O", iloList, iloListEn)
 
     sv, en = matchAndConsume(XxListExpWrap, XxListExp, sv, XxListExpWrap, XxListExp, en, "Xx-list", iloList, iloListEn)
     
