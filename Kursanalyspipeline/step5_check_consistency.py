@@ -250,6 +250,8 @@ if checks["bloom"]:
                 else:
                     exp = line.strip()
 
+                if exp in bloomLex:
+                    print (bloomFile + " has verb '" + exp + "' listed with two default levels, level " + str(bloomLex[exp]) + " and level " + str(bloomLevel) + "\n")
                 bloomLex[exp] = bloomLevel
     except:
         bloomFile = ""
@@ -277,6 +279,8 @@ if checks["bloom"]:
             if line[0].islower() or line[0].isupper():
                 exp = line.strip()
 
+                if exp in bloomLexEn:
+                    print (bloomFileEn + " has verb '" + exp + "' listed with two default levels, level " + str(bloomLexEn[exp]) + " and level " + str(bloomLevel) + "\n")
                 bloomLexEn[exp] = bloomLevel
     except:
         bloomFileEn = ""
