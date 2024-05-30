@@ -300,7 +300,7 @@ try:
         if len(v):
             stoplist[v] = 1
 except:
-    log("Error reading stoplist.")
+    print("Error reading stoplist.")
 
 ############################
 ### read JSON from stdin ###
@@ -2012,6 +2012,325 @@ def numberOfVerbsGroup(n):
     else:
         return "4 (" + str(n) + ")"
 
+
+
+###########################################################
+### General principles for ignoring parts of goal texts ###
+###########################################################
+def applyGeneralPrinciples(s):
+    # Generella principer
+    
+    # för att -> vänsterledet avgör nivån (utom för "använda * för att" och "applicera * för att" då det är högerledet som avgör nivån)
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(1, len(s)):
+            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "för":
+                useLeft = 1
+                j = i - 2
+                while j >= 0:
+                    if s[j]["l"] == "applicera" or s[j]["l"] == "använda":
+                        useLeft = 0
+                        break
+                    if s[j]["t"] == "mad":
+                        break
+                    j -= 1
+                if useLeft:
+                    new = []
+                    for j in range(i-1): # add everything on the left
+                        new.append(s[j])
+
+                    sawMad = 0
+                    for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
+                        if s[j]["t"] == "mad":
+                            sawMad = 1
+                        if sawMad:
+                            new.append(s[j])
+                    if len(s) != len(new):
+
+                        ss = ""
+                        for t in s:
+                            ss += " " + t["w"]
+                            nn = ""
+                        for t in new:
+                            nn += " " + t["w"]
+                        
+                        s = new
+                        check = 1
+                        break
+                else: # use right side
+                    new = []
+                    sawMad = 0
+                    for j in range(i-1, -1, -1): # check for sentence delimiter on the left
+                        if s[j]["t"] == "mad":
+                            sawMad = j
+                            break
+
+                    if sawMad > 0:
+                        for j in range(sawMad+1): # add anything on the left that is in another sentence
+                            new.append(s[j])
+
+                    for j in range(i+1, len(s)): # add everything on the right
+                        new.append(s[j])
+
+                    if len(s) != len(new):
+
+                        ss = ""
+                        for t in s:
+                            ss += " " + t["w"]
+                            nn = ""
+                        for t in new:
+                            nn += " " + t["w"]
+
+                        s = new
+                        check = 1
+                        break
+                    
+    # i/med syfte att -> vänsterledet avgör nivån
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(0, len(s) - 2):
+            if (s[i]["w"].lower() == "i" or s[i]["w"].lower() == "med") and s[i+1]["l"] == "syfte" and s[i+2]["w"].lower() == "att":
+                new = []
+                for j in range(i): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad":
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+    
+    # genom att -> högerledet avgör nivån
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(1, len(s)):
+            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "genom":
+                # use right side
+                new = []
+                sawMad = 0
+                for j in range(i-1, -1, -1): # check for sentence delimiter on the left
+                    if s[j]["t"] == "mad":
+                        sawMad = j
+                        break
+
+                if sawMad > 0:
+                    for j in range(sawMad+1): # add anything on the left that is in another sentence
+                        new.append(s[j])
+
+                for j in range(i+1, len(s)): # add everything on the right
+                    new.append(s[j])
+
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+
+    # som taggat som hp -> skippa hela bisatsen som inleds med “som”
+    # (exempel: "Förutsäga vilka muskelrörelser som kontrollerar särskilda kroppsrörelser." - Här ska inte verbet kontrollerar bloomnivåbestämmas.)
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(0, len(s)):
+            if s[i]["w"].lower() == "som" and s[i]["t"] == "hp":
+                new = []
+                for j in range(i): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad" or s[j]["t"] == "mid": # TODO: should use phrase analysis here instead
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+    
+    # utveckla elever.*/studenter.* förmåga/egenskap.* att -> det som kommer efter borde avgöra nivån
+    check = 1
+    while check:
+        check = 0
+
+        utv = -1
+        haveStu = 0
+        for i in range(0, len(s) - 1):
+            if s[i]["l"] == "utveckla":
+                utv = i
+            elif utv >= 0 and (s[i]["l"] == "student" or s[i]["l"] == "elev"):
+                haveStu = 1
+            elif utv >= 0 and haveStu and (s[i]["l"] == "förmåga" or s[i]["l"] == "egenskap") and s[i+1]["l"] == "att":
+                # use right side
+                
+                new = []
+                sawMad = 0
+                for j in range(utv-1, -1, -1): # check for sentence delimiter on the left
+                    if s[j]["t"] == "mad":
+                        sawMad = j
+                        break
+
+                if sawMad > 0:
+                    for j in range(sawMad+1): # add anything on the left that is in another sentence
+                        new.append(s[j])
+
+                for j in range(i+2, len(s)): # add everything on the right
+                    new.append(s[j])
+
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+
+    # Skippa att bloomnivågranska verb som förekommer efter “med att”, “sätt att” och “hur”, se exempel nedan:
+    # ex: "Reflektera över svårigheter med att modellera, simulera och optimera under de olika stegen i en utvecklingsprocess gällande produktion och logistik ."
+    # ex: "Diskutera och problematisera olika sätt att planera, organisera och utvärdera undervisning inom ett eller flera av ämnena teknik, matematik, fysik och kemi ."
+    # ex: "Förklara hur företag kan organisera och leda utveckling av nya värderbjudanden, både vad gäller varu- och tjänsteinnovationer"
+    # ex: "Identifiera hur det är möjligt att välja och optimera parametrar FÖR ATT erhålla en hållbar metallurgisk processkedja ."
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(0, len(s) - 1):
+            if s[i]["w"].lower() == "hur" or ((s[i]["w"].lower() == "med" or s[i]["w"].lower() == "sätt") and s[i+1]["w"].lower() == "att"):
+                new = []
+                for j in range(i): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad":
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+
+    # Ytterligare huvudvärksframkallande exempel:
+    # "föreslå överförbara resultat FÖR ATT förbättra förvaltningen och effektiv användning av energi, GENOM ATT utveckla nya idéer ."
+
+    
+    # "syftet med ... är att ... <skip>",
+    check = 1
+    while check:
+        check = 0
+
+        haveSyfte = -1
+        for i in range(0, len(s) - 2):
+            if s[i]["l"].lower() == "syfte" and s[i+1]["w"].lower() == "med":
+                haveSyfte = i
+            elif s[i]["t"] == "mad":
+                haveSyfte = -1
+            elif haveSyfte >= 0 and s[i]["w"].lower() == "är"  and s[i+1]["w"].lower() == "att":
+                
+                new = []
+                for j in range(haveSyfte): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+2, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad":
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+
+    # "utan att ... "
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(0, len(s) - 2):
+            if s[i]["w"].lower() == "utan" and s[i+1]["w"].lower() == "att":
+                new = []
+                for j in range(i): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+2, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad":
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+    
+    return s
+
 ###################################################
 ### For each course, check for ambiguities etc. ###
 ###################################################
@@ -2233,8 +2552,11 @@ for cl in data:
                 blooms = []
                 if "Bloom-list-sv" in c:
                     blooms = c["Bloom-list-sv"]
+
                 for si in range(len(ls)):
-                    s = ls[si]
+                    s2 = ls[si]
+
+                    s = applyGeneralPrinciples(s2)
 
                     for i in range(len(s)):
                         wtl = s[i]
