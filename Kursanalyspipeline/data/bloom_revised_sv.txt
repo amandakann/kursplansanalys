@@ -380,6 +380,7 @@ jämföra * i relation till
 komma fram till
 kontrastera
 kritisera
+komma med * *kritik
 ge * *kritik
 kritiskt * förhålla sig till
 motivera
@@ -390,7 +391,14 @@ stödja
 försvara
 ta * ställning
 fatta * *beslut
-(föreslå)
+föreslå * med hänsyn till
+föreslå * *åtgärd * för
+föreslå * *åtgärd som leder till
+föreslå * *förbättring * för
+föreslå lämplig * för 
+föreslå lämplig * utifrån
+föreslå adekvat * för
+föreslå adekvat * utifrån
 tillse
 kontrollera
 koordinera
@@ -413,7 +421,7 @@ föra * *argumentation
 framlägga argument
 reflektera
 integrera och reflektera
-(dra * slutsats*)
+(dra * slutsats)
 uppskatta
 rekommendera
 tolka
@@ -437,8 +445,6 @@ ge * respons på
 ge * kommentar
 opponera
 genomföra * *opposition
-komma med * *kritik
-ge * *kritik
 ge * *feedback
 ge * *återkoppling
 ge * *tolkning
@@ -474,7 +480,6 @@ framkalla
 formulera
 antaga
 formge
-ge * form
 designa
 producera
 kreera
@@ -495,7 +500,15 @@ modellera
 processmodellera
 författa
 tidsplanera
-föreslå
+föreslå * teknisk *lösning
+föreslå * möjlig *lösning
+föreslå * hållbar *lösning
+föreslå * teknisk modifiering
+föreslå * effektiv *design
+föreslå * effektiv *lösning
+föreslå * adekvat strategi
+föreslå * forskningsprojekt
+föreslå * utformas så att
 studieplanera
 planlägga
 ställa upp
