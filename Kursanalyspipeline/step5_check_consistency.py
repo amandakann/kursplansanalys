@@ -1462,7 +1462,7 @@ def printBloom():
     ls.sort(reverse=True)
     
     print ("\n","-"*15, "VERBS", "-"*15)
-    print (vs, "different verbs seen,", tot, "total occurences of these verbs.")
+    print (vs, "different verbs seen,", tot, "total occurrences of these verbs.")
     print("Number of Bloom classifications of each level:")
     for c in range(6):
         if c in bloomLevelCounts:
@@ -1481,7 +1481,7 @@ def printBloom():
     for v in ambiguousVerbs:
         atot += ambiguousVerbs[v]
         avs += 1
-    print (avs, "different ambiguous verbs seen,", atot, "total occurences of these verbs.")
+    print (avs, "different ambiguous verbs seen,", atot, "total occurrences of these verbs.")
     ls = []
     for v in ambiguousVerbs:
         ls.append([ambiguousVerbs[v], v])
@@ -1503,7 +1503,7 @@ def printNonBloom():
         vs += 1
     print ("\n", "-"*15, "Non-Bloom","-"*15)
     print (vs, "verbs found that did not get a Bloom classification.")
-    print (tot, "total occurences of these verbs.")
+    print (tot, "total occurrences of these verbs.")
 
 
     print ("-"*10)
