@@ -58,6 +58,7 @@ except Exception as e:
 #####################################################################
 #### Clean up things that sometimes are weird in the source data ####
 #####################################################################
+SHORTEST_GOAL=4
 clexp1 = re.compile("^[0-9.•*·–…]*\s*")
 clexp2 = re.compile("\s*[0-9.•*·–…]*\s*[.]*\s*$")
 hpExp = re.compile("[A-ZÅÄÖ][a-zåäö, ]*, [0-9][0-9,.]*\s*hp[.]?")
@@ -1099,6 +1100,46 @@ def iloListFixes(iloList):
 
     newLs = []
     for goal in iloList:
+        ls = goal.split(" X ")
+        if len(ls) <= 2:
+            ls = goal.split(" • ")
+        if len(ls) > 2:
+            for g in ls:
+                gg = g.strip()
+                if len(gg):
+                    newLs.append(gg)
+        else:
+            newLs.append(goal)
+    if len(newLs) > len(iloList):
+        iloList = newLs
+
+    newLs = []
+    for goal in iloList:
+        ls = re.split("FSR [0-9]+", goal)
+        if len(ls) > 2:
+            for g in ls:
+                gg = g.strip()
+                if len(gg):
+                    newLs.append(gg)
+        else:
+            newLs.append(goal)
+    if len(newLs) > len(iloList):
+        iloList = newLs
+        
+    newLs = []
+    changes = 0
+    for goal in iloList:
+        ngoal = goal.replace("-kunna", " kunna").replace("-uppvisa", " uppvisa")
+        if goal != ngoal:
+            newLs.append(ngoal)
+            chages = 1
+        else:
+            newLs.append(goal)
+    if changes:
+        iloList = newLs
+
+    newLs = []
+    for goal in iloList:
         tail = goal
         m = hypNoSpaceExp.search(tail)
         ls = []
@@ -1124,57 +1165,6 @@ def iloListFixes(iloList):
         iloList = newLs
     
     return iloList
-
-##########################################################################
-### Check list for duplicates and substrings that are completely found ###
-### in other strings, and remove them                                  ###
-##########################################################################
-SHORTEST_GOAL=4
-def dupcheck(ls):
-    res = []
-
-    tmp = []
-    for s in ls:
-        tmp.append(s) # to keep order
-    
-    def lenf(s):
-        return len(s)
-    ls.sort(key=lenf)
-    
-    for s in ls:
-        skip = 0
-        if len(s) >= SHORTEST_GOAL:
-            for i in range(len(res)):
-                ss = res[i]
-                if s.find(ss) >= 0 or ss.find(s) >= 0:
-                    skip = 1
-                    log("dupcheck, duplicates: ======>", s + "<======>" + ss + "<=====")
-
-                    if len(s) > len(ss): # generally, we prefer the shorter match?
-                        if s.find(" - " + ss) >= 0 or s.find("\n- " + ss) >= 0:
-                            res[i] = s
-                        else:
-                            if ss.find(" ") < 0 and s.find(" ") > 0: # if short string is only one word, skip it
-                                res[i] = s
-                            else:
-                                res[i] = ss
-                    else:
-                        if ss.find(" - " + s) >= 0 or ss.find("\n- " + s) >= 0:
-                            res[i] = ss
-                        else:
-                            if s.find(" ") < 0 and ss.find(" ") > 0: # if short string is only one word, skip it
-                                res[i] = ss
-                            else:
-                                res[i] = s
-                    break
-        if not skip and len(s) >= SHORTEST_GOAL:
-            res.append(s)
-
-    keep = []
-    for s in tmp:
-        if s in res:
-            keep.append(s)
-    return keep
 
 ######################################################################
 ### Check if a goal starts with upper or lower case. If lower case ###
@@ -1239,11 +1229,9 @@ for c in data["Course-list"]:
     log("New course ---------------------------------------------", c["CourseCode"])
     iloList, iloListEn = extractGoals(c)
 
-    # iloList = dupcheck(iloList) # should not be necessary
     iloList = startcheck(iloList)    
     c["ILO-list-sv"] = iloList
     
-    # iloListEn = dupcheck(iloListEn) # should not be necessary
     iloListEn = startcheckEn(iloListEn)
     c["ILO-list-en"] = iloListEn
     
