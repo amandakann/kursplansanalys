@@ -936,9 +936,14 @@ def printBloomStats():
             
                 print("\n" + "-"*10, "Statistics per", label, "-"*10)
                 
+                cats = []
+                for cat in lex:
+                    cats.append(cat)
+                cats.sort()
+                
                 totGoals = 0
                 totCourses = 0
-                for k in lex:
+                for k in cats:
                     if "goalCounts" in lex[k] and "tot" in lex[k]["goalCounts"] and "N" in lex[k]["goalCounts"]:
                         totGoals = lex[k]["goalCounts"]["tot"]
                         totCourses = lex[k]["goalCounts"]["N"]
@@ -953,11 +958,6 @@ def printBloomStats():
                         for k in lex:
                             print(str(lex[k].keys()))
                     
-                cats = []
-                for cat in lex:
-                    cats.append(cat)
-                cats.sort()
-                
                 print("-"*10, "Most common verbs", "-"*10)
                 for cat in cats:
                     ls = []
