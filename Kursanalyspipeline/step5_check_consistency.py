@@ -6,6 +6,8 @@ import re
 VERBS_BEFORE_MORE_THAN=15 # How many verbs to show before lumping the rest as "more than X"
 VERBS_BEFORE_WARNING=50   # How many Bloom-classified verbs can a course have before warning for "very many verbs"?
 
+MAX_EXAMPLES_TO_PRINT=10
+
 ##############################
 ### check system arguments ###
 ##############################
@@ -1385,11 +1387,11 @@ def addAmbig(v):
 def addNonBloom(v, goal, cc):
     if not v in nonBloomVerbs:
         nonBloomVerbs[v] = 0
-        nonBloomVerbs[v] += 1
+    nonBloomVerbs[v] += 1
 
     if not v in nonBloomVerbsInfo:
         nonBloomVerbsInfo[v] = []
-        nonBloomVerbsInfo[v].append([goal, cc])
+    nonBloomVerbsInfo[v].append([goal, cc])
 
 goalCounts = {"tot":0, "N":0, "max":0}
 def addGoals(ls):
@@ -1502,13 +1504,25 @@ def printNonBloom():
     print ("\n", "-"*15, "Non-Bloom","-"*15)
     print (vs, "verbs found that did not get a Bloom classification.")
     print (tot, "total occurences of these verbs.")
+
+
+    print ("-"*10)
+    ls = []
+    for v in nonBloomVerbs:
+        ls.append([nonBloomVerbs[v], v])
+    ls.sort(reverse=True)
+    for tmp in ls:
+        print ("{0: >6} {1:}".format(tmp[0], tmp[1]))
+    
     print ("-"*10)
     ls = []
     for v in nonBloomVerbsInfo:
+        n = 0
         for ex in nonBloomVerbsInfo[v]:
-            s = "** " + v + " ** in course " + ex[1] + ", goal text:\n" + ex[0] + "\n"
-            ls.append(s)
-            #print ("**", v, "** in course ", ex[1], "goal text:\n", ex[0], "\n")
+            if n < MAX_EXAMPLES_TO_PRINT:
+                n += 1
+                s = "'" + v + "' (" + ex[1] + "):\n" + ex[0] + "\n"
+                ls.append(s)
     ls.sort()
     for s in ls:
         print(s)
@@ -2579,7 +2593,7 @@ for cl in data:
                     for i in range(len(s)):
                         wtl = s[i]
 
-                        if wtl["t"][:2] == "vb" and wtl["t"][-4:] != ".sfo" and not (wtl["t"][-3:] == "aux" or wtl["t"][-3:] == "kop" or wtl["t"][-3:] == "mod"):
+                        if wtl["t"][:2] == "vb" and wtl["t"][-4:] != ".sfo" and not (wtl["t"][-3:] == "aux" or wtl["t"][-3:] == "kop" or wtl["t"][-3:] == "mod") and wtl["t"][:6] != "vb.prt":
                             found = 0
                             w = wtl["l"]
                             if w in stoplist:
@@ -2602,7 +2616,7 @@ for cl in data:
                                         g += " (" + wtl["t"].upper() + ")"
                                     g += " "
                                 g.strip()
-                                addNonBloom(w, g, c["CourseCode"])
+                                addNonBloom(w, g, UNI + c["CourseCode"])
         
         if checks["type"]:
             if not "CourseType" in c:
