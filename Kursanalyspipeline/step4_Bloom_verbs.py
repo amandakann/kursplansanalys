@@ -218,6 +218,15 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                     else:
                         s[i] = lemma
 
+        # If the lemma form is not a known verb, try the inflected
+        # form. This helps when PoS tagging is wrong, typically when a
+        # verb occurs as the first word in a sentence with no subject
+        # and is tagged as an adjective instead. This also over
+        # generates, because it matches non-verbs when the PoS-tagging
+        # is correct.
+        if not lemma in lex and i == 0 and isSwedish and s[i]["w"].lower() in lex:
+            lemma = s[i]["w"].lower()
+            
         if lemma in lex:
             exps = lex[lemma]
 
@@ -252,8 +261,8 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         else:
                             matchOK = 0
                             break
-
-                if matchOK and (hasVB or not isSwedish):
+                
+                if matchOK and (hasVB or not isSwedish or i == 0):
                     candidates.append([i, ii, exps[j]])
 
     while len(candidates):
