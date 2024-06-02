@@ -324,6 +324,10 @@ pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)",
 pListExpWrap = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?kunna:?\s*(</\s*p>)?(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>)+", re.S)
 pListExpWrapEn = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?((know\s*how)|(able))\s*to:?\s*(</\s*p>)?(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>)+", re.S)
 
+### KTH courses with LM1, LM2 ... etc
+###    (example course KTH MF2088)
+lm1Exp = re.compile("LM[0-9]+:?\s*(.*?)</p>", re.S)
+lm1ExpWrap = re.compile("(LM[0-9]+(.*?)</p>)(.*?LM[0-9]+(.*?)</p>)+", re.S)
 
 ### KTH courses can use HTML <BR> breaks to list goals
 ###   "Efter kursen ska du kunna:<br />• Beräkna hur att uppföra och driva olika processer inom hållbar vatten- och avloppsrening.<br />• Applicera kemiska och biologiska kunskaper ..."
@@ -780,6 +784,9 @@ def extractGoals(c):
     if sv.find("<p>") >= 0 or en.find("<p>") >= 0:
         sv, en = matchAndConsume(pListExpWrap, pListExp, sv, pListExpWrapEn, pListExp, en, "p-list", iloList, iloListEn)
 
+    if sv.find("LM1") >= 0 or en.find("LM1") >= 0:
+        sv, en = matchAndConsume(lm1ExpWrap, lm1Exp, sv, lm1ExpWrap, lm1Exp, en, "LM-1-list", iloList, iloListEn)
+                        
     if brListIndicator.search(sv) or brListIndicator.search(en):
         sv, en = matchAndConsume(brListExpWrap, brListExp, sv, brListExpWrapEn, brListExp, en, "br-list", iloList, iloListEn)
         sv, en = matchAndConsume(brListExpWrap2, brListExp, sv, brListExpWrap2, brListExp, en, "br-list-2", iloList, iloListEn)
