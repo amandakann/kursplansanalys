@@ -399,7 +399,7 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
         bloomStatsGoal["cred"][creditsGroup] = {"verbCounts":{}}
 
     nGoals = len(ls)
-    for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"], bloomStatsCC["scbG"][scbGroup]["goalCounts"], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
+    for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"], bloomStatsCC["scbG"][scbGroup]["goalCounts"], bloomStatsCC["levelG"][levelGroup]["goalCounts"], bloomStatsCC["cred"][creditsGroup]["goalCounts"]]:
         if not nGoals in lex:
             lex[nGoals] = 0
         lex[nGoals] += 1
@@ -656,6 +656,7 @@ def printBloomStats():
             print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
         else:
             print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+
     print ("\n" + str(totBloom), "classified verbs\n")
 
     ###############################
@@ -932,7 +933,24 @@ def printBloomStats():
             if len(lex.keys()) > 1:
             
                 print("\n" + "-"*10, "Statistics per", label, "-"*10)
+                
+                totGoals = 0
+                totCourses = 0
+                for k in lex:
+                    if "goalCounts" in lex[k] and "tot" in lex[k]["goalCounts"] and "N" in lex[k]["goalCounts"]:
+                        totGoals = lex[k]["goalCounts"]["tot"]
+                        totCourses = lex[k]["goalCounts"]["N"]
+                        if totCourses > 0:
+                            print("{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course.".format(k, totCourses, totGoals, totGoals/float(totCourses)))
+                        else:
+                            print("{0:}\n {1: >5} courses {2: >6} goals {3: 3.f2} goals per course.".format(k, totCourses, totGoals, 0))
 
+                    else:
+                        print ("No goalCounts for label " + label + " key " + k)
+                        print (str(lex.keys()))
+                        for k in lex:
+                            print(str(lex[k].keys()))
+                    
                 cats = []
                 for cat in lex:
                     cats.append(cat)
