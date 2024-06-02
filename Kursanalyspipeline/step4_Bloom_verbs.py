@@ -526,7 +526,7 @@ def applyGeneralPrinciples(s):
                 useLeft = 1
                 j = i - 2
                 while j >= 0:
-                    if s[j]["l"] == "applicera" or s[j]["l"] == "använda":
+                    if s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera":
                         useLeft = 0
                         break
                     if s[j]["t"] == "mad":
@@ -591,7 +591,7 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(0, len(s) - 2):
-            if (s[i]["w"].lower() == "i" or s[i]["w"].lower() == "med") and s[i+1]["l"] == "syfte" and s[i+2]["w"].lower() == "att":
+            if (s[i]["w"].lower() == "i" or s[i]["w"].lower() == "med") and (s[i+1]["l"] == "syfte" or s[i+1]["w"].lower() == "syfte") and s[i+2]["w"].lower() == "att":
                 new = []
                 for j in range(i): # add everything on the left
                     new.append(s[j])
@@ -692,7 +692,7 @@ def applyGeneralPrinciples(s):
         utv = -1
         haveStu = 0
         for i in range(0, len(s) - 1):
-            if s[i]["l"] == "utveckla":
+            if s[i]["l"] == "utveckla" or s[i]["w"].lower() == "utveckla":
                 utv = i
             elif utv >= 0 and (s[i]["l"] == "student" or s[i]["l"] == "elev"):
                 haveStu = 1
