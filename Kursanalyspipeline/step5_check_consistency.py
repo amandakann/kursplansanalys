@@ -2596,7 +2596,7 @@ for cl in data:
                         if wtl["t"][:2] == "vb" and wtl["t"][-4:] != ".sfo" and not (wtl["t"][-3:] == "aux" or wtl["t"][-3:] == "kop" or wtl["t"][-3:] == "mod") and wtl["t"][:6] != "vb.prt":
                             found = 0
                             w = wtl["l"]
-                            if w in stoplist:
+                            if w in stoplist or wtl["w"] in stoplist:
                                 continue
 
                             for bl in blooms:

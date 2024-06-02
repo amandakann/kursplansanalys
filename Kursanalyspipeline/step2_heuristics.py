@@ -1102,7 +1102,7 @@ def iloListFixes(iloList):
     for goal in iloList:
         ls = goal.split(" X ")
         if len(ls) <= 2:
-            ls = goal.split(" • ")
+            ls = goal.split("•")
         if len(ls) > 2:
             for g in ls:
                 gg = g.strip()
