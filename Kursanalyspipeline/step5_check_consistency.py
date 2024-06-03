@@ -961,15 +961,40 @@ def printBloomStats():
                 print("-"*10, "Most common verbs", "-"*10)
                 for cat in cats:
                     ls = []
+                    catTot = 0
                     for v in lex[cat]["verbCounts"]:
                         ls.append([lex[cat]["verbCounts"][v], v])
+                        catTot += lex[cat]["verbCounts"][v]
                     ls.sort(reverse=True)
+                    if catTot == 0:
+                        catTot = 1
+                    
                     print ("--->", cat)
+                    catTotTop10 = 0
                     for vi in range(len(ls)):
-                        print ("{0: >5}: {1:}".format(ls[vi][0], ls[vi][1]))
+                        print ("{0: >5} ({1: >5}): {2:}".format(ls[vi][0], "{:2.1%}".format(ls[vi][0] / float(catTot)), ls[vi][1]))
+                        catTotTop10 += ls[vi][0]
                         if vi >= 10:
                             break
+                    print ("Top 11 verbs cover {: 2.2%} of all verb occurrences.".format(catTotTop10  / float(catTot)))
                 print()
+
+                if (label == "University"):
+                    print("-"*10, "Most common verbs per bloom level", "-"*10)
+                    for bloomL in range(6):
+                        print ("Level " + str(bloomL) + " ............")
+                        for cat in cats:
+                            ls = []
+                            for v in lex[cat]["verbCounts"]:
+                                if v in bloomLex and bloomLex[v] == bloomL:
+                                    ls.append([lex[cat]["verbCounts"][v], v])
+                            ls.sort(reverse=True)
+                            print ("--->", cat)
+                            for vi in range(len(ls)):
+                                print ("{0: >5}: {1:}".format(ls[vi][0], ls[vi][1]))
+                                if vi >= 5:
+                                    break
+                    print()
 
                 ls = []
                 rowLabel = "Verbs per Bloom level"
@@ -1470,11 +1495,16 @@ def printBloom():
         else:
             print ("{0: >2}: {1: >5}".format(c, 0))
     print ("\n","-"*15, "Most common verbs", "-"*15)
+    totC = tot
+    if totC == 0:
+        totC = 1
+    top10tot = 0
     for i in range(len(ls)):
-        print ("{0: >5}: {1:}".format(ls[i][0], ls[i][1]))
+        print ("{0: >5} ({1: >5}): {2:}".format(ls[i][0], "{:2.1%}".format(ls[i][0] / float(totC)), ls[i][1]))
+        top10tot += ls[i][0]
         if i >= 10:
             break
-
+    print ("Top 11 verbs cover {:2.2%} of all verb occurrences.".format(top10tot  / float(totC)))
     print ("-"*30)
     atot = 0
     avs = 0
