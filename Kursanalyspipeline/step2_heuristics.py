@@ -1182,11 +1182,11 @@ def startcheck(ls):
     res = []
     for si in range(len(ls)):
         s = ls[si].strip()
-        if s[0] == "-":
+        while len(s) and (s[0] == "-" or s[0] == "/" or s[0] == ")"):
             s = s[1:].strip()
-        if s[0].isupper():
+        if len(s) and s[0].isupper():
             pass
-        elif s[0].islower():
+        elif len(s) and s[0].islower():
             if s[:5] == "kunna":
                 s = "Hon ska " + s
             elif s[:3] == "ha ":
@@ -1206,6 +1206,8 @@ def startcheck(ls):
         if not s[-1] in string.punctuation:
             s += " ."
         res.append(s)
+    if len(res) == 0 and len(ls) == 1:
+        res = ls
     return res
 
 def startcheckEn(ls):
@@ -1227,7 +1229,10 @@ def startcheckEn(ls):
         if not s[-1] in string.punctuation:
             s += " ."
         res.append(s)
+    if len(res) == 0 and len(ls) == 1:
+        res = ls
     return res
+
 
 ######################################
 ### For each course, extract goals ###
@@ -1236,7 +1241,7 @@ for c in data["Course-list"]:
     log("New course ---------------------------------------------", c["CourseCode"])
     iloList, iloListEn = extractGoals(c)
 
-    iloList = startcheck(iloList)    
+    iloList = startcheck(iloList)
     c["ILO-list-sv"] = iloList
     
     iloListEn = startcheckEn(iloListEn)
