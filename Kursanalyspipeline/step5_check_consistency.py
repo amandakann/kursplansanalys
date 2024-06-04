@@ -2082,6 +2082,37 @@ def numberOfVerbsGroup(n):
 def applyGeneralPrinciples(s):
     # Generella principer
     
+    # som taggat som hp -> skippa hela bisatsen som inleds med “som”
+    # (exempel: "Förutsäga vilka muskelrörelser som kontrollerar särskilda kroppsrörelser." - Här ska inte verbet kontrollerar bloomnivåbestämmas.)
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(0, len(s)):
+            if s[i]["w"].lower() == "som" and s[i]["t"] == "hp":
+                new = []
+                for j in range(i): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad" or s[j]["t"] == "mid": # TODO: should use phrase analysis here instead
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+
+                    s = new
+                    check = 1
+                    break
+    
     # för att -> vänsterledet avgör nivån (utom för "använda * för att" och "applicera * för att" då det är högerledet som avgör nivån)
     check = 1
     while check:
@@ -2092,7 +2123,7 @@ def applyGeneralPrinciples(s):
                 useLeft = 1
                 j = i - 2
                 while j >= 0:
-                    if s[j]["l"] == "applicera" or s[j]["l"] == "använda":
+                    if s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera":
                         useLeft = 0
                         break
                     if s[j]["t"] == "mad":
@@ -2155,7 +2186,7 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(0, len(s) - 2):
-            if (s[i]["w"].lower() == "i" or s[i]["w"].lower() == "med") and s[i+1]["l"] == "syfte" and s[i+2]["w"].lower() == "att":
+            if (s[i]["w"].lower() == "i" or s[i]["w"].lower() == "med") and (s[i+1]["l"] == "syfte" or s[i+1]["w"].lower() == "syfte") and s[i+2]["w"].lower() == "att":
                 new = []
                 for j in range(i): # add everything on the left
                     new.append(s[j])
@@ -2214,37 +2245,6 @@ def applyGeneralPrinciples(s):
                     check = 1
                     break
 
-    # som taggat som hp -> skippa hela bisatsen som inleds med “som”
-    # (exempel: "Förutsäga vilka muskelrörelser som kontrollerar särskilda kroppsrörelser." - Här ska inte verbet kontrollerar bloomnivåbestämmas.)
-    check = 1
-    while check:
-        check = 0
-
-        for i in range(0, len(s)):
-            if s[i]["w"].lower() == "som" and s[i]["t"] == "hp":
-                new = []
-                for j in range(i): # add everything on the left
-                    new.append(s[j])
-
-                sawMad = 0
-                for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
-                    if s[j]["t"] == "mad" or s[j]["t"] == "mid": # TODO: should use phrase analysis here instead
-                        sawMad = 1
-                    if sawMad:
-                        new.append(s[j])
-                if len(s) != len(new):
-
-                    ss = ""
-                    for t in s:
-                        ss += " " + t["w"]
-                        nn = ""
-                    for t in new:
-                        nn += " " + t["w"]
-
-                    s = new
-                    check = 1
-                    break
-    
     # utveckla elever.*/studenter.* förmåga/egenskap.* att -> det som kommer efter borde avgöra nivån
     check = 1
     while check:
@@ -2253,7 +2253,7 @@ def applyGeneralPrinciples(s):
         utv = -1
         haveStu = 0
         for i in range(0, len(s) - 1):
-            if s[i]["l"] == "utveckla":
+            if s[i]["l"] == "utveckla" or s[i]["w"].lower() == "utveckla":
                 utv = i
             elif utv >= 0 and (s[i]["l"] == "student" or s[i]["l"] == "elev"):
                 haveStu = 1
@@ -2504,9 +2504,14 @@ for cl in data:
                 add("No ILO list", c["CourseCode"])
                 
             elif not "Bloom-list-sv" in c or len(c["Bloom-list-sv"]) < 1:
-                cPrint(UNI + c["CourseCode"] + " has empty Bloom-list: " + str(c["ILO-list-sv"]))
-                printed = 1
-                add("No Bloom-list", c["CourseCode"])
+                if not "Bloom-list-sv" in c:
+                    cPrint(UNI + c["CourseCode"] + " has empty Bloom-list: " + str(c["ILO-list-sv"]))
+                    printed = 1
+                    add("No Bloom-list", c["CourseCode"])
+                else:
+                    cPrint(UNI + c["CourseCode"] + " has 0 Bloom verbs:\n" + str(c["ILO-list-sv"]) + "\n\n" + str(c["ILO-sv"]))
+                    printed = 1
+                    add("0 Bloom verbs", c["CourseCode"])
 
             else:
                 # Check if there are ridiculously many verbs
@@ -2634,6 +2639,11 @@ for cl in data:
                                     if b[0] == w:
                                         found = 1
                                         break
+                                    else:
+                                        tmp = b[1].split()
+                                        if w in tmp:
+                                            found = 1
+                                            break
                                 if found:
                                     break
                                 
