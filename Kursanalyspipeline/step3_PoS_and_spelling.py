@@ -455,6 +455,272 @@ except Exception as e:
     print(str(e))
     sys.exit(0)
 
+
+#############################################
+### Remove some common errors from step 2 ###
+#############################################
+
+errorExamples = ["Efter avklarad modul ska studenten .",
+                 "Efter avslutad kurs ska studenten , avseende värderingsförmåga och förhållningssätt .",
+                 "Efter avslutad kurs ska studenten , avseende färdighet och förmåga .",
+                 "Efter avslutad kurs ska studenten ha förmåga att .",
+                 "Efter avslutad kurs skall studenten kunna",
+                 "Efter avslutad modul ska studenten , avseende färdighet och förmåga .",
+                 "Efter avslutad modul ska studenten , avseende värderingsförmåga och förhållningssätt .",
+                 "Efter avslutad modul ska studenten .",
+                 "Efter genomgången kurs ska studenten .",
+                 ") För betyget Godkänd ska den studerande .",
+                 "För godkänd kurs ska den studerande avseende färdighet och förmåga .",
+                 "För godkänd kurs ska den studerande avseende värderingsförmåga och förhållningssätt .",
+                 "Hon ska kunna 0 .",
+                 "Hon ska kunna mso-*",
+                 "Hon ska kunna själv .",
+                 "Hon ska kunna självständigt .",
+                 "Hon ska kunna samt .",
+                 "Hon ska kunna table .",
+                 "Hon ska kunna uppvisa .",
+                 "Se respektive moment .",
+                 "Se information under innehållet på samtliga moment .",
+                 "Se under innehåll i respektive moment .",
+                 "Se under respektive moment .",
+                 "Studenten ska .",
+                 "Efter avslutat moment ska studenten .",
+                 "Efter genomgången kurs ska den studerande också .",
+                 "Efter genomgången kurs skall den studerande .",
+                 "Hon ska kunna för delkurs .",
+                 "Hon ska kunna för moment .",
+                 "Hon ska kunna grunderna i .",
+                 "Hon ska kunna inom aktuellt ämne .",
+                 "( Samtliga delmoment )",
+                 ", baserat på aktuell ämnesdidaktisk forskning ."
+                 "0001pt .",
+                 "20 systemet .",
+                 "Avseende färdighet och förmåga .",
+                 "Avseende värderingsförmåga och förhållningssätt .",
+                 "Behörighetskrav .",
+                 "Efter moment .",
+                 "FSR .",
+                 ", baserat på *",
+                 "Hon ska kunna baserat på aktuell ämnesdidaktisk forskning .",
+                 "Färdigheter och förmågor .",
+                 "Kunskap och förmåga .",
+                 "Moment ett .",
+                 "Efter avslutad kurs ska .",
+                 "Lärandemålen gäller *",
+                 "För delkurs .",
+                 "För modul .",
+                 "Fördjupad färdighet och förmåga .",
+                 "Förväntade studieresultat , moment .",
+                 "Genomförande av examensarbete .",
+                 "KUNSKAP OCH FöRSTåELSE .",
+                 "Laboration(er)? .",
+                 "Område 0 .",
+                 "Projekt .",
+                 "Teori .",
+                 "Värderingsförmåga och förhållningsätt .",
+                 "Kunskaper .",
+                 "Denna kurs ger dig baskunskaper inom industriell ekonomi .",
+                 "Detta inkluderar .",
+                 "Efter avslutad kurs ska deltagarna .",
+                 "Efter avslutad kurs ska studenten .",
+                 "Efter avslutad kurs skall varje student kunna 1 .",
+                 "Efter genomförd kurs skall studenten kunna 1 .",
+                 "Efter genomgången kurs kommer studenterna att .",
+                 "Efter godkänd kurs ska studenten .",
+                 "Efter kursen skall studenten .",
+                 "Hon ska kunna eller teknikanknuten verksamhet .",
+                 "Hon ska kunna följande efter avslutad kurs .",
+                 "Hon ska kunna innan en prototyp ens har byggts .",
+                 "Hon ska kunna inom något visst ingenjörs .",
+                 "I detta ingår att .",
+                 "Specifikt betyder det .",
+                 "Studenten skall efter kursen .",
+                 "Studenterna kommer .",
+                 "Vara medveten om .",
+                 "X eller XDet blir väl inte för mycket deformationer ?",
+                 "Dessutom ska studenten .",
+                 "Del 1 , Matematikkunskap för undervisning ( Mathematical knowledge for teaching ) *",
+                 "Studenten skall efter kursen dessutom ha goda färdigheter i att .",
+                 "Lärandemål 1 , examineras i *",
+                 "Lärandemål 2 , examineras i *",
+                 "Lärandemål 3 , examineras i *",
+                 "Lärandemål 4 , examineras i *",
+                 "Mer precist ska studenten .",
+                 "Det innebär att studenten bör .",
+                 "Detta görs dels i form av paper .",
+                 "Detta inkluderar bl .",
+                 "Detta lärandemål gäller endast studenter *",
+                 "Efter avslutad kurs ska studenten .",
+                 "Efter genomgången kurs förväntas studenten .",
+                 "Efter genomgången kurs skall studenten .",
+                 "För kandidatexamen skall studenten .",
+                 "För godkänt resultat på kursen skall den studerande .",
+                 "Hon ska kunna del Teori ( Theory ) 4,5 hp .",
+                 "Hon ska kunna eller *",
+                 "Förväntade studieresultat Efter genomgånden delkurs förväntas studenten Utvecklingspsykologi , 4,5 hp Innehåll Dynamisk utvecklingspsykologi , sexualitet , köns .",
+                 "Detta inkluderar att .",
+                 "Avseende kunskap och förståelse .",
+                 "I modul .",
+                 "Kompetens och färdigheter .",
+                 "Moment Teoridel .",
+                 "SYNTES OCH VäRDERING .",
+                 "Statistisk metod .",
+                 "Style Definitions .",
+                 "Samtliga moment .",
+                 "ärdighet och förmåga .", 
+                 "ör godkänd modul ska den studerande med avseende på kunskap och förståelse .",
+                 "Del 1 , Ancient DNA .",
+                 "Del 1 , Förhistoriskt DNA .",
+                 "Del 1 , Läroplansteori , ämnesdidaktik , betyg och bedömning , fokus på språk .",
+                 "Del 1 , Teori ( THEO ) , 8hp .",
+                 "Del 1 , Teori .",
+                 "Del 1 , teori .",
+                 "Del 1 , Ämnesdidaktik med läroplansteori .",
+                 "Del 2 , hemuppgifter .",
+                 "Del 2 fokus svenska )",
+                 "Del 3 , Naturvetenskapsämnenas didaktik .",
+                 "Del 3 , Projekt .",
+                 "Del 4 , Matematikämnets didaktik .",
+                 "Del 4-5 , Fluiddynamik och Dynamisk meteorologi .",
+                 "Del I , Analog skissteknik .",
+                 "FäRDIGHET OCH FöRMåGA (",
+                 "FäRDIGHET OCH FöRMåGA ( 10 )",
+                 "Färdigheter och förmågorX .",
+                 "Färdigheter och kompetenser .",
+                 "För godkänd kurs ska den studerande avseendefärdigheter och förmåga .",
+                 "För godkänd kurs ska den studerande avseendefärdigheter och förmågasjälvständigt .",
+                 "För godkänd kurs ska den studerande avseendevärderingsförmåga och förhållningssätt .",
+                 "För godkänd kurs ska den studerande med avseende på färdighet och förmåga .",
+                 "För godkänd kurs ska den studerande med avseende på värderingsförmåga och förhållningssätt .",
+                 "För godkänd kurs ska den studerande med avseende påfärdighetochförmåga .",
+                 "För godkänd kurs ska den studerande med avseende påvärderingsförmågaochförhållningssätt .",
+                 "För godkänd kurs ska den studerandemed avseende på färdighet och förmåga .",
+                 "För godkänd kurs ska den studerandemed avseende på värderingsförmåga och förhållningssätt .",
+                 "För godkänd kurs ska den studerandemed avseende på värderingsförmågaochförhållningssätt .",
+                 "För godkänd kurs skall studenten visa .",
+                 "För godkänd modul ska den studerande med avseende på värderingsförmåga och förhållningssätt .",
+                 "För godkänt moment ska den studerande avseende färdigheter och förmåga .",
+                 "För godkänt på Kultur- och naturarv på plats .",
+                 "För godkänt resultat måste dock alltid punkt .",
+                 "För godkänt resultat på .",
+                 "För godkänt resultat på Brottsprevention .",
+                 "För godkänt resultat på Utvärdering .",
+                 "För godkänt resultat på delkursen .",
+                 "Förväntade studieresultat hör till båda kursdelarna .",
+                 "Förväntade studieresultat är att .",
+                 "Teori och metod .",
+                 "Värdering och förhållningssätt .",
+                 "Hon ska kunna uppvisa ett korrekt .",
+                 "Den studerande ska ."
+                 ]
+                 
+errors = [
+]
+for e in errorExamples:
+    errors.append(e.split())
+
+######################## MOve this to stpe3???
+def removeCommonErrors(ls):
+    newLs = []
+    for s in ls:
+        S = len(s)
+        clearedAll = 1
+        for e in errors:
+            E = len(e)
+            if len(e) == S or (E < S and e[-1][-1] == "*"):
+                use = 0
+                for i in range(E):
+                    if e[i][0].isdigit():
+                        if s[i]["w"] != e[i] and not s[i]["l"][-1].isdigit():
+                            use = 1
+                    elif e[i][-1] == "*":
+                        if s[i]["w"][:len(e[i]) - 1] == e[i][:-1]:
+                            pass
+                        else:
+                            use = 1
+                    else:
+                        if s[i]["w"] != e[i] and (not e[i][0].isdigit() or s[i]["l"] != "17"):
+                            use = 1
+                if not use:
+                    clearedAll = 0
+                    break
+        if clearedAll:
+            newLs.append(s)
+            
+    ls = newLs
+    newLs = []
+    for s in ls:
+        skip = 0
+        if s[0]["t"] == "pad" and s[-1]["t"] == "pad":
+            skip = 1
+            for i in range(1, len(s) - 1):
+                if s[i]["t"][:2] == "vb":
+                    skip = 0
+                    break
+        if not skip:
+            newLs.append(s)
+
+    ls = newLs
+    newLs = []
+    for s in ls:
+        tag = s[0]["t"]
+        while len(s) and (tag == "pad" or tag == "mid" or tag == "mad" or s[0]["w"] == "a" or s[0]["w"] == "a."):
+            s = s[1:]
+            if len(s):
+                tag = s[0]["t"]
+            else:
+                tag = ""
+        if len(s) > 0:
+            newLs.append(s)
+
+    ls = newLs
+    newLs = []
+    for s in ls:
+        skip = 0
+        if len(s) > 3 and s[0]["w"] == "Hon" and s[1]["w"] == "ska" and s[2]["w"] == "kunna":
+            ss = s[3:]
+        else:
+            ss = s
+
+        midmadpad = 0
+        for i in range(len(ss)):
+            if ss[i]["t"] == "mid" or ss[i]["t"] == "mad" or ss[i]["t"] == "pad":
+                midmadpad += 1
+            
+        if len(ss) - midmadpad < 3:
+            skip = 1
+            for tt in range(len(ss)):
+                t = ss[tt]["t"][:2]
+                if t == "vb":
+                    skip = 0
+
+        if not skip:
+            for i in range(len(ss)):
+                if ss[i]["t"][:2] == "vb":
+                    break
+                if ss[i]["w"] == "hp":
+                    left = len(ss) - i
+                    if left < 3:
+                        skip = 1
+                        break
+                    if left < 5 and (left > 2 and (ss[i + 1]["w"] == "ska" or ss[i+2]["w"] == "ska")):
+                        skip = 1
+                        break
+                    if left < 7 and (ss[-1]["w"] == "FSR" or ss[-2]["w"] == "FSR" or ss[-3]["w"] == "FSR"):
+                        skip = 1
+                        break
+        
+        if not skip:
+            newLs.append(s)
+            
+    ls = newLs
+    newLs = []
+    for s in ls:
+        if len(ls) > 0:
+            newLs.append(s)
+            
+    return newLs
+                        
 #################################################################
 ### For each course, part-of-speech tag the ILO-list-sv field ###
 #################################################################
@@ -462,20 +728,29 @@ cs = len(data["Course-list"])
 for idx in range(cs):
 #for c in data["Course-list"]:
     c = data["Course-list"][idx]
-    ls = c["ILO-list-sv"]
+    if "ILO-list-sv" in c:
+        ls = c["ILO-list-sv"]
+    else:
+        ls = []
 
+    if ls == None:
+        ls = []
+
+    wtl = []
     if tagAllTogether:
         text = ""
         for s in ls:
             text += "\n"
             text += s
-        
-        if doSpell:
-            wtl = posParseAndSpell(text, True)
-            # wtl = granska(text)        
-        else:
-            wtl = posParseAndSpell(text, False)
-            # wtl = postag(s)
+
+        text = text.strip()
+        if len(text):
+            if doSpell:
+                wtl = posParseAndSpell(text, True)
+                # wtl = granska(text)        
+            else:
+                wtl = posParseAndSpell(text, False)
+                # wtl = postag(s)
     else:
         res = []
         for s in ls:
@@ -486,6 +761,9 @@ for idx in range(cs):
                 wtl = posParseAndSpell(text, False)
             res += wtl
         wtl = res
+
+    wtl = removeCommonErrors(wtl)
+    
     c["ILO-list-sv-tagged"] = wtl
 
     if idx % 100 == 0:
