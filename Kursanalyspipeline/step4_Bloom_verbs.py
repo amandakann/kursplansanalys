@@ -10,9 +10,13 @@ defaultEn = "data/bloom_revised_en.txt"
 ### Logging ###
 ###############
 logging = 0
+zero = False
 for i in range(len(sys.argv)):
     if sys.argv[i] == "-log":
         logging = 1
+    elif sys.argv[i] == "-z":
+        zero = True
+        
 if logging:
     logf = open(sys.argv[0] + ".log", "w")
 def log(s):
@@ -28,14 +32,15 @@ def log(s):
 ##############################
 hlp = 0
 for i in range(1, len(sys.argv)):
-    if sys.argv[i] != "-log" and sys.argv[i][0] == "-":
+    if sys.argv[i] != "-log" and sys.argv[i] != "-z" and sys.argv[i][0] == "-":
         hlp = 1
     if sys.argv[i] == "help":
         hlp = 1
 if hlp:
     print ("\nReads JSON from stdin, extracts Bloom verbs and adds the Bloom levels, prints JSON to stdout.\n")
     print ("usage:")
-    print ("    ", sys.argv[0], "<Bloom verbs filename (Swedish)> <Bloom verbs filename (English)>\n")
+    print ("    ", sys.argv[0], "<Bloom verbs filename (Swedish)> <Bloom verbs filename (English)> [-z]")
+    print ("     ", "                    -z   Collect data on goals with 0 Bloom classified verbs.\n")
     print ("    ", "(If no files are specified, " + defaultSv + " and " + defaultEn + " will be used.)\n")
     sys.exit(0)
 
@@ -43,7 +48,7 @@ first = True
 svFileName = defaultSv
 enFileName = defaultEn
 for i in range(1, len(sys.argv)):
-    if sys.argv[i] != "-log":
+    if sys.argv[i] != "-log" and sys.argv[i] != "-z":
         if first:
             svFileName = sys.argv[i]
             first = False
@@ -183,8 +188,8 @@ for v in bloomLexEn:
 ### English text is assumed to be ["word1", "word2", ...]                   ###
 ###############################################################################
 def bloomVerbsInSentence(s, lex, aLex, isSwedish):
-
     if isSwedish:
+        sOrg = s
         s = applyGeneralPrinciples(s)
     
     bloomMatches = []
@@ -209,7 +214,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
             if skip < len(lemma) - 1:
                 lemma2 = lemma[skip:]
                 if lemma2 in lex:
-                    log("Changed '" + lemma + "' to '" + lemma2 + "'")
+                    # log("Changed '" + lemma + "' to '" + lemma2 + "'")
 
                     lemma = lemma2
                     
@@ -218,15 +223,37 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                     else:
                         s[i] = lemma
 
+        if not lemma in lex and len(lemma) and lemma[0].lower() == "x" and lemma[1:] in lex:
+            lemma = lemma[1:]
+            if isSwedish and s[i]["w"][0].lower() == "x":
+                s[i]["w"] = s[i]["w"][1:]
+            if isSwedish:
+                s[i]["l"] = lemma
+            else:
+                s[i] = lemma
+
         # If the lemma form is not a known verb, try the inflected
         # form. This helps when PoS tagging is wrong, typically when a
         # verb occurs as the first word in a sentence with no subject
         # and is tagged as an adjective instead. This also over
         # generates, because it matches non-verbs when the PoS-tagging
         # is correct.
-        if not lemma in lex and i == 0 and isSwedish and s[i]["w"].lower() in lex:
-            lemma = s[i]["w"].lower()
-            
+        if not lemma in lex and isSwedish and s[i]["w"].lower() in lex:
+            if i == 0 or s[i]["w"][0].isupper():
+                lemma = s[i]["w"].lower()
+                s[i]["l"] = lemma
+                s[i]["t"] = "vb.inf.akt"
+
+            if i > 0 and (s[i-1]["w"] == "och" or s[i-1]["w"] == "samt"):
+                lemma = s[i]["w"].lower()
+                s[i]["l"] = lemma
+                s[i]["t"] = "vb.inf.akt"
+                
+            if i > 0 and s[i-1]["t"] == "ab.pos" and s[i-1]["l"] != "mycket"  and s[i-1]["l"] != "vanligt" and  s[i-1]["l"] != "rutinmässigt" and  s[i-1]["l"] != "vardagligt":
+                lemma = s[i]["w"].lower()
+                s[i]["l"] = lemma
+                s[i]["t"] = "vb.inf.akt"
+                
         if lemma in lex:
             exps = lex[lemma]
 
@@ -240,6 +267,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                 ii = 0
                 matchOK = 1
                 hasVB = 0
+                hasUpper = 0
                 for k in range(len(tokens)):
                     if tokens[k] == "*": # Whole token is a wildcard
                         tmp = 0
@@ -257,12 +285,14 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         if i + ii < len(s) and tokenMatch(tokens[k], s[i + ii], isSwedish):
                             if isSwedish and s[i + ii]["t"][:2] == "vb" and s[i + ii]["t"][-4:] != ".sfo":
                                 hasVB = 1
+                            if isSwedish and s[i + ii]["w"][0].isupper():
+                                hasUpper = 1
                             ii += 1
                         else:
                             matchOK = 0
                             break
                 
-                if matchOK and (hasVB or not isSwedish or i == 0):
+                if matchOK and (hasVB or not isSwedish or i == 0 or hasUpper):
                     candidates.append([i, ii, exps[j]])
 
     while len(candidates):
@@ -326,7 +356,14 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                             iOK = 0
                 if iOK and not i in overlaps:
                     noOverlap[i] = 1
-                    
+
+            last = len(candidates) - 1
+            if not last in overlaps:
+                 noOverlap[last] = 1
+
+            # log("noOverlap: " + str(noOverlap))
+            # log("overlaps: " + str(overlaps))
+            
             somethingChanged = 0
             for i in noOverlap:
                 somethingChanged = 1
@@ -340,6 +377,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                 candidates = newCandidates
                     
             if len(candidates) > 1: # we have overlapping matches
+                # log("More than one candidate: " + str(candidates))
                 worseThan = {}
                 
                 for i in range(len(candidates) - 1):
@@ -352,9 +390,18 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
 
                         if ifirst > jlast or jfirst > ilast:
                             # no overlap
+                            overlapIsOK = 1
                             pass
                         else:
                             # i and j overlap
+                            if ifirst < jfirst:
+                                overlapIsOK = checkOverlapsForOch(candidates[i], candidates[j], s, isSwedish)
+                            elif jfirst < ifirst:
+                                overlapIsOK = checkOverlapsForOch(candidates[j], candidates[i], s, isSwedish)
+                            else:
+                                overlapIsOK = 0
+                                
+                        if not overlapIsOK:
                             use = -1
 
                             # check longest expression
@@ -376,9 +423,9 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                                 # log("Longer expr tie-break:\nuse " + str(ilen) + ":" + str(candidates[i]) + "\nskip " + str(jlen) + ":" + str(candidates[j]))
                             elif jlen > ilen:
                                 use = j
-                                # log("Longer expr tie-break:\nuse " + str(jlen) + ":" + str(candidates[j]) + "\nskip " + str(ilen) + ":" + str(candidates[i]))
+                            #     log("Longer expr tie-break:\nuse " + str(jlen) + ":" + str(candidates[j]) + "\nskip " + str(ilen) + ":" + str(candidates[i]))
                             # else:
-                                # log("Expr lengths same, i=" + str(i) + ", j=" + str(j) + " " + str(ilen) + "=" + str(jlen) + ", " + str(candidates[i]) + " and " + str(candidates[j]))
+                            #      log("Expr lengths same, i=" + str(i) + ", j=" + str(j) + " " + str(ilen) + "=" + str(jlen) + ", " + str(candidates[i]) + " and " + str(candidates[j]))
                             if use < 0:
                                 # check shortest match
                                 ilen = candidates[i][1]
@@ -470,7 +517,76 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
     #     log("Final result: " + str(bloomMatches))
     #     log("in text: " + str(s))
     #     log("-"*40)
+
+    if zero:
+        if isSwedish and len(bloomMatches) == 0:
+            vbLex = {}
+            removedLex = {}
+        
+            tmp = ""
+
+            hasVbAfterPrinciples = 0
+            hasVbBeforePrinciples = 0
+            for i in range(len(s)):
+                if s[i]["t"][:2] == "vb":
+                    hasVbAfterPrinciples = 1
+                    vbLex[s[i]["l"]] = 1
+            for i in range(len(sOrg)):
+                if sOrg[i]["t"][:2] == "vb":
+                    hasVbBeforePrinciples = 1
+                    if not sOrg[i]["l"] in vbLex:
+                        removedLex[sOrg[i]["l"]] = 1
+                # tmp = tmp + sOrg[i]["w"]  + "(" + sOrg[i]["t"][:2] + ")" + " " 
+                tmp = tmp + sOrg[i]["w"]  + " "
+            for v in vbLex:
+                if not v in zeroBloomGoalVerbs:
+                    zeroBloomGoalVerbs[v] = 0
+                zeroBloomGoalVerbs[v] += 1
+
+            for v in removedLex:
+                if not v in zeroBloomGoalVerbsPr:
+                    zeroBloomGoalVerbsPr[v] = 0
+                zeroBloomGoalVerbsPr[v] += 1
+            zeroBloomGoalExamples.append([hasVbAfterPrinciples, tmp.strip()])
+            if tmp.strip() == "":
+                log("Empty sentence?: '" + str(s) + "'")
     return bloomMatches
+
+zeroBloomGoalVerbs = {}
+zeroBloomGoalVerbsPr = {}
+zeroBloomGoalExamples = []
+
+def printZeroBloomInfo():
+    f = open("zeroBloomVerbGoals.txt", "w")
+
+    f.write("vvvv Verb in goals with 0 Bloom verbs\n")
+    ls = []
+    for v in zeroBloomGoalVerbs:
+        ls.append([zeroBloomGoalVerbs[v], v])
+    ls.sort(reverse=True)
+    for p in ls:
+        f.write("{0: >5} {1:}\n".format(p[0], p[1]))
+
+    f.write("vvvv Verb removed by princples in goals with 0 Bloom verbs\n")
+    ls = []
+    for v in zeroBloomGoalVerbsPr:
+        ls.append([zeroBloomGoalVerbsPr[v], v])
+    ls.sort(reverse=True)
+    for p in ls:
+        f.write("{0: >5} {1:}\n".format(p[0], p[1]))
+
+    f.write("vvvv Example goals with 0 Bloom verbs but with other verbs\n")
+    zeroBloomGoalExamples.sort()
+    for ex in zeroBloomGoalExamples:
+        if ex[0]:
+            f.write(ex[1])
+            f.write("\n\n")
+    f.write("vvvv Example goals with 0 Bloom verbs and no other verbs\n")
+    for ex in zeroBloomGoalExamples:
+        if not ex[0]:
+            f.write(ex[1])
+            f.write("\n\n")
+    f.close()
 
 def tokenMatch(tok, src, isSwedish):
     if tok.find("*") >= 0: # Single token that contains wildcard(s)
@@ -524,6 +640,38 @@ def checkOverlapsForOch(exp1, exp2, s, isSwedish):
 
 def applyGeneralPrinciples(s):
     # Generella principer
+    
+    # som taggat som hp -> skippa hela bisatsen som inleds med “som”
+    # (exempel: "Förutsäga vilka muskelrörelser som kontrollerar särskilda kroppsrörelser." - Här ska inte verbet kontrollerar bloomnivåbestämmas.)
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(0, len(s)):
+            if s[i]["w"].lower() == "som" and (s[i]["t"] == "hp" or (i+3 < len(s) and (s[i+1]["w"] == "kan" or s[i+2]["w"] == "kan" or s[i+3]["w"] == "kan"))):
+                new = []
+                for j in range(i): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad" or s[j]["t"] == "mid": # TODO: should use phrase analysis here instead
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+                    log("....... Principle 'som <hp>'\n" + ss + "\nuse only:" + nn)
+
+                    s = new
+                    check = 1
+                    break
     
     # för att -> vänsterledet avgör nivån (utom för "använda * för att" och "applicera * för att" då det är högerledet som avgör nivån)
     check = 1
@@ -661,38 +809,6 @@ def applyGeneralPrinciples(s):
                     check = 1
                     break
 
-    # som taggat som hp -> skippa hela bisatsen som inleds med “som”
-    # (exempel: "Förutsäga vilka muskelrörelser som kontrollerar särskilda kroppsrörelser." - Här ska inte verbet kontrollerar bloomnivåbestämmas.)
-    check = 1
-    while check:
-        check = 0
-
-        for i in range(0, len(s)):
-            if s[i]["w"].lower() == "som" and s[i]["t"] == "hp":
-                new = []
-                for j in range(i): # add everything on the left
-                    new.append(s[j])
-
-                sawMad = 0
-                for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
-                    if s[j]["t"] == "mad" or s[j]["t"] == "mid": # TODO: should use phrase analysis here instead
-                        sawMad = 1
-                    if sawMad:
-                        new.append(s[j])
-                if len(s) != len(new):
-
-                    ss = ""
-                    for t in s:
-                        ss += " " + t["w"]
-                        nn = ""
-                    for t in new:
-                        nn += " " + t["w"]
-                    log("....... Principle 'som <hp>'\n" + ss + "\nuse only:" + nn)
-
-                    s = new
-                    check = 1
-                    break
-    
     # utveckla elever.*/studenter.* förmåga/egenskap.* att -> det som kommer efter borde avgöra nivån
     check = 1
     while check:
@@ -849,8 +965,13 @@ def applyGeneralPrinciples(s):
 ### For each course in the course list, add Bloom verbs and their Bloom levels ###
 ##################################################################################
 for c in data["Course-list"]:
-    ls = c["ILO-list-sv-tagged"]
-
+    if "ILO-list-sv-tagged" in c:
+        ls = c["ILO-list-sv-tagged"]
+    else:
+        ls = []
+    if ls == None:
+        ls = []
+    
     blooms = []
     for s in ls:
         m = bloomVerbsInSentence(s, bloomLex, ambiLex, True)
@@ -869,4 +990,8 @@ for c in data["Course-list"]:
 ##############################
 ### Print result to stdout ###
 ##############################
+if zero:
+    printZeroBloomInfo()
+
 print (json.dumps(data))
+
