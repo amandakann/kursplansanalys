@@ -34,6 +34,7 @@ namnge
 rubricera
 (matcha)
 (redogöra)
+berätta
 återberätta
 översätta * begrepp
 dokumentera
@@ -109,6 +110,9 @@ specificera
 uttala sig
 koppla
 framföra
+belysa
+besvara
+svara
 erkänna
 klarlägga
 föra * diskussion
@@ -116,6 +120,7 @@ tyda
 --- Apply 2 ---
 tillämpa
 beräkna
+kalkylera
 utifrån * upptäcka
 upptäcka * utifrån
 upptäcka * givet
@@ -148,6 +153,7 @@ fördela
 tidsintegrera
 integrera * funktion
 integrera och använda
+taylorutveckla
 bereda
 projektera
 georeferera
@@ -169,7 +175,6 @@ segmentera
 ändra
 upprätta
 simulera
-pröva hypoteser
 faktorisera
 kompilera
 konfigurera
@@ -200,7 +205,7 @@ göra * modell
 göra * *beräkning
 göra * budget
 göra * frekvensuppdelning
-göra * köpavslut
+göra * *avslut
 göra * *utvecklingar
 göra * nätverksdesign
 göra * tillämpning
@@ -226,6 +231,7 @@ initiera
 realisera
 tillgodose
 marknadsföra
+erbjuda
 instrumentalisera
 följa * regel
 följa * *föreskrift
@@ -238,23 +244,33 @@ skydda
 expandera
 behandla
 hantera
+upprätthålla
+lagra
+utvinna
+utbyta
+avsluta
 arbeta
 jobba
 medverka
 växla
 frilägga
-vidta * åtgärd
+åtgärda
 räkna ut
 räkna på
 räkna med
 kondensera
+artikulera
 allokera
 balansera
 placera
 förflytta sig
+driva
 bedriva
 utöva
 agera
+anlägga
+handlägga
+operationalisera
 utnyttja
 involvera
 angripa
@@ -269,6 +285,7 @@ hålla * tidsplan
 hålla * tidsgräns
 hålla * tidsram
 samarbeta
+samverka
 interagera
 bidra
 leda
@@ -282,6 +299,7 @@ handleda
 samtala
 föra * konversation
 översätta
+transkribera
 föra * samtal
 föra * dialog
 föra * förhandling
@@ -292,6 +310,19 @@ köra * program
 exekvera * *kod
 logga in
 exfiltrera
+artbestämma
+avkoda
+diagnostisera
+differentialdiagnostisera
+mikroskopera
+tala
+uttala
+(skriva)
+sjunga
+spela
+ackompanjera
+undervisa
+instruera
 utveckla * förståelse
 utveckla * *kompetens
 utveckla * *förmåga
@@ -319,13 +350,17 @@ sortera
 differentiera
 bearbeta
 särskilja
+inplacera
+placera * in
+placera * i
+placera * inom
 fokusera
 sätta in
 analysera
 utföra * *analys
 genomföra * *analys
 utveckla * *analys
-föraa * *analys
+föra * *analys
 ordna
 införliva
 strukturera
@@ -339,10 +374,13 @@ karakterisera
 karaktärisera
 kategorisera
 systematisera 
+situationsanpassa
 granska
 genomföra * *granskning
+korrigera
 jämföra
 utforska
+utreda
 ställa * *frågor
 undersöka
 genomföra * *undersökning
@@ -362,7 +400,9 @@ indela
 avgränsa
 kartlägga
 sammankoppla
+anknyta
 föra samman
+kontextualisera
 prioritera
 minimera
 maximera
@@ -408,12 +448,14 @@ interpolera
 samordna
 upptäcka
 testa
+pröva
 observera
 övervaka
 bedöma
 genomföra * *bedömning
 ge * *omdöme
 kritiskt granska
+precisera
 mäta
 (undersöka)
 argumentera
@@ -423,9 +465,11 @@ reflektera
 integrera och reflektera
 (dra * slutsats)
 uppskatta
+göra * *uppskattning
 rekommendera
 tolka
 utvärdera
+nyhetsvärdera
 spekulera
 validera
 teoretisera
@@ -435,12 +479,16 @@ föra * *resonemang
 verifiera
 evaluera
 examinera
+betygsätta
+betygssätta
 rimlighetsbedöma
 estimera
 skatta
 överväga
+revidera
 utvidga
 recensera
+kommentera
 ge * respons på
 ge * kommentar
 opponera
@@ -470,6 +518,7 @@ lägga fram
 skapa
 konstruera
 framställa
+anordna
 organisera
 planera
 rekonstruera
@@ -482,6 +531,7 @@ antaga
 formge
 designa
 producera
+prestera * text
 kreera
 tillverka
 uppföra
@@ -494,6 +544,7 @@ utveckla
 dra * slutsats
 (tolka)
 kommunicera
+forma
 utforma
 detaljutforma
 modellera
@@ -521,11 +572,19 @@ integrera
 bilda
 bygga
 modifiera
+utöka
+åtgärda
+vidta * åtgärd
 vidareutveckla
+säkerställa
+färdigställa
 (förbättra)
 implementera
 lägga upp
 sätta upp
+arrangera * musik
+författa
+komponera
 förutspå
 prediktera
 göra * *antagande
@@ -535,6 +594,7 @@ göra * detaljplanekarta
 göra * *studie
 inkludera * helhetsperspektiv
 inkludera * i utvecklingen
+överblicka
 ge * *överblick
 ge * *översikt
 ställa upp * *hypotes
