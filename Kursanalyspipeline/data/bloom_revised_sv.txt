@@ -254,7 +254,7 @@ jobba
 medverka
 växla
 frilägga
-åtgärda
+(åtgärda)
 räkna ut
 räkna på
 räkna med
@@ -285,7 +285,6 @@ hålla * tidsplan
 hålla * tidsgräns
 hålla * tidsram
 samarbeta
-samverka
 interagera
 bidra
 leda
@@ -465,7 +464,6 @@ reflektera
 integrera och reflektera
 (dra * slutsats)
 uppskatta
-göra * *uppskattning
 rekommendera
 tolka
 utvärdera
@@ -549,7 +547,6 @@ utforma
 detaljutforma
 modellera
 processmodellera
-författa
 tidsplanera
 föreslå * teknisk *lösning
 föreslå * möjlig *lösning
