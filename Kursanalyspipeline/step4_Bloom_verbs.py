@@ -2,6 +2,7 @@ import sys
 import json
 import re
 import string
+import requests
 
 defaultSv = "data/bloom_revised_sv.txt"
 defaultEn = "data/bloom_revised_en.txt"
@@ -11,11 +12,14 @@ defaultEn = "data/bloom_revised_en.txt"
 ###############
 logging = 0
 zero = False
+spelling = False
 for i in range(len(sys.argv)):
     if sys.argv[i] == "-log":
         logging = 1
     elif sys.argv[i] == "-z":
         zero = True
+    elif sys.argv[i] == "-s":
+        spelling = True
         
 if logging:
     logf = open(sys.argv[0] + ".log", "w")
@@ -32,15 +36,16 @@ def log(s):
 ##############################
 hlp = 0
 for i in range(1, len(sys.argv)):
-    if sys.argv[i] != "-log" and sys.argv[i] != "-z" and sys.argv[i][0] == "-":
+    if sys.argv[i] != "-log" and sys.argv[i] != "-z" and sys.argv[i] != "-s" and sys.argv[i][0] == "-":
         hlp = 1
     if sys.argv[i] == "help":
         hlp = 1
 if hlp:
     print ("\nReads JSON from stdin, extracts Bloom verbs and adds the Bloom levels, prints JSON to stdout.\n")
     print ("usage:")
-    print ("    ", sys.argv[0], "<Bloom verbs filename (Swedish)> <Bloom verbs filename (English)> [-z]")
+    print ("    ", sys.argv[0], "<Bloom verbs filename (Swedish)> <Bloom verbs filename (English)> [-z] [-s]")
     print ("     ", "                    -z   Collect data on goals with 0 Bloom classified verbs.\n")
+    print ("     ", "                    -s   Try automatic spelling correction.\n")
     print ("    ", "(If no files are specified, " + defaultSv + " and " + defaultEn + " will be used.)\n")
     sys.exit(0)
 
@@ -48,7 +53,7 @@ first = True
 svFileName = defaultSv
 enFileName = defaultEn
 for i in range(1, len(sys.argv)):
-    if sys.argv[i] != "-log" and sys.argv[i] != "-z":
+    if sys.argv[i] != "-log" and sys.argv[i] != "-z" and sys.argv[i] != "-s":
         if first:
             svFileName = sys.argv[i]
             first = False
@@ -232,6 +237,15 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
             else:
                 s[i] = lemma
 
+        if not lemma in lex and len(lemma) and lemma[-1].lower() == "x" and lemma[:-1] in lex:
+            lemma = lemma[1:]
+            if isSwedish and s[i]["w"][-1].lower() == "x":
+                s[i]["w"] = s[i]["w"][:-1]
+            if isSwedish:
+                s[i]["l"] = lemma
+            else:
+                s[i] = lemma
+
         # If the lemma form is not a known verb, try the inflected
         # form. This helps when PoS tagging is wrong, typically when a
         # verb occurs as the first word in a sentence with no subject
@@ -253,6 +267,26 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                 lemma = s[i]["w"].lower()
                 s[i]["l"] = lemma
                 s[i]["t"] = "vb.inf.akt"
+
+        # Try suggestions from the spell check
+        if isSwedish and spelling and not lemma in lex:
+            found = 0
+            if lemma.lower() in spellings:
+                for v in spellings[lemma.lower()]:
+                    if v in lex:
+                        lemma = v
+                        s[i]["l"] = lemma
+                        s[i]["t"] = "vb.inf.akt"
+                        found = 1
+                        break
+            if not found and s[i]["w"].lower() in spellings:
+                for v in spellings[s[i]["w"].lower()]:
+                    if v in lex:
+                        lemma = v
+                        s[i]["l"] = lemma
+                        s[i]["t"] = "vb.inf.akt"
+                        found = 1
+                        break
                 
         if lemma in lex:
             exps = lex[lemma]
@@ -595,6 +629,15 @@ def tokenMatch(tok, src, isSwedish):
             if re.fullmatch(r, src["w"], re.I) or re.fullmatch(r, src["l"], re.I):
                 # log("Regex match: " + r + " matched " + str(src))
                 return 1
+            if spelling:
+                if src["w"] in spellings:
+                    for v in spellings[src["w"]]:
+                        if re.fullmatch(r, v, re.I):
+                            return 1
+                if src["l"] in spellings:
+                    for v in spellings[src["l"]]:
+                        if re.fullmatch(r, v, re.I):
+                            return 1
         else: # no WTL
             if re.fullmatch(r, src, re.I):
                 # log("Regex match: " + r + " matched " + str(src))
@@ -604,6 +647,15 @@ def tokenMatch(tok, src, isSwedish):
         if isSwedish:
             if tl == src["w"].lower() or tl == src["l"].lower():
                 return 1
+            if spelling:
+                if src["w"] in spellings:
+                    for v in spellings[src["w"]]:
+                        if tl == v:
+                            return 1
+                if src["l"] in spellings:
+                    for v in spellings[src["l"]]:
+                        if tl == v:
+                            return 1
         else: # no WTL
             if tl == src.lower():
                 return 1   
@@ -678,17 +730,20 @@ def applyGeneralPrinciples(s):
     while check:
         check = 0
 
-        for i in range(1, len(s)):
+        for i in range(1, len(s)):            
             if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "för":
                 useLeft = 1
-                j = i - 2
-                while j >= 0:
-                    if s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera":
-                        useLeft = 0
-                        break
-                    if s[j]["t"] == "mad":
-                        break
-                    j -= 1
+                if not (i + 1 < len(s) and s[i+1]["w"].lower() == "få"):
+                    # never 'use right' even if we find "använda" or "applicera" if we have "för att få", example:
+                    # "Använda innovativ teknik för nya system och förbättring av gamla system för att få bättre funktion och uppfyller kraven i samhället ."
+                    j = i - 2
+                    while j >= 0:
+                        if s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera":
+                            useLeft = 0
+                            break
+                        if s[j]["t"] == "mad":
+                            break
+                        j -= 1
                 if useLeft:
                     new = []
                     for j in range(i-1): # add everything on the left
@@ -779,7 +834,7 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(1, len(s)):
-            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "genom":
+            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "genom" and (i < 2 or s[i-2]["w"] != "eller"):
                 # use right side
                 new = []
                 sawMad = 0
@@ -960,6 +1015,55 @@ def applyGeneralPrinciples(s):
                     break
     
     return s
+
+    
+##########################################################################################
+### Find all unique word forms, send them to Stava (spell check) and store suggestions ###
+##########################################################################################
+uniq = {}
+spellings = {}
+if spelling:
+    for c in data["Course-list"]:
+        if "ILO-list-sv-tagged" in c:
+            for s in c["ILO-list-sv-tagged"]:
+                for wtl in s:
+                    uniq[wtl["w"].lower()] = 1
+                    uniq[wtl["l"].lower()] = 1
+    text = ""
+    for w in uniq:
+        if w != ",":
+            text += w
+            text += "\n"
+    
+    url = "https://skrutten.csc.kth.se/granskaapi/spell.php"
+    try:
+        x = requests.post(url, data = {"coding":"text", "words":text})
+        if x.ok and x.text.find("<div") < 0:
+            lines = x.text.split("\n")
+            for l in lines:
+                p = l.find(":")
+        
+                if p > 0:
+                    word = l[:p].strip()
+                    suggs = l[p+1:].strip().split(",")
+                else:
+                    word = l.strip()
+                    suggs = []
+
+                variants = []
+                for ss in suggs:
+                    s = ss.strip()
+                    if len(s) and s != word:
+                        variants.append(s)
+                        if s.find(" ") > 0: # Sometimes words are corrected to multi-words, and we accept matches on either one of them (we should perhaps redo the PoS-tagging of the sentence instead)
+                            ls = s.split(" ")
+                            for sub in ls:
+                                if len(sub.strip()) and sub.strip() != word:
+                                    variants.append(sub.strip())
+                if len(variants):
+                    spellings[word] = variants
+    except Exception as e:
+        log("Error when using Stava: " + str(e))
 
 ##################################################################################
 ### For each course in the course list, add Bloom verbs and their Bloom levels ###
