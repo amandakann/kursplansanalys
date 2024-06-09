@@ -351,6 +351,7 @@ def add(label, cc):
 verbCounts = {}
 bloomLevelCounts = {}
 nonBloomVerbs = {}
+nonBloomVerbsAlone = {}
 nonBloomVerbsInfo = {}
 ambiguousVerbs = {}
 
@@ -466,6 +467,15 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
             else:
                 lex["min"][mn] += 1
 
+            spn = mx - mn
+            if spn < 0: #  mn and mx are not available because we have 0 verbs
+                spn = " - "
+            if not "span" in lex:
+                lex["span"] = {}
+            if not spn in lex["span"]:
+                lex["span"][spn] = 0
+            lex["span"][spn] += 1
+                
             if not "nVerbs" in lex:
                 lex["nVerbs"] = {}
 
@@ -828,6 +838,23 @@ def printBloomStats():
             print ("{0: >2}: {1: >5} (0%)".format(val, 0))
     print (tmp, "goals with Bloom data")
 
+
+    print ("-"*10, "Difference beteween max and min Bloom level in goal", "-"*10)
+    tmp = 0
+    vals = [" - ", 0, 1, 2, 3, 4, 5]
+    for val in vals:
+        if val in bloomStatsGoal["all"]["span"]:
+            c = bloomStatsGoal["all"]["span"][val]
+            tmp += c
+            if totGoals > 0:
+                proc = c / float(totGoals)
+            procs = "{:>5}".format("{:2.1%}".format(proc))
+            print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
+        else:
+            print ("{0: >4}: {1: >5} (0%)".format(val, 0))
+    print (tmp, "goals with Bloom data")
+
+    
     print ("-"*10, "Average Mean Bloom level per goal", "-"*10)
     m = 0
     n = len(bloomStatsGoal["all"]["mean"])
@@ -1165,6 +1192,8 @@ def printBloomStats():
 
                 printBloomHelper("min", "min Bloom/goal", lex, 6)
 
+                printBloomHelper("span", "diff. max and min Bloom/goal", lex, 6)
+                
                 ls = []
                 rowLabel = "average mean Bloom per goal"
                 longest = len(rowLabel)
@@ -1409,10 +1438,15 @@ def addAmbig(v):
         ambiguousVerbs[v] = 0
     ambiguousVerbs[v] += 1
 
-def addNonBloom(v, goal, cc):
+def addNonBloom(v, goal, cc, noBloomInSentence):
     if not v in nonBloomVerbs:
         nonBloomVerbs[v] = 0
     nonBloomVerbs[v] += 1
+
+    if not v in nonBloomVerbsAlone:
+        nonBloomVerbsAlone[v] = 0
+    if noBloomInSentence:
+        nonBloomVerbsAlone[v] += 1
 
     if not v in nonBloomVerbsInfo:
         nonBloomVerbsInfo[v] = []
@@ -1527,22 +1561,26 @@ def printNonBloom():
         return
     
     tot = 0
+    totAlone = 0
     vs = 0
     for v in nonBloomVerbs:
         tot += nonBloomVerbs[v]
         vs += 1
+        totAlone += nonBloomVerbsAlone[v]
     print ("\n", "-"*15, "Non-Bloom","-"*15)
-    print (vs, "verbs found that did not get a Bloom classification.")
-    print (tot, "total occurrences of these verbs.")
+    print ("{: >5} verbs found that did not get a Bloom classification.".format(vs))
+    print ("{: >5} total occurrences of these verbs.".format(tot))
+    print ("{: >5} occurrences in goals with no Bloom score.".format(totAlone))
 
 
     print ("-"*10)
     ls = []
     for v in nonBloomVerbs:
-        ls.append([nonBloomVerbs[v], v])
+        ls.append([nonBloomVerbs[v], nonBloomVerbsAlone[v], v])
     ls.sort(reverse=True)
+    print ("{0: >6} {1: >8} {2:}".format("All", "No-Bloom", "Verb"))
     for tmp in ls:
-        print ("{0: >6} {1:}".format(tmp[0], tmp[1]))
+        print ("{0: >6} {1: >8} {2:}".format(tmp[0], tmp[1], tmp[2]))
     
     print ("-"*10)
     ls = []
@@ -2041,7 +2079,7 @@ def levelGroup(level):
 ##################################
 def creditsGroup(creds):
     if not creds:
-        return "4: (No Credits)"
+        return "4: (No HP info)"
 
     try:
         f = float(creds.replace(",", "."))
@@ -2057,7 +2095,7 @@ def creditsGroup(creds):
         else:
             return "5: (Unexpected credits: " + str(f) + ")"
     except:
-        return "4: (No Credits)"
+        return "4: (No HP info)"
         
 ##########################################
 ### Grouping based on number of verbs. ###
@@ -2121,14 +2159,18 @@ def applyGeneralPrinciples(s):
         for i in range(1, len(s)):
             if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "för":
                 useLeft = 1
-                j = i - 2
-                while j >= 0:
-                    if s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera":
-                        useLeft = 0
-                        break
-                    if s[j]["t"] == "mad":
-                        break
-                    j -= 1
+
+                if not (i + 1 < len(s) and s[i+1]["w"].lower() == "få"):
+                    # never 'use right' even if we find "använda" or "applicera" if we have "för att få", example:
+                    # "Använda innovativ teknik för nya system och förbättring av gamla system för att få bättre funktion och uppfyller kraven i samhället ."
+                    j = i - 2
+                    while j >= 0:
+                        if s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera":
+                            useLeft = 0
+                            break
+                        if s[j]["t"] == "mad":
+                            break
+                        j -= 1
                 if useLeft:
                     new = []
                     for j in range(i-1): # add everything on the left
@@ -2216,7 +2258,7 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(1, len(s)):
-            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "genom":
+            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "genom" and (i < 2 or s[i-2]["w"] != "eller"):
                 # use right side
                 new = []
                 sawMad = 0
@@ -2646,7 +2688,13 @@ for cl in data:
                                             break
                                 if found:
                                     break
-                                
+                            
+                            noBloomInGoal = 1
+                            if si < len(blooms):
+                                if len(blooms[si]) > 0:
+                                    noBloomInGoal = 0
+                                else:
+                                    noBloomInGoal = 1
                             if not found:
                                 g = "(" + wtl["t"] + ") "
                                 for wwi in range(len(s)):
@@ -2656,7 +2704,7 @@ for cl in data:
                                         g += " (" + wtl["t"].upper() + ")"
                                     g += " "
                                 g.strip()
-                                addNonBloom(w, g, UNI + c["CourseCode"])
+                                addNonBloom(w, g, UNI + c["CourseCode"], noBloomInGoal)
         
         if checks["type"]:
             if not "CourseType" in c:
