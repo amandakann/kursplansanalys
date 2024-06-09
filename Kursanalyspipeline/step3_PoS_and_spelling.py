@@ -611,6 +611,13 @@ errorExamples = ["Efter avklarad modul ska studenten .",
                  "Teori och metod .",
                  "Värdering och förhållningssätt .",
                  "Hon ska kunna uppvisa ett korrekt .",
+                 "Värderingar och förhållningssätt .",
+                 "Antiken och medeltiden .",
+                 "Efter kursen skall studenten ha .",
+                 "Kunskaper och förståelse .",
+                 "Kunskaper och insikter .",
+                 "ULV ( *",
+                 "DELKURSERNAS INNEHÅLL OCH FÖRVÄNTADE STUDIERESULTAT *",
                  "Den studerande ska ."
                  ]
                  
@@ -645,6 +652,26 @@ def removeCommonErrors(ls):
                     clearedAll = 0
                     break
         if clearedAll:
+            newLs.append(s)
+            
+    ls = newLs
+    newLs = []
+    for s in ls:
+        skip = 0
+        if s[0]["l"] == "för":
+            mom = 0
+            vb = 0
+            godk = 0
+            for i in range(len(s)):
+                if s[i]["l"] == "moment" or s[i]["l"] == "del" or s[i]["l"] == "delkurs" or s[i]["l"] == "kursdel":
+                    mom = 1
+                if s[i]["l"] == "godkänd" or s[i]["l"] == "godkänt":
+                    godk = 1
+                if s[i]["t"][:2] == "vb" and s[i]["l"] != "ska":
+                    vb = 1
+            if not vb and (mom or godk):
+                skip = 1
+        if not skip:
             newLs.append(s)
             
     ls = newLs
