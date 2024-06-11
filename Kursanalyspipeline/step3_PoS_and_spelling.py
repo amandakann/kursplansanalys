@@ -1,6 +1,5 @@
 import sys
 import string
-import requests
 import html
 import xml.etree.ElementTree as XML
 import json
@@ -14,8 +13,6 @@ from timeit import default_timer as timer
 ##############################
 doSpell = 0
 logging = 0
-useCache = 0
-tagAllTogether = 1
 for i in range(1, len(sys.argv)):
     if sys.argv[i] == "-s":
         doSpell = 1
@@ -23,21 +20,12 @@ for i in range(1, len(sys.argv)):
         doSpell = 0
     elif sys.argv[i] == "-log":
         logging = 1
-    elif sys.argv[i] == "-cache":
-        useCache = 1
-    elif sys.argv[i] == "-sendAll":
-        tagAllTogether = 1
-    elif sys.argv[i] == "-sendEach":
-        tagAllTogether = 0
     else:
         print ("\nReads JSON from stdin, adds part-of-speech tagging, prints JSON to stdout.")
         print ("\nusage options:")
         print ("     -s          do spelling error correction and part-of-speech tagging")
         print ("     -ns         no spelling, just tagging")
-        print ("     -log        log debug data to " + sys.argv[0] + ".log")
-        print ("     -sendAll    PoS-tag all goal texts at once (one call to Granska)")
-        print ("     -sendEach   PoS-tag each goal separately (many calls to Granska)")
-        print ("     -cache      use a local cache of sentences already tagged\n")
+        print ("     -log        log debug data to " + sys.argv[0] + ".log\n")
         sys.exit(0)
 
 
@@ -54,350 +42,10 @@ def log(s):
         logF.write("\n")
         logF.flush()
 
-###############
-#### Cache ####
-###############
-cache = {}
-newReqsNotInFile = 0
-totNew=0
-totHits=0
-WHEN_TO_WRITE=500
-if useCache:
-    log("load cached data")
-    cacheFile = sys.argv[0] + ".cache"
-
-    cache = {}
-    try:
-        f = open(cacheFile)
-        cache = json.load(f)
-        f.close()
-    except:
-        cache = {}
-
-    log(str(len(cache.keys())) + " cached items found.")
-
-########################################################
-#### Granska stuff (part-of-speech, lemma, spelling ####
-########################################################
-
-###########################################################################
-# Does part-of-speech tagging.                                          ###
-# returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
-###########################################################################
-def posParseAndSpell(text, doSpellCheck):
-
-    if text in cache:
-        global totHits
-        totHits += 1
-        return cache[text]
-
-    if len(text.strip()) > 0:
-        toSend  = ("TEXT " + text.replace("\n", " ").strip() + "\nENDQ\n").encode("latin-1", "ignore")
-        commOK = 0
-        tries = 0
-        
-        while tries < 5 and not commOK:
-            reply = ""
-            try:
-                usock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                usock.settimeout(60 * 2) # if there is no reply in 2 minutes, give up and try again
-                usock.connect(("skrutten.csc.kth.se", 6123))
-
-                usock.send(toSend) # There is a length restriction on this service, but we should always be fine with our relatively short texts.
-
-                first = 1
-                haveAll = 0
-                while not haveAll:
-                    if first:
-                        first = 0
-                        reply = usock.recv(1024*1024)
-                    else:
-                        reply += usock.recv(1024*1024)
-
-                    try:
-                        tmp = reply.decode("latin-1")
-                        if tmp.find("/Root>") >= 0:
-                            haveAll = 1
-                    except:
-                        haveAll = 0
-                usock.close()
-                commOK = 1
-
-            except Exception as e:
-                log("Exception when using Granska: " + str(e))
-                tries += 1
-                time.sleep(15) # wait 15 seconds and see if the server is back again
-
-        if commOK:
-            
-            try:
-                t = reply.decode("latin-1")
-                p = t.find("<Root>")
-                t = t[p:]
-                xml = XML.fromstring(t)
-            except Exception as e:
-                log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n" + text + "\n\n")
-                writeCache()
-                if t.lower().find("granska error"):
-                    time.sleep(5*60) # sleep 5 minutes and wait for the Granska server to come back
-                return []
-
-            if doSpellCheck:
-                return spellCheckAndTag(xml)
-            else:
-                return tagsFromXML(xml)
-def spellCheckAndTag(xml):
-    # Find all sentences
-    sentences = []
-    for elS in xml.iter("s"):
-        if elS and elS.tag == "s" and elS.attrib:
-            sentId = elS.attrib["ref"]
-            sent = []
-            for elW in elS.iter('w'):
-                sent.append(elW.text)
-            if len(sent) > 0:
-                sentences.append([sentId, sent])
-
-    # find all error reports, save the ones that are spelling errors with corrections
-    spellingSuggs = []
-    for elScrut in xml.iter('scrutinizer'):
-        for elS in elScrut.iter('s'):
-            sentId = elS.attrib["ref"]
-
-            for elErr in elS.iter('gramerror'):
-                isSpelling = 0
-                for field in elErr:
-                    if field.tag == "rule" and field.text == "stav1@stavning":
-                        isSpelling = 1
-                        break
-                suggs = []
-                if isSpelling:                        
-                    for sugg in elErr.iter('sugg'):
-                        suggs.append("".join(sugg.itertext()))
-                markFrom = -1
-                markTo = -1
-                if len(suggs):
-                    for mark in elErr.iter('mark'):
-                        attribs = mark.attrib
-                        if "begin" in attribs:
-                            markFrom = int(attribs["begin"])
-                        if "end" in attribs:
-                            markTo = int(attribs["end"])
-                if markTo >= 0 and markTo == markFrom:
-                    spellingSuggs.append([sentId, markTo, suggs])
-
-    # apply corrections
-    atLeastOneChange = 0
-    for sugg in spellingSuggs:
-        sId = sugg[0]
-        for s in range(len(sentences)):
-            if sentences[s][0] == sId:
-                markTo = sugg[1]
-                replacement = sugg[2][0]
-                sentences[s][1][markTo - 2] = replacement
-                atLeastOneChange = 1
-                break
-
-    # if something changed, run Granska on the corrected text
-    if atLeastOneChange:
-        newText = ""
-        for s in sentences:
-            sent = " ".join(s[1])
-            newText += sent
-            newText += "\n"
-        return posParseAndSpell(newText, False)
-    else:
-        return tagsFromXML(xml)
-
-def tagsFromXML(xml):
-    res = convertTags(xml)
-
-    if res:
-        cache[text] = res
-        if useCache:
-            global newReqsNotInFile
-            newReqsNotInFile += 1
-    
-            if newReqsNotInFile > WHEN_TO_WRITE:
-                writeCache()
-    return res
-
-
-
-def postag(text):
-    if text in cache:
-        global totHits
-        totHits += 1
-        return cache[text]
-    
-    if len(text.strip()) > 0:
-        url = "https://skrutten.csc.kth.se/granskaapi/wtl.php"
-        tries = 0
-        while tries < 5:
-            try:
-                x = requests.post(url, data = {"coding":"json", "text":text})
-                break
-            except Exception as e:
-                log("Exception when using Granska: " + str(e))
-                tries += 1
-                time.sleep(15) # wait 15 seconds and see if the server is back again
-                
-        if tries < 5 and x.ok:
-            try:
-                ls = json.loads(str(x.text))
-                res = []
-                s = []
-                for w in ls:
-                    s.append(w)
-                    if w["t"] == "mad":
-                        res.append(s)
-                        s = []
-                if len(s) > 0:
-                    res.append(s)
-
-                cache[text] = res
-                if useCache:
-                    global newReqsNotInFile
-                    newReqsNotInFile += 1
-
-                    if newReqsNotInFile > WHEN_TO_WRITE:
-                        writeCache()
-                return res
-            except Exception as e:
-                log ("WARNING: could not parse JSON:\n\n" + str(e) + "\n\n" + x.text + "\n\n" + text + "\n\n")
-                writeCache()
-                if x.text.lower().find("granska error"):
-                    time.sleep(5*60) # sleep 5 minutes and wait for the Granska server to come back
-        else:
-            log ("WARNING: could not PoS-tag sentence.")
-    return []
-
-def writeCache():
-    if not useCache:
-        return
-    
-    global totNew
-    global newReqsNotInFile
-    f = open(cacheFile, "w")
-    f.write(json.dumps(cache))
-    f.close()
-    totNew += newReqsNotInFile
-    newReqsNotInFile = 0
-    log("new cached items: " + str(totNew))
-    
-###########################################################################
-# Does spelling error correction and part-of-speech tagging.            ###
-# returns list of lists (one per sentence) of {w:word, t:tag, l:lemma}  ###
-###########################################################################
-def granska(text): # returns [{word, tag, lemma}, ...] after spelling correction
-    if text in cache:
-        global totHits
-        totHits += 1
-        return cache[text]
-    
-    if len(text.strip()) > 0:
-        url = "https://skrutten.csc.kth.se/granskaapi/scrutinize.php"
-        tries = 0
-        while tries < 5:
-            try:
-                x = requests.post(url, data = {"text":text})
-                break
-            except Exception as e:
-                log("Exception when using Granska: " + str(e))
-                tries += 1
-                time.sleep(15) # wait 15 seconds and see if the server is back again
-                
-        if tries < 5 and x.ok:
-            t = html.unescape(x.text).replace("&", "&amp;").replace('"""', '"&quot;"').replace('>"<', '>&quot;<')
-
-            try:
-                xml = XML.fromstring(t)
-            except Exception as e:
-                log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n" + text + "\n\n")
-                writeCache()
-                if t.lower().find("granska error"):
-                    time.sleep(5*60) # sleep 5 minutes and wait for the Granska server to come back
-                return postag(text)
-            
-            # Find all sentences
-            sentences = []
-            for elS in xml.iter("s"):
-                if elS and elS.tag == "s" and elS.attrib:
-                    sentId = elS.attrib["ref"]
-                    sent = []
-                    for elW in elS.iter('w'):
-                        sent.append(elW.text)
-                    if len(sent) > 0:
-                        sentences.append([sentId, sent])
-
-            # find all error reports, save the ones that are spelling errors with corrections
-            spellingSuggs = []
-            for elScrut in xml.iter('scrutinizer'):
-                for elS in elScrut.iter('s'):
-                    sentId = elS.attrib["ref"]
-
-                    for elErr in elS.iter('gramerror'):
-                        isSpelling = 0
-                        for field in elErr:
-                            if field.tag == "rule" and field.text == "stav1@stavning":
-                                isSpelling = 1
-                                break
-                        suggs = []
-                        if isSpelling:                        
-                            for sugg in elErr.iter('sugg'):
-                                suggs.append("".join(sugg.itertext()))
-                        markFrom = -1
-                        markTo = -1
-                        if len(suggs):
-                            for mark in elErr.iter('mark'):
-                                attribs = mark.attrib
-                                if "begin" in attribs:
-                                    markFrom = int(attribs["begin"])
-                                if "end" in attribs:
-                                    markTo = int(attribs["end"])
-                        if markTo >= 0 and markTo == markFrom:
-                            spellingSuggs.append([sentId, markTo, suggs])
-
-            # apply corrections
-            atLeastOneChange = 0
-            for sugg in spellingSuggs:
-                sId = sugg[0]
-                for s in range(len(sentences)):
-                    if sentences[s][0] == sId:
-                        markTo = sugg[1]
-                        replacement = sugg[2][0]
-                        sentences[s][1][markTo - 2] = replacement
-                        atLeastOneChange = 1
-                        break
-
-            # if something changed, run Granska on the corrected text
-            if atLeastOneChange:
-                newText = ""
-                for s in sentences:
-                    sent = " ".join(s[1])
-                    newText += sent
-                    newText += "\n"
-                return postag(newText)
-            else:
-                # if nothing changed, return word-tag-lemma info
-                res = convertTags(xml)
-
-                cache[text] = res
-                if useCache:
-                    global newReqsNotInFile
-                    newReqsNotInFile += 1
-
-                    if newReqsNotInFile > WHEN_TO_WRITE:
-                        writeCache()
-                return res
-        else:
-            log ("WARNING: could not PoS-tag sentence.")
-            return []
-    return []
 ################################################################################################################
 ### When asking for spelling correction, tags come only as numbers. This list shows the tag for each number. ###
 ################################################################################################################
-tagLex = ["nn.neu.sin.def.nom", "nn.utr", "hd.utr/neu.plu.ind", "jj.pos.sms", "dt.utr/neu.plu.def", "hs.def", "jj.kom.utr/neu.sin/plu.ind/def.nom", "jj.pos.utr/neu.plu.ind/def.nom", "dt.utr.sin.ind/def", "dt.utr/neu.sin.def", "nn.neu.plu.ind.gen", "nn", "nn.utr.plu.def.nom", "jj.pos.neu.sin.ind/def.nom", "nn.utr.sin.def.nom.dat", "vb.imp.akt.aux", "ps.utr.sin.def", "jj.pos.utr/neu.plu.ind.nom", "dt.utr/neu.plu.ind/def", "nn.utr.sin.ind.nom.dat", "hd.neu.sin.ind", "vb.prt.sfo.kop", "sen.que", "dt.utr/neu.plu.ind", "nn.neu", "pn.neu.sin.ind.sub/obj", "pn.utr/neu.plu.def.sub/obj", "hp", "ps.utr/neu.sin/plu.def", "pn.utr/neu.plu.def.obj", "vb.prt.akt.aux", "nn.utr.sin.ind.nom", "ro", "nn.utr.plu.def.gen", "nn.neu.plu.ind.nom", "nn.neu.sin.def.gen", "nn.sms", "jj.suv.mas.sin.def.nom", "jj.suv.utr/neu.sin/plu.def.nom", "vb.prs.sfo", "pm.nom", "sen.hea", "nn.utr.sin.def.nom.set", "sn", "ab.kom", "pad", "dt.utr/neu.sin.ind", "vb.imp", "pn.utr.sin.def.sub/obj", "pn.utr.sin.def.obj", "rg.utr/neu.plu.ind/def.nom", "jj.pos.utr/neu.sin.def.nom", "sen.exc", "rg.utr.sin.ind.nom", "vb.prs.akt", "pm.gen", "dt.utr.sin.ind", "dt.utr/neu.sin/plu.ind", "nn.utr.sms", "vb.inf.akt.aux", "pn.utr.sin.def.sub", "kn", "vb.prs.sfo.kop", "vb.prs.akt.mod", "vb.inf.akt.mod", "pc.gen", "ro.nom", "jj.pos.neu.sin.ind.nom", "nn.utr.plu.ind.nom", "pn.utr.sin.ind.sub", "jj.suv.utr/neu.plu.def.nom", "dt.neu.sin.def", "rg.sin", "ro.sin", "vb.imp.akt.kop", "hd.utr.sin.ind", "nn.neu.sin.def.nom.set", "vb.kon.prs.akt", "ab.suv", "vb.inf.akt", "jj.pos.utr.sin.ind.nom", "nn.neu.plu.def.gen", "vb.imp.akt.mod", "vb.prt.akt.mod", "dt.neu.sin.ind", "pn.utr/neu.plu.ind.sub/obj", "pn.neu.sin.def.sub/obj", "vb.inf.akt.kop", "rg.neu.sin.ind.nom", "pn.mas.sin.def.sub/obj", "ro.gen", "nn.neu.plu.def.nom", "dt.mas.sin.ind/def", "dt.neu.sin.ind/def", "vb.inf.sfo", "jj.suv.utr/neu.sin/plu.ind.nom", "rg.gen", "hp.neu.sin.ind", "vb.kon.prt", "sen.per", "ps.utr/neu.plu.def", "nn.utr.sin.ind.nom.set", "nn.utr.sin.def.nom", "pn.utr.plu.def.sub", "nn.neu.sin.ind.gen", "ps.neu.sin.def", "pn.utr.plu.def.obj", "jj.pos.utr.sin.ind/def.nom", "vb.prt.sfo", "mad", "ab", "pn.utr/neu.sin/plu.def.obj", "vb.sup.akt", "mid", "vb.sup.akt.kop", "jj.pos.mas.sin.def.nom", "hp.utr/neu.plu.ind", "vb.sup.akt.mod", "jj.kom.sms", "nn.utr.sin.def.gen", "rg.nom", "nn.neu.sin.ind.nom", "rg.yea", "pl", "in", "vb.prt.akt", "nn.neu.sms", "vb.sup.sfo", "nn.utr.plu.ind.gen", "pn.utr.sin.ind.sub/obj", "dt.utr.sin.def", "nn.neu.sin.ind.nom.set", "vb", "pp", "vb.prs.akt.kop", "nn.utr.sin.ind.gen", "jj.gen", "vb.prt.akt.kop", "ie", "ro.mas.sin.ind/def.nom", "jj.pos.utr/neu.sin/plu.ind/def.nom", "hp.utr.sin.ind", "pc.prs.utr/neu.sin/plu.ind/def.nom", "sen.non", "pn.utr/neu.plu.def.sub", "ha", "vb.prs.akt.aux", "ab.pos", "pm.sms"]
+# tagLex = ["nn.neu.sin.def.nom", "nn.utr", "hd.utr/neu.plu.ind", "jj.pos.sms", "dt.utr/neu.plu.def", "hs.def", "jj.kom.utr/neu.sin/plu.ind/def.nom", "jj.pos.utr/neu.plu.ind/def.nom", "dt.utr.sin.ind/def", "dt.utr/neu.sin.def", "nn.neu.plu.ind.gen", "nn", "nn.utr.plu.def.nom", "jj.pos.neu.sin.ind/def.nom", "nn.utr.sin.def.nom.dat", "vb.imp.akt.aux", "ps.utr.sin.def", "jj.pos.utr/neu.plu.ind.nom", "dt.utr/neu.plu.ind/def", "nn.utr.sin.ind.nom.dat", "hd.neu.sin.ind", "vb.prt.sfo.kop", "sen.que", "dt.utr/neu.plu.ind", "nn.neu", "pn.neu.sin.ind.sub/obj", "pn.utr/neu.plu.def.sub/obj", "hp", "ps.utr/neu.sin/plu.def", "pn.utr/neu.plu.def.obj", "vb.prt.akt.aux", "nn.utr.sin.ind.nom", "ro", "nn.utr.plu.def.gen", "nn.neu.plu.ind.nom", "nn.neu.sin.def.gen", "nn.sms", "jj.suv.mas.sin.def.nom", "jj.suv.utr/neu.sin/plu.def.nom", "vb.prs.sfo", "pm.nom", "sen.hea", "nn.utr.sin.def.nom.set", "sn", "ab.kom", "pad", "dt.utr/neu.sin.ind", "vb.imp", "pn.utr.sin.def.sub/obj", "pn.utr.sin.def.obj", "rg.utr/neu.plu.ind/def.nom", "jj.pos.utr/neu.sin.def.nom", "sen.exc", "rg.utr.sin.ind.nom", "vb.prs.akt", "pm.gen", "dt.utr.sin.ind", "dt.utr/neu.sin/plu.ind", "nn.utr.sms", "vb.inf.akt.aux", "pn.utr.sin.def.sub", "kn", "vb.prs.sfo.kop", "vb.prs.akt.mod", "vb.inf.akt.mod", "pc.gen", "ro.nom", "jj.pos.neu.sin.ind.nom", "nn.utr.plu.ind.nom", "pn.utr.sin.ind.sub", "jj.suv.utr/neu.plu.def.nom", "dt.neu.sin.def", "rg.sin", "ro.sin", "vb.imp.akt.kop", "hd.utr.sin.ind", "nn.neu.sin.def.nom.set", "vb.kon.prs.akt", "ab.suv", "vb.inf.akt", "jj.pos.utr.sin.ind.nom", "nn.neu.plu.def.gen", "vb.imp.akt.mod", "vb.prt.akt.mod", "dt.neu.sin.ind", "pn.utr/neu.plu.ind.sub/obj", "pn.neu.sin.def.sub/obj", "vb.inf.akt.kop", "rg.neu.sin.ind.nom", "pn.mas.sin.def.sub/obj", "ro.gen", "nn.neu.plu.def.nom", "dt.mas.sin.ind/def", "dt.neu.sin.ind/def", "vb.inf.sfo", "jj.suv.utr/neu.sin/plu.ind.nom", "rg.gen", "hp.neu.sin.ind", "vb.kon.prt", "sen.per", "ps.utr/neu.plu.def", "nn.utr.sin.ind.nom.set", "nn.utr.sin.def.nom", "pn.utr.plu.def.sub", "nn.neu.sin.ind.gen", "ps.neu.sin.def", "pn.utr.plu.def.obj", "jj.pos.utr.sin.ind/def.nom", "vb.prt.sfo", "mad", "ab", "pn.utr/neu.sin/plu.def.obj", "vb.sup.akt", "mid", "vb.sup.akt.kop", "jj.pos.mas.sin.def.nom", "hp.utr/neu.plu.ind", "vb.sup.akt.mod", "jj.kom.sms", "nn.utr.sin.def.gen", "rg.nom", "nn.neu.sin.ind.nom", "rg.yea", "pl", "in", "vb.prt.akt", "nn.neu.sms", "vb.sup.sfo", "nn.utr.plu.ind.gen", "pn.utr.sin.ind.sub/obj", "dt.utr.sin.def", "nn.neu.sin.ind.nom.set", "vb", "pp", "vb.prs.akt.kop", "nn.utr.sin.ind.gen", "jj.gen", "vb.prt.akt.kop", "ie", "ro.mas.sin.ind/def.nom", "jj.pos.utr/neu.sin/plu.ind/def.nom", "hp.utr.sin.ind", "pc.prs.utr/neu.sin/plu.ind/def.nom", "sen.non", "pn.utr/neu.plu.def.sub", "ha", "vb.prs.akt.aux", "ab.pos", "pm.sms"]
 
 ###########################################################################
 ### Convert granska numerical indexes of part-of-speech tags to strings ###
@@ -626,7 +274,6 @@ errors = [
 for e in errorExamples:
     errors.append(e.split())
 
-######################## MOve this to stpe3???
 def removeCommonErrors(ls):
     newLs = []
     for s in ls:
@@ -747,63 +394,281 @@ def removeCommonErrors(ls):
             newLs.append(s)
             
     return newLs
-                        
-#################################################################
-### For each course, part-of-speech tag the ILO-list-sv field ###
-#################################################################
-cs = len(data["Course-list"])
-for idx in range(cs):
-#for c in data["Course-list"]:
-    c = data["Course-list"][idx]
-    if "ILO-list-sv" in c:
-        ls = c["ILO-list-sv"]
-    else:
-        ls = []
 
-    if ls == None:
-        ls = []
 
-    wtl = []
-    if tagAllTogether:
-        text = ""
-        for s in ls:
-            text += "\n"
-            text += s
+#######################################################################
+### Go through the Granska reply, extract word-tag-lemma and clause ###
+### information                                                     ###
+#######################################################################
+def extractTagsAndClauses(xml):
+    phrases = []
+    wtls = []
 
-        text = text.strip()
-        if len(text):
-            if doSpell:
-                wtl = posParseAndSpell(text, True)
-                # wtl = granska(text)        
-            else:
-                wtl = posParseAndSpell(text, False)
-                # wtl = postag(s)
-    else:
-        res = []
-        for s in ls:
-            text = s
-            if doSpell:
-                wtl = posParseAndSpell(text, True)
-            else:
-                wtl = posParseAndSpell(text, False)
-            res += wtl
-        wtl = res
+    for elB in xml.iter("bio"):
+        sent = []
+        for elR in elB.iter("row"):
+            tmp = elR.text
+            if tmp:
+                wtpc = tmp.split("\t")
+                sent.append({"w":wtpc[0], "t":wtpc[-3], "p":wtpc[-2], "c":wtpc[-1]})
+        phrases.append(sent)
+        
+    for elS in xml.iter("s"):
+        if elS.attrib:
+            sentId = elS.attrib["ref"]
 
-    wtl = removeCommonErrors(wtl)
+            sent = []
+            for elW in elS.iter('w'):
+                if elW.attrib:
+                    w = elW.text
+                    t = elW.attrib["tag"]
+                    l = elW.attrib["lemma"]
+                
+                    sent.append({"w":w, "t":t, "l":l})
+            
+            wtls.append(sent)
     
-    c["ILO-list-sv-tagged"] = wtl
+    return [wtls, phrases]
 
-    if idx % 100 == 0:
-        log("Courses: " + str(idx) + " of " + str(cs) + " done, " + str(totNew + newReqsNotInFile) + " non-cache items.")
+##################################################################
+### Take the word-tag-lemma-clause data and map it back to the ###
+### respective courses.                                        ###
+##################################################################
+def mapWTLbackToCoursesAndGaols(courseList, wtlList, phrList):
+
+    ### Merge word-tag-lemma with phrase-clause
+    merged = []
+
+    nextWtl = 0
+    nextPhr = 0
+
+    while nextWtl < len(wtlList) and nextPhr < len(phrList):
+        badMatch = False
+        m = []
+
+        wtl = wtlList[nextWtl]
+        ph = phrList[nextPhr]
+
+        if(len(wtl) != len(ph) + 4):
+            log("WARNING, lengths are not as expected when merging: " + str(nextWtl) + " " + str(len(wtl)) + " " + str(len(ph)))
+            log(str(wtl))
+            log(str(ph))
+        
+        idxp = 0
+        idxw = 0
+        while idxw < len(wtl) and idxp < len(ph):
+            while wtl[idxw]["t"][:4] == "sen.":
+                idxw += 1
+            if wtl[idxw]["w"].lower() == ph[idxp]["w"].lower():
+                m.append({"w":wtl[idxw]["w"], "t":wtl[idxw]["t"], "l":wtl[idxw]["l"], "p":ph[idxp]["p"], "c":ph[idxp]["c"]})
+                idxw += 1
+                idxp += 1
+            else:
+                badMatch = True
+                break
+        
+        if not badMatch:
+            if len(m) < 1 or (len(m) == 1 and m[0]["w"] == "."):
+                pass
+            else:
+                merged.append(m)
+            nextWtl += 1
+            nextPhr += 1
+        else:
+            if nextWtl+1 < len(wtlList) and wtlList[nextWtl+1][2]["w"] == phrList[nextPhr][0]["w"]:
+                nextWtl += 1
+            elif nextPhr+1 < len(phrList) and wtlList[nextWtl][2]["w"] == phrList[nextPhr+1][0]["w"]:
+                nextPhr += 1
+            else:
+                nextWtl += 1
+                nextPhr += 1
+
+    ### Map merged info back to the corresponding courses
+
+    mi = 0
+    while mi < len(merged):
+        m = merged[mi]
+        
+        if len(m) == 2 and m[0]["w"] in taggedCC:
+            # start of course
+
+            mj = mi + 1
+            while mj < len(merged):
+                m2 = merged[mj]
+                if (len(m2) == 2 and m2[0]["w"] in taggedCC) or mj == len(merged) - 1:
+                    # next course
+
+                    taggedSents = []
+                    for i in range(mi+1, mj):
+                        taggedSents.append(merged[i])
+                    if mj == len(merged) - 1:
+                        taggedSents.append(merged[mj])
+                        mi = mj + 1
+                    else:
+                        mi = mj
+
+                    occurrences = taggedCC[m[0]["w"]]
+                    if len(occurrences) > 0:
+                        c = courseList[occurrences[0]] # use first (unused) occurence 
+                        if len(occurrences) > 1:
+                            taggedCC[m[0]["w"]] = occurrences[1:] # remove first occurence to add tags to the next occurence next time
+                        
+                        c["ILO-list-sv-tagged"] = removeCommonErrors(taggedSents)
+                        
+                    else:
+                        log("WARNING: No record of course " + m[0]["w"] + " is left.")
+                    
+                    break
+                else:
+                    mj += 1
+        else:
+            log("WARNING: Found sentence but don't know where it belongs: " + str(mi) + ", " + str(merged[mi]))
+            mi += 1
+            
+############################################################
+### Combine all text, send everything at once to Granska ###
+############################################################
+fullText = ""
+firstF = 1
+cs = len(data["Course-list"])
+chunks = []
+
+##########################################################################
+### Granska only accepts 100 000 bytes data, so we need to divide data ###
+### into smaller chunks                                                ###
+##########################################################################
+GRANSKA_SIZE_LIMIT = 55000 #99000
+
+taggedCC = {}
+
+for idx in range(cs):
+    c = data["Course-list"][idx]
+
+    first = True
+    head = str(c["CourseCode"]) + " . . "
+    goals = head
+    
+    if "ILO-list-sv" in c and c["ILO-list-sv"]:
+        ls = c["ILO-list-sv"]
+
+        for goal in ls:
+            if len(goal.strip()):
+                if first:
+                    first = False
+                else:
+                    goals += " . . "
+
+                goals = goals + goal
+
+    if goals != head:
+        if c["CourseCode"] in taggedCC:
+            taggedCC[c["CourseCode"]].append(idx)
+        else:
+            taggedCC[c["CourseCode"]] = [idx]
+        
+        if len(fullText) + len(goals) > GRANSKA_SIZE_LIMIT:
+            if len(fullText):
+                chunks.append(fullText)
+            fullText = ""
+            firstF = True
+        if firstF:
+            firstF = False
+        else:
+            fullText += " . . "
+        fullText += goals
+
+if len(fullText):
+    chunks.append(fullText)
+    
+chnk = 0
+for chunk in chunks:
+    tries = 0
+    commOK = 0
+
+    toSend  = ("TEXT " + chunk.replace("\n", " ").strip() + "\nENDQ\n").encode("latin-1", "ignore")
+
+    chnk += 1
+
+    while tries < 5 and not commOK:
+        log("Try no " + str(tries) + ", size " + str(len(toSend)) + ", chunk " + str(chnk) + " of " + str(len(chunks)))
+        try:
+            # log("connecting to Granska")
+            usock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            usock.settimeout(60 * 2) # if there is no reply in 2 minutes, give up and try again
+            usock.connect(("skrutten.csc.kth.se", 6127))
+            usock.settimeout(None)
+
+            # log("Sending data")
+
+            usock.settimeout(60) 
+            usock.send(toSend) # There is a length restriction on this service, but we should always be fine with our relatively short texts.
+            usock.settimeout(None)
+
+            first = 1
+            haveAll = 0
+            reply = ""
+            while not haveAll:
+                # log("Receiving reply")
+                
+                usock.settimeout(60)
+                tmp = usock.recv(1024*1024)
+                usock.settimeout(None)
+                
+                if first:
+                    first = 0
+                    reply = tmp
+                else:
+                    reply += tmp
+
+                # log("Received " + str(len(reply)) + " so far. " + str(reply[-10:]) + " this time " + str(len(tmp)))
+
+                haveAll = 0
+                try:
+                    tmpR = reply.decode("latin-1")
+                    if tmpR.find("/Root>") >= 0:
+                        haveAll = 1
+                        break
+                except:
+                    haveAll = 0
+                    
+                if len(tmp) == 0: # disconnected
+                    break
+                    
+            if haveAll:
+                log("Received everything.")
+                usock.close()
+                commOK = 1
+            else:
+                log("Did not receive a full reply.")
+                tries += 1
+                time.sleep(60) # wait 60 seconds and see if the server is back again
+
+        except Exception as e:
+            log("Exception when using Granska: " + str(e))
+            tries += 1
+            time.sleep(60) # wait 60 seconds and see if the server is back again
+            log("Try again")
+            continue
+
+        if commOK:
+            try:
+                t = reply.decode("latin-1")
+                p = t.find("<Root>")
+                t = t[p:].replace(">&</w>", ">&amp;</w>")
+                xml = XML.fromstring(t)
+            except Exception as e:
+                log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n" + text + "\n\n")
+                xml = False
+
+            if xml:
+                tmp = extractTagsAndClauses(xml)
+
+                wtlList = tmp[0]
+                phrList = tmp[1]
+
+                mapWTLbackToCoursesAndGaols(data["Course-list"], wtlList, phrList)
 
 ##############################
 ### Print result to stdout ###
 ##############################
-if useCache:
-    if newReqsNotInFile > 0:
-        writeCache()
-
-log("Cache hits: " + str(totHits))
-log("New entries in cache file: " + str(totNew))
-
 print(json.dumps(data))
