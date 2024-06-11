@@ -287,7 +287,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         s[i]["t"] = "vb.inf.akt"
                         found = 1
                         break
-                
+        
         if lemma in lex:
             exps = lex[lemma]
 
@@ -315,6 +315,14 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         if not starOK:
                             matchOK = 0
                             break
+                    elif tokens[k].find("<") >= 0:
+                        # token refers to part-of-speech or phrase tag
+                        if tokenMatchTags(tokens[k], s, i + ii, isSwedish, False):
+                            hasUpper = 1
+                            ii += 1
+                        else:
+                            matchOK = 0
+                            break
                     else: # Not a wildcard token
                         if i + ii < len(s) and tokenMatch(tokens[k], s[i + ii], isSwedish):
                             if isSwedish and s[i + ii]["t"][:2] == "vb" and s[i + ii]["t"][-4:] != ".sfo":
@@ -327,6 +335,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                             break
                 
                 if matchOK and (hasVB or not isSwedish or i == 0 or hasUpper):
+                    log("Found match for " + str(exps[j]))
                     candidates.append([i, ii, exps[j]])
 
     while len(candidates):
@@ -659,6 +668,131 @@ def tokenMatch(tok, src, isSwedish):
         else: # no WTL
             if tl == src.lower():
                 return 1   
+    return 0
+
+
+def tokenMatchTags(tok, src, sIdx, isSwedish, everyWordCanMatch):
+    if sIdx < len(src):
+        allTokensOK = True
+        
+        if isSwedish:
+            # remove < and >, split on ".", so <NP.sin.def>
+            # becomes [NP, sin, def]
+            elements = tok[1:-1].split(".") 
+
+            for e in range(len(elements)):
+                el = elements[e]
+
+                noPhraseMatch = True
+                
+                phrases = src[sIdx]["p"].split("|")
+                phrases.reverse() # order outer tag first in list, reverse of written order
+                
+                for pIdx in range(len(phrases)):
+                    phraseTag = phrases[pIdx]
+                    if phraseTag[:len(el)] == el:
+                        # rest of match should be inside this phrase
+                        noPhraseMatch = False
+
+                        # collect other things that need to match inside this phrase
+                        subElements = []
+                        for e2 in range(e+1, len(elements)):
+                            subElements.append(elements[e2])
+
+                        if len(subElements):
+
+                            # extract the phrase from the sentence
+                            matchPhrase = [src[sIdx]]
+                            for sIdx2 in range(sIdx + 1, len(src)):
+                                phrases2 = src[sIdx2]["p"].split("|")
+                                phrases2.reverse()
+                                if pIdx < len(phrases2): # there is a phrase on the same depth we are looking
+                                    if phrases2[pIdx][:len(el)] == phrases[pIdx][:len(el)] and not phrases2[pIdx][-1] == "B": # if we have the same type of phrase but not the beginning of a new phrase
+                                        matchPhrase.append(src[sIdx2])
+                                    else:
+                                        break
+                                else:
+                                    break
+
+                            # make a copy of the match, but strip out the outer phrases
+                            copy = []
+                            for wtl in matchPhrase:
+                                newWtl = {"w":wtl["w"], "t":wtl["t"], "l":wtl["l"], "c":wtl["c"]}
+                                newWtl["p"] = wtl["p"][pIdx:]
+                                copy.append(newWtl)
+                            newTok = "<" + ".".join(subElements) + ">"
+                            
+                            return tokenMatchTags(newTok, copy, 0, isSwedish, True)
+                        else: # no subElements to match, we are done
+                            return 1
+                    else: # not a matching phrase tag on this level
+                        pass # just trying next phrase level
+                
+                # if not a phrase tag match, check clauses and pos-tags instead
+
+                # try caluses
+                noClauseMatch = True
+                
+                clauses = src[sIdx]["c"].split("|")
+                clauses.reverse() # order outer tag first in list, reverse of written order
+                
+                for cIdx in range(len(clauses)):
+                    clTag = clauses[cIdx]
+                    if clauses[:len(el)] == el:
+                        # rest of match should be inside this clause
+                        noClauseMatch = False
+
+                        # collect other things that need to match inside this phrase
+                        subElements = []
+                        for e2 in range(e+1, len(elements)):
+                            subElements.append(elements[e2])
+
+                        if len(subElements):
+                            # extract the clause from the sentence
+                            matchClause = [src[sIdx]]
+                            for sIdx2 in range(sIdx + 1, len(src)):
+                                clauses2 = src[sIdx2]["c"].split("|")
+                                clauses2.reverse()
+                                if cIdx < len(clauses2) and clauses2[cIdx][:len(el)] == clauses[cIdx][:len(el)] and not clauses2[cIdx][-1] == "B": # if we have the clause continues
+                                    matchPhrase.append(src[sIdx2])
+                                else:
+                                    break
+
+                            # make a copy of the match, but strip out the outer phrases
+                            copy = []
+                            for wtl in matchPhrase:
+                                newWtl = {"w":wtl["w"], "t":wtl["t"], "l":wtl["l"], "p":wtl["p"]}
+                                newWtl["c"] = wtl["c"][cIdx:]
+                                copy.append(newWtl)
+                            newTok = "<" + ".".join(subElements) + ">"
+                            
+                            return tokenMatchTags(newTok, copy, 0, isSwedish, True)
+                        else: # no subElements to match, we are done
+                            return 1
+                    else: # not a match on this clause level
+                        pass # try next level
+                
+                # if not a phrase and not a clause, check pos-tags
+                last = sIdx + 1
+                if everyWordCanMatch:
+                    last = len(src)
+
+                thisIdxMatched = False
+                for idx in range(sIdx, last):
+                    pos = src[idx]["t"].split(".")
+                    for pIdx in range(len(pos)):
+                        if pos[pIdx] == el:
+                            thisIdxMatched = True
+
+                if thisIdxMatched:
+                    pass # go on with next element in loop
+                else:
+                    return 0
+            if allTokensOK:
+                return 1 
+        else: # not Swedish, so no WTL etc.
+            return 0
+
     return 0
 
 def checkOverlapsForOch(exp1, exp2, s, isSwedish):
@@ -1072,6 +1206,7 @@ for c in data["Course-list"]:
     if "ILO-list-sv-tagged" in c:
         ls = c["ILO-list-sv-tagged"]
     else:
+        log("No 'ILO-list-sv-tagged' in " + c["CourseCode"])
         ls = []
     if ls == None:
         ls = []
