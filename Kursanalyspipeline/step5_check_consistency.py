@@ -6,6 +6,7 @@ import re
 VERBS_BEFORE_MORE_THAN=15 # How many verbs to show before lumping the rest as "more than X"
 VERBS_BEFORE_WARNING=50   # How many Bloom-classified verbs can a course have before warning for "very many verbs"?
 
+TOP_VERBS=11 # How many verbs to show in the top lists
 MAX_EXAMPLES_TO_PRINT=10
 
 ##############################
@@ -997,13 +998,11 @@ def printBloomStats():
                         catTot = 1
                     
                     print ("--->", cat)
-                    catTotTop10 = 0
-                    for vi in range(len(ls)):
+                    catTotTop = 0
+                    for vi in range(min(len(ls),TOP_VERBS)):
                         print ("{0: >5} ({1: >5}): {2:}".format(ls[vi][0], "{:2.1%}".format(ls[vi][0] / float(catTot)), ls[vi][1]))
-                        catTotTop10 += ls[vi][0]
-                        if vi >= 10:
-                            break
-                    print ("Top 11 verbs cover {: 2.2%} of all verb occurrences.".format(catTotTop10  / float(catTot)))
+                        catTotTop += ls[vi][0]
+                    print ("Top "+str(min(len(ls),TOP_VERBS))+" verbs cover {: 2.2%} of all verb occurrences.".format(catTotTop  / float(catTot)))
                 print()
 
                 if (label == "University"):
@@ -1532,13 +1531,11 @@ def printBloom():
     totC = tot
     if totC == 0:
         totC = 1
-    top10tot = 0
-    for i in range(len(ls)):
+    toptot = 0
+    for i in range(min(len(ls),TOP_VERBS)):
         print ("{0: >5} ({1: >5}): {2:}".format(ls[i][0], "{:2.1%}".format(ls[i][0] / float(totC)), ls[i][1]))
-        top10tot += ls[i][0]
-        if i >= 10:
-            break
-    print ("Top 11 verbs cover {:2.2%} of all verb occurrences.".format(top10tot  / float(totC)))
+        toptot += ls[i][0]
+    print ("Top "+str(min(len(ls),TOP_VERBS))+" verbs cover {:2.2%} of all verb occurrences.".format(toptot  / float(totC)))
     print ("-"*30)
     atot = 0
     avs = 0
