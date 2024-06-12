@@ -1,0 +1,1648 @@
+Allmän rättslära och rättshistoria 	15,0 	2JU052
+Barn- och ungdomspsykiatri 	30,0 	3PS008
+Beteendevetenskapliga grunder, 7 	5,0 	6SY038
+Biomedicin och allmän farmakologi, 7 	5,0 	3OM036
+Biomedicin och omvårdnad, 10 	5,0 	3OM318
+Centrala teorier och begrepp i socialt arbete, 10 	5,0 	2SA096
+Centrala teorier och begrepp i socialt arbete, 12 	5,0 	2SA077
+Digitala och sociala medier, 7 	5,0 	6KO000
+eHälsa och fördjupningsarbete 	15,0 	2EH039
+Etik och kommunikation, 7 	5,0 	3OM251
+Examensarbete i idrottspedagogik 	15,0 	2IP033
+Filosofi A 	30,0 	1FL052
+Företagsekonomi A45 	30,0 	2FE009
+Förlossningskonst III 	15,0 	3OM246
+Grundläggande Kemi 	15,0 	3BK023
+Handlingsstrategier i socialt arbete I 	14,0 	2SA109
+HR-arbete i teori och praktik II 	15,0 	2PE104
+HRM - innehåll och metoder 	30,0 	2PE079
+Humanbiologisk grundkurs, 7 	5,0 	3AT082
+Hälsa, sjukdom och funktionshinder 1 	10,0 	3AT086
+Individer och grupper i utsatta livssituationer 	13,0 	2SA093
+Informationsvetenskaplig analys och metod 	15,0 	2BV029
+Inledande ingenjörskurs i bioteknik, 7 	5,0 	5MO072
+Internet, sociala medier och samhälle, 7 	5,0 	2SO159
+Journalistik, medier och kommunikation 	15,0 	1KO034
+Juridisk översiktskurs: Kön och rättvisa 	15,0 	2JU194
+Konsultativ metodik och handledning för psykologprogrammet 	4,0 	2PS155
+Kunskap och minne, 7 	5,0 	1KG005
+Kurs 12 Personlighets- och utvecklingspsykologi - avancerad nivå 	18,0 	2PS013
+Kvalitet, utvärdering och kunskapsbasering i socialt arbete 	15,0 	2SA143
+Matematik för datavetare, 7 	5,0 	5MA150
+Morfologi 	10,0 	3BM005
+Måltidskultur - en introduktion, 7 	5,0 	2MR061
+Människans livsvillkor, 7 	5,0 	3OM037
+Nationalekonomi A1 	30,0 	2NE000
+Pedagogik A, Distans 	30,0 	2PE062
+Polisiärt arbete: grunder 	40,0 	2UP002
+Programvaruteknik 	15,0 	5DV151
+Religionshistoria: kandidatkurs 	15,0 	1RE186
+Research Methodology in Business Administration B69, 7 	5,0 	2FE032
+Rätten i socialt arbete 	10,0 	2JU123
+Samhälleliga levnadsvillkor, 6 	5,0 	2SA092
+Skogsekologi 	15,0 	5BI155
+Socialt arbete som ämne och profession, 6 	5,0 	2SA091
+Socialt arbete som ämne och profession, 7 	5,0 	2SA073
+Socialt arbete V 	30,0 	2SA025
+Spanska, Kvalifikationskurs 	15,0 	1SP001
+Statistik B 	30,0 	2ST007
+Strategizing - planning and processes D, 7 	5,0 	2FE203
+Strålningsväxelverkan, 7 	5,0 	5RA006
+Teknik för hållbar utveckling, 7 	5,0 	5EL240
+Teori och metod i konst- och bildvetenskap I, 7 	5,0 	1KB003
+Turism, upplevelser och media - nät, 7 	5,0 	1ET033
+Utbildning, arbete och arbetsmarknad, 7 	5,0 	2SO158
+Vetenskaplig teori och metod I, 4 	5,0 	3OM242
+Sociologi C 	30,0 	2SO019
+Arbetsrätt för sociologer 	15,0 	2JU124
+Kvantfältteori II 	7,5 	5FY180
+Management Accounting and Analysis D 	15,0 	2FE181
+Medicinsk biokemi och cellbiologi 	15,0 	3BK014
+Miljöstörningar i mark och vatten 	15,0 	5GV050
+Pre- och intrahospital omvårdnad 	6,0 	3OM452
+2:a Världskriget 	7,5 	1HI021
+3D-modellering och siktanalys 	7,5 	2KG605
+Accounting Auditing and Control D 	30,0 	2FE107
+Affekter och utveckling (KBT) för psykoterapeuprogrammet 	7,5 	2PS312
+Affärsutveckling 	7,5 	2FE233
+Aktuell utveckling inom Elektronik och datorteknik 	7,5 	5EL214
+Aktuella kulturstudier: Etnologi B 	7,5 	1ET060
+Akutmedicin för sjuksköterskor 	15,0 	3ME057
+Akutsjukvård för poliser 	4,0 	2PO003
+Akutsjukvård för poliser 	3,0 	2PO019
+Akvatisk kemi 	15,0 	5KE002
+Akvatiska ekosystem 	7,5 	5BI247
+Algebra 	7,5 	5MA167
+Algebra 	7,5 	6MA040
+Algebra för ingenjörer 	7,5 	5MA147
+Algebra och analys för datavetare 	7,5 	5MA186
+Algebra och analys för processoperatörer 	7,5 	5MA193
+Allmän och oral patologi 	11,0 	3ME063
+Allmän vuxentandvård 	7,5 	3OD014
+Analog elektronik 1 	7,5 	5EL231
+Analys för ingenjörer 	7,5 	5MA148
+Analysis of Business Culture C 	7,5 	2FE152
+Analytisk mekanik C 	6,0 	5FY001
+Analytiska perspektiv på kriser och krishantering 	7,5 	2FO029
+Anatomi 	3,0 	3BM012
+Anatomi 	3,0 	3OT158
+Anställningsavtalets rättsliga reglering 	15,0 	2JU094
+Applikationsprogrammering i Python 	7,5 	5DA000
+Applikationsutveckling (Java) 	7,5 	5DV222
+Applikationsutveckling för bioinformatik 	7,5 	5DV233
+Applikationsutveckling i Java 	7,5 	5DV135
+Arbetsliv och hälsa 	15,0 	3AH001
+Arbetsliv och hälsa, introduktionskurs 	7,5 	3EM006
+Arbetsliv och lärande 	7,5 	6SY036
+Arbetslivets psykologi för psykologprogrammet 	12,0 	2PS220
+Arbetsmarknadsekonomi B100:6 	7,5 	2NE081
+Arbetsmiljö- och diskrimineringslagstiftning 	7,5 	2JU107
+Arbetsmiljö- och diskrimineringslagstiftning (Juristprogrammet) 	7,5 	2JU108
+Arbetsrätt för personalvetare 	15,0 	2JU226
+Arbetssociologi 	7,5 	2SO092
+Arbetsterapeuten som handledare, entreprenör och ledare 	7,5 	3AT523
+Arbetsterapi - examensarbete 	15,0 	3AT522
+Arbetsterapi - meningsfull aktivitet, delaktighet och hälsa 	15,0 	3AT076
+Arbetsterapi - processmodeller 	15,0 	3AT222
+Arbetsterapi - professionellt resonemang 1 	12,0 	3AT321
+Arbetsterapi - professionellt resonemang 2 	12,0 	3AT323
+Arbetsterapi: Arbetsförmåga och rehabilitering till arbetslivet 	7,5 	3AT099
+Arkeologi A, internetkurs 	30,0 	1AR055
+Arkeologi A1 Särskilt nordeuropeisk 	30,0 	1AR000
+Arkeologi B 	30,0 	1AR045
+Arkeologi B1, särskilt nordeuropeisk för arkeologiprogrammet 	30,0 	1AR053
+Arkeologi och GIS - den geografiska dimensionen 	15,0 	1AR057
+Arkitektur och staden - för en annan framtid 	7,5 	5AR017
+Arkitekturhistoria 1:1 	6,0 	5AR132
+Arkitekturhistoria 1:1 	6,0 	5AR142
+Arkitekturhistoria 2:1 	6,0 	5AR202
+Arktisk vetenskap 	4,5 	5FY105
+Arrangering, komposition och musikteori 1 	7,5 	1MU025
+Artificiell intelligens 	7,5 	5DV243
+Artificiell intelligens - grunderna 	7,5 	5DV121
+Artificiell intelligens - grunderna 	7,5 	5DV124
+Artificiell intelligens - metoder och tillämpningar 	7,5 	5DV181
+Artificiell intelligens för kognitionsvetare 	7,5 	5DV201
+Artificiell intelligens för verksamhetsutveckling 	15,0 	2IN408
+Artificiell Intelligens i samhället 	7,5 	2IN306
+Artkunskap och systematik 	15,0 	5BI237
+Artkunskap och systematik för biologilärare 	15,0 	6BI024
+Astrofysik 	7,5 	5FY195
+Astronomi och meteorologi 	7,5 	6FY009
+Atom- och molekylfysik 	7,5 	5FY213
+Att analysera och förstå sociala fenomen 	6,0 	2SA127
+Att analysera och förstå sociala fenomen 	7,5 	2SA111
+Att leda det digitala företaget 	15,0 	2IN128
+Att leda och driva projekt 	7,5 	2FE226
+Att skriva om samtida konst 	7,5 	1KB002
+Att undersöka hälsans och sjukvårdens geografi 	15,0 	2ST045
+Att undersöka och utvärdera digitala miljöer 	7,5 	2IN118
+Att undersöka sociala fenomen 	13,5 	2SA100
+Att undervisa i biologi (VFU) 	6,0 	6BI028
+Att undervisa i fritidshem (VFU) 	7,5 	6PE207
+Att undervisa i förskolan (VFU) 	10,0 	6PE304
+Att undervisa i Idrott och hälsa (VFU) 	6,0 	6PE271
+Att undervisa i Samhällskunskap (VFU) 	6,0 	6PE272
+Att utveckla lärande i skola och vardag för elever med intellektuell funktionsnedsättning 	15,0 	6SP062
+Attack och försvar 	13,5 	3MB029
+Attack och försvar 	13,5 	3MB040
+Avancerad Datorgrafik och tillämpningar 	7,5 	5DV051
+Avancerad Datorgrafik och tillämpningar 	7,5 	5DV180
+Avancerad Molekylärbiologi 	15,0 	5MO105
+Avancerad rumslig analys 	15,0 	2KG505
+Avancerad tjänstedesign 	15,0 	2IN404
+Avancerade beräkningsmetoder i flödesmekanik 	7,5 	5FY167
+Avancerade material 	7,5 	5FY178
+Avancerat projekt i molekylärbiologi 	15,0 	5MO133
+Avtagbar protetik samt implantat 	10,0 	3OT054
+Barn och unga i ett kliniskt och pedagogiskt perspektiv för psykologprogrammet 	12,0 	2PS149
+Barn och unga i ett kliniskt och pedagogiskt perspektiv för psykologprogrammet med inriktning mot idrott 	12,0 	2PS152
+Barn, unga och familj i socialt arbete 	15,0 	2SA144
+Barn, unga och familj i socialt arbete 	7,5 	2SA190
+Barn, unga och familj i socialt arbete 	7,5 	2SA198
+Barn, unga och sociala medier 	7,5 	2PE153
+Barn, unga och sociala medier i lärmiljöer 	7,5 	2PE155
+Barn- och ungdomspsykiatri: neuropsykiatri 	15,0 	3PS018
+Barn- och ungdomspsykiatri: trauma, ångest och depression 	15,0 	3PS017
+Barnet, omvärlden och fritidshemmets uppdrag 	15,0 	6PE228
+Barnpsykiatri 	3,0 	3PS015
+Barnrätt (Juristprogrammet) 	15,0 	2JU102
+Barnrätt i samhälle och professionspraktik 	7,5 	2JU229
+Barns lärande och omsorg 	15,0 	6PE202
+Barns och ungdomars hälsa och livsvillkor 	7,5 	3OM414
+Barns språkutveckling 	7,5 	6LÄ064
+Basfärdigheter i algebra (Preppmatte) 	1,5 	5MA173
+Basic Course in Law 	15,0 	2JU047
+Basic EU Law 	7,5 	2JU002
+Baskurs i samhällsvetenskaplig analys 	30,0 	2EH030
+Bedömning för lärande i förskolan (UK) 	10,0 	6PE237
+Bedömning för och av lärande (UVK) 	15,0 	6KP002
+Bedömning för och av lärande för åk 7-9 och gymnasium (UK) 	11,0 	6PE238
+Bedömning för och av lärande i grundskolan (UK) 	11,0 	6PE236
+Befolkningsgeografi 	15,0 	2KG010
+Behandlingsforskning och klinisk utvärdering för psykologprogrammet med inriktning mot idrott 	4,0 	2PS175
+Behandlingsforskning och klinisk utvärdering för psykologprogrammet, 	4,0 	2PS172
+Belastningsergonomi: Arbetsplatsanalys och riskbedömning 	7,5 	3FT924
+Berättandets betydelser 	7,5 	1ET017
+Beskattningsrätt 1 	15,0 	2JU009
+Beteendevetenskap 	15,0 	2SO096
+Beteendevetenskaplig metod 	15,0 	2SO135
+Beteendevetenskapliga grunder 	7,5 	2SO088
+Beteendevetenskapliga grunder - Social- och Gruppsykologi 	7,5 	2PS316
+Beteendevetenskapliga grunder för karriärvägledning 	5,0 	6SY045
+Beteendevetenskapliga grunder: Introduktion till pedagogik 	7,5 	2PE130
+Beteendevetenskapliga grunder: Pedagogik 	7,5 	2PE132
+Beteendevetenskapliga grunder: Social- och Grupppsykologi 	7,5 	2ÖÄ015
+Beteendevetenskapliga grunder: Sociala kategorier och diskriminering i arbetslivet 	7,5 	2SO090
+Beteendevetenskapliga grunder: socialpsykologi BIT 	7,5 	2PS107
+Beteendevetenskapliga grunder: Sociologi 	7,5 	2ÖÄ010
+Beteendevetenskapliga grunder: sociologi med inriktning mot IT-miljöer 	7,5 	2SO143
+Biblioteks- och informationsvetenskaplig metod och forskningsdesign 	15,0 	2BV018
+Big data och analys av högdimensionella data 	7,5 	5MS062
+Bild 1 	30,0 	6ES128
+Bilden av den andre 	7,5 	1HI013
+Bilderboken och barnromanen 	7,5 	1LV057
+Bilderboken och barnromanen 	7,5 	6LV003
+Biofysikalisk kemi med läkemedelsinriktning 	7,5 	5KE120
+Biofysikaliska-kemiska koncept 	15,0 	5KE174
+Biokemi 	15,0 	5KE020
+Biokemi - Proteiners struktur och funktion 	15,0 	5KE170
+Biokemi - Proteinkemi och enzymkinetik 	15,0 	5KE076
+Biologi baskurs I 	7,5 	5BX003
+Biologi baskurs II 	7,5 	5BX002
+Biologisk kemi 	15,0 	5KE111
+Biologisk och kognitiv psykologi 	15,0 	2KO003
+Biologisk psykologi 	7,5 	2PS116
+Biologisk psykologi för psykologprogrammet 	7,5 	2PS134
+Biologisk psykologi för psykologprogrammet med inriktning mot idrott 	7,5 	2PS135
+Biomedicin och allmän farmakologi 	7,5 	3OM393
+Biomedicin och omvårdnad 	10,5 	3OM369
+Biomedicinsk genetik 	7,5 	5MO095
+Biomedicinsk kemi 	30,0 	3BK032
+Biomekanik och motorisk kontroll inom idrott och träning 	7,5 	3ID303
+Biostatistik 	5,0 	3FH072
+Business Analysis, Planning, and Performance D 	15,0 	2FE153
+Business Analytics 	15,0 	2ST070
+Business Development and Supply Chain Management D 	30,0 	2FE200
+Byggnader och inomhusmiljö 	7,5 	5BY083
+Byggnadsfysik 	7,5 	5BY002
+Byggnadsmekanik 2 	7,5 	5BY061
+Byggprocessen 	7,5 	5BY082
+Cell- och molekylärbiologi med laboratoriemetodik 	9,0 	3BL204
+Cell- och molekylärbiologi med laboratoriemetodik 	9,0 	3BL304
+Cellbiologi 	15,0 	5MO100
+Cellens struktur och funktion 	27,0 	3MK008
+Cellens struktur och funktion 	27,0 	3MK010
+Change and Entrepreneurship in Organizations C 	15,0 	2FE138
+Civilrätt 	30,0 	2JU057
+Civilrätt 	30,0 	2JU056
+Civilsamhället, empowerment och social mobilisering 	7,5 	1ET054
+Comparative Law 	7,5 	2JU125
+Comparative Social Policy 	7,5 	2SO028
+Consumer Behavior and Marketing Strategy D 	15,0 	2FE179
+Consumer Behavior, Market Analysis and Strategic Decision Making D 	30,0 	2FE177
+Corporate Finance and Analysis D 	15,0 	2FE180
+Corporate Governance D 	7,5 	2FE111
+Critical Perspectives on Nordic Gender Equalities 	15,0 	2KC034
+CSS-baserad webbdesign 	7,5 	2IN005
+Current Trends and a Minor in Business Development D 	30,0 	2FE197
+Current Trends and a Minor in Finance D 	30,0 	2FE196
+Current Trends and a Minor in Management D 	30,0 	2FE194
+Current Trends and a Minor in Marketing D 	30,0 	2FE193
+Databasdesign 	7,5 	2IN070
+Databasteknik 	7,5 	5DV187
+Datacentrerat värdeskapande 	7,5 	2IN200
+Datainsamling och analys 	7,5 	2PS103
+Datakommunikation 	7,5 	5EL131
+Datakommunikation och datornät 	7,5 	5DV213
+Datakommunikation och internet 	7,5 	5DV212
+Datasekretess 	7,5 	5DV241
+Datastrukturer och algoritmer (C) 	7,5 	5DV149
+Datastrukturer och algoritmer (Python) 	7,5 	5DV150
+Datavetenskapens grunder 	7,5 	5DV037
+Datavisualisering av globala trender 	7,5 	2ST071
+Datorers uppbyggnad och arkitektur 	7,5 	5DV193
+Datorgrafik 	7,5 	5DV179
+Datorspel och lärande I 	7,5 	2IT004
+Datorstödd maskinritning 	7,5 	5MT002
+Datorteknik och inbyggda system 	15,0 	5EL179
+Demenssjukdom och personcentrerad omvårdnad 	7,5 	3OM384
+Democracy, Human Rights and Sustainability: Global Perspectives in Education 	7,5 	6PE194
+Demokrati, mänskliga rättigheter och gender: globala perspektiv i utbildning 	7,5 	6PE121
+Den svenska modellen och arbetsrättens internationalisering 	15,0 	2JU160
+Dentala biomaterial med inriktning mot tandteknik 	23,0 	3OT077
+Design & kläder A 	30,0 	1TX004
+Design & kläder A 	30,0 	1TX011
+Design av informationssystem 	30,0 	2IN119
+Design för användarupplevelser 	30,0 	2IN331
+Design för idékommunikation 	15,0 	5ID199
+Design och konsthantverk sedan 1980 	7,5 	1KB020
+Designprojekt 2 	9,0 	5ID216
+Destinationer 	15,0 	2KG018
+Det professionella tränarskapet för Tränarprogrammet 	15,0 	2PS322
+Det samiska samhället: historiska perspektiv 	7,5 	1SA154
+Det sociala arbetets målgrupper 	7,5 	2SA177
+Didaktik för det flerspråkiga klassrummet 	7,5 	6SD007
+Didaktik för modersmålslärare 	7,5 	6SD006
+Dietik B 	30,0 	2KN070
+Differentialekvationer 	7,5 	6MA050
+Differentialekvationer för teknologer 	7,5 	5MA121
+Differentialekvationer och flervariabelanalys 	7,5 	6MA052
+Digital etnografi 	7,5 	1ET044
+Digital innovation 	7,5 	2IN193
+Digital kompetens och lärande I 	7,5 	2IT029
+Digital kompetens och lärande II 	7,5 	2IT030
+Digital källkritik 	7,5 	1KO076
+Digital redigering och postproduktion 	30,0 	2IN106
+Digital sociologi 	7,5 	2SO098
+Digital strategi 	15,0 	2IN196
+Digital tjänsteutveckling 	30,0 	2IN333
+Digital visualisering 	30,0 	2IN332
+Digitala bilder 	7,5 	2IT006
+Digitala ekosystem 	30,0 	2IN127
+Digitala ekosystem 	30,0 	2IN141
+Digitala och sociala medier 	7,5 	1KO035
+Digitalt arbetsliv: strategier för det nya normala 	7,5 	2IN901
+Digitalt berättande och kreativt lärande 	7,5 	2IT026
+Diskret matematik 	7,5 	6MA043
+Distribuerade system 	7,5 	5DV186
+Ditt barns språk I - Språkutvecklingen mellan 0 och 2 år 	5,0 	6LI010
+Drottningar och drottningskap i medeltida och tidigmoderna Europa 	7,5 	1HI075
+DV0: Datavetenskapligt tänkande 	7,5 	5DV223
+DV0: Komputationellt tänkande 	7,5 	5DV159
+DV1: Datatyper och datastrukturer 	7,5 	5DV224
+DV2: Algoritmer och problemlösning 	7,5 	5DV204
+DV3: Beräkningar och språk 	7,5 	5DV208
+DV4: Datavetenskaplig logik 	7,5 	5DV163
+DV5: Datavetenskaplig fördjupning 	7,5 	5DV225
+DV5: Metoder och aktuell kunskap 	7,5 	5DV164
+Effektiva algoritmer 	7,5 	5DV182
+eHälsotjänster och den digitala patienten 	7,5 	2IN123
+Ekologi 	15,0 	5BI234
+Ekologi 	15,0 	5BI265
+Ekologi och energi i planeringen 	15,0 	5BI088
+Ekologi och energi i planeringen 	15,0 	5BI256
+Ekologi och geovetenskap 	15,0 	5BI233
+Ekonometri I D12 	7,5 	2NE005
+Ekonomisk familjerätt 	15,0 	2JU105
+Ekonomisk historia A 	30,0 	2EH049
+Ekonomisk och politisk geografi 	15,0 	2KG008
+Ekonomisk och social geografi 	15,0 	2KG308
+Ekonomisk och social geografi 	15,0 	6KG003
+Ekonomisk teori och marknadsorganisation, A22 	7,5 	2NE052
+Ekonomiska kriser i historisk belysning 	7,5 	2EH050
+El- och vågrörelselära 	7,5 	5FY204
+Elektriska maskiner 	7,5 	5EL188
+Elektrodynamik 	6,0 	5FY186
+Elektrodynamik II 	7,5 	5FY170
+Elektrodynamik med vektoranalys 	7,5 	5FY147
+Elektromagnetismens grunder 	6,0 	5FY127
+Elektronik och PCB-design 	7,5 	5EL282
+Elever i behov av extra anpassningar och särskilt stöd ur ett fritidshemsperspektiv 	7,5 	6PE250
+Elkraft 	7,5 	5EL189
+Elmaskiner 1 	7,5 	5EL191
+Elnät 	7,5 	5EL199
+Elteknik 	7,5 	5EL133
+Endimensionell analys 1 	7,5 	5MA153
+Endimensionell analys 2 	7,5 	5MA154
+Endodonti 1 	5,0 	3EN010
+Endontoni 2 	7,0 	3EN011
+Energikällor 	7,5 	5EN093
+Energiprojekt 	7,5 	5EN092
+Energiteknisk kemi 	15,0 	5KE197
+Engelska 2 för ämneslärare med inriktning mot gymnasiet 	30,0 	6EN036
+Engelska A, Academic Writing 	7,5 	1EN066
+Engelska A, Allmän inriktning 	30,0 	1EN000
+Engelska A, Grammatik och översättning 	7,5 	1EN002
+Engelska A, Litteratur 	7,5 	1EN003
+Engelska A1, nätkurs 	15,0 	1EN050
+Engelska B, allmän inriktning 	30,0 	1EN020
+Engelska B1, nätkurs 	15,0 	1EN052
+Engelska B2, nätkurs 	15,0 	1EN053
+Engelska C 	15,0 	1EN079
+Engelska för F-3, kurs 1 	7,5 	6EN039
+Engelska för F-3, kurs 2 	7,5 	6EN041
+Engelska för åk 4-6, kurs 1 	7,5 	6EN040
+Engelska för åk 4-6, kurs 2 	7,5 	6EN042
+Engelska för åk 4-6, kurs 3 	15,0 	6EN043
+Engelska för ämneslärare, kurs 1 	30,0 	6EN045
+Engelska för ämneslärare, kurs 3 	30,0 	6EN046
+Engelska, Examensarbete för kandidatexamen, språkvetenskaplig inriktning 	15,0 	1EN084
+Engelska, vetenskapligt skrivande inom humaniora och samhällsvetenskap 	7,5 	1EN082
+Ensemblearrangering i Kulturskolan 	7,5 	6KS006
+Entrepreneurial Financial Management C 	7,5 	2FE064
+Entreprenörskap och affärsutveckling 	7,5 	2FE176
+Entreprenörskap och företaget i samhället A 	15,0 	2FE027
+Envariabelanalys 1 	7,5 	5MA009
+Envariabelanalys 1 	7,5 	5MA197
+Envariabelanalys 1 	7,5 	6MA041
+Envariabelanalys 2 	7,5 	5MA198
+Envariabelanalys 2 	7,5 	6MA046
+Epidemiologi 	10,0 	3FH038
+Estetiska ämnen C 	30,0 	1ES014
+Etik och kommunikation 	7,5 	3OM392
+Etik, demokrati och den heterogena lärandemiljön (UK) 	7,5 	6LU007
+Etnografi och kulturanalys 	7,5 	1ET025
+Etnografiska intervjuer och kulturanalytisk tolkning 	7,5 	1ET059
+Etnografiskt författarskap och etnografiska framställningsformer - kvalitativt vetenskapligt skrivande 	7,5 	1ET071
+Etnologi A 	30,0 	1ET073
+Etnologi A - kultur, berättelser, ritualer 	30,0 	1ET029
+Evangeliernas Jesus och brevens Paulus: språklig kandidatkurs i Nya testamentets exegetik 	15,0 	1RE192
+Evidens inom radiografi 	7,5 	3OM402
+Evidensbaserad fysioterapi 	7,5 	3FT904
+Evidensbaserat folkhälsoarbete 	4,0 	3FH060
+Examensarbete 	15,0 	2SA118
+Examensarbete 	15,0 	3OT160
+Examensarbete 	15,0 	3BL224
+Examensarbete för civilingenjörsexamen i interaktion och design 	30,0 	5DV189
+Examensarbete för förskollärarexamen 	15,0 	6PE289
+Examensarbete för grundlärarexamen med inriktning mot förskoleklass och grundskolans år 1-3 	30,0 	6PE212
+Examensarbete för grundlärarexamen med inriktning mot grundskolans år 4-6 	30,0 	6PE213
+Examensarbete för speciallärarexamen med specialisering mot matematikutveckling 	15,0 	6PE277
+Examensarbete för speciallärarexamen med specialisering mot språk-, skriv- och läsutveckling 	15,0 	6SD011
+Examensarbete för Studie- och yrkesvägledarprogrammet 	15,0 	6PE055
+Examensarbete för ämneslärarexamen - Matematik 	30,0 	6MN036
+Examensarbete för ämneslärarexamen - Naturkunskap 	30,0 	6NK004
+Examensarbete för ämneslärarexamen - Religion 	30,0 	6RV027
+Examensarbete för ämneslärarexamen - Språkdidaktik 	30,0 	6SD022
+Examensarbete för ämneslärarexamen - Svenska 	30,0 	6SD021
+Examensarbete i biologi avseende kandidatexamen 	30,0 	5BI263
+Examensarbete i biomedicin med forskningsplan 	45,0 	3BK025
+Examensarbete i Bioteknik 	30,0 	5MO136
+Examensarbete i idrottspedagogik med praktik 	15,0 	2IP032
+Examensarbete i kulturgeografi 	15,0 	2KG021
+Examensarbete i Oral hälsa 	15,0 	3OT173
+Examensarbete i pedagogik, med inriktning mot personal- och arbetslivsfrågor 	15,0 	2PE167
+Examensarbete i Studie- och yrkesvägledarprogrammet 	15,0 	6SY052
+Examensarbete i svenska för ämneslärarexamen 	30,0 	6SD002
+Examensarbete med ämnesdidaktisk inriktning för ämneslärarexamen - grundnivå (UVK) 	15,0 	6KP016
+Examensarbete speciallärarprogrammet med specialisering mot utvecklingsstörning 	15,0 	6SP059
+Examensarbete speciallärarprogrammet med specialisering mot utvecklingsstörning 	15,0 	6SP036
+Examensarbete specialpedagogprogrammet 	15,0 	6SP060
+Examensarbete specialpedagogprogrammet 	15,0 	6SP035
+Examensarbete, konstnärlig masterexamen i arkitektur och stadsbyggnad 	30,0 	5AR522
+Exkludering och diskriminering i IKT-miljöer 	7,5 	2SO147
+Experimentell problemlösning och forskningsmetodik för termiska energiprocesser 	15,0 	5EN088
+Familjebehandling i teori och praktik för psykologprogrammet 	4,0 	2PS179
+Familjebehandling i teori och praktik för psykologprogrammet med inriktning mot idrott 	4,0 	2PS186
+Farmakologi N/T 	15,0 	5MO122
+Fascismens historia 	7,5 	1HI083
+Fasta tillståndets fysik 	7,5 	5FY209
+Fasta tillståndets fysik C 	10,5 	5FY021
+Filosofi A för programmet i filosofi och samhällsanalys 	30,0 	1FL106
+Filosofi B 	30,0 	1FL053
+Filosofi B 	30,0 	1FL108
+Filosofi B för programmet i filosofi och samhällsanalys 	30,0 	1FL107
+Financial Management 	30,0 	2FE144
+Financial Management D 	30,0 	2FE108
+Financial Markets, Institutions and Financial Planning C 	15,0 	2FE121
+Finansiell ekonomi D2 	7,5 	2NE016
+Finansiell ekonomi II D21 	7,5 	2NE056
+Finansiell matematik 	7,5 	5MA175
+Finansiell matematik 	7,5 	5MA208
+Finansiering och kalkylering 	7,5 	2FE174
+Finita elementmetoden 	7,5 	5MA176
+Finska B, Grammatik, vokabulär och skriftlig kommunikation 	15,0 	1FI058
+Finska, Läsförståelse I 	15,0 	1FI063
+Finska, Standardfinska för sverigefinska och finlandsvenska studerande I 	7,5 	1FI034
+Flervariabelanalys 	7,5 	6MA047
+Flervariabelanalys 	7,5 	5MA164
+Flervariabelanalys och differentialekvationer 	7,5 	5MA044
+Folkhälsa, arbetsrelaterad ohälsa och fysioterapi 	18,0 	3FT401
+Folkhälsovetenskap, epidemiologi och biostatistik 	7,0 	3ME095
+Fordonsteknik 	7,5 	5MT004
+Forskningsdesign och metod inom utbildningsvetenskap 	7,5 	6PE195
+Forskningsmetod och profession (UVK) 	7,5 	6PE288
+Forskningsmetodik - kvantitativ och kvalitativ metod 	7,5 	3AT521
+Fostran, socialisation och tränarskap inom idrott 	7,5 	2IP040
+Foundations of Finance B 	7,5 	2FE097
+Framtidens IT-miljöer 	7,5 	2IN201
+Franska A Fonetik, grammatik och språkvetenskap 	7,5 	1FR029
+Franska B 	30,0 	1FR031
+Franska B, Fransk litteratur och litteraturhistoria 	7,5 	1FR045
+Franska, Aktivera din franska 	7,5 	1FR028
+Franska, Kvalifikationskurs 	7,5 	1FR001
+Franska, Nordic Noir som globalt litteraturfenomen 	7,5 	1FR034
+Franska, Nybörjarkurs 	15,0 	1FR018
+Franska, Påfartskurs 	7,5 	1FR039
+Fred och fredsbyggande 	15,0 	2FO026
+Freds- och konfliktstudier A 	30,0 	2FO006
+Freds- och konfliktstudier B 	30,0 	2FO007
+Freds- och konfliktstudier C 	30,0 	2FO008
+Funktionell rörelseanalys för skadeprevention och idrottsprestation 	7,5 	3ID502
+Fysik baskurs I 	7,5 	5FX001
+Fysik baskurs II 	7,5 	5FX002
+Fysik baskurs III 	7,5 	5FX003
+Fysikalisk modellering och beräkningsteknik 	10,5 	5FY224
+Fysikalisk mätteknik 	7,5 	5FY190
+Fysikalisk mätteknik med ellära 	7,5 	5FY225
+Fysikaliska modellers matematik B 	10,5 	5FY031
+Fysikens matematiska metoder 	15,0 	5MA122
+Fysiologi 	15,0 	5BI170
+Fysiologi 	15,0 	5BI245
+Fysiologi för dietetik 	15,0 	2KN069
+Fysiologi med inriktning mot akutsjukvård 	9,0 	3BM031
+Fysiologi och farmakologi 	10,0 	3BM003
+Fysiologisk diagnostik I 	15,0 	3BL213
+Fysiologisk metodik och laboratoriediagnostik i primärvården 	7,5 	3BL205
+Fysiologisk metodik och laboratoriediagnostik i primärvården 	7,5 	3BL305
+Fysioterapi - anatomi och fysiologi 	15,0 	3FT111
+Fysioterapi - arbetsfysiologi 	7,5 	3FT211
+Fysioterapi - beteendevetenskap och kroppslighet 	7,5 	3FT212
+Fysioterapi - examensarbete 	15,0 	3FT501
+Fysioterapi - examensarbete 	15,0 	3FT511
+Fysioterapi - fördjupning i kliniskt resonemang 	12,0 	3FT611
+Fysioterapi - klinisk utvärdering och mätmetoder 	7,5 	3FT903
+Fysioterapi - motorisk kontroll, fysisk förmåga och träning 	15,0 	3FT213
+Fysioterapi - professionell utveckling och verksamhetsförlagd utbildning 	18,0 	3FT612
+Fysioterapi - vetenskaplig teori och metod 	15,0 	3FT920
+Fysioterapi i folkhälsa och arbetsliv: Fysisk aktivitet och träning för hälsa och förmåga 	15,0 	3FT512
+Fysioterapi inom habilitering, geriatrisk och neurologisk rehabilitering samt verksamhetsförlagd utbildning 	30,0 	3FT411
+Fysioterapi vid muskuloskeletala besvär och psykisk ohälsa samt vetenskaplig metod 	22,5 	3FT312
+Fysioterapi vid nedsättning i andnings- och cirkulationssystemen 	7,5 	3FT311
+Fysioterapi: Arbetsförmåga och rehabilitering till arbetslivet 	7,5 	3FT923
+Fysioterapi: Rehabilitering och habilitering 	15,0 	3FT303
+Fysisk infrastruktur och detaljplanering 	15,0 	2KG056
+Fältkurs med miljöarkeologi 	15,0 	1AR040
+Förberedande kemi för miljö- och hälsoskyddsområdet 	7,5 	5KE153
+Förbränningsteknik 	7,5 	5EN041
+Fördjupad brottsutredning med inriktning mot våld i nära relation och utredning av onaturliga dödsfall 	13,5 	2PO016
+Fördjupad klinisk bedömning och behandling för psykologprogrammet 	18,0 	2PS191
+Fördjupad klinisk bedömning och behandling för psykologprogrammet med inriktning mot idrott 	18,0 	2PS192
+Fördjupning i digital medieproduktion 	30,0 	2IN334
+Fördjupning inom vetenskaplig metod i polisiärt arbete 	7,5 	2UPO22
+Fördjupning inom vetenskaplig metodik 	15,0 	3FT922
+Fördjupningskurs i informatik med inriktning mot beteendevetenskap och IT-miljöer 	30,0 	2IN122
+Förebygga och behandla sjukdom och funktionsnedsättning: Design och utvärdering av anpassad fysisk aktivitet och träning 	15,0 	3FT503
+Föremålens betydelser. Om relationen mellan ting, identitet och kultur 	7,5 	1ET051
+Företagekonomi A61 	15,0 	2FE021
+Företagsekonomi 	15,0 	2ÖÄ008
+Företagsekonomi A 	30,0 	2FE211
+Företagsekonomi A HLP 	30,0 	2FE214
+Företagsekonomi A PA 	15,0 	2FE228
+Företagsekonomi A SM 	30,0 	2FE213
+Företagsekonomi A1:1 	15,0 	2FE182
+Företagsekonomi A1:1 	15,0 	2FE229
+Företagsekonomi A1:2 	15,0 	2FE183
+Företagsekonomi A53 	30,0 	2FE010
+Företagsekonomi B 	30,0 	FEKB53
+Företagsekonomi B5 - Affärsutveckling med beslutsstöd 	7,5 	2FE154
+Företagsekonomi B53 	30,0 	2FE014
+Företagsekonomi B71 	30,0 	2FE104
+Företagsekonomi B72 	30,0 	2FE105
+Företagsekonomi med internationell inriktning A 	30,0 	2FE012
+Företagsekonomi med internationell inriktning B 	30,0 	2FE095
+Författningskunskap 	7,5 	2JU218
+Förhandling och tvistelösning på arbetsmarknaden 	7,5 	2JU161
+Förhandling och tvistelösning på arbetsmarknaden (Juristprogrammet) 	7,5 	2JU162
+Förlossningskonst I 	7,5 	3OM425
+Förlossningskonst II 	15,0 	3OM426
+Förlossningskonst III 	15,0 	3OM428
+Förskolans uppdrag och arbetssätt 1 	5,0 	6PE203
+Förskolans uppdrag och arbetssätt 2 	10,0 	6PE252
+Förskollärare som profession (UK) 	6,0 	6PE183
+Försäljningsstrategier 	15,0 	2FE317
+Försöksplanering och avancerad statistisk modellering 	15,0 	5MS071
+Förvaltning 	7,5 	5MH136
+Förvaltning 	7,5 	5MH200
+Förvaltningsrätt 	15,0 	2JU027
+Förvärvade tal- språk- och sväljstörningar 1 	7,5 	3LO061
+Förvärvade tal- språk- och sväljstörningar 2 	9,0 	3LO067
+Förändrad markanvändning ur rättsligt perspektiv 	15,0 	2JU145
+Förändrad markanvändning ur rättsligt perspektiv (Juristprogrammet) 	15,0 	2JU144
+Förändring och lärande i organisationer för psykologprogrammet 	6,0 	2PS187
+Galenisk farmaci 	10,5 	3FA029
+Gastronomi - inriktning gastronomi och kreativ matlagning 	15,0 	2MR058
+Gastronomi - inriktning gastronomi och värdskap 	15,0 	2MR059
+Genetik och evolution 	15,0 	5BI194
+Genetik och evolution för biologilärare 	15,0 	6BI026
+Genus och rätt 	7,5 	2JU158
+Genus, nation och migration 	7,5 	2KC026
+Genus, sexualitet och bibeln: språklig magisterkurs i exegetik 	15,0 	1RE222
+Genuspedagogik i lärmiljöer 	15,0 	6PE275
+Genusvetenskap: Makt och kön A 	30,0 	2KC000
+Genusvetenskap: Makt och kön B 	30,0 	2KC001
+Genusvetenskap: Makt och kön C 	30,0 	2KC002
+Geodatabasdesign 	7,5 	2KG601
+Geografididaktik 1 	7,5 	6KG007
+Geografiska informationssystem 	15,0 	5GV066
+Geografiska perspektiv på turism och hållbarhet 	15,0 	2KG403
+Geovetenskap 	15,0 	5GV095
+Geovetenskap 	15,0 	5GV101
+Geovetenskap med inriktning mot naturkatastrofer 	7,5 	5GV059
+Geovetenskap med inriktning mot naturkatastrofer 	7,5 	5GV099
+Gerodonti 	7,5 	3OT177
+GIS och rumslig analys 	15,0 	2KG017
+GIS, mobilitet och system 	15,0 	2KG026
+Global and Regional Governance 	15,0 	2SV031
+Global hälsa 	10,0 	3FH041
+Global rättvisa 	15,0 	2KG047
+Global sociologi 	30,0 	2SO070
+Grafisk design & Media A för lärare 	30,0 	1ES015
+Grafisk design och media A 	30,0 	1ES007
+Grafisk design och Media A 	30,0 	1ES009
+Grunder för polisiärt arbete - juridik 	30,0 	UPUX11
+Grunderna i byggnadskonstruktion 	7,5 	5BY055
+Grundkurs i filosofi 	22,5 	1FL133
+Grundläggande brottsutredning för poliser 	12,5 	2PO007
+Grundläggande fastighetsförvaltning 	7,5 	5BY057
+Grundläggande idrottsmedicin för Tränarprogrammet 	15,0 	3ID900
+Grundläggande Idrottspsykologi och Tränarskap för Tränarprogrammet 	7,5 	2PS310
+Grundläggande juridik för poliser 	12,0 	2PO004
+Grundläggande Kemi 	15,0 	3BK033
+Grundläggande klinisk bedömning och behandling för Psykologprogrammet 	18,0 	2PS168
+Grundläggande klinisk bedömning och behandling för Psykologprogrammet med inriktning mot idrott 	18,0 	2PS165
+Grundläggande laboratorievetenskap 	15,0 	3BL201
+Grundläggande logik och modellteori 	7,5 	5DV102
+Grundläggande oral hälsa 	30,0 	3OT167
+Grundläggande psykoterapeutisk teori och metod: Bedömning 	7,5 	2PS270
+Grundläggande psykoterapeutisk teori och metod: Behandling 	7,5 	2PS271
+Grupp- och organisationspsykologi för Tränarprogrammet 	7,5 	2PS319
+Grupprocesser och polisiär yrkeskultur 	2,5 	2PO005
+Grupprocesser och samverkan ur ett fritidshemsperspektiv 	7,5 	6PE111
+Gruppsykologi i teori och praktik för psykologprogrammet 	7,5 	2PS177
+Gruppsykologi i teori och praktik för psykologprogrammet med inriktning mot idrott 	7,5 	2PS178
+Gruppsykologi och organisationspsykologi 	7,5 	2PS701
+Gruppvägledning 	7,5 	2PE150
+Gruppvägledning med inriktning mot karriärutveckling 	7,5 	6SY031
+Gynekologisk och sexuell hälsa 	7,5 	3OM423
+Handel och lokalisering 	7,5 	2KG150
+Handelsrätt 	15,0 	2JU121
+Handelsrättslig översiktskurs 	15,0 	2JU122
+Handelsrättslig översiktskurs 	15,0 	2KU122
+Handledarutbildning för VFU-handledare, bedömning 	3,5 	6PE206
+Handledarutbildning för VFU-handledare. handledningssamtal 	4,0 	6PE208
+Handledd verksamhetsförlagd utbildning - Internationellt 	30,0 	2SA217
+Handledd verksamhetsförlagd utbildning - Nationellt 	30,0 	2SA182
+Handledd verksamhetsförlagd utbildning - Nationellt 	30,0 	2SA216
+Handling 	7,5 	3BM011
+HBTQ och sexualitet för psykologprogrammet 	6,0 	2PS228
+HBTQ och sexualitet för psykologprogrammet med inriktning mot idrott 	6,0 	2PS233
+Hem- och konsumentkunskap A 	30,0 	6KN023
+Hem- och konsumentkunskap B 	30,0 	6KN025
+Hematologi 	15,0 	3MD004
+Histologi med cellbiologi 	3,0 	3OT045
+Historia 1 	30,0 	6HI034
+Historia 2 	30,0 	6HI033
+Historia 3 	30,0 	6HI035
+Historia A 	30,0 	1HI000
+Historia A4 	7,5 	1HI004
+Historia B 	30,0 	1HI073
+Historia B för humanistiskt samhällsprogram 	30,0 	1HI074
+Historia C 	30,0 	1HI008
+Historia C 	30,0 	1HI082
+Hot team 	6,0 	5ID214
+HR-arbete i teori och praktik 	15,0 	2PE022
+HR-arbete i teori och praktik 	15,0 	2PE143
+HR-arbete i teori och praktik II 	15,0 	2PE151
+HR-arbete i teori och praktik II 	15,0 	2PE159
+HRM - innehåll och metoder 	30,0 	2SO087
+HRM, organisation och arbetsliv 	15,0 	2ÖÄ001
+HRM, organisation och arbetsliv 	15,0 	2PE165
+Human Resource Management and Development 	15,0 	2SO126
+Human Rights Law (Juristprogrammet) 	15,0 	2JU204
+Humanbiologi och laboratoriemetodik 	15,0 	3BL302
+Humanfysiologi 	15,0 	6BI033
+Hydraulik 	7,5 	5MT007
+Hållbarhet och planering i en globaliserad värld 	15,0 	2KG303
+Hållbart skogsbruk 	15,0 	5BI239
+Hållfasthetslära 	7,5 	5MT044
+Hälsa och familj hos unga HBTQ-personer 	7,5 	3OM437
+Hälsa, sjukdom och funktionsnedsättning 2 	6,0 	3AT322
+Hälsoekonomisk teori 	7,5 	3FH071
+Hälsofrämjande familjefokuserad omvårdnad 	7,5 	3OM420
+Hälsokommunikation och sociologiska perspektiv inom hem- och konsumentkunskap 	7,5 	6KN033
+Hälsokommunikation, media och kostundersökningsmetoder 	7,5 	2KN053
+Hälsopsykologi 	7,5 	2PS121
+Hälsopsykologi för Psykologprogrammet 	7,5 	2PS143
+Hälsopsykologi I: Introduktion 	7,5 	2PS304
+Hälsopsykologi II: Livsstilsperspektiv 	7,5 	2PS305
+Hälsopsykologi III: Arbetslivsperspektiv 	7,5 	2PS306
+Hälsorisker och tillsyn 	7,5 	2KN068
+Idéhhistoria: Upplysning och romantik 	7,5 	1IH053
+Idéhistoria A 	30,0 	1IH000
+Idéhistoria A för Humanistiskt samhällsprogram 	30,0 	1IH005
+Idéhistoria B 	30,0 	1IH001
+Idéhistoria C 	30,0 	1IH002
+Idéhistoria: antiken, medeltiden och renässansen 	7,5 	1IH052
+Idéhistoria: svensk idéhistoria 	7,5 	1IH055
+Identitet och makt i sociala medier 	7,5 	2IN900
+Idrott och hälsa 1 	30,0 	6ID017
+Idrott och hälsa 2 	30,0 	6ID021
+Idrott och hälsa 3 	30,0 	6ID020
+Idrott och samhälle för psykologprogrammet med inriktning mot idrott 	6,0 	2PS151
+Idrott, fostran och socialisation 	7,5 	2IP027
+Idrotts- och hälsopsykologi 	7,5 	2PS300
+Idrotts- och hälsopsykologi för psykologprogrammet med inriktning mot idrott 	7,5 	2PS249
+Idrotts- och hälsopsykologi för Tränarprogrammet 	7,5 	2PS308
+Idrottsfysiologi III - Styrketräning 	7,5 	3ID202
+Idrottsjuridik 	15,0 	2JU046
+Idrottspedagogik, kompetens och arbetsmarknad 	5,0 	2IP034
+Idrottspedagogisk forskning 1 	7,5 	2IP029
+Idrottspedagogisk forskning II 	10,0 	2IP031
+Idrottspedagogiska perspektiv på utmaningar inom idrottens område 	7,5 	2IP026
+Idrottspsykologi 1 	7,5 	2PS301
+Idrottspsykologi 1 för Tränarprogrammet 	7,5 	2PS309
+Idrottspsykologi med inriktning mot prestation för psykologprogrammet med inriktning mot idrott 	6,0 	2PS199
+Immunkemiska tekniker N/T 	7,5 	5MO108
+Immunologi och hematologi 	7,5 	3BL208
+Imperativ programmering (C) 	7,5 	5DV221
+Individuell fördjupningskurs i Interpersonell Psykoterapi (IPT) för psykologprogrammen 	6,0 	2PS246
+Industriell ekonomi A 	7,5 	2FE017
+Industriell utveckling och ekonomisk förändring 	7,5 	2EH032
+Industriella mätsystem 	7,5 	5EL277
+Infektionssjukvård 	15,0 	3IS013
+Informationsförmedlingens vetenskapliga och sociala sammanhang 	30,0 	2BV002
+Informationssystem 	15,0 	2IN115
+Informationssystem 	30,0 	2BV017
+Informationsteori nätverk och marknade 	7,5 	5FY126
+Inköp och försäljning C 	22,5 	2FE217
+Inledande kurs för kandidatprogrammet i matematik 	7,5 	5MA205
+Inledande kurs i Elektronik och datorteknik 	7,5 	5EL212
+Inledande kurs i maskinteknik 	7,5 	5MT041
+Innovation och affärsutveckling 	7,5 	2FE227
+Innovation och förändringsarbete i samverkan 	15,0 	3AT621
+Innovation, evidens och prevention - fysioterapeuten i samhället 	15,0 	3FT502
+Installations- och fastighetsteknik 	15,0 	5BY081
+Intellektuellt funktionshinder - om vardag och livsvillkor för vuxna och äldre 	7,5 	2SA134
+Intensivkurs i svenska 1: nybörjarkurs 	30,0 	1SV040
+Intensivkurs i svenska 2: fortsättningskurs 	30,0 	1SV041
+Intensivkurs i svenska 3: behörighetsgivande kurs 	30,0 	1SV042
+Interaktionsteknik 	7,5 	5DV132
+Interaktionsteknik 	7,5 	5DV226
+Interaktionsteknik och design 	7,5 	5TF020
+Internationalisering och socialt arbete 	15,0 	2SA163
+Internationalisering och socialt arbete 	7,5 	2SA195
+Internationalisering och socialt arbete 	7,5 	2SA203
+Internationell arbetsrätt: Globala, regionala och nationella perspektiv (Juristprogrammet) 	15,0 	2JU233
+Internationell ekonomisk historia 	15,0 	2EH035
+Internationell ekonomisk historia (nivå 1) 	15,0 	2EH012
+Internationell företagsekonomi A IBP 	30,0 	2FE212
+Introduction to Swedish Law 	7,5 	2JU031
+Introduktion Oral Hälsa 	30,0 	3OT163
+Introduktion till data science 	3,0 	2ST043
+Introduktion till databashantering 	7,5 	5DV202
+Introduktion till det specialpedagogiska fältet 	7,5 	6SP050
+Introduktion till digital medieproduktion 	30,0 	2IN330
+Introduktion till diskret matematik 	7,5 	5MA143
+Introduktion till e-Government 	7,5 	2IN006
+Introduktion till fasta tillståndets fysik 	7,5 	5FY210
+Introduktion till freds- och konfliktstudier 	7,5 	2FO034
+Introduktion till Industriell Ekonomi 	7,5 	FMA195
+Introduktion till Industriell Ekonomi 	7,5 	5MA195
+Introduktion till läkarutbildningen 	3,0 	3MK009
+Introduktion till läraryrket 	7,5 	6PE323
+Introduktion till miljö och hälsoskydd 	15,0 	5MH113
+Introduktion till miljö och hälsoskydd 	7,5 	5MH155
+Introduktion till samhällsekonomi 	7,5 	6NE002
+Introduktion till samhällsekonomi 	7,5 	2NE086
+Introduktion till språk och kultur i norra Skandinavien 	7,5 	1NS104
+Introduktion till turism 	15,0 	2KG019
+Introduktion till vetenskapliga studier 	7,5 	2EH051
+Introduktionskurs 	3,0 	3MK006
+Introduktionskurs 	3,0 	3MK011
+Introduktionskurs i Psykologi 	7,5 	2PS114
+Introduktionskurs i psykologi för psykologprogrammet med inriktning mot idrott 	7,5 	2PS131
+Introduktionskurs i psykologi för psykologprogrammet, 7 	7,5 	2PS130
+Inventering av biologisk mångfald 	15,0 	5BI254
+IT-miljöer och digitala tjänster 	15,0 	2IN121
+Italienska A:1 	15,0 	1IT007
+Italienska A:2 	15,0 	1IT008
+Italienska BI 	7,5 	1IT011
+Italienska, Kvalifikationskurs, steg 3 	7,5 	1IT009
+Italienska, Nybörjarkurs 	15,0 	1IT003
+Journalistik 	30,0 	1JO011
+Journalistik, medier och kommunikation A 	30,0 	1KO030
+Journalistik, medier och kommunikation A1 	15,0 	1KO032
+Journalistik, medier och kommunikation B 	30,0 	1KO031
+Journalistisk analys 	30,0 	1JO010
+Judendom i förändring: mötet med moderniteten 	15,0 	1RE231
+Juridik för byggnadsingenjörer 	7,5 	2JU143
+Juridik för psykologprogrammet 	6,0 	2JU180
+Juridik för psykologprogrammet med inriktning mot idrott 	6,0 	2JU181
+Juridik inom fastighetsbildning och markexploatering 	15,0 	2JU149
+Juridik T6: Förvaltningsrätt och internationell rätt 	30,0 	2JU053
+Juridisk översiktskurs 	15,0 	2JU033
+Juridisk översiktskurs med inriktning mot handel och logistik 	15,0 	2RV002
+Juridisk översiktskurs med inriktning mot offentlig förvaltning 	15,0 	2JU230
+Juridisk översiktskurs med inriktning mot Service Management 	15,0 	2JU043
+Kandidatkurs i pedagogik 	30,0 	2PE113
+Kandidatkurs i pedagogik 	30,0 	2PE156
+Kandidatuppsats i religionsvetenskap 	15,0 	1RE210
+Kandidatuppsats i teologi 	15,0 	1RE175
+Kandidatuppsats i teologi 	15,0 	1RE225
+Kandidatuppsats i teologi 	15,0 	1RE236
+Kariologi 2 	6,0 	3CA008
+Karriärteori och vägledning 	12,5 	6SY030
+Karriärteori och vägledning 	7,5 	6SY048
+Karriärutveckling i socialt och kulturellt perspektiv 	15,0 	6SY028
+Karriärvägledning och andra insatser för människor i behov av särskilt stöd 	10,0 	6SY029
+Kemi baskurs I 	7,5 	5KX000
+Kemi Baskurs II 	7,5 	5KX001
+Kemi för miljö- och hälsoskyddsområdet 	15,0 	5KE004
+Kemins grunder 	15,0 	5KE165
+Kemisk och molekylär termodynamik 	7,5 	5KE196
+Klassisk hebreiska: grundkurs 	15,0 	1RE206
+Klassisk mekanik 	7,5 	5FY040
+Klassisk mekanik A 	9,0 	5FY041
+Klinisk bedömning 	7,5 	3OM288
+Klinisk fysiologi I 	15,0 	3BL212
+Klinisk fysiologi II 	7,5 	3BL222
+Klinisk förberedelsekurs 	30,0 	3ME110
+Klinisk handledning i odontologisk verksamhet 	7,5 	3OD030
+Klinisk kurs 1 	30,0 	3ME119
+Klinisk kurs 2 	30,0 	3KI004
+Klinisk kurs 2 	30,0 	3KI006
+Klinisk kurs 3 	30,0 	3IS017
+Klinisk kurs 3 	30,0 	31SO22
+Klinisk kurs 3 	30,0 	3IS022
+Klinisk kurs 4 	30,0 	3ME120
+Klinisk kurs 5 	30,0 	3ME086
+Klinisk kurs 5 	30,0 	3ME121
+Klinisk laboratoriemetodik, modul I 	7,5 	3BL214
+Klinisk oral fysiologi 	3,0 	3OT048
+Klinisk Oral Fysiologi 1 	6,0 	3OT147
+Klinisk oral fysiologi 2 	5,0 	3OT148
+Klinisk propedeutik inklusive kliniska undersökningsmetoder och medicinsk psykologi 	30,0 	3ME125
+Klinisk propedeutik inklusive kliniska undersökningsmetoder och medicinsk psykologi 	30,0 	3ME118
+Klinisk tillämpning av arbetsterapeutiska teorier och modeller 	15,0 	3AT069
+Kliniska bedömningar inom distriktssköterskans verksamhetsområde 	7,5 	3OM415
+Kläddesign 	15,0 	6TX037
+Kognitionspsykologi 1 	7,5 	2PS118
+Kognitiv Design 	7,5 	5ID225
+Kognitiv Neuropsykologi 	7,5 	2KO022
+Kognitiv neuropsykologi 1 för psykologprogrammet med inriktning mot idrott 	4,0 	2PS194
+Kognitiv neuropsykologi 2 för psykologprogrammet 	2,0 	2PS195
+Kognitiv neuropsykologi 2 för psykologprogrammet med inriktning mot idrott 	2,0 	2PS196
+Kognitiv neuropsykologi för psykologprogrammet 	6,0 	2PS241
+Kognitiv Neurovetenskap I 	7,5 	3KO000
+Kognitiv Neurovetenskap II 	7,5 	3KO001
+Kognitiv psykologi för psykologprogrammet 	7,5 	2PS142
+Kognitiv psykologi för psykologprogrammet med inriktning mot idrott 	7,5 	2PS138
+Kommersiell avtals- och marknadsrätt 	15,0 	2JU119
+Kommersiell EU-rätt 	15,0 	2JU071
+Kommersiell EU-rätt (juristprogrammet) 	15,0 	2JU066
+Kommunikation och språkutveckling för fritidshem 	7,5 	6LÄ058
+Kommunikation och undervisning 	7,5 	6SY032
+Kommunikationens grunder 	7,5 	5EL242
+Kommunikationsfördjupning 	30,0 	1KO064
+Kompetens, lärande och IKT i arbetslivet 	7,5 	2PE133
+Konflikt, stress och mobbning ur ett individuellt och organisatoriskt perspektiv 	7,5 	2PS273
+Konflikthantering i skolan 	7,5 	2SP002
+Konst i digitala miljöer 	7,5 	1KB005
+Konst och visuell kultur 1870-1950 	7,5 	1KB014
+Konst och visuell kultur från efterkrigstid till nutid 	15,0 	1KB004
+Konst- och bildvetenskap A 	30,0 	1KB000
+Konstpedagogik i samtida konstformer 	15,0 	1ES012
+Konstruktionsmaterial 	7,5 	5MT034
+Konsultativ metodik och handledning för psykologprogrammet 	4,0 	2PS230
+Konsultativ metodik och handledning för psykologprogrammet med inriktning mot idrott 	4,0 	2PS235
+Kontinuerlig optimering 	7,5 	5MA171
+Kost vid träning 	15,0 	2KN035
+Kostvetenskap C 	15,0 	2KN065
+Kostvetenskap A 	30,0 	2KN001
+Kostvetenskap A 	30,0 	2KN063
+Kreativ medieproduktion 1 	30,0 	2IN101
+Kreativ medieproduktion 2 	30,0 	2IN107
+Kreativa reflektioner kring produktdesign 	7,5 	5ID217
+Kreativt akademiskt skrivande 	7,5 	1LV070
+Kreativt skrivande A: Att skriva i olika genrer 	15,0 	1KS006
+Kreativt skrivande A: Konsten att berätta 	15,0 	1KS004
+Kreativt skrivande B: Litterärt projekt och temaarbete 	15,0 	1KS005
+Kreativt skrivande B: Litterärt projekt och uppsatsarbete 	15,0 	1KS007
+Kreativt skrivande C: Skrivprocess och uppsatsarbete 	30,0 	1KS000
+Kredit- och exekutionsrätt (Juristprogrammet) 	15,0 	2JU025
+Kriminologi A 	30,0 	2SO203
+Kriminologi A:1 	15,0 	2SO201
+Kriminologi B 	30,0 	2SO071
+Kriminologi I 	15,0 	2SO023
+Kriminologi och viktimologi för jurister 	15,0 	2JU038
+Kriminologi och viktimologi för jurister (Juristprogrammet) 	15,0 	2JU037
+Kriser och krishantering som empiriskt fenomen 	7,5 	2FO028
+Krishantering och offentlig förvaltning 	7,5 	2FO030
+Krishanteringssystem i jämförande perspektiv 	15,0 	2FO001
+Kriskommunikation 	7,5 	1KO038
+Kroki 1 	7,5 	5ID221
+Kron- och broprotetik inklusive CAD/CAM- teknik samt implantatstödd protetik 	19,0 	3OT165
+Kroppen och omvårdnad 	13,5 	3OM368
+Kultur, entreprenörskap och projekt 	30,0 	1KA011
+Kulturanalys B 	30,0 	1KA062
+Kulturanalys C 	30,0 	1KA030
+Kulturanalys III 	30,0 	1KA025
+Kulturarv och hållbarhet 	7,5 	1MU011
+Kulturentreprenörskap i praktiken 	30,0 	1KA023
+Kulturentreprenörskap i publika sammanhang 	30,0 	1KA009
+Kulturentreprenörskap och strategisk planering 	30,0 	1KA022
+Kulturgeografiska metoder 	15,0 	2KG012
+Kulturskolans didaktik - estetik, bildning och digitala verktyg 	15,0 	6KS002
+Kunskap och kommunikation - att utveckla läromiljöer för elever med intellektuell funktionsnedsättning 	15,0 	6SP063
+Kunskap undervisning och lärande 2 	15,0 	6PE256
+Kunskap, undervisning och lärande 2 (UVK) 	15,0 	6PE317
+Kunskap, vetenskap och forskningsmetodik (UK) 	7,5 	6LU006
+Kunskapsbaserad praktik i socialt arbete 	6,0 	2SA128
+Kunskapsbaserad praktik i socialt arbete 	7,5 	2SA113
+Kvalitativ forskning i informatik 	7,5 	2IN191
+Kvalitativ forskning i informatik 	7,5 	2IN409
+Kvalitativ metod för samhällsvetenskaperna 	7,5 	2SO145
+Kvalitativ metod i socialt arbete 	7,5 	2SA129
+Kvalitativ metod i socialt arbete 	7,5 	2SA141
+Kvalitativa ansatser i vetenskaplig metod för psykologprogrammet med inriktning mot idrott 	4,0 	2PS162
+Kvalitetssäkring och klinisk dokumentation 	7,0 	3BL207
+Kvalitetssäkring och klinisk dokumentation 	7,0 	3BL407
+Kvalitetsteknik och försöksplanering 	7,5 	5MS001
+Kvantfältteori 	7,0 	5FY179
+Kvantitativ metod för samhällsvetenskaperna 	7,5 	2ST031
+Kvantitativ metod II 	7,5 	3OM148
+Kvantitativa ansatser i vetenskaplig metod för psykologprogrammet 	6,0 	2PS221
+Kvantitativa ansatser i vetenskaplig metod för psykologprogrammet med inriktning mot idrott 	6,0 	2PS225
+Kvantmekanik 1 	6,0 	5FY156
+Kvantmekanik 2 	7,5 	5FY174
+Kvantmekanikens grunder 	7,5 	5FY157
+Kvinno- och familjehälsa I 	7,5 	3OM424
+Kvinno- och familjehälsa II 	15,0 	3OM427
+Källkritik på nätet i förskola och skola 	7,5 	2IT036
+Laboratoriemedicin I 	7,5 	3BL220
+Laboratoriemedicin II 	7,5 	3BL223
+Laserfysik 	7,5 	5FY175
+Leadership, Negotiation, and Decision-Making 	7,5 	2FE207
+Leda och utveckla omvårdnadsarbete 	7,5 	3OM204
+Ledarskap 	7,5 	2FE204
+Ledarskap i offentlig förvaltning 	15,0 	2SV001
+Ledarskap och ledarskapsutveckling A 	7,5 	2FE125
+Ledarskap och organisation I 	15,0 	2LO003
+Ledarskap och organisation i socialt arbete 	7,5 	2SA097
+Ledarskap och organisation med inriktning mot utbildningsledarskap: Teoretiska och metodologiska perspektiv 	15,0 	6ST049
+Ledarskap och professionell utveckling 	7,5 	3OM401
+Ledarskap, organisations- och professionsutveckling 	7,5 	3FT603
+Likabehandling och normkritik i civil och offentlig verksamhet 	7,5 	1ET052
+Likabehandling och normkritik i lärandemiljön 	7,5 	1ET053
+Likabehandling och normkritik i lärandemiljön 	7,5 	6ET001
+Lingvistik A, Språket, individen och samhället 	7,5 	1LI058
+Lingvistik A, Världens språk 	7,5 	1LI060
+Lingvistik för logopedi 7,5 hp 	7,5 	1LI034
+Linjär algebra 	7,5 	5MA160
+Linjär algebra 	7,5 	6MA036
+Linjärprogrammering 	7,5 	5MA158
+Linux som utvecklingsmiljö 1 	7,5 	5EL273
+Litteratur i praktiken I 	30,0 	1LV063
+Litteratur i praktiken II 	30,0 	1LV064
+Litteratur, historia och teologi i den hebreiska bibeln: icke-språklig kandidatkurs i exegetik 	15,0 	1RE207
+Litteraturvetenskap A 	30,0 	1LV001
+Litteraturvetenskap och kreativt skrivande A 	30,0 	1LV061
+Litteraturvetenskap och kreativt skrivande B 	30,0 	1LV062
+Litteraturvetenskap och kreativt skrivande C 	30,0 	1LV065
+Litteraturvetenskapliga studier på avancerad nivå 	30,0 	1LV071
+Logik och formella metoder 	7,5 	1FL069
+Logik och formella metoder 	7,5 	1FL109
+Logistik och Supply Chain Management 	7,5 	2FE189
+Logopedi i habiliterande verksamhet 	9,0 	3LO072
+Läkemedelsanalytisk kemi 	7,5 	5KE121
+Lärande och undervisning (UK) 	7,5 	6PE187
+Lärar-, handlednings- och konsultationsmetodik för psykoterapeutprogrammet inriktning specialistpsykolog 	7,5 	2PS217
+Läraryrkets dimensioner - bild 	22,5 	6ES110
+Läraryrkets dimensioner - ingångsämne religion (VFU) 	22,5 	6RV025
+Läraryrkets dimensioner för fritidshem 1 (VFU) 	11,0 	6PE229
+Läraryrkets dimensioner för fritidshem 2 (VFU) 	2,5 	6PE249
+Läraryrkets dimensioner för fritidshem 2 (VFU) 	2,5 	6PE325
+Läraryrkets dimensioner för fritidshem 3 (VFU) 	7,5 	6PE259
+Läraryrkets dimensioner för förskolan 1 (VFU) 	11,0 	6PE338
+Läraryrkets dimensioner för förskolan 2 	7,5 	6PE287
+Läs- och skrivinlärning 	7,5 	6LÄ065
+Läs- och skrivsvårigheter 	6,0 	3LO070
+Läs- och skrivutveckling med berättandet i fokus. För lärare i F-3 och 4-6 	7,5 	6LÄ066
+Machine Learning with R, part 2 	3,0 	2ST063
+Magisterkurs i filosofi II 	15,0 	1FL117
+Magisterkurs i historia 	30,0 	1HI055
+Magisterkurs i pedagogik 	30,0 	2PE080
+Magisterkurs i pedagogik 	30,0 	2PE160
+Magisteruppsats i historia 	15,0 	1HI057
+Magisteruppsats i Pedagogisk yrkesverksamhet 	15,0 	6PE241
+Magisteruppsats i socialt arbete 	15,0 	2SA124
+Magisteruppsats i teologi 	15,0 	1RE226
+Magnetresonanstomografi och ultraljud 	7,5 	3RA043
+Makroekonomi och arbetsmarknad A23 	7,5 	6NE001
+Makroekonomi och stabiliseringspolitik C3 	7,5 	2NE010
+Makroekonomisk analys D27 	7,5 	2NE072
+Managerial Perspectives and Supply Chain Management D 	30,0 	2FE201
+Managerial Perspectives on Strategy and People D 	15,0 	2FE040
+Managerial Perspectives on Strategy, People, Projects and Processes D 	30,0 	2FE047
+Mark och vatten - teori och fältmetoder 	15,0 	5GV082
+Marknadsföring 	7,5 	2FE158
+Marknadsföring IVP 	7,5 	2FE225
+Maskinelement 	7,5 	5MT015
+Maskininlärning 	7,5 	5DV238
+Masterkurs i historia 	30,0 	1HI058
+Masteruppsats i filosofi 	30,0 	1FL113
+Mat och miljö 	7,5 	2KN037
+Mat och måltider för barn och ungdomar 	7,5 	6KN024
+Matematik 1 för förskoleklass och grundskolans årskurs 1-3 	7,5 	6MN057
+Matematik 1 för grundskolans årskurs 4-6 	7,5 	6MA038
+Matematik 1 för lärande och undervisning för förskoleklass och grundskolans årskurs 1-6 	15,0 	6MN049
+Matematik 2 för förskoleklass och grundskolans årskurs 1-3 	7,5 	6MA053
+Matematik 2 för lärande och undervisning för grundskolans årskurs 4-6 	15,0 	6MN053
+Matematik 2 för årskurs F-3 	7,5 	6MA037
+Matematik 3 för förskoleklass och grundskolans årskurs 1-3 	7,5 	6MN040
+Matematik 3 för förskoleklass och grundskolans årskurs 1-3 	7,5 	6MN058
+Matematik 3 för grundskolans årskurs 4-6 	7,5 	6MN061
+Matematik 4 för förskoleklass och grundskolans årskurs 1-3 	7,5 	6MN041
+Matematik 4 för grundskolans årskurs 4-6 	7,5 	6MN062
+Matematik baskurs III 	7,5 	5MX005
+Matematik basår I 	7,5 	5MX003
+Matematik basår II 	7,5 	5MX004
+Matematik för ekonomer I D7 	7,5 	2NE007
+Matematik för förskolan 	7,5 	6MN045
+Matematik i specialpedagogiskt perspektiv 	7,5 	6PE280
+Matematik, naturvetenskap och utomhuspedagogik för fritidshem 	7,5 	6NO036
+Matematikdidaktik 2 för grundskolans årskurs 7-9 och gymnasiet, 	7,5 	6MN051
+Matematikens historia 	7,5 	6MA051
+Matematikens historia 	7,5 	6MA056
+Matematisk introduktion till maskininlärning 	7,5 	5MA206
+Matematisk modellering 	7,5 	5MA189
+Matematisk modellering av ekonomiska system 	7,5 	5MA210
+Matematiska metoder 	7,5 	6MA022
+Matematiska metoder i fysik 	7,5 	6FY011
+Matematiska verktyg 	7,5 	5MA026
+Materialhållfasthet, avanc 	7,5 	5MT049
+Materiell kultur i museer 	7,5 	1MU042
+MC-metoder med finansiella tillämpningar 	7,5 	5MA178
+Medicinsk biokemi med laboratoriemetodik 	7,5 	3BL203
+Medicinsk rätt (Juristprogrammet) 	15,0 	2JU208
+Medie- och kommunikationsanalys 	30,0 	1KO065
+Medie- och kommunikationsvetenskap C 	30,0 	1KO013
+Medier, kommunikation och hållbar utveckling 	7,5 	1KO077
+Mekanik och energifysik 	7,5 	5FY121
+Metod 	7,5 	2KC029
+Metoder och praktiker för förståelse av komplexa IT-miljöer 	30,0 	2PE152
+Metoder och verktyg för datavetare 	7,5 	5DV107
+Metoder och verktyg för datavetare 	7,5 	5DV227
+Metoder och verktyg för nationalekonomer 	7,5 	2NE079
+Metoder, handläggning, myndighetsutövning och dokumentation i socialt arbete 	15,0 	2SA180
+Metodik i miljö- och hälsoskyddsarbete 	15,0 	5MH153
+Meänkieli A, Grammatik, vokabulär och muntlig kommunikation 	15,0 	1FI065
+Meänkieli, Kvalifikationskurs (steg 3) 	7,5 	1FI036
+Meänkieli, Nybörjarkurs (steg 1-2) 	15,0 	1FI060
+Migration, integration och etniska relationer i socialt arbete 	15,0 	2SA145
+Migration, integration och etniska relationer i socialt arbete 	7,5 	2SA191
+Migrationsrätt (Juristprogrammet) 	15,0 	2JU129
+Mikrobiologi 	5,0 	3BL206
+Mikrobiologi 	5,0 	3BL306
+Mikrobiologi, immunologi och virologi 	10,0 	3MI000
+Mikrobiologi, immunologi och virologi 	10,0 	3MI100
+Mikrobiologi, immunologi och virologi 	10,0 	3OT100
+Mikrodatorteknik 1 	7,5 	5EL239
+Mikrodatorteknik 2 	7,5 	5EL243
+Mikroekonomisk analys och tillämpningar 	15,0 	2NE089
+Miljöarkeologi - Hållbarhet och kulturmiljövård 	15,0 	1AR066
+Miljöekonomisk profilkurs 	30,0 	2NE073
+Miljöhumaniora - Humanistiska perspektiv på människans plats(er) i miljön 	7,5 	1IH080
+Miljöledning - teorikurs 	7,5 	5MH151
+Miljötänkandets historia 	7,5 	1IH077
+Mobbning i lärmiljöer 	7,5 	6PE276
+Mobbning och kränkande handlingar i teori och praktik 	7,5 	6PE246
+Mobil robotik 	7,5 	5DV228
+Modellering och simulering 	7,5 	5FY176
+Modern fysik 	4,5 	5FY205
+Molekylär ekologi och evolution 	15,0 	5BI273
+Molekylär spektroskopi och diffraktion 	7,5 	5KE195
+Molekylärbiologisk metodik 	7,5 	3BL215
+Motorisk kontroll och skador i centrala nervsystemet. Teori och praktisk tillämpning 	7,5 	3FT301
+Motstånd och ickevåld 	7,5 	2FO035
+Multivariat dataanalys 	7,5 	5MS056
+Multivariat dataanalys 	7,5 	5MS081
+Museologi A: Museer, samhälle och kulturarv 	30,0 	1MU061
+Museologi B: Pedagogik, utställning och representation 	30,0 	1MU062
+Museologi C: Kulturteoretisk fördjupning och uppsats 	30,0 	1MU065
+Musik 1 	30,0 	6MU063
+Musik fördjupning 2 	30,0 	6MU072
+Musikproduktion 1 	30,0 	1MU056
+Musikskapande till Film, Dataspel och Teater 	7,5 	1MU020
+Musikteori i kulturskola 	7,5 	6KS004
+Mystik och paranormala upplevelser: magisterkurs 	15,0 	1RE229
+Måltider ur ett historiskt perspektiv II - Mat, dryck, värdskap 	7,5 	2MR065
+Måltids- och restaurangvetenskap 2 	15,0 	2MR052
+Måltids- och restaurangvetenskap 3 	15,0 	2MR053
+Måltidsorganisation och styrning 	7,5 	2KN079
+Måltidsservice och dietetik 	30,0 	2KN066
+Människa-AI-interaktion 	7,5 	5DV245
+Människa-AI-interaktion 	7,5 	2IN952
+Människa-datorinteraktion 	7,5 	5DV229
+Människa-datorinteraktion för kognitionsvetare 	7,5 	5DV060
+Människa-datorinteraktion med inriktning mot kognition och design 	7,5 	5DV045
+Människa-datorinteraktion och användarupplevelse 	15,0 	2IN400
+Människans anatomi och fysiologi 	7,5 	3AT221
+Människocentrerad artificiell intelligens 	7,5 	5DV244
+Människokroppens funktion vid hälsa och sjukdom samt dess anpassning till fysisk aktivitet 	15,0 	3SG039
+Mätsystem och mätmetoder 	7,5 	5EL200
+Mönsterkonstruktion och modellskapande 	7,5 	1TX006
+Nationalekonomi A10 	15,0 	2NE037
+Nationalekonomi A100 	30,0 	2NE060
+Nationalekonomi A101 	30,0 	2NE061
+Nationalekonomi B100 	30,0 	2NE062
+Nationalekonomi B100:2 	15,0 	2NE068
+Nationalekonomi C100:1 	15,0 	2NE047
+Naturorienterande ämnen och teknik för lärare åk 4-6 	30,0 	6NO047
+Naturorientering och teknik för förskoleklass och grundskolans årskurs 1-3 	15,0 	6NO039
+Naturvetenskap och teknik i förskolan 	15,0 	6NO043
+Naturvård 	15,0 	5BI268
+Neurobiologi 	7,5 	5MO098
+Neurolingvistik 	4,5 	1LI042
+Neuropsykiatriska svårigheter - förhållningssätt, bemötande och strategier i pedagogisk verksamhet 	15,0 	6SP056
+Neuropsykologi 	3,0 	2PS076
+New Product Innovation D 	7,5 	2FE205
+New Venture Creation 	7,5 	2FE419
+Nordens historia 	7,5 	1HI081
+Normkritisk genuspedagogik 	15,0 	6PE244
+Normkritisk pedagogik i arbetslivet 	7,5 	2PE135
+Normkritiska perspektiv på vardag och arbetsliv 	7,5 	2PE154
+NoSQL-databaser 	7,5 	2IN124
+Numeriska metoder för partiella differentialekvationer 	7,5 	5MA184
+Nytestamentlig grekiska: grundkurs 	15,0 	1RE054
+Objektorienterad Programmering 	7,5 	2IN309
+Objektorienterad Programmering (Java) 	7,5 	5DV230
+Objektorienterad programmeringsmetodik 	7,5 	5DV133
+Odontologisk materialvetenskap 	25,0 	3OT162
+Offentlig ekonomi B100:5 	7,5 	2NE080
+Offentlig förvaltning och planering 	7,5 	2SV026
+Omvårdnad 	7,5 	3OM397
+Omvårdnad i olika livsfaser del I 	30,0 	3OM335
+Omvårdnad i olika livsfaser del I 	30,0 	3OM372
+Omvårdnad i olika livsfaser del II 	22,5 	3OM336
+Omvårdnad i olika livsfaser del II 	22,5 	3OM373
+Omvårdnad inom ortopedisk vård 	7,5 	3OM327
+Omvårdnad med farmakologi och läkemedelshantering 	6,5 	3BL210
+Omvårdnad med fokus på det goda åldrandet 	7,5 	3OM383
+Omvårdnad med inriktning mot ambulanssjukvård 	15,0 	3OM353
+Omvårdnad med inriktning mot anestesisjukvård, verksamhetsförlagd utbildning 	15,0 	3OM359
+Omvårdnad med inriktning mot intensivvård och medicinsk vetenskap 	15,0 	3OM364
+Omvårdnad med inriktning mot intensivvård, verksamhetsförlagd utbildning 	15,0 	3OM365
+Omvårdnad med inriktning mot neonatal intensivvård 	7,5 	3OM433
+Omvårdnad med inriktning mot operationssjukvård och operationsteknik 	15,0 	3OM361
+Omvårdnad med inriktning mot operationssjukvård, verksamhetsförlagd utbildning 	15,0 	3OM362
+Omvårdnad och ambulanssjukvård vid skadehändelser och katastrofer 	6,0 	3OM354
+Omvårdnad vid diabetes I 	7,5 	3OM434
+Omvårdnad vid diabetes II 	7,5 	3OM287
+Omvårdnadens metoder och procedurer 	15,0 	3OM371
+Omvårdnadens organisation och ledning del I 	7,5 	3OM375
+Omvårdnadens organisation och ledning del I 	7,5 	3OM338
+Omvårdnadens organisation och ledning del II 	7,5 	3OM341
+Omvårdnadens organisation och ledning del II 	7,5 	3OM378
+Omvårdnadens teori och vetenskapliga grund 	15,0 	3OM370
+Omvårdnadsvetenskap - teori och tillämpning 	22,0 	3OM339
+Omvårdnadsvetenskap - teori och tillämpning 	22,5 	3OM376
+Onkologi och omvårdnad vid cancersjukdom 	7,5 	3OM379
+Operations Management D 	7,5 	2FE052
+Operativsystem 	7,5 	5DV171
+Oral diagnostisk radiologi 	2,0 	3OD045
+Oral diagnostisk radiologi 1 	9,0 	3OD044
+Oral hälsa i olika livsfaser 	22,5 	3OT176
+Oral hälsoinriktad prevention och behandling 	30,0 	3OT170
+Oral hälsopromotion och professionell utveckling 	22,5 	3OT172
+Oral kirurgi 1 	3,0 	3OT145
+Oral kirurgi 2 	7,0 	3OT146
+Oral och kraniofacial biologi 	13,0 	3BM006
+Orala infektionssjukdomar 	5,0 	3OT113
+Organisation och ledarskap 	15,0 	2SO200
+Organisation och ledarskap I 	15,0 	2SO032
+Organisation och ledarskap i arbetslivet 	7,5 	2SO120
+Organisation, ledning och utveckling av omvårdnadsarbete 	7,5 	3OM388
+Organisationsförändring 	7,5 	2PE075
+Organisationsförändring 	7,5 	2SO084
+Organisatoriskt ledarskapande 	7,5 	2PE102
+Organisering och ledning i socialt arbete 	7,5 	2SA179
+Organisering och ledning i socialt arbete 	7,5 	2S179
+Organisk kemi med läkemedelsinriktning 	15,0 	5KE116
+Organizational Design C 	7,5 	2FE113
+Organsystemens struktur och funktion 	46,5 	3BM026
+Ortodonti 	9,0 	3OT071
+Palliativ omvårdnad 	7,5 	3OM374
+Palliativ omvårdnad och vård i livets slutskede 	7,5 	3OM380
+Parallell programmering för multicore-baserade system 	7,5 	5DV152
+Parodontologi 1 	7,0 	3OT149
+Parodontologi 2 	5,0 	3OT150
+Pedagogik 	15,0 	2PE129
+Pedagogik A 	30,0 	2PE147
+Pedagogik B 	30,0 	2PE109
+Pedagogik B 	30,0 	2PE148
+Pedagogik B med inriktning mot självständigt arbete 	30,0 	2PE149
+Pedagogik med inriktning mot beteendevetenskap och IT-miljöer 	30,0 	2PE078
+Pedagogik och IKT på arbetsplatsen I 	7,5 	2PE140
+Pedagogik och IKT på arbetsplatsen II 	7,5 	2PE141
+Pedagogisk dokumentation med IT-stöd: text, bild och ljud 	7,5 	2IT021
+Pedagogiskt ledarskap, sociala relationer och konflikthantering 	8,5 	6PE301
+Pedagogiskt ledarskap, sociala relationer och specialpedagogik (UVK) 	10,0 	6PE284
+Pedagogiskt ledarskap, sociala relationer och specialpedagogik (UVK) 	10,0 	6PE318
+Perception 	7,5 	2PS021
+Personlig och professionell utveckling i socialt arbete 	15,0 	2SA094
+Personlighetspsykologi 	7,5 	2PS120
+Personlighetspsykologi för psykologprogrammet 	7,5 	2PS145
+Personlighetspsykologi för psykologprogrammet med inriktning mot idrott 	7,5 	2PS141
+Perspektiv på digitalisering 	15,0 	2IN550
+Planeringsteori och planerarrollen 	15,0 	2KG029
+Polisarbete i socialt utsatta områden 	7,5 	2UP003
+Polisarbete i trafikmiljö I 	3,3 	2PO011
+Polisarbete i trafikmiljö II 	5,0 	2PO014
+Polisen i samhället 	7,5 	2PO000
+Polisen i samhället 	8,5 	2PO018
+Polisens arbete med människor i utsatthet 	15,0 	2PO012
+Polisens brottsförebyggande arbete 	7,5 	2PO009
+Polisens organisation och styrning 	7,5 	2UP023
+Polisiär konflikthantering 1 	4,0 	2PO002
+Polisiär professionsutveckling 	4,0 	2PO017
+Polisiära färdigheter och metoder I 	4,0 	2PO006
+Polisiära färdigheter och metoder II 	10,0 	2PO008
+Polisiära färdigheter och metoder III 	4,0 	2PO010
+Polisiära färdigheter och metoder IV 	7,5 	2PO015
+Political Violence 	7,5 	1HI067
+Politik och samhälle 	15,0 	6ST000
+PR, medier och samhälle 	15,0 	1KO037
+Praktikkurs i Informatik 	15,0 	2IN307
+Praktiska studier 	15,0 	5ID215
+Praktiskt estetiskt ämne - Idrott och hälsa 1 	15,0 	6ID016
+Praktiskt estetiskt ämne - Idrott och hälsa 2 	15,0 	6ID015
+Pre- och intraoperativ omvårdnad med inriktning mot anestesisjukvård 	6,0 	3OM457
+Pre- och intraoperativ omvårdnad med inriktning mot operationssjukvård 	6,0 	3OM557
+Prestandaprogrammering 	7,5 	5DV237
+Prestationspsykologi för Tränarprogrammet 	7,5 	2PS328
+Processer i praktiken inom det specialpedagogiska fältet 	7,5 	6SP039
+Produktionsteknik 	7,5 	5MT022
+Produktionsteknologi 	7,5 	5MT046
+Profession och vetenskap 	7,5 	6SH014
+Profession och vetenskap för fritidshem (UK) 	7,5 	6PE262
+Profession och vetenskap för förskoleklass och grundskolans årskurs 1-3 (UK) 	7,5 	6PE266
+Profession och vetenskap för grundskolans årskurs 4-6 (UK) 	7,5 	6PE265
+Profession och vetenskap för yrkeslärare (UVK) 	5,0 	6PE282
+Profession och vetenskap för ämneslärare 	7,5 	6SH016
+Professionell utveckling 	15,0 	3ME062
+Professionell utveckling 2 för psykologprogrammet 	6,0 	2PS158
+Professionell utveckling 2 för psykologprogrammet med inriktning mot idrott 	6,0 	2PS163
+Professionell utveckling 3 för psykologprogrammet 	6,0 	2PS169
+Professionell utveckling 3 för Psykologprogrammet med inriktning mot idrott 	6,0 	2PS166
+Professionell utveckling 4 för psykologprogrammet 	6,0 	2PS189
+Professionell utveckling 4 för psykologprogrammet med inriktning mot idrott 	6,0 	2PS190
+Professionell utveckling 5 för psykologprogrammet 	6,0 	2PS223
+Professionell utveckling 5 för psykologprogrammet med inriktning mot idrott 	6,0 	2PS227
+Professionell utveckling 6 för psykologprogrammet 	6,0 	2PS232
+Professionell utveckling 6 för psykologprogrammet med inriktning mot idrott 	6,0 	2PS237
+Professionell utveckling 7 för psykologprogrammet 	6,0 	2PS238
+Professionell utveckling 7 för psykologprogrammet med inriktning mot idrott 	6,0 	2PS239
+Professionella möten och samtal i socialt arbete 	7,5 	2SA181
+Professionellt förhållningssätt 	3,0 	3LO069
+Professionellt socialt arbete - samhälleligt förändringsarbete och samverkan 	15,0 	2SA196
+Profilkurs: Det föreställda Arktis 	7,5 	1PK003
+Programmering i förskola och grundskolans tidigare år 	7,5 	2IT033
+Programmering i Python 	7,5 	5DV106
+Programmering i Python 	7,5 	5DV177
+Programmeringsteknik med C och Matlab 	7,5 	5DV157
+Programmeringsteknik med Python och Matlab 	7,5 	5DV105
+Programmeringsteknik med Python och Matlab 	7,5 	5DV176
+Programspråk 	7,5 	5DV086
+Programvaruteknik 	15,0 	5DV214
+Project Management and Organizational Design D 	15,0 	2FE122
+Project Management D 	7,5 	2FE221
+Projektledning 	15,0 	2SO031
+Projektledning 1 	7,5 	5EL223
+Projektledning och arbete i IT-projekt 	15,0 	2IN126
+Projektledning och digital produktion 	30,0 	1KO002
+Projektledning och organisering 	7,5 	2FE175
+Propaganda, public relations och journalistik 	7,5 	1KO043
+Protetik 1 	7,5 	3PR012
+Protetik 2 	10,0 	3PR013
+Psykiatri 	3,0 	3PS013
+Psykiatrisk omvårdnad, verksamhetsförlagd utbildning 	15,0 	3OM409
+Psykologi som vetenskap 	15,0 	2PS007
+Psykologi/psykiatri 	3,0 	3OD010
+Psykosocial arbetsmiljö 	15,0 	2SO030
+Psykosomatik, stress, smärta och fysioterapi inkl. akupunktur 	10,5 	3FT601
+Psykoterapeutisk teori och metod 2 (familj-barn-ungdom) för psykoterapeutprogrammet 	15,0 	2PS260
+Psykoterapeutisk teori och metod 2 (KBT) för psykoterapeutprogrammet 	15,0 	2PS256
+Psykoterapeutisk teori och metod 3 (familj-barn-ungdom) för psykoterapeutprogrammet 	15,0 	2PS266
+Psykoterapeutisk teori och metod 3 (KBT) för psykoterapeutprogrammet 	15,0 	2PS262
+Psykoterapeutisk teori och metod 3 (KBT) för psykoterapeutprogrammet inriktning specialistpsykolog 	15,0 	2PS263
+Påbyggnadskurs i filosofi 	30,0 	1FL081
+Qualitative Research Methods for the Social Sciences 	7,5 	2SO095
+Quantitative Research Methods for the Social Sciences 	7,5 	2ST053
+Radiografi II 	15,0 	3OM394
+Radiografi III 	22,5 	3OM395
+Radiografi IV 	22,5 	3OM398
+Radiografi V 	7,5 	3OM399
+Radiografi V 	7,5 	3RA055
+Radiografi VI 	15,0 	3OM400
+Radiografi, examensarbete 	15,0 	3OM403
+Radiography I 	15,0 	3OM389
+Redovisning C 	15,0 	2FE062
+Redovisning C 	15,0 	2FE218
+Reell analys 	7,5 	5MA182
+Reglermetoder för robotapplikationer 	7,5 	5EL257
+Reglersystem 	7,5 	5EL197
+Relation och förändring i människovårdande arbete 	7,5 	2SA178
+Religion, fundamentalism och våld: grundkurs 	15,0 	1RE133
+Religionspedagogik: kandidatkurs 	15,0 	1RE196
+Religionspedagogik: kandidatkurs 	15,0 	1RE235
+Religionspsykologi: Kandidatkurs 	15,0 	1RE183
+Religionspsykologi: magisterkurs 	15,0 	1RE185
+Religionsvetenskap 1 	30,0 	6RV021
+Religionsvetenskap 2 	30,0 	6RV020
+Religionsvetenskap 3, med kandidatuppsats 	30,0 	6RV023
+Religionsvetenskap: grundkurs 	60,0 	1RE062
+Religionsvetenskap: grundkurs A1 	30,0 	1RE042
+Religionsvetenskap: grundkurs A2 	30,0 	1RE043
+Reproduktiv och perinatal hälsa 	7,5 	3OM422
+Resonerande och informationsbehandling 	7,5 	5DV175
+Resursfördelningsteori C4 	7,5 	2NE011
+Revenue Management 	7,5 	2MR042
+Risk, säkerhet och arbetsmiljö 	7,5 	5MH143
+Riskbaserad portfölj- och företagsstyrning 	15,0 	5MA179
+Ritualer, fester och evenemang 	7,5 	1ET042
+Ryska A, Grammatik 	7,5 	1RY022
+Ryska A, Kultur och realia 	7,5 	1RY027
+Ryska A, Text och skriftlig språkfärdighet 	7,5 	1RY026
+Ryska B, Grammatik, skriftlig kommunikation och realia 	15,0 	1RY029
+Ryska B, Text, muntlig kommunikation och litteratur 	15,0 	1RY030
+Ryska, Kurs för nybörjare (steg 1) 	15,0 	1RY031
+Ryska, Kvalifikationskurs (steg 2-3) 	15,0 	1RY021
+Ryska, Nybörjarkurs (steg 1) 	15,0 	1RY020
+Rätten i socialt arbete 	15,0 	2JU214
+Rätten till aktivitet - folkhälsa och arbete ur ett samhällsperspektiv 	12,0 	3AT421
+Rättens historia, teori och metod 	20,0 	2JU191
+Rättslingvistik: Språkliga aspekter på rättsprocessen 	7,5 	1LI081
+Rättsmedicin för jurister 	15,0 	3RM001
+Rättsstaten, konstitutionalism och grundläggande principer 	15,0 	2JU235
+Rättsvetenskap med inriktning mot fastighetsrätt 	15,0 	2JU146
+Rättsvetenskap/Miljörätt 	7,5 	5MH138
+Rättsvetenskap/Miljörätt 	7,5 	5MH201
+Röststörningar 	9,0 	3LO062
+Samhälle och organisation för psykologprogrammet 	6,0 	2PS148
+Samhällskunskap 1 	30,0 	6SH009
+Samhällskunskap 2 	30,0 	6SH010
+Samhällskunskap 3 	30,0 	6SH011
+Samhällsorientering för förskolan 	15,0 	6PE260
+Samhällsorientering, F-3 	15,0 	6PE146
+Samhällsorientering, F-3 	15,0 	6PE322
+Samhällsplanering 	15,0 	2KG011
+Samhällsplanering med hållbarhetsprofil 	7,5 	5MH137
+Samhällsplanering under osäkra villkor 	7,5 	2KG128
+Samhällsvetenskaplig introduktionskurs 	30,0 	2EH055
+Samhällsvetenskaplig metod och vetenskapsteoretisk orientering 	15,0 	2PE166
+Samisk kultur: andlighet och tro 	7,5 	1SA157
+Samiska A, Lulesamiska 	30,0 	1SA134
+Samiska A, Nordsamiska 	30,0 	1SA135
+Samtalsmetodik för psykologprogrammet 	4,0 	2PS154
+Samtalsmetodik för psykologprogrammet med inriktning mot idrott 	4,0 	2PS159
+Samverkan och polisarbete för tillitsskapande och förebyggande av brott 	7,5 	2UP021
+Sannolikhetsteori 	7,5 	5MS073
+Sensorer och elektronik 	7,5 	5EL267
+Service Marketing, Marketing Ethics and Sustainability C 	15,0 	2FE202
+Sex och samlevnad 	7,5 	6PE182
+Simulering och optimering av energisystem 	15,0 	5EN097
+Sjukdomslära och genetik 	9,0 	3BL209
+Sjukdomslära, symtom och diagnostik 	30,0 	3ME074
+Sjukdomslära, symtom och diagnostik, 	30,0 	3ME114
+Sjukgymnastik vid muskuloskelettala problem 	7,5 	3SG040
+Sjukgymnastik: Grundläggande funktionsanalys och vetenskaplig metod 	15,0 	3SG038
+Sjuksköterskans profession - introduktion 	6,0 	3OM367
+Sjuksköterskans profession - tillämpning 	22,5 	3OM340
+Sjuksköterskans profession - tillämpning 	22,5 	3OM377
+Sjukvårdens juridik och journalhantering 	15,0 	2JU084
+Skapande bild, distans 	30,0 	6ES107
+Skapande lek i förskolan 1 	7,5 	6ES119
+Skapande lek i förskolan 1 	7,5 	6ES129
+Skapande lek i förskolan 2 	15,0 	6ES118
+Skapande lek i förskolan 2 	15,0 	6ES130
+Skapande musik 	30,0 	1MU006
+Skapande Musik - Musikproduktion 	30,0 	1MU018
+Skatterätt, bolagsrätt och ekonomi 	15,0 	2JU054
+Skolbibliotek i teori och praktik 	7,5 	2BV031
+Slöjd 1, textil 	30,0 	6TX026
+Slöjd 1, Trä- och metall 	30,0 	6SL035
+Slöjd, textil 21, distans 	15,0 	6TX016
+Slöjd, textil 2b, distans 	15,0 	6TX020
+Slöjd, Trä- och metall 21, distans 	15,0 	6SL021
+Slöjd, Trä- och metall 2b, distans 	15,0 	6SL022
+Små barns samspel och utveckling 	7,5 	2LÄ001
+Små barns tal och språkutveckling 	7,5 	2LÄ002
+Smärtfysiologi och motorisk kontroll inom muskuloskeletal rehabilitering 	15,0 	3FT910
+Social stratifiering: teorier och begrepp i socialt arbete 	7,5 	2SA162
+Social- och gruppsykologi 	7,5 	2PS115
+Social- och gruppsykologi för Psykologprogrammet 	7,5 	2PS132
+Social- och gruppsykologi för psykologprogrammet med inriktning mot idrott 	7,5 	2PS133
+Sociala förklaringsmodeller för global hälsa och hälsofrämjande arbete 	5,0 	3FH049
+Socialpolitik, välfärd och sociala problem 	7,5 	2SA158
+Socialpsykologi A 	30,0 	2SO016
+Socialpsykologi B 	30,0 	2SO018
+Socialt arbete för delaktighet och medborgarskap - samhällsstöd vid psykisk och intellektuell funktionsnedsättning 	7,5 	2SA194
+Socialt arbete i ett internationellt perspektiv 	15,0 	2SA184
+Socialt arbete II 	30,0 	2SA010
+Socialt arbete inom somatisk och psykiatrisk vård 	15,0 	2SA072
+Socialt arbete inom somatisk och psykiatrisk vård 	15,0 	2SA147
+Socialt arbete med äldre 	7,5 	2SA192
+Socialt arbete och samhällets organisering 	7,5 	2FO032
+Socialt arbete som forskningsfält I 	7,5 	2SA159
+Socialt arbete som forskningsfält II 	7,5 	2SA175
+Socialt arbete: En introduktion 	7,5 	2SA157
+Socialt hållbart arbetsliv 	15,0 	2SO100
+Sociologi A 	30,0 	2SO015
+Sociologi B 	30,0 	2SO017
+Sociologi C med inr mot socialpsykologi 	30,0 	2SO020
+Sociologisk teori och praktik 	15,0 	2SO204
+Socionomers verksamhetsfält 	7,5 	2SA176
+Solceller 	7,5 	5FY185
+Solenergiteknik 	7,5 	5EN091
+Spanska A, Litteratur och kultur 	15,0 	1SP028
+Spanska A, Muntlig och skriftlig kommunikation 	15,0 	1SP029
+Spanska B 	30,0 	1SP030
+Spanska för ämneslärare, kurs 2 	30,0 	6SA014
+Spanska, Kvalifikationskurs (steg 3-4) 	15,0 	1SP031
+Spanska, nybörjarkurs 	15,0 	1SP033
+Spanska, Nybörjarkurs, steg 1-2 	15,0 	1SP018
+Specialpedagogik - för grundskolan (UK) 	5,0 	6PE222
+Specialpedagogik - åk 7-9 och gymnasieskolan (UK) 	7,5 	6PE223
+Specialpedagogik för förskolan (UK) 	6,0 	6PE221
+Specialpedagogik för yrkeslärare 	15,0 	6PE320
+Specialpedagogik med fokus på svenska och matematik för F-3 	15,0 	6LI005
+Specialpedagogik med fokus på svenska och matematik för F-3 	15,0 	6LI013
+Specialpedagogik och socioemotionella svårigheter 	15,0 	2SP009
+Specialpedagogiska kunskapsområden 	7,5 	6SP057
+Språk och kön 	7,5 	1NS025
+Språk och matematik i ett specialpedagogiskt perspektiv 	7,5 	6PE279
+Språk- och talutveckling 	6,0 	1LI022
+Språk-, skriv- och läsutveckling i ett specialpedagogiskt perspektiv, 	7,5 	6SD012
+Språket, individen och samhället 	7,5 	1LI044
+Språklig interaktion 	4,5 	1LI023
+Språkteknologi 	7,5 	5DV218
+Språkutveckling, litteracitet och barnlitteratur i förskolan och förskoleklassen 	15,0 	6LÄ063
+Stamning 	4,5 	3LO063
+Stationära stokastiska processer 	7,5 	5MS083
+Statistics in Medicine 	7,5 	2ST067
+Statistik A 	30,0 	2ST004
+Statistik A1 	15,0 	2ST005
+Statistik A2 	15,0 	2ST006
+Statistik B: Programmering och modellering 	15,0 	2ST058
+Statistik B: Teori 	15,0 	2ST052
+Statistik C1 	15,0 	2ST014
+Statistik C: Inferensteori 	5,0 	2ST059
+Statistik C: Metoder för data science 	10,0 	2ST060
+Statistik för datavetare 	7,5 	5MS070
+Statistik för farmaceuter 	3,0 	5MS075
+Statistik för internationella ekonomer 	15,0 	2ST027
+Statistik för lärare 	7,5 	6MS002
+Statistik för lärare 	7,5 	6MS004
+Statistik för tekniska fysiker 	6,0 	5MS068
+Statistik för teknologer 	7,5 	5MS042
+Statistik för teknologer 	7,5 	5MS069
+Statistik för teknologer 	7,5 	5MS079
+Statistik med inriktning mot logistik 	7,5 	2ST034
+Statistik och empirisk metod 	7,5 	2KO015
+Statistik och kvalitetsteknik 	7,5 	5MS024
+Statistik och metod 	4,5 	2PS075
+Statistisk fysik 	4,5 	5FY208
+Statistisk inlärning med högdimensionella data 	7,5 	5MS084
+Statistisk kommunikation 	7,5 	2ST051
+Statistisk problemlösning med Excel och VBA 	7,5 	5MS064
+Statistisk programmering 	7,5 	2ST035
+Statistiska metoder 	7,5 	5MS010
+Statsvetenskap A 	30,0 	2SV013
+Statsvetenskap B 	30,0 	2SV014
+Statsvetenskap C 	30,0 	2SV015
+Statsvetenskapliga analysinriktningar 	15,0 	2SV036
+Stokastiska processer och simulering 	7,5 	5MS049
+Straff- och processrätt 	30,0 	2JU055
+Straffrätt i kontext 	15,0 	2JU152
+Straffrätt i kontext (Juristprogrammet) 	15,0 	2JU153
+Strategic Business Development D 	30,0 	2FE178
+Strategier och verktyg för kvalitetsarbete 	7,5 	5TN028
+Strategisk HRM 	15,0 	2PE087
+Strategisk HRM 	15,0 	2PE169
+Strategisk kommunikation 	30,0 	1KO003
+Strategisk styrning, organisering och ledning inom idrottens område, 22,5 hp 	22,5 	2IP028
+Strategiskt utvecklings- och förändringsarbete inom idrottens område, 22,5 hp 	22,5 	2IP030
+Strukturbiologi 	7,5 	5MO114
+Strömningslära 	7,5 	5FY149
+Student Conference in Computing Science 	7,5 	5DV184
+Studie- och yrkesvägledning för lärare och socionomer 	12,5 	6SY039
+Studie- och yrkesvägledningens grunder 	15,0 	6SY003
+Styr- och reglerteknik 	7,5 	5EL099
+Supply Chain Management I för civilingenjörer 	7,5 	2FE190
+Supply Chain Management II 	7,5 	2FE198
+Svensk och engelsk medicinsk terminologi 	15,0 	3AN004
+Svenska för F-3, kurs 1 	15,0 	6SV021
+Svenska för F-3, kurs 2 	7,5 	6SV022
+Svenska för F-3, kurs 3 	7,5 	6SV023
+Svenska för internationella studenter, Nybörjarkurs I 	15,0 	1SV012
+Svenska för internationella studenter, Nybörjarkurs II 	15,0 	1SV013
+Svenska för internationella studenter, Nybörjarkurs III 	15,0 	1SV044
+Svenska för åk 4-6, kurs 1 	15,0 	6SV024
+Svenska för åk 4-6, kurs 2 	7,5 	6SV025
+Svenska för åk 4-6, kurs 3 	7,5 	6SV026
+Svenska för ämneslärare, kurs 2 	30,0 	6SV078
+Svenska för ämneslärare, kurs 3 	30,0 	6SV079
+Svenska kyrkans tro och liv: kandidatkurs 	15,0 	1RE188
+Svenska kyrkans tro och liv: kandidatkurs 	15,0 	1RE227
+Svenska som andraspråk C, Examensarbete för kandidatexamen 	15,0 	6SV067
+Svenska som andraspråk för ämneslärare, kurs 2 	30,0 	6SV088
+Svenska som andraspråk för ämneslärare, kurs 3 	30,0 	6SV070
+Svenska språket A: Retorik 	7,5 	1NS096
+Svenska språket A: Skrivande i utbildning och yrkesliv, 7 	7,5 	1NS066
+Svenska/Nordiska språk C: Examensarbete för kandidatexamen 	15,0 	1NS097
+Svenska/Nordiska språk: Kognitiv semantik: Språk, tanke och betydelse 	7,5 	1NS098
+Svetsteknologi 	7,5 	5MT017
+Systematisk teologi - Dogmatik: kandidatkurs 	15,0 	1RE197
+Systematisk teologi - Dogmatik: magisterkurs 	15,0 	1RE179
+Systematisk teologi - Moderna och postmoderna perspektiv: kandidatkurs 	15,0 	1RE189
+Systematisk teologi - Moderna och postmoderna perspektiv: magisterkurs 	15,0 	1RE176
+Systemtänkande 	15,0 	2IN551
+T 1:1 - Introduktion till juridiken och civilrätt 	15,0 	2JU164
+T 1:2 - Konstitutionell rätt och EU-rätt 	15,0 	2JU165
+T 2 - Civilrätt 	30,0 	2JU166
+T 3 - Civilrätt 	30,0 	2JU172
+T 4 - Förvaltningsrätt, skatterätt och miljörätt 	30,0 	2JU173
+T 6:1 - Internationell rätt 	10,0 	2JU190
+Tal- och språkstörningar hos barn 	12,0 	3LO066
+Talkommunikation I: talproduktion 	6,0 	1LI035
+Talkommunikation II: talets akustik och perception 	9,0 	1LI074
+Talkommunikation III 	7,5 	1LI077
+Tandanatomi 	2,0 	3OD019
+Tandanatomi 	5,0 	3OT058
+Tandanatomi 	2,0 	3OD032
+Teknik, etik och miljö 	7,5 	5GV056
+Teknisk beräkningsvetenskap I 	4,5 	5DV154
+Teologi: grundkurs 	60,0 	1RE039
+Teologi: grundkurs A1 	30,0 	1RE040
+Teologi: grundkurs A2 	30,0 	1RE041
+Teoretiska perspektiv inom Kognitionsvetenskap 	7,5 	5DV113
+Teoretiska perspektiv på människa-datorinteraktion 	15,0 	2IN405
+Teori, metod och fördjupningsarbete i statsvetenskap 	15,0 	2SV066
+Teorier om individer och grupper i socialt arbete 	7,5 	2SA161
+Teorier, modeller och metoder för vägledning och dess praktik 	20,0 	6SY037
+Teorier, modeller och metoder för vägledning och dess praktik 	20,0 	6SY046
+Teorier, modeller och metoder för vägledning och dess praktik 	20,0 	6SY053
+Termodynamik 	15,0 	5EN089
+Termodynamik B 	6,0 	5FY083
+Testmetodik I 	7,5 	3ID302
+Text i program- och utställningsverksamhet på det publika museet 	7,5 	1MU031
+Textila uttryck 	30,0 	6TX025
+Tidsserieanalys och spatial statistik 	7,5 	5MS072
+Tillverkningsteknik 	7,5 	5MT025
+Tillämpad algoritmisk problemlösning 	7,5 	5DV239
+Tillämpad hälsopsykologi för psykologprogrammet 	6,0 	2PS222
+Tillämpad hälsopsykologi för psykologprogrammet med inriktning mot idrott 	6,0 	2PS226
+Tillämpad IT i skolan 	7,5 	2IT013
+Tillämpad kognitiv psykologi 	7,5 	2KO017
+Tillämpad kulturvetenskap II 	30,0 	1KA032
+Tillämpad laboratoriemetodik I 	15,0 	3BL216
+Tillämpad mekanik 	7,5 	5EN029
+Tillämpad mätteknik 	7,5 	5EL233
+Tillämpat ledarskap inom idrott 	7,5 	2IP035
+Tillämpat tränarskap 1 	7,5 	2IP041
+Tillämpat tränarskap 2 	7,5 	2IP042
+Tillämpningar av fysik och dynamik i biologiska system 	10,5 	5EL104
+Transport-GIS 	7,5 	2KG604
+Trygga lärmiljöer, identitet och intersektionalitet 	15,0 	6PE243
+Träning, fysisk aktivitet och hälsa I 	7,5 	3ID203
+Träning, fysisk aktivitet och hälsa II 	7,5 	3ID204
+Turism-GIS 	15,0 	2KG075
+Turismekonomi A 	15,0 	2NE004
+Tyska A, Den moderna tyskans struktur 	7,5 	1TY008
+Tyska A, Modern tyskspråkig litteratur och litteraturhistoria 	7,5 	1TY007
+Tyska B med allmän inriktning 	30,0 	1TY011
+Tyska B, Språk- och kulturkompetens 	7,5 	1TY048
+Tyska B, Språkdidaktik - fokus tyska 	7,5 	6TY026
+Tyska, kvalifikationskurs 	7,5 	1TY002
+Tyska, Kvalifikationskurs (steg 3) 	7,5 	1TY062
+Tyska, Nybörjarkurs (steg 1-2) 	15,0 	1TY045
+Tyska, Nybörjarkurs I 	7,5 	1TY023
+Tyska, Påfartskurs 	7,5 	1TY004
+Undervisning för elever i språk-, läs- och skrivsvårigheter 	7,5 	6SD013
+Unga, sex och internet 	7,5 	2IT003
+Unga, sex och internet i lärmiljöer 	7,5 	2PE168
+Ungdomsromanen i samtiden 	7,5 	1LV058
+Uppsats i kostvetenskap C 	15,0 	2KN067
+Uppsats med inriktning hem- och konsumentkunskap 	15,0 	6KN029
+Utbildning och arbetsmarknad I 	7,5 	6ST001
+Utbildningsdesign för E-lärande i arbetslivet 	7,5 	2PE134
+Utbildningsplanering med inriktning mot tränarskap 	7,5 	2IP043
+Utbildningssystem i Sverige och andra länder 	10,0 	6SY016
+Utbildningsvetenskap i pedagogisk praktik 	15,0 	6PE311
+Utbildningsvetenskap, undervisning och lärande för förskolan (UK) 	7,5 	6PE220
+Utbildningsvetenskap, undervisning och lärande för grundskolan (UK) 	7,5 	6PE225
+Utrednings- och utvärderingsarbete 	15,0 	2SO134
+Utredningsmetodik för Psykologprogrammet 	6,0 	2PS167
+Utredningsmetodik för Psykologprogrammet med inriktning mot idrott 	6,0 	2PS164
+Utveckling av mobila applikationer 	7,5 	5DV209
+Utvecklingspsykologi 	7,5 	2PS119
+Utvecklingspsykologi - grundnivå 	7,5 	2PS020
+Utvecklingspsykologi för psykologprogrammet 	7,5 	2PS144
+Utvecklingspsykologi för psykologprogrammet med inriktning mot idrott 	7,5 	2PS140
+utvecklingspsykologi I med inriktning mot kognitiv utveckling 	7,5 	2PS082
+Utvecklingspsykologi II, med inriktning mot social och emotionell utveckling 	7,5 	2PS060
+Utvärdering, kunskaps- och verksamhetsutveckling i socialt arbete 	7,5 	2SA187
+Utvärdering, ledarskap och förändringsarbete 	22,5 	6SP040
+Utvärdering, ledarskap och förändringsarbete 	22,5 	6SP061
+Verksamhetsanalys och organisationsförändring 	15,0 	2IN190
+Verksamhetsförlagd utbildning 	15,0 	2SV046
+Verksamhetsförlagd utbildning 	15,0 	2MR060
+Verksamhetsförlagd utbildning - Nationellt 	30,0 	2SA104
+Verksamhetsförlagd utbildning 1 	4,5 	3LO060
+Verksamhetsförlagd utbildning 1 	12,0 	3AT110
+Verksamhetsförlagd utbildning 1 inom KPU (VFU) 	15,0 	6KP019
+Verksamhetsförlagd utbildning 2 	15,0 	3AT114
+Verksamhetsförlagd utbildning 2 inom KPU - grundnivå (VFU) 	15,0 	6KP014
+Verksamhetsförlagd utbildning för psykologprogrammet med inriktning mot idrott 	22,5 	2PS176
+Verksamhetsförlagd utbildning i fysioterapi, III 	12,0 	3FT602
+Verksamhetsförlagd utbildning i socialt arbete i hälso- och sjukvård 	7,5 	2SA210
+Verksamhetsförlagd utbildning inom ambulanssjukvård 	9,0 	3OM355
+Verksamhetsintegrerad Oral Hälsa A 	7,5 	3OT171
+Verksamhetsintegrerad Oral Hälsa C 	15,0 	3OT175
+Verksamhetsutveckling i digitala organisationer 	15,0 	2IN117
+Verksamhetsutveckling i digitala organisationer 	15,0 	2IN202
+Vetenskaplig kommunikation 	7,5 	1LI004
+Vetenskaplig kommunikation 	7,5 	1KG008
+Vetenskaplig metod 	7,5 	2PS117
+Vetenskaplig metod 	15,0 	2SO123
+Vetenskaplig metod i polisiärt arbete 	7,5 	2UP004
+Vetenskaplig metod i socialt arbete 	7,5 	2SA174
+Vetenskaplig metod med inriktning hem- och konsumentkunskap 	7,5 	6KN028
+Vetenskaplig metod och examensarbete i socialt arbete 	22,5 	2SA186
+Vetenskaplig metod och statistik 	4,5 	3FT403
+Vetenskaplig metodik 1 	3,0 	3OT161
+Vetenskaplig metodik och ledarskap i arbetslivet 	7,5 	3BL221
+Vetenskaplig metodkurs Speciallärar- och specialpedagogprogrammen 	7,5 	6SP064
+Vetenskaplig och professionell metod för psykologprogrammet 	7,5 	2PS136
+Vetenskaplig och professionell metod för psykologprogrammet med inriktning mot idrott 	7,5 	2PS137
+Vetenskaplig teori och metod 	7,5 	6SY049
+Vetenskaplig teori och metod I 	4,5 	3OM390
+Vetenskaplig teori och metod II 	7,5 	3OM396
+Vetenskapliga perspektiv på studie- och yrkesvägledning 	7,5 	6SY013
+Vetenskapligt tänkande 	7,5 	1VE007
+Vetenskapligt tänkande 	7,5 	1VE013
+Vetenskapsteori 	7,5 	1VE011
+Vetenskapsteori och vetenskaplig metod 	15,0 	6PE134
+Vibrationsanalys 	7,5 	5MT047
+Viltbiologi med viltvård 	15,0 	5BI162
+Vin och mat 	7,5 	2MR011
+Vinkunskap i teori och praktik 	7,5 	2MR068
+Visualisering av data 	7,5 	2ST050
+Vuxnas och äldres hälsa och livsvillkor 	15,0 	3OM416
+Vågfysik och optik 	6,0 	5FY091
+Våld i nära relation 	7,5 	2SA140
+Våld i nära relation 	7,5 	2SA193
+Våld i nära Våld i nära relation och dödsfallsutredning 	7,5 	2SA201
+Vård vid kronisk hjärtsvikt 	7,5 	3OM298
+Vård, samhälle och hälsoekonomi 	15,0 	2EH031
+Vårdadministration C 	30,0 	2SV060
+Vårdens administration, organisation och politik 	15,0 	2SV043
+Vägledningsinsatser för individer i behov av särskilt stöd 	7,5 	6SY047
+Välfärdssamhällets utveckling, 7 	7,5 	1HI012
+Världens språk 	7,5 	1LI046
+Värme- och masstransport I 	10,5 	5EN030
+Vävdesign 	15,0 	6TX038
+Webbaserade system 	30,0 	2IN120
+Webbaserade system 	30,0 	2IN140
+Webbdesign med JavaScript och Document Object Model 	7,5 	2IN007
+Webbdesign och fördjupningsarbete 	15,0 	2SV054
+Webbteknik för ingenjörer 	7,5 	5TF019
+Work and Family in Transition 	7,5 	2SO029
+Yrkesmässig handledning 	7,5 	3AT034
+Återuppbyggnad efter kriser och katastrofer 	15,0 	2KG055
+Ämnesdidaktik för yrkeslärare (UVK) 	10,0 	6PE382
+Ämneslärare som profession 	6,0 	6PE185
+Ölkunskap i teori och praktik 	7,5 	2MR069

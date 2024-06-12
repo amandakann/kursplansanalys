@@ -41,7 +41,25 @@ if (not haveCC and not haveCCall) or (haveCC and haveCCall):
     print ("\nNote: One of -a OR -cc OR -ccs must be used.\n");
     sys.exit(0)
 
+#####################################
+#### Read extra file with credits ###
+#####################################
+creditLex = {}
+creditsInLex = 0
+creditsFound = 0
+creditsMissed = 0
+try:
+    for line in open("data/UMU.credits.txt").readlines():
+        tokens = line.strip().split()
+        if len(tokens) > 2:
+            cc = tokens[-1]
+            creds = tokens[-2]
 
+            creditLex[cc] = creds
+            creditsInLex += 1
+except:
+    pass
+            
 ################################
 #### Read file              ####
 ################################
@@ -337,6 +355,11 @@ for lineno in range(1, len(lines)):
         
     elig = ""
     credit = ""
+    if cc in creditLex:
+        credit = creditLex[cc]
+        creditsFound += 1
+    else:
+        creditsMissed += 1
     
     r = {
         "University":"UMU", # one of (Miun, UmU, SU, KTH)
@@ -376,3 +399,4 @@ for lineno in range(1, len(lines)):
 ############################
 output = {"Course-list": res}
 print(json.dumps(output))
+logF.write("Credits in file {:0}\nCredits score used {:1}\nCredits not found {:2}\n".format(creditsInLex, creditsFound, creditsMissed))
