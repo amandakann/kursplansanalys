@@ -841,7 +841,7 @@ def applyGeneralPrinciples(s):
 
                 sawMad = 0
                 for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
-                    if s[j]["t"] == "mad" or s[j]["t"] == "mid": # TODO: should use phrase analysis here instead
+                    if s[j]["t"] == "mad" or (j > i+1 and s[j]["t"] == "mid") or (j > i+1 and s[j]["c"] == "CLB"): # new sentence or new clause
                         sawMad = 1
                     if sawMad:
                         new.append(s[j])
