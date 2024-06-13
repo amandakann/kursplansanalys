@@ -1,19 +1,5 @@
-0       ange
-3       (ange)
-3       ange huvuddrag
-
-1       (använda)
-2       använda
-
-0       återge
-1       (återge)
-
 0       (beskriva)
 1       beskriva
-
-2       (bevisa)
-4       (bevisa)
-5       bevisa
 
 4	(dra * slutsats)
 5	dra * slutsats
@@ -21,59 +7,11 @@
 2       examinera
 4	(examinera)
 
-1       (extrapolera) [Inget exempel]
-5       extrapolera [Inget exempel]
-
 2	förbättra
 5	(förbättra)
 
-1       förklara
-4       (förklara)
-5       (förklara)
-
-1       (försvara)
-4       försvara
-
 1       (förutsäga)
-2       (förutsäga)
 5       förutsäga
-
-1       (förutse)
-2       (förutse)
-5       förutse
-
-1       (generalisera)
-5       generalisera
-
-3       granska
-4       (granska)
-
-0       identifiera
-3       (identifiera)
-
-1       illustrera
-3       (illustrera)
-
-2       integrera
-3       (integrera)
-
-1       (jämföra)
-3       (jämföra)
-4       jämföra
-
-1       (karaktärisera)
-3       karaktärisera
-
-1       (karakterisera)
-3       karakterisera
-
-1       (kartlägga)
-3       kartlägga
-4       (kartlägga)
-
-1       (kategorisera)
-3       (kategorisera)
-5       kategorisera
 
 1       (kontrastera)
 4       kontrastera
@@ -81,45 +19,16 @@
 0       (matcha)
 1       matcha
 
-2       modifiera
-5       (modifiera)
-
-2	(optimera)
-3       optimera
-
-2       organisera
-3       (organisera)
-5       (organisera)
-
-0       översätta
-1       (översätta)
-
-1       påvisa
-4       (påvisa)
-
-2       producera
-2       reproducera
-5       (producera)
-
 0       (redogöra)
 1       redogöra
 3       (redogöra)
 
 2       (relatera)
-3       (relatera)
-4       relatera
-5       (relatera)
+3       relatera
+4       (relatera)
 
-1       sammanfatta
-4       (sammanfatta)
-5       (sammanfatta)
-
-2       (skissera)
-3       skissera
-5       (skissera)
-
-2       (testa)
-4       testa
+1       (skissera)
+2       skissera
 
 1       (tolka)
 4       tolka
@@ -128,14 +37,14 @@
 3       undersöka
 4       (undersöka)
 
-2       upptäcka
-4       (upptäcka)
-
-1       (utveckla)
-2       (utveckla)
-5       utveckla
-5       vidareutveckla
-
 0       (välja)
 3       välja
-4       (välja)
+
+2       (skriva)
+5       skriva
+
+2       (åtgärda)
+5       åtgärda
+
+1       (skissa)
+2       skissa
