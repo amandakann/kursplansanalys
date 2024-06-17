@@ -74,13 +74,13 @@ klassificera
 inordna
 abstrahera
 (kontrastera)
-matcha
+matcha # ambiguous
 rapportera
 diskutera
-redogöra
+redogöra # ambiguous
 ge * redogörelse
 skildra
-beskriva
+beskriva # ambiguous
 renodla
 rita
 plotta
@@ -139,8 +139,8 @@ lösa
 använda
 nyttja
 iscensätta
-skissa
-skissera
+skissa # ambiguous
+skissera # ambiguous
 ge * form
 utföra
 genomföra
@@ -174,7 +174,7 @@ manipulera
 omkonstruera
 bestämma
 förändra
-förbättra
+förbättra # ambiguous
 multiplicera
 segmentera
 ändra
@@ -375,11 +375,11 @@ skilja
 urskilja
 peka ut
 peka på
-relatera
+relatera # ambiguous
 ställa * i relation
 sätta * i relation
 länka
-välja
+välja # ambiguous
 utvälja
 separera
 dela in
@@ -421,7 +421,7 @@ jämföra
 utforska
 utreda
 ställa * *frågor
-undersöka
+undersöka # ambiguous
 genomföra * *undersökning
 (redogöra)
 rangordna
@@ -458,7 +458,7 @@ jämföra och värdera
 jämföra och välja
 jämföra * i relation till
 komma fram till
-kontrastera
+kontrastera # ambiguous
 kritisera
 komma med * *kritik
 ge * *kritik
@@ -511,7 +511,7 @@ integrera och reflektera
 (dra * slutsats)
 uppskatta
 rekommendera
-tolka
+tolka # ambiguous
 genomföra * tolkning
 utvärdera
 nyhetsvärdera
@@ -523,7 +523,7 @@ genomföra * *resonemang
 föra * *resonemang
 verifiera
 evaluera
-examinera
+examinera # ambiguous
 betygsätta
 betygssätta
 rimlighetsbedöma
@@ -584,11 +584,11 @@ tillverka
 uppföra
 syntetisera
 generalisera
-förutsäga
+förutsäga # ambiguous
 extrapolera
 bevisa
 utveckla
-dra * slutsats
+dra * slutsats # ambiguous
 (tolka)
 kommunicera
 forma
@@ -612,14 +612,14 @@ ställa upp
 ta fram
 uttrycka
 gestalta
-skriva
+skriva # ambiguous
 sätta ihop
 integrera
 bilda
 bygga
 modifiera
 utöka
-åtgärda
+åtgärda # ambiguous
 vidta * åtgärd
 vidareutveckla
 säkerställa
