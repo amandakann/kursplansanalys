@@ -12,6 +12,7 @@ definiera
 beskriva * begrepp
 beskriva * term
 #beskriva <NP, huvudord singular bestämd form>
+beskriva <NP.sin.def>
 nämna
 (välja)
 identifiera
