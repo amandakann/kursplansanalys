@@ -2684,6 +2684,11 @@ for cl in data:
                             if w in stoplist or wtl["w"] in stoplist:
                                 continue
 
+                            if wtl["t"] == "vb.sup.akt" and ((i+1 < len(s) and s[i+1]["w"].lower() == "till") or (i+2 < len(s) and s[i+1]["w"].lower() == "fram" and s[i+2]["w"].lower() == "till")):
+                                continue
+                            if s[i]["w"].lower() == "relaterade" and i+1 < len(s) and  s[i+1]["w"].lower() == "till":
+                                continue
+
                             for bl in blooms:
                                 for b in bl:
                                     if b[0] == w:
