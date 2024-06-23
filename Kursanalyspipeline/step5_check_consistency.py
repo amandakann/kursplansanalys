@@ -215,84 +215,73 @@ if checks["bloom"]:
 
 print ()
 
-###########################################################################
-### Check Bloom verbs, print info on courses with ambiguous Bloom verbs ###
-###########################################################################
-if checks["bloom"]:
-    ambig = {}
-    ambigEn = {}
-    bloomLex = {}
-    bloomLexEn = {}
+##############################################################
+### Import and initialize the Bloom-verb related functions ###
+##############################################################
+import bloom_functions
     
-    try:
-        for line in open(bloomFile).readlines():
-            if line[0] == "#":
-                continue
-            if line[0:3] == "---": # new Bloom level
-                m = re.findall("---\s*\w*\s*([0-9][0-9]*)\s*---", line)
-                if len(m) == 1:
-                    bloomLevel = int(m[0])
+if checks["bloom"]:
+    bloomLex, ambig, bloomLexEn, ambigEn = bloom_functions.readBloomFiles(bloomFile, bloomFileEn, 1, 1, 0)
+    translationsSuggs = bloom_functions.bloomTranslations("data/bloom_translations_sv_to_en.txt")
+    # bloom_functions.initBloomSpellings(data)
 
-            if line[0] == "(": # ambiguous verb, not the default level of this verb
-                v = line.replace("(", "").replace(")", "").strip()
-                p = line.find("#")
-                if p > 0:
-                    exp = line[:p].strip()
-                else:
-                    exp = line.strip()
-                    
-                if v in ambig:
-                    ambig[v].append(bloomLevel)
-                else:
-                    ambig[v] = [bloomLevel]
-                    
-            if line[0].islower() or line[0].isupper():
-                p = line.find("#")
-                if p > 0:
-                    exp = line[:p].strip()
-                else:
-                    exp = line.strip()
-
-                if exp in bloomLex:
-                    print (bloomFile + " has verb '" + exp + "' listed with two default levels, level " + str(bloomLex[exp]) + " and level " + str(bloomLevel) + "\n")
-                bloomLex[exp] = bloomLevel
-    except:
-        bloomFile = ""
+    for v in bloomLex:
+        ls = bloomLex[v]
+        for i in range(len(ls) - 1):
+            for j in range(i+1, len(ls)):
+                if ls[i][1] == ls[j][1]:
+                    print ("WARNING: " + svFileName + " has verb '" + v + "' listed twice, for level " + str(ls[i][2]) + " and level " + str(ls[j][2]) + "\n")
+    
     for v in ambig:
+        found = 0
         if v in bloomLex:
-            ambig[v] = [bloomLex[v]] + ambig[v]
+            for exp in bloomLex[v]:
+                if exp[1] == v:
+                    found = 1
         else:
+            tokens = v.split()
+            if tokens[0] in bloomLex:
+                for exp in bloomLex[tokens[0]]:
+                    if exp[1] == v:
+                        found = 1
+        if not found:
             print (bloomFile + " has verb '" + v + "' with ambiguous Bloom level but no default level.\n")
-    try:
-        for line in open(bloomFileEn).readlines():
-            if line[0] == "#":
-                continue
-            if line[0:3] == "---": # new Bloom level
-                m = re.findall("---\s*\w*\s*([0-9][0-9]*)\s*---", line)
-                if len(m) == 1:
-                    bloomLevel = int(m[0])
-
-            if line[0] == "(": # ambiguous verb, not the default level of this verb
-                v = line.replace("(", "").replace(")", "").strip()
-                if v in ambigEn:
-                    ambigEn[v].append(bloomLevel)
-                else:
-                    ambigEn[v] = [bloomLevel]
-                    
-            if line[0].islower() or line[0].isupper():
-                exp = line.strip()
-
-                if exp in bloomLexEn:
-                    print (bloomFileEn + " has verb '" + exp + "' listed with two default levels, level " + str(bloomLexEn[exp]) + " and level " + str(bloomLevel) + "\n")
-                bloomLexEn[exp] = bloomLevel
-    except:
-        bloomFileEn = ""
+    
+    for v in bloomLexEn:
+        ls = bloomLexEn[v]
+        for i in range(len(ls) - 1):
+            for j in range(i+1, len(ls)):
+                if ls[i][1] == ls[j][1]:
+                    print ("WARNING: " + enFileName + " has verb '" + v + "' listed twice, for level " + str(ls[i][2]) + " and level " + str(ls[j][2]) + "\n")
     for v in ambigEn:
+        found = 0
         if v in bloomLexEn:
-            ambigEn[v] = [bloomLexEn[v]] + ambigEn[v]
+            for exp in bloomLexEn[v]:
+                if exp[1] == v:
+                    found = 1
         else:
+            tokens = v.split()
+            if tokens[0] in bloomLexEn:
+                for exp in bloomLexEn[tokens[0]]:
+                    if exp[1] == v:
+                        found = 1
+        if not found:
             print (bloomFileEn + " has verb '" + v + "' with ambiguous Bloom level but no default level.\n")
 
+    expLex = {}
+    for v in bloomLex:
+        for exp in bloomLex[v]:
+            expLex[exp[1]] = exp[2]
+    bloomLexOrg = bloomLex
+    bloomLex = expLex
+
+    expLex = {}
+    for v in bloomLexEn:
+        for exp in bloomLexEn[v]:
+            expLex[exp[1]] = exp[2]
+    bloomLexOrgEn = bloomLexEn
+    bloomLexEn = expLex
+    
 #####################
 ### read stoplist ###
 #####################
@@ -1542,13 +1531,16 @@ def printBloom():
     for v in ambiguousVerbs:
         atot += ambiguousVerbs[v]
         avs += 1
-    print (avs, "different ambiguous verbs seen,", atot, "total occurrences of these verbs.")
+    print (avs, "different ambiguous verbs seen,", atot, "total occurrences of these verbs,", translationBasedChanges["total"], "of these disambiguated by English translation.")
     ls = []
     for v in ambiguousVerbs:
-        ls.append([ambiguousVerbs[v], v])
+        eng = 0
+        if v in translationBasedChanges:
+            eng = translationBasedChanges[v]
+        ls.append([ambiguousVerbs[v], v, eng])
     ls.sort(reverse=True)
     for vv in ls:
-        print ("{0: <35}: {1: >5}".format(vv[1],vv[0]))
+        print ("{0: <35}: {1: >5} {2: >4}".format(vv[1],vv[0], vv[2]))
     
 def printNonBloom():
     if not checks["nonBloom"]:
@@ -2435,6 +2427,25 @@ def applyGeneralPrinciples(s):
 ###################################################
 ### For each course, check for ambiguities etc. ###
 ###################################################
+translationBasedChanges = {"total":0}
+for cl in data:
+    for c in data[cl]:
+
+        if "ILO-en" in c and len(c["ILO-en"]) and "ILO-list-en" in c and "Bloom-list-en" in c and "Bloom-list-sv" in c: # if we have English text
+            hasAmbiguous = 0
+            for bb in c["Bloom-list-sv"]:
+                for b in bb:
+                    if b[1] in translationsSuggs:
+                        hasAmbiguous = 1
+                
+            if hasAmbiguous:
+                changes = bloom_functions.checkEnglishWhenSwedishIsAmbiguous(c["Bloom-list-sv"], c["Bloom-list-en"], c["ILO-list-en"], c["ILO-en"])
+
+                for v in changes:
+                    if not v in translationBasedChanges:
+                        translationBasedChanges[v] = 0
+                    translationBasedChanges[v] += changes[v]
+                    translationBasedChanges["total"] += changes[v]
 
 for cl in data:
     unis = ""

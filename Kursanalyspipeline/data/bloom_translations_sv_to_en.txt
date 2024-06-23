@@ -1,0 +1,56 @@
+0       (beskriva)
+1       beskriva
+
+4	(dra * slutsats) "inference" "infer" "inferring"
+5	dra * slutsats
+
+2       (examinera)
+4	examinera
+
+2	förbättra
+5	(förbättra)
+
+1       (förutsäga)
+5       förutsäga
+
+1       (kontrastera)
+4       kontrastera
+
+0       (matcha)
+1       matcha
+
+0       (redogöra) "reproducing" "reproduce" "present" "presenting" "describing" "describe" "give * account" "account for" "accounting for"
+1       redogöra "explain" "report" "reporting" "explaining"
+3       (redogöra)
+
+2       (relatera)
+3       relatera
+4       (relatera)
+
+1       (skissera)
+2       skissera
+
+1       (tolka)
+4       tolka
+5       (tolka)
+1	tolka * begrepp
+
+3       undersöka
+4       (undersöka)
+
+0       (välja)
+3       välja "extract" "extracting"
+3	välja * utifrån
+
+2	(skriva) "report * in writing"
+5	skriva "generate" "produce" "generating" "producing"
+5	skriva * program
+5	skriva * kod
+2	skriva ut
+2 	skriva protokoll
+
+2	(åtgärda)
+5	åtgärda
+
+1	(skissa) "outline" "outlining"
+2	skissa "sketch" "draw" "drawing" "sketching"
