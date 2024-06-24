@@ -16,7 +16,7 @@ The scripts are written for Python 3. Older versions of python may not work.
 The scripts generally read data from the standard input and writes the
 results to the standard output, so you can chain them together.
 
-```python3 step1_KTH_fetch_from_API.py -cc DD2350 -cy 2023:2 | python3 step2_heuristics.py | python3 step3_PoS_and_spelling.py -ns | python3 step4_Bloom_verbs.py | python3 step5_check_consistency.py```
+```python3 step1_KTH_fetch_from_API.py -cc DD2350 -cy 2023:2 | python3 step2_heuristics.py | python3 step3_PoS_and_spelling.py | python3 step4_Bloom_verbs.py | python3 step5_check_consistency.py```
 
 It is also possible to do one step at a time, saving the data to files.
 
@@ -39,9 +39,9 @@ The scripts can output a short description of available options:
 
 **Step 1**: Step one is different depending on the source data but
   typically allows a choice between all courses (`-a`), one specific
-  course (`-cc <course code>`), or a few courses (`-ccs "<course code
-  1> <course code2> ... "`). You can also specify the time period of
-  interest with either `-ct <YEAR:TermNo>` (one semester) or `-cy
+  course (`-cc <course code>`), or a few courses (`-ccs "<course
+  code1> <course code2> ... "`). You can also specify the time period
+  of interest with either `-ct <YEAR:TermNo>` (one semester) or `-cy
   <YEAR:TermNo>` (one year). The format is `YYYY:X`, where X is 1 for
   spring term and 2 for fall term, for example `2023:2` for the fall
   of 2023.
@@ -53,31 +53,29 @@ The scripts can output a short description of available options:
   used. If neither is specified, the default is to ignore the level
   information.
 
-**Step 3**: Step three adds part-of-speech tags and can also correct
-  spelling errors at the same time. The options `-s` (correct spelling
-  errors) and `-ns` (ignore spelling errors) can be used. The default
-  behavior is to ignore spelling errors. The options `-sendAll` and
-  `-sendEach` can be used to specify if a separate call should be made
-  to the Granska API server with each goal text or all texts for a
-  course should be sent at once. Sending everything at once is
-  typically faster, but if you have many courses were some but not all
-  goals overlap it can be faster to deal with one goal at a time.The
-  option `-cache` can be used to store results locally, which makes
-  later calls on the same courses or courses with similar goals much
-  faster.
+**Step 3**: Step three adds part-of-speech tags and phrase
+  structure. This step uses an online API for part-of-speech tagging
+  Swedish text, so it requires an Internet connection. The
+  part-of-speech tagging can take quite a long time if there is a lot
+  of text to tag, for example around 20 minutes for one year worth of
+  courses.
 
 **Step 4**: Step four needs a reference to a file with Bloom verbs and
   the levels for the Bloom verbs for Swedish, and another file for
   English. If no filenames are given, the files are assumed to be in a
   subfolder `data` with the names `data/bloom_revised_sv.txt` and
-  `data/bloom_revised_en.txt`
+  `data/bloom_revised_en.txt`. This step can apply automatic spelling
+  correction using an online API if the option `-s` is used. When
+  using spelling correction, an Internet connection is required. The
+  option `-z` can be used to write statistics and examples regarding
+  verbs with no Bloom classification to a file.
 
 **Step 5**: Step five collects statistics and checks for
   problems/inconsistencies in the data. It uses a config file
   `step5.config` (or use option `-c <filename>` to specify a different
   file) to specify what data to collect and what to print. For some
   options, the same data files with Bloom verb classifications used in
-  Step 4 is used. The files to use for Bloom data can be specified
+  Step 4 are used. The files to use for Bloom data can be specified
   with `-b <filename>` (Swedish) and `-be <filename>` (English). If
   not specified, `data/bloom_revised_sv.txt` and
   `data/bloom_revised_en.txt` will be used.
@@ -89,15 +87,16 @@ The scripts can output a short description of available options:
   ambiguous verbs"
 
   Step 5 can read data from **more than one source**, for example if you
-  want to compare data from different universities. You can specify
+  want to compare data from multiple universities. You can specify
   input files with `-inp "<filename 1> <filename 2> ... "`. The script
   will also read data from stdin if there seem to be data there.
 
 Some steps take a LOT of time. Downloading a lot of course information
 from the KTH API in *Step 1* can take a long time. *Step 3* can take a
-lot of time (to part-of-speech tag a few thousand courses, it could
-take several hours) since contacting the Granska API server takes
-time. The other steps are typically fast.
+lot of time since contacting the Granska API server takes time and it
+only accepts 100,000 bytes per request. Automatic spelling correction
+in step 4 can take a few minutes but is much faster than
+part-of-speech tagging.
 
 # Data files
 
@@ -112,6 +111,12 @@ analysing course information.
 `swedish_trigrams.txt`         Character trigrams for Swedish; used for language identification
 
 `english_trigrams.txt`         Character trigrams for English; used for language identification
+
+`bloom_translations_sv_to_en.txt`         Rules for disambiguating Swedish verbs using English translations.
+
+`UMU.credits.txt`              Course credit information for some courses missing this in the original data.
+
+`stoplist.txt`         	       A list of verbs that should not be listed when listing verbs that did not receive a Bloom classification.
 
 If you want to have a different classification of goals you can use
 different files with verbs and give different levels to different
