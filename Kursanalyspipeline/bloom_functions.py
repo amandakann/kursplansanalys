@@ -1303,21 +1303,21 @@ def initBloomSpellings(data):
 def checkEnglishWhenSwedishIsAmbiguous(svBloom, enBloom, enILO, enText):
     changes = {}
     
-    svScores = []
-    enScores = []
-    for goal in svBloom:
-        for bloom in goal:
-            if bloom[1] in ambiLex:
-                svScores.append(9)
-            else:
-                svScores.append(bloom[2])
+    # svScores = []
+    # enScores = []
+    # for goal in svBloom:
+    #     for bloom in goal:
+    #         if bloom[1] in ambiLex:
+    #             svScores.append(9)
+    #         else:
+    #             svScores.append(bloom[2])
 
-    for goal in enBloom:
-        for bloom in goal:
-            if bloom[1] in ambiLexEn:
-                enScores.append(9)
-            else:
-                enScores.append(bloom[2])
+    # for goal in enBloom:
+    #     for bloom in goal:
+    #         if bloom[1] in ambiLexEn:
+    #             enScores.append(9)
+    #         else:
+    #             enScores.append(bloom[2])
 
     enTextLow = enText.lower()
     for b in range(len(svBloom)):
@@ -1335,6 +1335,13 @@ def checkEnglishWhenSwedishIsAmbiguous(svBloom, enBloom, enILO, enText):
                     if len(enILO) == len(svBloom) and len(enILO[b]) > 0:
                         txt = enILO[b]
 
+                    elif abs(len(enILO) - len(svBloom)) == 1:
+                        txt = ""
+                        for t in range(max(0, b-1), min(len(enILO), b+1)):
+                            if txt != "":
+                                txt += " "
+                            txt += enILO[t]
+                        
                     # log("HINT check SV-Bloom len= " + str(len(svBloom)) + " ILO-en len=" + str(len(enILO)))
                     # log("HINT check " + str(sugg) + " in '" + str(txt) + "'")
                     
