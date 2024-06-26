@@ -3,7 +3,7 @@
 These are tools for analysing course descriptions, mainly extracting
 Bloom verbs from the goals of the course description.
 
-This is a collection of Python scripts named *step1_...*, *step2_...*,
+This is a collection of Python scripts named **step1_...**, **step2_...**,
 etc. Step 1 is different depending on the source of the data (for
 example, the SU data is expected to come in a CSV file while the KTH
 data is expected to be available from an online API). The rest of the
@@ -83,7 +83,7 @@ The scripts can output a short description of available options:
   The config file has one option per row and the options are commented
   with short explanations. For example `+printErrorTypeLists` means
   "do print (plus sign) a list of course codes for each error type"
-  and `-printAmbiguousVerbs` means "do NOT (minus sign) print info on
+  and `-printAmbiguousVerbs` means "do **NOT** (minus sign) print info on
   ambiguous verbs"
 
   Step 5 can read data from **more than one source**, for example if you
@@ -91,8 +91,8 @@ The scripts can output a short description of available options:
   input files with `-inp "<filename 1> <filename 2> ... "`. The script
   will also read data from stdin if there seem to be data there.
 
-Some steps take a LOT of time. Downloading a lot of course information
-from the KTH API in *Step 1* can take a long time. *Step 3* can take a
+Some steps take a **LOT** of time. Downloading a lot of course information
+from the KTH API in **Step 1** can take a long time. **Step 3** can take a
 lot of time since contacting the Granska API server takes time and it
 only accepts 100,000 bytes per request. Automatic spelling correction
 in step 4 can take a few minutes but is much faster than
@@ -123,3 +123,108 @@ different files with verbs and give different levels to different
 verbs. As long as the file keeps to the same format as the file above
 and only verbs or expressions starting with a verb are used, it should
 work with the scripts.
+
+# Rule formats
+
+## Bloom classifications
+
+The files with Bloom levels for verbs and expressions have one rule
+per line. Anything after a "#" is considered a comment.
+
+Lines starting with "--- " are assumed to be the start of a new level,
+and the format should be `--- <one word description> <level value>
+---`, for example:
+
+`--- Remember 0 ---`
+
+Verbs or expressions in parenthesis are assumed to be ambiguous, and
+the level where the verb/expression occurs without parenthesis is
+assumed to be the default level.
+
+Bloom classified expressions can be a single word, for example
+`sammanfatta`. They can also be multiple words, for example `skriva
+om`.
+
+When looking for matches, both the inflected form and the lemma form
+of the plain text will be matched against the expression, so "skriv
+om" will match the expression `skriva om` (the lemma form of "skriv"
+is "skriva"). The expression itself will be used as-is, so if the
+expression is `skriv om`, it would **NOT** match "skriva om" in the
+text. This means that expressions should typically be written with the
+words in lemma form unless, you explicitly want to allow only certain
+inflections.
+
+Expressions can include wildcards. The `*` wildcard can be used as a
+token and will then match 0 or more tokens that can be anything. So
+the expression:
+
+`bevisa * teorem`
+
+would match "bevisa teorem", "bevisa avancerade teorem", "bevisa och
+förstå många olika sorters teorem", etc. When a wildcard token is
+used, there should normally be non-wildcard tokens both before and
+after the wildcard token. Anything matched by `bevisa *` would also
+match `bevisa` and vice versa, so if the wildcard token is first or
+last you can just remove it.
+
+A wildcard can also be used inside a token, for example:
+
+`göra * *vägande`
+
+A `*` inside a token will match 0 or more characters, so `*vägande`
+will match "övervägande", "avvägande" "vägande", etc. Inflections will
+also be taken into consideration, since the regular expression will
+also be matched against the lemma form, so `*vägande` will also match
+"överväganden" and "avvägandet".
+
+Tokens can also refer to phrase analysis and part-of-speech tagging
+information of a token. For example:
+
+`beskriva <NP.sin.def>`
+
+will match the word "beskriva" followed by a word that has a phrase
+analysis tag "NP" and has a word with a part-of-speech tag that
+includes "sin" and "def" inside this phrase, so it is intended to
+match a noun phrase (NP in the Granska language) in singular and
+definite form.
+
+This expression would match "Beskriva polymerernas beteende", since
+"polymerernas beteende" is tagged as a noun phrase by Granska and
+"beteende" is tagged as singular definite form. A noun phrase can be a
+single word, so the expression would also match "beskriva
+Aharonov-Bohm-effekten".
+
+In a token starting with `<` and ending with `>`, upper case letters
+are assumed to refer to phrase or clause analysis tags, and lower case
+letters are assumed to refer to part-of-speech tags.
+
+## Translation based rules
+
+In the file with rules based on the translations of ambiguous words,
+each line is a rule and lines are formatted like this:
+
+`1	(skissa) "outline" "outlining"`
+
+`2	skissa "sketch" "draw" "drawing" "sketching"`
+
+The first token on each line is the Bloom classification level that
+should be used if this rule matches. The next token or tokens are the
+tokens for the ambiguous expression. Anything inside quotes is an
+expression that if it matches the corresponding goal in English, the
+ambiguous expression should not have the default classification, it
+should have the classification specified by this rule instead.
+
+If the rule refers to the classification that is the default
+classification, any matching expression in the corresponding
+translation will mean that the default level should be used even if
+there are also other matches for other levels (a matching default
+level overrides other matches).
+
+`2	(skriva) "report * in writing"`
+
+`4	(dra * slutsats) "inference" "infer" "inferring"`
+
+Wildcards can be used for tokens and inside tokens, but matching
+phrase analysis or part-of-speech tags cannot be used for the
+translated text. For the ambiguous expression, the format can be
+anything allowed in the Bloom classification rules above.
