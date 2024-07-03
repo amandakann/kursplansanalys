@@ -431,6 +431,11 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         log("Found match for " + str(exps[j]))
                         candidates.append([i, ii, exps[j]])
 
+                        # if str(exps[j]).find("<NP.sin.def>") > 0:
+                        #     log(str(exps[j]) + " was matched against " + str(s[i:i+ii]))
+                        #     for wwww in s[i:]:
+                        #         log(wwww["w"] + " " + wwww["p"])
+
     while len(candidates):
         # check for overlapping matches and choose the best one, so a
         # sentence with "jämföra och värdera" only gives one match for
@@ -880,6 +885,7 @@ def tokenMatchTags(tok, src, sIdx, isSwedish, everyWordCanMatch):
                     pos = src[idx]["t"].split(".")
                     for pIdx in range(len(pos)):
                         if pos[pIdx] == el:
+                            # log("pos match:" + str(pos) + " == " + str(el) + " from " + str(src[idx]))
                             thisIdxMatched = True
 
                 if thisIdxMatched:

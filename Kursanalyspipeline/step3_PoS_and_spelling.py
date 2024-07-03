@@ -14,20 +14,19 @@ from timeit import default_timer as timer
 doSpell = 0
 logging = 0
 for i in range(1, len(sys.argv)):
-    if sys.argv[i] == "-s":
-        doSpell = 1
-    elif sys.argv[i] == "-ns":
-        doSpell = 0
-    elif sys.argv[i] == "-log":
+    if sys.argv[i] == "-log":
         logging = 1
+    # elif sys.argv[i] == "-ns":
+    #     doSpell = 0
+    # elif sys.argv[i] == "-s":
+    #     doSpell = 1
     else:
         print ("\nReads JSON from stdin, adds part-of-speech tagging, prints JSON to stdout.")
         print ("\nusage options:")
-        print ("     -s          do spelling error correction and part-of-speech tagging")
-        print ("     -ns         no spelling, just tagging")
+        # print ("     -s          do spelling error correction and part-of-speech tagging")
+        # print ("     -ns         no spelling, just tagging")
         print ("     -log        log debug data to " + sys.argv[0] + ".log\n")
         sys.exit(0)
-
 
 #################
 #### Logging ####
@@ -107,170 +106,13 @@ except Exception as e:
 #############################################
 ### Remove some common errors from step 2 ###
 #############################################
-
-errorExamples = ["Efter avklarad modul ska studenten .",
-                 "Efter avslutad kurs ska studenten , avseende värderingsförmåga och förhållningssätt .",
-                 "Efter avslutad kurs ska studenten , avseende färdighet och förmåga .",
-                 "Efter avslutad kurs ska studenten ha förmåga att .",
-                 "Efter avslutad kurs skall studenten kunna",
-                 "Efter avslutad modul ska studenten , avseende färdighet och förmåga .",
-                 "Efter avslutad modul ska studenten , avseende värderingsförmåga och förhållningssätt .",
-                 "Efter avslutad modul ska studenten .",
-                 "Efter genomgången kurs ska studenten .",
-                 ") För betyget Godkänd ska den studerande .",
-                 "För godkänd kurs ska den studerande avseende färdighet och förmåga .",
-                 "För godkänd kurs ska den studerande avseende värderingsförmåga och förhållningssätt .",
-                 "Hon ska kunna 0 .",
-                 "Hon ska kunna mso-*",
-                 "Hon ska kunna själv .",
-                 "Hon ska kunna självständigt .",
-                 "Hon ska kunna samt .",
-                 "Hon ska kunna table .",
-                 "Hon ska kunna uppvisa .",
-                 "Se respektive moment .",
-                 "Se information under innehållet på samtliga moment .",
-                 "Se under innehåll i respektive moment .",
-                 "Se under respektive moment .",
-                 "Studenten ska .",
-                 "Efter avslutat moment ska studenten .",
-                 "Efter genomgången kurs ska den studerande också .",
-                 "Efter genomgången kurs skall den studerande .",
-                 "Hon ska kunna för delkurs .",
-                 "Hon ska kunna för moment .",
-                 "Hon ska kunna grunderna i .",
-                 "Hon ska kunna inom aktuellt ämne .",
-                 "( Samtliga delmoment )",
-                 ", baserat på aktuell ämnesdidaktisk forskning ."
-                 "0001pt .",
-                 "20 systemet .",
-                 "Avseende färdighet och förmåga .",
-                 "Avseende värderingsförmåga och förhållningssätt .",
-                 "Behörighetskrav .",
-                 "Efter moment .",
-                 "FSR .",
-                 ", baserat på *",
-                 "Hon ska kunna baserat på aktuell ämnesdidaktisk forskning .",
-                 "Färdigheter och förmågor .",
-                 "Kunskap och förmåga .",
-                 "Moment ett .",
-                 "Efter avslutad kurs ska .",
-                 "Lärandemålen gäller *",
-                 "För delkurs .",
-                 "För modul .",
-                 "Fördjupad färdighet och förmåga .",
-                 "Förväntade studieresultat , moment .",
-                 "Genomförande av examensarbete .",
-                 "KUNSKAP OCH FöRSTåELSE .",
-                 "Laboration(er)? .",
-                 "Område 0 .",
-                 "Projekt .",
-                 "Teori .",
-                 "Värderingsförmåga och förhållningsätt .",
-                 "Kunskaper .",
-                 "Denna kurs ger dig baskunskaper inom industriell ekonomi .",
-                 "Detta inkluderar .",
-                 "Efter avslutad kurs ska deltagarna .",
-                 "Efter avslutad kurs ska studenten .",
-                 "Efter avslutad kurs skall varje student kunna 1 .",
-                 "Efter genomförd kurs skall studenten kunna 1 .",
-                 "Efter genomgången kurs kommer studenterna att .",
-                 "Efter godkänd kurs ska studenten .",
-                 "Efter kursen skall studenten .",
-                 "Hon ska kunna eller teknikanknuten verksamhet .",
-                 "Hon ska kunna följande efter avslutad kurs .",
-                 "Hon ska kunna innan en prototyp ens har byggts .",
-                 "Hon ska kunna inom något visst ingenjörs .",
-                 "I detta ingår att .",
-                 "Specifikt betyder det .",
-                 "Studenten skall efter kursen .",
-                 "Studenterna kommer .",
-                 "Vara medveten om .",
-                 "X eller XDet blir väl inte för mycket deformationer ?",
-                 "Dessutom ska studenten .",
-                 "Del 1 , Matematikkunskap för undervisning ( Mathematical knowledge for teaching ) *",
-                 "Studenten skall efter kursen dessutom ha goda färdigheter i att .",
-                 "Lärandemål 1 , examineras i *",
-                 "Lärandemål 2 , examineras i *",
-                 "Lärandemål 3 , examineras i *",
-                 "Lärandemål 4 , examineras i *",
-                 "Mer precist ska studenten .",
-                 "Det innebär att studenten bör .",
-                 "Detta görs dels i form av paper .",
-                 "Detta inkluderar bl .",
-                 "Detta lärandemål gäller endast studenter *",
-                 "Efter avslutad kurs ska studenten .",
-                 "Efter genomgången kurs förväntas studenten .",
-                 "Efter genomgången kurs skall studenten .",
-                 "För kandidatexamen skall studenten .",
-                 "För godkänt resultat på kursen skall den studerande .",
-                 "Hon ska kunna del Teori ( Theory ) 4,5 hp .",
-                 "Hon ska kunna eller *",
-                 "Förväntade studieresultat Efter genomgånden delkurs förväntas studenten Utvecklingspsykologi , 4,5 hp Innehåll Dynamisk utvecklingspsykologi , sexualitet , köns .",
-                 "Detta inkluderar att .",
-                 "Avseende kunskap och förståelse .",
-                 "I modul .",
-                 "Kompetens och färdigheter .",
-                 "Moment Teoridel .",
-                 "SYNTES OCH VäRDERING .",
-                 "Statistisk metod .",
-                 "Style Definitions .",
-                 "Samtliga moment .",
-                 "ärdighet och förmåga .", 
-                 "ör godkänd modul ska den studerande med avseende på kunskap och förståelse .",
-                 "Del 1 , Ancient DNA .",
-                 "Del 1 , Förhistoriskt DNA .",
-                 "Del 1 , Läroplansteori , ämnesdidaktik , betyg och bedömning , fokus på språk .",
-                 "Del 1 , Teori ( THEO ) , 8hp .",
-                 "Del 1 , Teori .",
-                 "Del 1 , teori .",
-                 "Del 1 , Ämnesdidaktik med läroplansteori .",
-                 "Del 2 , hemuppgifter .",
-                 "Del 2 fokus svenska )",
-                 "Del 3 , Naturvetenskapsämnenas didaktik .",
-                 "Del 3 , Projekt .",
-                 "Del 4 , Matematikämnets didaktik .",
-                 "Del 4-5 , Fluiddynamik och Dynamisk meteorologi .",
-                 "Del I , Analog skissteknik .",
-                 "FäRDIGHET OCH FöRMåGA (",
-                 "FäRDIGHET OCH FöRMåGA ( 10 )",
-                 "Färdigheter och förmågorX .",
-                 "Färdigheter och kompetenser .",
-                 "För godkänd kurs ska den studerande avseendefärdigheter och förmåga .",
-                 "För godkänd kurs ska den studerande avseendefärdigheter och förmågasjälvständigt .",
-                 "För godkänd kurs ska den studerande avseendevärderingsförmåga och förhållningssätt .",
-                 "För godkänd kurs ska den studerande med avseende på färdighet och förmåga .",
-                 "För godkänd kurs ska den studerande med avseende på värderingsförmåga och förhållningssätt .",
-                 "För godkänd kurs ska den studerande med avseende påfärdighetochförmåga .",
-                 "För godkänd kurs ska den studerande med avseende påvärderingsförmågaochförhållningssätt .",
-                 "För godkänd kurs ska den studerandemed avseende på färdighet och förmåga .",
-                 "För godkänd kurs ska den studerandemed avseende på värderingsförmåga och förhållningssätt .",
-                 "För godkänd kurs ska den studerandemed avseende på värderingsförmågaochförhållningssätt .",
-                 "För godkänd kurs skall studenten visa .",
-                 "För godkänd modul ska den studerande med avseende på värderingsförmåga och förhållningssätt .",
-                 "För godkänt moment ska den studerande avseende färdigheter och förmåga .",
-                 "För godkänt på Kultur- och naturarv på plats .",
-                 "För godkänt resultat måste dock alltid punkt .",
-                 "För godkänt resultat på .",
-                 "För godkänt resultat på Brottsprevention .",
-                 "För godkänt resultat på Utvärdering .",
-                 "För godkänt resultat på delkursen .",
-                 "Förväntade studieresultat hör till båda kursdelarna .",
-                 "Förväntade studieresultat är att .",
-                 "Teori och metod .",
-                 "Värdering och förhållningssätt .",
-                 "Hon ska kunna uppvisa ett korrekt .",
-                 "Värderingar och förhållningssätt .",
-                 "Antiken och medeltiden .",
-                 "Efter kursen skall studenten ha .",
-                 "Kunskaper och förståelse .",
-                 "Kunskaper och insikter .",
-                 "ULV ( *",
-                 "DELKURSERNAS INNEHÅLL OCH FÖRVÄNTADE STUDIERESULTAT *",
-                 "Den studerande ska ."
-                 ]
-                 
-errors = [
-]
+gStoplist = open("data/goalStoplist.txt")
+errorExamples = []
+for line in gStoplist.readlines():
+    errorExamples.append(line.strip())
+gStoplist.close()
+      
+errors = []
 for e in errorExamples:
     errors.append(e.split())
 

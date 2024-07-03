@@ -2528,7 +2528,9 @@ for cl in data:
         if moreThanOneUni and "University" in c:
             UNI = c["University"] + " "
         
-        if "ILO-list-sv" in c:
+        if "ILO-list-sv-tagged" in c:
+            addGoals(c["ILO-list-sv-tagged"])
+        elif "ILO-list-sv" in c:
             addGoals(c["ILO-list-sv"])
         else:
             addGoals([])
@@ -2539,6 +2541,12 @@ for cl in data:
             addBloomList([], scb, level, thisType, c["University"], scbGr, levelGr, creditsGr)
             
         if checks["ilo"]:
+            if "ILO-list-sv-tagged" in c and c["ILO-list-sv-tagged"] and "Bloom-list-sv" in c and c["Bloom-list-sv"]:
+                if len(c["Bloom-list-sv"]) != len(c["ILO-list-sv-tagged"]):
+                    cPrint(UNI + c["CourseCode"] + " has different number of goals in ILO list and Bloom list: " + str(len(c["ILO-list-sv-tagged"])) + " " + str(len(len(c["Bloom-list-sv"]))))
+                    printed = 1
+                    add("ILO and Bloom list lengths not same", c["CourseCode"])
+            
             if not "ILO-sv" in c or c["ILO-sv"].strip() == "":
                 if "ILO-en" in c and c["ILO-en"] and len(c["ILO-en"]):
                     cPrint(UNI + c["CourseCode"] + " has no ILO-sv but has English: " + c["ILO-en"])
@@ -2553,6 +2561,11 @@ for cl in data:
                 printed = 1
                 add("No ILO list", c["CourseCode"])
                 
+            # elif not "ILO-list-sv-tagged" in c or len(c["ILO-list-sv-tagged"]) < 1: # This happens when we have 'bad' goals that step 3 cleans out
+            #     cPrint(UNI + c["CourseCode"] + " has empty ILO-list-sv-tagged (no PoS-tags): " + c["ILO-sv"] + " " + str(c["ILO-list-sv"]) + " " + str(c["ILO-list-sv-tagged"]))
+            #     printed = 1
+            #     add("No PoS-tags", c["CourseCode"])
+                
             elif not "Bloom-list-sv" in c or len(c["Bloom-list-sv"]) < 1:
                 if not "Bloom-list-sv" in c:
                     cPrint(UNI + c["CourseCode"] + " has empty Bloom-list: " + str(c["ILO-list-sv"]))
@@ -2562,7 +2575,7 @@ for cl in data:
                     cPrint(UNI + c["CourseCode"] + " has 0 Bloom verbs:\n" + str(c["ILO-list-sv"]) + "\n\n" + str(c["ILO-sv"]))
                     printed = 1
                     add("0 Bloom verbs", c["CourseCode"])
-
+                    
             else:
                 # Check if there are ridiculously many verbs
                 ls = c["Bloom-list-sv"]
