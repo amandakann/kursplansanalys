@@ -116,6 +116,9 @@ errors = []
 for e in errorExamples:
     errors.append(e.split())
 
+#######################################
+### Remove common erroneous matches ###
+#######################################
 def removeCommonErrors(ls):
     newLs = []
     for s in ls:
@@ -237,7 +240,6 @@ def removeCommonErrors(ls):
             
     return newLs
 
-
 #######################################################################
 ### Go through the Granska reply, extract word-tag-lemma and clause ###
 ### information                                                     ###
@@ -272,10 +274,10 @@ def extractTagsAndClauses(xml):
     
     return [wtls, phrases]
 
-##################################################################
-### Take the word-tag-lemma-clause data and map it back to the ###
-### respective courses.                                        ###
-##################################################################
+#######################################################################
+### Take the word-tag-lemma-clause data from all ILO texts from all ###
+### courses and map it back to the ### respective courses.          ###
+#######################################################################
 def mapWTLbackToCoursesAndGaols(courseList, wtlList, phrList):
 
     ### Merge word-tag-lemma with phrase-clause
@@ -366,23 +368,30 @@ def mapWTLbackToCoursesAndGaols(courseList, wtlList, phrList):
         else:
             log("WARNING: Found sentence but don't know where it belongs: " + str(mi) + ", " + str(merged[mi]))
             mi += 1
-            
-############################################################
-### Combine all text, send everything at once to Granska ###
-############################################################
+
+##################################################################################
+### Do part-of-speech tagging and phrase analysis using the online Granska API ###
+##################################################################################
+
+#################################################################
+### Combine all ILO texts, send everything at once to Granska ###
+#################################################################
 fullText = ""
 firstF = 1
 cs = len(data["Course-list"])
 chunks = []
 
-##########################################################################
-### Granska only accepts 100 000 bytes data, so we need to divide data ###
-### into smaller chunks                                                ###
-##########################################################################
+#############################################################################
+### Granska only accepts 100 000 bytes of data, so we need to divide data ###
+### into smaller chunks                                                   ###
+#############################################################################
 GRANSKA_SIZE_LIMIT = 55000 #99000
 
 taggedCC = {}
 
+##########################
+### Combine goal texts ###
+##########################
 for idx in range(cs):
     c = data["Course-list"][idx]
 
@@ -421,7 +430,11 @@ for idx in range(cs):
 
 if len(fullText):
     chunks.append(fullText)
-    
+
+##########################################################################
+### For each chunk of ILO texts of a size that Granska API can handle, ###
+### send it to Granska and read the reply                              ###
+##########################################################################
 chnk = 0
 for chunk in chunks:
     tries = 0

@@ -734,6 +734,10 @@ def printZeroBloomInfo():
             f.write("\n\n")
     f.close()
 
+##########################################################################
+### Try to match one token of a Bloom classificaton rule to the source ###
+### text                                                               ###
+##########################################################################
 def tokenMatch(tok, src, isSwedish):
     if tok.find("*") >= 0: # Single token that contains wildcard(s)
         r = tok.replace("*", ".*")
@@ -772,8 +776,10 @@ def tokenMatch(tok, src, isSwedish):
             if tl == src.lower():
                 return 1   
     return 0
-
-
+#########################################################################
+### Match a token from a Bloom classification rule to the source text ###
+### when the token refer to tagging information.                      ###
+#########################################################################
 def tokenMatchTags(tok, src, sIdx, isSwedish, everyWordCanMatch):
     if sIdx < len(src):
         allTokensOK = True
@@ -899,6 +905,12 @@ def tokenMatchTags(tok, src, sIdx, isSwedish, everyWordCanMatch):
 
     return 0
 
+##########################################################################
+### For overlapping matches, check if they also overlap "och". We keep ###
+### both matches for things such as "ge * kommentar" and "ge * respons ###
+### på" in "ge kommentarer och respons på andras texter". We only keep ###
+### one of "jämföra * i relation till" and "jämföra".                  ###
+##########################################################################
 def checkOverlapsForOch(exp1, exp2, s, isSwedish):
     # log("Check overlap for 'och', " + str(exp1) + " and " + str(exp2) + " in " + str(s[exp1[0] : exp1[0]+exp1[1]]).replace("{", "\n{") + "\n(" + str(s[exp2[0] : exp2[0]+exp2[1]]).replace("{", "\n{") + ")")
     
@@ -927,7 +939,12 @@ def checkOverlapsForOch(exp1, exp2, s, isSwedish):
         return 1
     return 0
 
-
+#########################################################################
+### Apply some general rules for constructions where we should ignore ###
+### some verb that could otherwise be a Bloom verb. Similar to "in    ###
+### order to" having a rule in "analyse text in order to improve it"  ###
+### to use "analyse" but not "improve"                                ###
+#########################################################################
 def applyGeneralPrinciples(s):
     # Generella principer
     

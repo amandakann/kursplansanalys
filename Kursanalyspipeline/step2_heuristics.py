@@ -923,6 +923,11 @@ def extractGoals(c):
    
     return (iloList, iloListEn)
 
+##########################################################################
+### Match parts of the ILO text, and removed the matched text so other ###
+### heuristics do not match the same text again.                       ###
+##########################################################################
+
 times = {}
 def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE):
     iloListSv = []
@@ -936,7 +941,12 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
         log("\nFOUND", name)
         log("\n" + str(m.start()) + " " + str(m.end()), "'" + sv[m.start():m.end()] + "'\n")
         found = 0
+
+        ### Text of the wrapper expression, for example the
+        ### <ol>...</ol>, used to extract each individual expression,
+        ### for example each <li>...</li>
         txt = sv[m.start():m.end()]
+        
         ls = goalExp.findall(txt)
         for l in ls:
             if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
@@ -995,6 +1005,14 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
     times[name] += endtime - startime
     return (sv, en)
 
+##########################################################################
+### Match parts of the ILO text, and removed the matched text so other ###
+### heuristics do not match the same text again. This version is used  ###
+### when a part of the wrapping expression should be added to each     ###
+### goal, such as "students shall be able to                           ###
+### understand<ul><li>match</li><li>physics</li></ul>" which happens   ###
+### with one verb and a list of objects for the verb.                  ###
+##########################################################################
 def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE):
     iloListSv = []
     iloListEn = []
@@ -1002,6 +1020,7 @@ def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, l
     
     startime = timer()
     m = allExp.search(sv)
+    
     while m:
         log("\nFOUND", name)
         log(str(m.start()) + " " + str(m.end()), "'" + sv[m.start():m.end()] + "'\n")
@@ -1077,7 +1096,10 @@ def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, l
     times[name] += endtime - startime
     return (sv, en)
 
-
+########################################################################
+### Clean up matched strings, handle things such as common errors or ###
+### non-standard list markers                                        ###
+########################################################################
 def iloListFixes(iloList):
     newLs = []
     for goal in iloList:
@@ -1210,6 +1232,10 @@ def startcheck(ls):
         res = ls
     return res
 
+#######################################################################
+### Check if the goal looks like a sentence or just a fragment that ###
+### could use a sentence head                                       ###
+#######################################################################
 def startcheckEn(ls):
     res = []
     for si in range(len(ls)):
@@ -1232,7 +1258,6 @@ def startcheckEn(ls):
     if len(res) == 0 and len(ls) == 1:
         res = ls
     return res
-
 
 ######################################
 ### For each course, extract goals ###
