@@ -707,6 +707,8 @@ def extractGoals(c):
     sv = ccparExp.sub("", sv)
     sv = betygparExp.sub("", sv)
     sv = momentExp.sub("", sv)
+
+    sv = re.sub("([0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
     
     
     en = gradeparExp.sub("", en)
