@@ -37,6 +37,10 @@ Avseende färdighet och förmåga .
 Avseende värderingsförmåga och förhållningssätt .
 Behörighetskrav .
 Efter moment .
+AI-principer .
+AI-historia .
+AI fundamentals .
+History of AI .
 FSR .
 , baserat på *
 Hon ska kunna baserat på aktuell ämnesdidaktisk forskning .
@@ -121,6 +125,7 @@ Del 3 , Projekt .
 Del 4 , Matematikämnets didaktik .
 Del 4-5 , Fluiddynamik och Dynamisk meteorologi .
 Del I , Analog skissteknik .
+Del II .
 FäRDIGHET OCH FöRMåGA (
 FäRDIGHET OCH FöRMåGA ( 10 )
 Färdigheter och förmågorX .

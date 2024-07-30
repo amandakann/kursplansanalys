@@ -366,8 +366,8 @@ dotListOExpWrap = re.compile("(Delkurs\s[0-9]+)?( o ((([^ o])|( [^o])|( o[^ ])){
 ###    sområdet XPresentera hållbar utveckling som ett ämne som kräver kritisk reflektion och diskussion utifrån olika perspektiv och visa hur detta bör komma f
 ###    ram i utbildningen för studenter XDesigna kursmål ..."
 ###   (example course KTH LH215V)
-XxListExp = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*(([^X\n\s]|( [^X\n\s])){4,}[^X\n\s])", re.S)
-XxListExpWrap = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,}(\s*.*?[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,})+", re.S)
+XxListExp = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*(([^XM\n\s]|( [^X\n\s])){4,}[^X\n\s])", re.S)
+XxListExpWrap = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*([^XM\n\s]|( [^X\n\s])){4,}(\s*.*?[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,})+", re.S)
 
 ###    (example course UMU 2PS273)
 oListExp = re.compile("[.\s][oO]\s(.*?)\\.")
@@ -708,7 +708,15 @@ def extractGoals(c):
     sv = betygparExp.sub("", sv)
     sv = momentExp.sub("", sv)
 
-    sv = re.sub("([0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
+    sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
+    sv = re.sub("IT-([^ ])", "IT\\1", sv)
+    sv = re.sub("eller -([^ ])", "eller \\1", sv)
+    sv = re.sub("([23]D)-", "\\1", sv)
+    sv = re.sub("(GUI)-", "\\1", sv)
+    en = re.sub("Karush-Kuhn-Tucker", "Karush Kuhn Tucker", en)
+    sv = re.sub("Karush-Kuhn-Tucker", "Karush Kuhn Tucker", sv)
+    sv = re.sub("Stream-", "Stream", sv)
+    sv = re.sub("X((Pointer)|(Path)|(Link))", "\\1", sv)
     
     
     en = gradeparExp.sub("", en)
