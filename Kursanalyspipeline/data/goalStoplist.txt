@@ -1,135 +1,169 @@
-Efter avklarad modul ska studenten .
-Efter avslutad kurs ska studenten , avseende värderingsförmåga och förhållningssätt .
-Efter avslutad kurs ska studenten , avseende färdighet och förmåga .
-Efter avslutad kurs ska studenten ha förmåga att .
-Efter avslutad kurs skall studenten kunna
-Efter avslutad modul ska studenten , avseende färdighet och förmåga .
-Efter avslutad modul ska studenten , avseende värderingsförmåga och förhållningssätt .
-Efter avslutad modul ska studenten .
-Efter genomgången kurs ska studenten .
-) För betyget Godkänd ska den studerande .
-För godkänd kurs ska den studerande avseende färdighet och förmåga .
-För godkänd kurs ska den studerande avseende värderingsförmåga och förhållningssätt .
-Hon ska kunna 0 .
-Hon ska kunna mso-*
-Hon ska kunna själv .
-Hon ska kunna självständigt .
-Hon ska kunna samt .
-Hon ska kunna table .
-Hon ska kunna uppvisa .
-Se respektive moment .
-Se information under innehållet på samtliga moment .
-Se under innehåll i respektive moment .
-Se under respektive moment .
-Studenten ska .
-Efter avslutat moment ska studenten .
-Efter genomgången kurs ska den studerande också .
-Efter genomgången kurs skall den studerande .
-Hon ska kunna för delkurs .
-Hon ska kunna för moment .
-Hon ska kunna grunderna i .
-Hon ska kunna inom aktuellt ämne .
 ( Samtliga delmoment )
+) För betyget Godkänd ska den studerande .
+, baserat på *
 , baserat på aktuell ämnesdidaktisk forskning .
 0001pt .
+1 kap. 9 § SFS 1992 1434 ) .
+1 kap. 9 § SFS 1992 1434 ) .
+2 ) Logistisk regression .
+2 a ordningens teori ) .
 20 systemet .
-Avseende färdighet och förmåga .
-Avseende värderingsförmåga och förhållningssätt .
-Behörighetskrav .
-Efter moment .
-AI-principer .
-AI-historia .
+5 ) Multilevel Modeling .
 AI fundamentals .
-History of AI .
-FSR .
-, baserat på *
-Hon ska kunna baserat på aktuell ämnesdidaktisk forskning .
-Färdigheter och förmågor .
-Kunskap och förmåga .
-Moment ett .
-Efter avslutad kurs ska .
-Lärandemålen gäller *
-För delkurs .
-För modul .
-Fördjupad färdighet och förmåga .
-Förväntade studieresultat , moment .
-Genomförande av examensarbete .
-KUNSKAP OCH FöRSTåELSE .
-Laboration(er)? .
-Område 0 .
-Projekt .
-Teori .
-Värderingsförmåga och förhållningsätt .
-Kunskaper .
-Denna kurs ger dig baskunskaper inom industriell ekonomi .
-Detta inkluderar .
-Efter avslutad kurs ska deltagarna .
-Efter avslutad kurs ska studenten .
-Efter avslutad kurs skall varje student kunna 1 .
-Efter genomförd kurs skall studenten kunna 1 .
-Efter genomgången kurs kommer studenterna att .
-Efter godkänd kurs ska studenten .
-Efter kursen skall studenten .
-Hon ska kunna eller teknikanknuten verksamhet .
-Hon ska kunna följande efter avslutad kurs .
-Hon ska kunna innan en prototyp ens har byggts .
-Hon ska kunna inom något visst ingenjörs .
-I detta ingår att .
-Specifikt betyder det .
-Studenten skall efter kursen .
-Studenterna kommer .
-Vara medveten om .
-X eller XDet blir väl inte för mycket deformationer ?
-Dessutom ska studenten .
-Del 1 , Matematikkunskap för undervisning ( Mathematical knowledge for teaching ) *
-Studenten skall efter kursen dessutom ha goda färdigheter i att .
-Lärandemål 1 , examineras i *
-Lärandemål 2 , examineras i *
-Lärandemål 3 , examineras i *
-Lärandemål 4 , examineras i *
-Mer precist ska studenten .
-Det innebär att studenten bör .
-Detta görs dels i form av paper .
-Detta inkluderar bl .
-Detta lärandemål gäller endast studenter *
-Efter avslutad kurs ska studenten .
-Efter genomgången kurs förväntas studenten .
-Efter genomgången kurs skall studenten .
-För kandidatexamen skall studenten .
-För godkänt resultat på kursen skall den studerande .
-Hon ska kunna del Teori ( Theory ) 4,5 hp .
-Hon ska kunna eller *
-Förväntade studieresultat Efter genomgånden delkurs förväntas studenten Utvecklingspsykologi , 4,5 hp Innehåll Dynamisk utvecklingspsykologi , sexualitet , köns .
-Detta inkluderar att .
+AI-historia .
+AI-principer .
+Akademiskt skrivande, 6,5 hp .
+Antiken och medeltiden .
+Arbetsliv 5 hp .
+Avseende färdighet , och (värderings)förmåga .
+Avseende färdighet och förmåga .
 Avseende kunskap och förståelse .
-I modul .
-Kompetens och färdigheter .
-Moment Teoridel .
-SYNTES OCH VäRDERING .
-Statistisk metod .
-Style Definitions .
-Samtliga moment .
-ärdighet och förmåga .
-ör godkänd modul ska den studerande med avseende på kunskap och förståelse .
+Avseende kunskap och förståelse .
+Avseende värderingsförmåga och förhållningssätt .
+Avsnitt Molekylär spektroskopi .
+Behörighetskrav .
+Både inom samhällsvetenskapen och naturvetenskapen .
+C-uppsats ( 15 hp ) .
+DELKURSERNAS INNEHÅLL OCH FÖRVÄNTADE STUDIERESULTAT *
 Del 1 , Ancient DNA .
 Del 1 , Förhistoriskt DNA .
 Del 1 , Läroplansteori , ämnesdidaktik , betyg och bedömning , fokus på språk .
+Del 1 , Matematikkunskap för undervisning ( Mathematical knowledge for teaching ) *
 Del 1 , Teori ( THEO ) , 8hp .
 Del 1 , Teori .
 Del 1 , teori .
 Del 1 , Ämnesdidaktik med läroplansteori .
+Del 1-3 , Atmosfärens termodynamik , Atmosfärens strålning och Atmosfärens kemi .
+Del 1-3 , Atmosfärens termodynamik , strålning och kemi .
+Del 2 , Teknikämnenas didaktik .
 Del 2 , hemuppgifter .
 Del 2 fokus svenska )
+Del 2 fokus svenska ) .
 Del 3 , Naturvetenskapsämnenas didaktik .
 Del 3 , Projekt .
 Del 4 , Matematikämnets didaktik .
 Del 4-5 , Fluiddynamik och Dynamisk meteorologi .
 Del I , Analog skissteknik .
 Del II .
+Delkursen Arkeologiska perspektiv .
+Delkurser Biologi 1 , teori och Biologi 2 , teori .
+Dels som lektion , seminarium , caseövning , eller annan pedagogiskt genomarbetad redovisningsform .
+Den studerande ska .
+Den traditionella beskrivningen av ett examensarbetes lärandemål är .
+Denna kurs ger dig baskunskaper inom industriell ekonomi .
+Design av lärande .
+Dessutom ska studenten .
+Det innebär att studenten bör .
+Detta görs dels i form av paper .
+Detta inkluderar .
+Detta inkluderar att .
+Detta inkluderar bl .
+Detta lärandemål gäller endast studenter *
+Digitaliseringsprocesser i samhället, 3 hp .
+EN INTRODUKTION I , 7,5 hp The Welfare State .
+EU , makt och demokrati .
+Efter avklarad modul ska studenten .
+Efter avslutad kurs ska .
+Efter avslutad kurs ska deltagarna .
+Efter avslutad kurs ska studenten , avseende färdighet och förmåga .
+Efter avslutad kurs ska studenten , avseende värderingsförmåga och förhållningssätt .
+Efter avslutad kurs ska studenten .
+Efter avslutad kurs ska studenten .
+Efter avslutad kurs ska studenten ha förmåga att .
+Efter avslutad kurs skall studenten kunna
+Efter avslutad kurs skall studenten kunna .
+Efter avslutad kurs skall studenten kunna .
+Efter avslutad kurs skall studenterna .
+Efter avslutad kurs skall studenterna För högre betyg bör man även .
+Efter avslutad kurs skall varje student kunna 1 .
+Efter avslutad modul ska studenten , avseende färdighet och förmåga .
+Efter avslutad modul ska studenten , avseende värderingsförmåga och förhållningssätt .
+Efter avslutad modul ska studenten .
+Efter avslutat moment ska studenten .
+Efter genomförd kurs skall studenten kunna 1 .
+Efter genomfört examensarbete ska studenten visat prov på att självständigt .
+Efter genomgången kurs förväntas studenten .
+Efter genomgången kurs kommer studenterna att .
+Efter genomgången kurs ska den studerande också .
+Efter genomgången kurs ska studenten .
+Efter genomgången kurs skall den studerande .
+Efter genomgången kurs skall studenten .
+Efter genomgången modul 1 ( Introduktion om museologi , museer och samlande ) ska studenten .
+Efter genomgången modul 1 ( Perspektiv på kommunikation för kulturarvsfältet ) skall studenten .
+Efter genomgången modul 2 ( Projektmetodik och projektledning ) skall studenten .
+Efter genomgången modul 3 ( Det komplexa kulturarvets möjligheter och utmaningar ) ska studenten .
+Efter genomgången modul 3 ( Projekt Fältarbetets uppstart ) skall studenten .
+Efter genomgången modul 4 ( Projekt Fältarbetets genomförande och projektrapport ) skall studenten .
+Efter godkänd kurs ska studenten .
+Efter godkänd modul 2 skall studenten .
+Efter godkänd modul 3 ( Magisteruppsats ) ska studenten .
+Efter kursen skall studenten .
+Efter kursen skall studenten ha .
+Efter modul 2 Muntligt berättande som resurs i yrkesliv och civilsamhället 3,5 hp ( Oral Narration as a Resource in Professional Life and Civil Society 3,5 Credits ) ska studenten .
+Efter modul 2 Muntligt berättande som resurs i yrkesliv och civilsamhället 3,5 hp ( Oral Narration as a Resource in Professional Life and Civil Society 3,5 Credits ) ska studenten .
+Efter modul 3 ( Examensarbete / Magisteruppsats ) ska studenten visa färdigheter i att .
+Efter moment .
+Efter moment .
+Ekologi 4 hp FSR .
+Ekonomi , politik och kultur .
+Empirisk finansiell ekonomi ( Empirical Finance ) .
+Entreprenörskap i samhällsförändring ( Entrepreneurship in Societal Change ) .
+Ethnography ( 3,5 credits ) .
+Exitmöjligheter för start-ups .
+Experimentella metoder inom modern fysik .
+FE1203 Organisering i. .
+FE1303 Marknadsföring i. .
+FE1403 Redovisning i. .
+FSR .
+Fastighetsinvesteringar , värdering och analys ( Real Estate Finance and Investments ) .
+Fi och Hi .
+Fi prototyper för mobila applikationer .
+Filosofi , politik och ekonomi ( Philosophy , Politics and Economics ) .
+Flerspråkighet som resurs ( Multilingualism as Resource ) .
+Fluiddynamik och dynamisk meteorologi .
+Fokus på hållbarhet .
+Fokus på process .
+Fokus på reflektion kring teori och praktik 9 .
+Fokus på resultat .
+Folkhälsa 5 hp .
+Folkhälsa ur ett samhällsvetenskapligt perspektiv .
+Form , design , presentation och kommunikation Hur heltäckande och kompetent kommuniceras examensarbetet visuellt och konceptuellt ?
+Formativ bedömning och motivation i teori och praktik .
+Forskningsmetoder i socialt arbete och uppsatsstöd , 7 hp Research Methods in Social Work .
+Fostran , undervisning och lärande .
+Framtidens digitala ekosystem .
+Framtidens digitala medieproduktion .
+Från franska revolutionen till fin de siècle .
+Från renässansen till och med upplysningen .
+Fysik 1b , teori .
+Fysiologiska svar och medicinska problem i samband med exponering för heta klimat .
+Fysiologiska svar och medicinska problem i samband med exponering för höga G-krafter .
+Fysiologiska svar och medicinska problem i samband med exponering för kalla klimat .
+Fysiologiska svar och medicinska problem i undervattensfarkoster .
+Fysiologiska svar och medicinska problem under och efter exponering för tyngdlöshet .
+Fysiologiska svar och medicinska problem vid immersion samt under exponering för höga omgivningstryck .
+Fysiologiska svar och medicinska problem vid vistelse på hög höjd .
 FäRDIGHET OCH FöRMåGA (
+FäRDIGHET OCH FöRMåGA ( .
 FäRDIGHET OCH FöRMåGA ( 10 )
+FäRDIGHET OCH FöRMåGA ( 10 ) .
+Färdigheter och förmågor .
 Färdigheter och förmågorX .
 Färdigheter och kompetenser .
+Färgkalibrering för digital fotografisk arbetsmiljö .
+Följande aspekter kommer att tas upp .
+För Det västerländska modets historia .
+För annan valbar kurs hänvisas till respektive kursplan .
+För att få godkänt på delkursen A300 Ekonomi .
+För att få högre betyg ska deltagarna dessutom visa att de kan .
+För att uppnå godkänt resultat på del av kurs valbar Specialkurs i sociologi , 7,5 hp .
+För att uppnå godkänt resultat på del av kurs valbar Specialkurs i statsvetenskap , 7,5 hp .
+För att visa hur deras vetenskap är relevant för samhället .
+För betyget Godkänd ska den studerande kunna visa .
+För delkurs .
+För detta ändamål ska studenten ha .
+För godkänd kurs ska den studerande avseende färdighet och förmåga .
+För godkänd kurs ska den studerande avseende värderingsförmåga och förhållningssätt .
 För godkänd kurs ska den studerande avseendefärdigheter och förmåga .
 För godkänd kurs ska den studerande avseendefärdigheter och förmågasjälvständigt .
 För godkänd kurs ska den studerande avseendevärderingsförmåga och förhållningssätt .
@@ -149,227 +183,18 @@ För godkänt resultat på .
 För godkänt resultat på Brottsprevention .
 För godkänt resultat på Utvärdering .
 För godkänt resultat på delkursen .
-Förväntade studieresultat hör till båda kursdelarna .
-Förväntade studieresultat är att .
-Teori och metod .
-Värdering och förhållningssätt .
-Hon ska kunna uppvisa ett korrekt .
-Värderingar och förhållningssätt .
-Antiken och medeltiden .
-Efter kursen skall studenten ha .
-Kunskaper och förståelse .
-Kunskaper och insikter .
-ULV ( *
-DELKURSERNAS INNEHÅLL OCH FÖRVÄNTADE STUDIERESULTAT *
-Den studerande ska .
-Efter avslutad kurs skall studenten kunna .
-Efter avslutad kurs skall studenterna .
-Efter avslutad kurs skall studenterna För högre betyg bör man även .
-Efter genomfört examensarbete ska studenten visat prov på att självständigt .
-Efter genomgången modul 1 ( Introduktion om museologi , museer och samlande ) ska studenten .
-Efter genomgången modul 1 ( Perspektiv på kommunikation för kulturarvsfältet ) skall studenten .
-Efter genomgången modul 2 ( Projektmetodik och projektledning ) skall studenten .
-Efter genomgången modul 3 ( Det komplexa kulturarvets möjligheter och utmaningar ) ska studenten .
-Efter genomgången modul 3 ( Projekt Fältarbetets uppstart ) skall studenten .
-Efter genomgången modul 4 ( Projekt Fältarbetets genomförande och projektrapport ) skall studenten .
-Efter godkänd modul 2 skall studenten .
-Efter godkänd modul 3 ( Magisteruppsats ) ska studenten .
-Efter modul 2 Muntligt berättande som resurs i yrkesliv och civilsamhället 3,5 hp ( Oral Narration as a Resource in Professional Life and Civil Society 3,5 Credits ) ska studenten .
-Efter modul 2 Muntligt berättande som resurs i yrkesliv och civilsamhället 3,5 hp ( Oral Narration as a Resource in Professional Life and Civil Society 3,5 Credits ) ska studenten .
-Efter modul 3 ( Examensarbete / Magisteruppsats ) ska studenten visa färdigheter i att .
-Följande aspekter kommer att tas upp .
-För annan valbar kurs hänvisas till respektive kursplan .
-För betyget Godkänd ska den studerande kunna visa .
-För detta ändamål ska studenten ha .
+För godkänt resultat på kursen skall den studerande .
 För högre betyg A-D skall studenterna dessutom visa att de kan .
 För högre betyg skall studenten också .
+För kandidatexamen skall studenten .
+För konstruktion av system på FPGA-kretsar ( SoC ) .
+För kursdelen teori .
+För modul .
 För moment 2 , Brottsdrabbade i rättssystemet och konsekvenser av brott , 4,5 hp .
 För självständigt arbete av teoretisk karaktär tillkommer dessutom att .
 För vem och varför skulle en viss exit-modell vara lämplig .
-Förslaget ska minst innehålla .
-Förstå .
-Hon ska kunna gå vidare till " Avhandlingsprojekt iii. " .
-Hon ska kunna gå vidare till Avhandlingsprojekt II .
-Hon ska kunna gå vidare till skrivandet av projektets avslutande avhandling .
-Hon ska kunna visa .
-Hon ska kunna visa en förmåga att .
-Hon ska kunna visa förmåga att .
-Hon ska kunna visa kunskap om .
-Hon ska kunna visa orienterande insikter i. .
-Hon ska kunna visa väsentligt .
-Individen med psykisk ohälsa / sjukdom , 3,5 hp Efter avslutat moment ska studenten .
-Individuellt projekt 2 ( 7,5 hp ) För godkänd kurs ska den studerande .
-Individuellt projekt II , 7,5 hp För godkänd kurs ska den studerande med avseende på kunskap och förståelse .
-Kunna .
-Kursen består av tre delmoment .
-Känna till de antaganden som .
-Känna till hur ett f. .
-Ledarskap i arbetslivet 3 hp Den studerande ska .
-Lettland , 7.5 hp Se separat kursplan .
-Momentet Proteinkemi Efter avslutat moment ska studenten .
-Momentet Proteinkemiska laborationer Efter avslutat moment ska studenten .
-Motivation , ståndpunkt Vilket hållbarhetsgrepp förespråkas i examensarbetet ?
-NET fungerar , .
-Se engelska texten .
-Se institutionens hemsida för lista på aktuella specialkurser .
-Se kursplaner för EC1111 Mikroteori med tillämpningar 15 högskolepoäng och EC1211 Makroteori med tillämpningar 15 högskolepoäng för beskrivning av kursernas mål .
-Se kursplaner för respektive vald delkurs .
-Se kursplaner för respektive vald delkurs samt kursplan för EC6902 Kandidatuppsats i nationalekonomi .
-Se under respektive moment i innehållet .
-Slutprojekt , 7,5 hp För godkänd modul ska den studerande kunna visa .
-Uppvisa kunskap om .
-Uppvisa medvetenhet om hur egna .
-Vad gäller specifika mål hänvisas .
-Vad gäller specifika mål hänvisas till delkursbeskrivningarna på institutionens webbplats .
-Vad gäller specifika mål hänvisas till punkten mål i delkursbeskrivningen på institutionens webbplats .
-Valbar fördjupningskurs , 7,5 hp För information om förväntade studieresultat för Valbar fördjupningskurs , 7,5 hp hänvisas till respektive kursplan .
-eller Det blir väl inte för mycket deformationer ?
-fyra av dessa fem delkurser utgör fr om VT2019 underlag för betyg på helkurs där antingen Information , propaganda , reklam och PR , 7,5 hp eller Internet och digitala medier , 7,5 hp ingår utöver Populärkultulturella världar , 7,5 hp , Metodologi , 7,5 hp och Digitala mediekulturer , 7,5 hp ) .
-js , där data lagras i MongoDB .
-när det gäller ordklasser .
-t. ex. Gauss lag på integralform ska kunna härledas utifrån differentialekvationen .
-1 kap. 9 § SFS 1992 1434 ) .
-1 kap. 9 § SFS 1992 1434 ) .
-2 ) Logistisk regression .
-2 a ordningens teori ) .
-5 ) Multilevel Modeling .
-Avseende färdighet , och (värderings)förmåga .
-Avsnitt Molekylär spektroskopi .
-C-uppsats ( 15 hp ) .
-Både inom samhällsvetenskapen och naturvetenskapen .
-Del 1-3 , Atmosfärens termodynamik , Atmosfärens strålning och Atmosfärens kemi .
-Del 1-3 , Atmosfärens termodynamik , strålning och kemi .
-Del 2 , Teknikämnenas didaktik .
-Del 2 fokus svenska ) .
-Delkursen Arkeologiska perspektiv .
-Delkurser Biologi 1 , teori och Biologi 2 , teori .
-Dels som lektion , seminarium , caseövning , eller annan pedagogiskt genomarbetad redovisningsform .
-Design av lärande .
-EN INTRODUKTION I , 7,5 hp The Welfare State .
-EU , makt och demokrati .
-Ekologi 4 hp FSR .
-Ekonomi , politik och kultur .
-Empirisk finansiell ekonomi ( Empirical Finance ) .
-Ethnography ( 3,5 credits ) .
-Entreprenörskap i samhällsförändring ( Entrepreneurship in Societal Change ) .
-Exitmöjligheter för start-ups .
-Experimentella metoder inom modern fysik .
-FE1203 Organisering i. .
-FE1303 Marknadsföring i. .
-FE1403 Redovisning i. .
-Fastighetsinvesteringar , värdering och analys ( Real Estate Finance and Investments ) .
-Fi och Hi .
-Fi prototyper för mobila applikationer .
-Filosofi , politik och ekonomi ( Philosophy , Politics and Economics ) .
-Flerspråkighet som resurs ( Multilingualism as Resource ) .
-Fluiddynamik och dynamisk meteorologi .
-Fokus på hållbarhet .
-Fokus på process .
-Fokus på reflektion kring teori och praktik 9 .
-Fokus på resultat .
-Folkhälsa ur ett samhällsvetenskapligt perspektiv .
-Form , design , presentation och kommunikation Hur heltäckande och kompetent kommuniceras examensarbetet visuellt och konceptuellt ?
-Formativ bedömning och motivation i teori och praktik .
-Forskningsmetoder i socialt arbete och uppsatsstöd , 7 hp Research Methods in Social Work .
-Fostran , undervisning och lärande .
-Framtidens digitala ekosystem .
-Framtidens digitala medieproduktion .
-Från franska revolutionen till fin de siècle .
-Från renässansen till och med upplysningen .
-Fysik 1b , teori .
-Fysiologiska svar och medicinska problem i samband med exponering för heta klimat .
-Fysiologiska svar och medicinska problem i samband med exponering för höga G-krafter .
-Fysiologiska svar och medicinska problem i samband med exponering för kalla klimat .
-Fysiologiska svar och medicinska problem i undervattensfarkoster .
-Fysiologiska svar och medicinska problem under och efter exponering för tyngdlöshet .
-Fysiologiska svar och medicinska problem vid immersion samt under exponering för höga omgivningstryck .
-Fysiologiska svar och medicinska problem vid vistelse på hög höjd .
-FäRDIGHET OCH FöRMåGA ( .
-FäRDIGHET OCH FöRMåGA ( 10 ) .
-Färgkalibrering för digital fotografisk arbetsmiljö .
-För Det västerländska modets historia .
-För att få godkänt på delkursen A300 Ekonomi .
-För att få högre betyg ska deltagarna dessutom visa att de kan .
-För att uppnå godkänt resultat på del av kurs valbar Specialkurs i sociologi , 7,5 hp .
-För att uppnå godkänt resultat på del av kurs valbar Specialkurs i statsvetenskap , 7,5 hp .
-För att visa hur deras vetenskap är relevant för samhället .
-För konstruktion av system på FPGA-kretsar ( SoC ) .
-För kursdelen teori .
+Fördjupad färdighet och förmåga .
 Fördjupning i psykologi .
-Genetik , 5 högskolepoäng .
-Genomförande av datainsamling .
-Geovetenskap 7,5 hp FSR .
-Grundläggande idrottsnutrition ( 4hp ) .
-Gällande kunskap och förståelse .
-HLR på vuxen .
-Halvledardetektorer ( och joniseringskammare ) .
-Historiedidaktikens teori och metod .
-Humanfysiologi , 7,5 hp FSR .
-INTRODUKTION TILL PSYKOLOGI .
-Inom delkursen Examensarbete , 15hp .
-Inom delkursen Modern standardarabiska III , 10hp .
-Inom delkursen Modern standardarabiska IV , 10hp .
-Insatser som görs beträffande substansbruksproblem inom socialt arbete i Sverige .
-Insatser som görs beträffande substansbruksproblem inom socialt arbete i Sverige Förväntade studieresultat .
-Intersektionell analys av maktstrukturer ( 7,5 hp ) .
-Introduktion till PDM .
-Introduktion till diagnossystemen DSM .
-Introduktion till internationella relationer .
-Introduktion till projekt och yrkesroll .
-Introduktion till psykologi .
-Js eller i webbläsare .
-Juridik och mänskliga rättigheter i välfärdskontexten .
-Kemi 2 , teori .
-Kritisk granskning av vetenskapliga arbeten .
-Kritiska perspektiv på Nordisk jämställdhet ( 7 .
-Lettland , 7.5 hp För godkänt resultat på delkursen Baltisk litteratur- och kulturhistoria .
-Levnadsvillkor och socioekonomisk situation för personer med funktionsnedsättning .
-Muntligt och skriftligt .
-Musik och rytm ) .
-Musik och rytm , UVK III ) .
-Musik och rytm , Vfu III ) .
-Musik och rytm , Vfu III och UVK III ) .
-PRO1 , PRO2 och PRO .
-TEN1 , LAB1 , SEM1 ) .
-TILLäMPNING OCH ANALYS / FäRDIGHET OCH FöRMåGA ( .
-Teori och praktik .
-Teorier om lärande .
-Teoriers betydelse i forskningsprocessen .
-UVK och SA ) .
-Uppsats ( självständigt arbete ) .
-Uppsats , 15 hp Essay .
-Utkast vid 70 % - seminarium ) .
-Verksamhetsledning ( Operations management ) .
-Vetenskaplig teori och metod III ( .
-Vetenskapsfilosofi I , 7.5 hp , .
-Vetenskapsfilosofi I , 7.5 hp , .
-Vfu III och UVK III ) .
-Vfu IV och Lek som värld , fenomen och redskap ) .
-Yrkesämnesdidaktik , 6 hp Subject Didactics .
-b ) hur varje metod tillämpas i praktiken .
-copingstrategier och tolkningstekniker .
-d ) fördelar och begränsningar med varje metod .
-för Kinakunskap iv. .
-för Modern kinesiska IV b. .
-för Modern kinesiska IV b. .
-för Praktisk språkfärdighet IV a. .
-för Praktisk språkfärdighet IV b. .
-för Praktisk språkfärdighet iv. .
-inkrementell , sustaining vs .
-kartor etc. , både i. .
-klass , kön och etnicitet .
-konceptval och utformning .
-och mål 5 jämställdhet .
-området för examensarbetet .
-tunnlingsfenomen och harmonisk oscillator .
-utifrån ett jämställdhetsperspektiv .
-TILLäMPNING OCH ANALYS / FäRDIGHET OCH FöRMåGA .
-Teknikprojekt , 5 hp ( Technology , 5 ECTS ) .
-Levnadsvillkor och socioekonomisk situation för äldre personer .
-Likabehandling , konflikthantering och sociala relationer .
-Litauen , 7.5 hp För godkänt resultat på delkursen Baltisk litteratur- och kulturhistoria .
-Interaktionsteknik och design .
-Internationell finansiering ( International Finance ) .
 Fördjupningsarbete i ekonomisk historia .
 Fördjupningsarbete i statsvetenskap .
 Fördjupningsseminarier , 7 hp Advanced Study Research Seminars .
@@ -377,4 +202,250 @@ Fördjupningsuppgift , 4 hp FSR .
 Företagets samhällsansvar ( Corporate Responsibility ) .
 Företagsanalys ( Corporate Enterprise Analysis ) .
 Företagsfinansiering ( Corporate Finance ) .
-Den traditionella beskrivningen av ett examensarbetes lärandemål är .
+Förslaget ska minst innehålla .
+Förstå .
+Förväntade studieresultat , moment .
+Förväntade studieresultat Efter genomgånden delkurs förväntas studenten Utvecklingspsykologi , 4,5 hp Innehåll Dynamisk utvecklingspsykologi , sexualitet , köns .
+Förväntade studieresultat hör till båda kursdelarna .
+Förväntade studieresultat är att .
+Genetik , 5 högskolepoäng .
+Genomförande av datainsamling .
+Genomförande av examensarbete .
+Geovetenskap 7,5 hp FSR .
+Grammatik .
+Grundläggande idrottsnutrition ( 4hp ) .
+Gällande kunskap och förståelse .
+HLR på vuxen .
+Halvledardetektorer ( och joniseringskammare ) .
+Historiedidaktikens teori och metod .
+History of AI .
+Hon ska kunna 0 .
+Hon ska kunna baserat på aktuell ämnesdidaktisk forskning .
+Hon ska kunna del Teori ( Theory ) 4,5 hp .
+Hon ska kunna eller *
+Hon ska kunna eller teknikanknuten verksamhet .
+Hon ska kunna följande efter avslutad kurs .
+Hon ska kunna för delkurs .
+Hon ska kunna för moment .
+Hon ska kunna grunderna i .
+Hon ska kunna gå vidare till " Avhandlingsprojekt iii. " .
+Hon ska kunna gå vidare till Avhandlingsprojekt II .
+Hon ska kunna gå vidare till skrivandet av projektets avslutande avhandling .
+Hon ska kunna innan en prototyp ens har byggts .
+Hon ska kunna inom aktuellt ämne .
+Hon ska kunna inom något visst ingenjörs .
+Hon ska kunna mso-*
+Hon ska kunna på ett vetenskapligt sätt .
+Hon ska kunna samt .
+Hon ska kunna samt .
+Hon ska kunna själv .
+Hon ska kunna självständigt .
+Hon ska kunna table .
+Hon ska kunna uppvisa .
+Hon ska kunna uppvisa ett korrekt .
+Hon ska kunna uppvisa förmåga att )
+Hon ska kunna utifrån teori och symtom .
+Hon ska kunna visa .
+Hon ska kunna visa .
+Hon ska kunna visa en förmåga att .
+Hon ska kunna visa förmåga att .
+Hon ska kunna visa kunskap om .
+Hon ska kunna visa orienterande insikter i. .
+Hon ska kunna visa väsentligt .
+Hon ska kunna;
+Humanfysiologi , 7,5 hp FSR .
+Hörförståelse (3hp)
+I detta ingår att .
+I modul .
+INTRODUKTION TILL PSYKOLOGI .
+Individen med psykisk ohälsa / sjukdom , 3,5 hp Efter avslutat moment ska studenten .
+Individuellt projekt 2 ( 7,5 hp ) För godkänd kurs ska den studerande .
+Individuellt projekt II , 7,5 hp För godkänd kurs ska den studerande med avseende på kunskap och förståelse .
+Inom delkursen Examensarbete , 15hp .
+Inom delkursen Modern standardarabiska III , 10hp .
+Inom delkursen Modern standardarabiska IV , 10hp .
+Insatser som görs beträffande substansbruksproblem inom socialt arbete i Sverige .
+Insatser som görs beträffande substansbruksproblem inom socialt arbete i Sverige Förväntade studieresultat .
+Interaktionsteknik och design .
+Internationell finansiering ( International Finance ) .
+Intersektionell analys av maktstrukturer ( 7,5 hp ) .
+Introduktion till PDM .
+Introduktion till diagnossystemen DSM .
+Introduktion till internationella relationer .
+Introduktion till projekt och yrkesroll .
+Introduktion till psykologi .
+Introduktion till sociologi, 3 hp .
+Js eller i webbläsare .
+Juridik och mänskliga rättigheter i välfärdskontexten .
+KUNSKAP OCH FöRSTåELSE .
+Kemi 2 , teori .
+Kompetens och färdigheter .
+Kritisk granskning av vetenskapliga arbeten .
+Kritiska perspektiv på Nordisk jämställdhet ( 7 .
+Kunna .
+Kunskap och förmåga .
+Kunskaper .
+Kunskaper .
+Kunskaper och förståelse .
+Kunskaper och insikter .
+Kursen består av tre delmoment .
+Känna till de antaganden som .
+Känna till hur ett f. .
+Laboration(er)? .
+Ledarskap i arbetslivet 3 hp Den studerande ska .
+Lettland , 7.5 hp För godkänt resultat på delkursen Baltisk litteratur- och kulturhistoria .
+Lettland , 7.5 hp Se separat kursplan .
+Levnadsvillkor och socioekonomisk situation för personer med funktionsnedsättning .
+Levnadsvillkor och socioekonomisk situation för äldre personer .
+Likabehandling , konflikthantering och sociala relationer .
+Litauen , 7.5 hp För godkänt resultat på delkursen Baltisk litteratur- och kulturhistoria .
+Lärandemål 1 , examineras i *
+Lärandemål 2 , examineras i *
+Lärandemål 3 , examineras i *
+Lärandemål 4 , examineras i *
+Lärandemålen gäller *
+Läsförståelse och ordkunskap (4hp)
+Mer precist ska studenten .
+Moment Teoridel .
+Moment ett .
+Momentet Proteinkemi Efter avslutat moment ska studenten .
+Momentet Proteinkemiska laborationer Efter avslutat moment ska studenten .
+Motivation , ståndpunkt Vilket hållbarhetsgrepp förespråkas i examensarbetet ?
+Muntlig framställning och uttal (4hp)
+Muntligt och skriftligt .
+Musik och rytm ) .
+Musik och rytm , UVK III ) .
+Musik och rytm , Vfu III ) .
+Musik och rytm , Vfu III och UVK III ) .
+NET fungerar , .
+Område 0 .
+Område 2. Vokabulär, fraseologi och ordbildningslära .
+Område 3. Skriftlig kommunikation .
+PRO1 , PRO2 och PRO .
+Projekt .
+SYNTES OCH VäRDERING .
+Samhällsvetenskaplig introduktion, 2 hp .
+Samtliga moment .
+Se engelska texten .
+Se information under innehållet på samtliga moment .
+Se institutionens hemsida för lista på aktuella specialkurser .
+Se kursplaner för EC1111 Mikroteori med tillämpningar 15 högskolepoäng och EC1211 Makroteori med tillämpningar 15 högskolepoäng för beskrivning av kursernas mål .
+Se kursplaner för respektive vald delkurs .
+Se kursplaner för respektive vald delkurs samt kursplan för EC6902 Kandidatuppsats i nationalekonomi .
+Se respektive moment .
+Se under innehåll i respektive moment .
+Se under respektive moment .
+Se under respektive moment i innehållet .
+Skriftlig framställning och grammatik (4hp)
+Slutprojekt , 7,5 hp För godkänd modul ska den studerande kunna visa .
+Specifikt betyder det .
+Statistisk metod .
+Statsvetenskapens grunder, 3 hp .
+Studenten ska .
+Studenten skall efter kursen .
+Studenten skall efter kursen dessutom ha goda färdigheter i att .
+Studenterna kommer .
+Style Definitions .
+Svensk och internationell ekonomisk historia del I, 7,5 hp .
+Svensk och internationell ekonomisk historia del II, 5 hp .
+TEN1 , LAB1 , SEM1 ) .
+TILLäMPNING OCH ANALYS / FäRDIGHET OCH FöRMåGA ( .
+TILLäMPNING OCH ANALYS / FäRDIGHET OCH FöRMåGA .
+Teknikprojekt , 5 hp ( Technology , 5 ECTS ) .
+Teori .
+Teori och metod .
+Teori och praktik .
+Teorier om lärande .
+Teoriers betydelse i forskningsprocessen .
+ULV ( *
+UVK och SA ) .
+Uppsats ( självständigt arbete ) .
+Uppsats , 15 hp Essay .
+Uppvisa kunskap om .
+Uppvisa medvetenhet om hur egna .
+Utkast vid 70 % - seminarium ) .
+Vad gäller specifika mål hänvisas .
+Vad gäller specifika mål hänvisas till delkursbeskrivningarna på institutionens webbplats .
+Vad gäller specifika mål hänvisas till punkten mål i delkursbeskrivningen på institutionens webbplats .
+Valbar fördjupningskurs , 7,5 hp För information om förväntade studieresultat för Valbar fördjupningskurs , 7,5 hp hänvisas till respektive kursplan .
+Vara medveten om .
+Verksamhetsledning ( Operations management ) .
+Vetenskaplig teori och metod III ( .
+Vetenskapsfilosofi I , 7.5 hp , .
+Vetenskapsfilosofi I , 7.5 hp , .
+Vfu III och UVK III ) .
+Vfu IV och Lek som värld , fenomen och redskap ) .
+Värdering och förhållningssätt .
+Värderingar och förhållningssätt .
+Värderingsförmåga och förhållningsätt .
+X eller XDet blir väl inte för mycket deformationer ?
+Yrkesämnesdidaktik , 6 hp Subject Didactics .
+b ) hur varje metod tillämpas i praktiken .
+copingstrategier och tolkningstekniker .
+d ) fördelar och begränsningar med varje metod .
+eller Det blir väl inte för mycket deformationer ?
+fyra av dessa fem delkurser utgör fr om VT2019 underlag för betyg på helkurs där antingen Information , propaganda , reklam och PR , 7,5 hp eller Internet och digitala medier , 7,5 hp ingår utöver Populärkultulturella världar , 7,5 hp , Metodologi , 7,5 hp och Digitala mediekulturer , 7,5 hp ) .
+för Kinakunskap iv. .
+för Modern kinesiska IV b. .
+för Modern kinesiska IV b. .
+för Praktisk språkfärdighet IV a. .
+för Praktisk språkfärdighet IV b. .
+för Praktisk språkfärdighet iv. .
+inkrementell , sustaining vs .
+js , där data lagras i MongoDB .
+kartor etc. , både i. .
+klass , kön och etnicitet .
+konceptval och utformning .
+när det gäller ordklasser .
+och mål 5 jämställdhet .
+området för examensarbetet .
+t. ex. Gauss lag på integralform ska kunna härledas utifrån differentialekvationen .
+tunnlingsfenomen och harmonisk oscillator .
+utifrån ett jämställdhetsperspektiv .
+ärdighet och förmåga .
+ör godkänd modul ska den studerande med avseende på kunskap och förståelse .
+Du ska kunna 0 .
+Du ska kunna baserat på aktuell ämnesdidaktisk forskning .
+Du ska kunna del Teori ( Theory ) 4,5 hp .
+Du ska kunna eller *
+Du ska kunna eller teknikanknuten verksamhet .
+Du ska kunna följande efter avslutad kurs .
+Du ska kunna för delkurs .
+Du ska kunna för moment .
+Du ska kunna grunderna i .
+Du ska kunna gå vidare till " Avhandlingsprojekt iii. " .
+Du ska kunna gå vidare till Avhandlingsprojekt II .
+Du ska kunna gå vidare till skrivandet av projektets avslutande avhandling .
+Du ska kunna innan en prototyp ens har byggts .
+Du ska kunna inom aktuellt ämne .
+Du ska kunna inom något visst ingenjörs .
+Du ska kunna mso-*
+Du ska kunna på ett vetenskapligt sätt .
+Du ska kunna samt .
+Du ska kunna samt .
+Du ska kunna själv .
+Du ska kunna självständigt .
+Du ska kunna table .
+Du ska kunna uppvisa .
+Du ska kunna uppvisa ett korrekt .
+Du ska kunna uppvisa förmåga att )
+Du ska kunna utifrån teori och symtom .
+Du ska kunna visa .
+Du ska kunna visa .
+Du ska kunna visa en förmåga att .
+Du ska kunna visa förmåga att .
+Du ska kunna visa kunskap om .
+Du ska kunna visa orienterande insikter i. .
+Du ska kunna visa väsentligt .
+Du ska kunna;
+Teori 8 hp .
+Exkursioner 2,5 hp .
+Projektarbete 4,5 hp .
+Naturtyper och artkunskap 3,5 hp FSR .
+Geovetenskap 7,5 hp FSR .
+Ekologi 4 hp FSR .
+Projektarbete 4 hp .
+Teori, 3,5 hp .
+Sveriges naturmiljö och klimat, 6 hp FSR .
+, Teoretisk del .
+, Teoretisk del .

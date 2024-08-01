@@ -572,6 +572,12 @@ umuHaLines = re.compile("\n[a-zåäö][^\n]{4,}")
 umuHaLinesWrap = re.compile("(((kunna)|(Kunskap och förståelse)|(Kunskap, undervisning och lärande,?\s?[0-9]*h?p?))\s*\n[a-zåäö](.*)(\n[a-zåäö].*){2,}(\n[a-zåäö][^\n]*))") # at least 4 lines starting with lower case
 umuHaLinesWrapEn = re.compile("((able\s*to).*\n[a-zåäö](.*)(\n[a-zåäö].*){2,}(\n[a-zåäö][^\n]*))")
 
+###    (example course UMU 5BI261)
+###    'delFSR1 tillämpa ett analytiskt förhållningsätt till ekologin i terrestra arktiska och subarktiska ekosystem från process till ett landskapsperspektiv och över olika tidsskalorFSR2 tillämpa ett analytiskt förhållningssätt till pågående och möjliga framtida effekter av klimatförändringar på arktiska som inkluderar subarktiska ekosystem och hur terrestra processer återkopplar till dessa.FSR3 formulera genomförbara hypoteser som relaterar till effekterna av en eller två potentiella interagerande ekologiska faktorer i arktiska ekosystem processer.Modul 2, ProjektarbeteFSR4tillämpa ett vetenskapligt förhållningssätt för att planera och genomföra en fördjupad vetenskaplig studie inom arktisk terrester ekologiFSR5 inhämta, bearbeta, analysera och tolka information om ekologiska processer,FSR6 analysera och jämför resultaten i relation till publicerad litteratur inom ämnet,FSR7 presentera resultaten i skrift i form av en individuellt skriven vetenskaplig rapport och muntligt i form av seminarium. Efter avklarad kurs skall studenten för betyget Väl Godkänd kunna FSR8 kritiskt granska vetenskaplig litteratur för att tolka vetenskapliga resultat.FSR9kritiskt granska vetenskaplig litteratur för att formulera följder eller konsekvenser av egna och/eller publicerade resultat i ett vidare perspektivFSR10 tillämpa kursens innehåll för att formulera nya frågeställningar och hypoteser.'
+
+umuFSRexp = re.compile('FSR[0-9]+\s*((([^F])|(F[^S])|(FS[^R])){4,})')
+umuFSRexpWrap = re.compile('(FSR[0-9]+\s*(([^FE])|(F[^S])|(FS[^R])|(E[f])|(Ef[^t])){4,}).*((FSR[0-9]+\s*(([^FE])|(F[^S])|(FS[^R])|(E[f])|(Ef[^t])){4,}).*)+')
+
 ###    (example course UMU )
 efterKunnaExp = re.compile("\n[^\n]{4,}")
 efterKunnaExpWrap = re.compile("((Efter avklarad kurs ska (den )?stude((rande)|(nten)|(nterna)) kunna)|(Efter avslutad kurs ska (den )?stude((rande)|(nten)|(nterna)) kunna)|(Efter genomgången kurs förväntas (den )?stude((rande)|(nten)|(nterna)))|(Efter genomgången kurs skall (den )?stude((rande)|(nten)|(nterna)) kunna))(\s*Kunskap och förståele)?(\s*,?\s*med avseende på)?([^\n]*)\n([a-zåäö].*\n){3,}.*", re.S)
@@ -708,7 +714,8 @@ def extractGoals(c):
     sv = betygparExp.sub("", sv)
     sv = momentExp.sub("", sv)
 
-    sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
+    # sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
+    sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1till\\2", sv)
     sv = re.sub("IT-([^ ])", "IT\\1", sv)
     sv = re.sub("eller -([^ ])", "eller \\1", sv)
     sv = re.sub("([23]D)-", "\\1", sv)
@@ -840,6 +847,8 @@ def extractGoals(c):
     sv, en = matchAndConsume(umuAvseendeExpWrap, umuAvseendeExp, sv, umuAvseendeExp, umuAvseendeExp, en, "avseende-list", iloList, iloListEn)
 
     sv, en = matchAndConsume(umuSamtligaMomentExpWrap, umuSamtligaMomentExp, sv, umuSamtligaMomentExp, umuSamtligaMomentExp, en, "Samtliga-moment-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuFSRexpWrap, umuFSRexp, sv, umuFSRexp, umuFSRexp, en, "FSR-list", iloList, iloListEn)
 
     sv, tmp = matchAndConsume(forGodkandExpWrap, forGodkandExp, sv, forGodkandExpWrap, forGodkandExp, "", "for-godkand-list", iloList, iloListEn)
     sv, tmp = matchAndConsume(forGodkandExpWrap2, forGodkandExpWrap2, sv, forGodkandExpWrap, forGodkandExp, "", "for-godkand-list", iloList, iloListEn)
@@ -1220,11 +1229,11 @@ def startcheck(ls):
             pass
         elif len(s) and s[0].islower():
             if s[:5] == "kunna":
-                s = "Hon ska " + s
+                s = "Du ska " + s
             elif s[:3] == "ha ":
-                s = "Hon ska " + s
+                s = "Du ska " + s
             else:
-                s = "Hon ska kunna " + s
+                s = "Du ska kunna " + s
         if s[-3:] == "och":
             s = s[:-3].strip()
 
