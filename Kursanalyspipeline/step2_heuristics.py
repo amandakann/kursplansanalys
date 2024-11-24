@@ -402,6 +402,9 @@ romanListIndicatorEn = re.compile("((know\s*how)|(able))\s*to:?\s*I")
 ###     2. Beskriva våra vanligaste folkhälsoproblem och folksjukdomar och redogöra för förekomst och sjukdomsorsaker
 ###     ... "
 ###   (example course SU PH03G0)
+arabicPListExp = re.compile("p>\s*\\(?\s*[0-9]+\s*[).]\s*([^<]{4,})", re.S)
+arabicPListExpWrap = re.compile("(p>\\(?\s*[0-9]+\s*[).]\s*([^<]){4,}(.*<p>\s*\\(?\s*[0-9]+\s*[).]\s*([^<]){4,})*)", re.S)
+
 arabicListExp = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}))", re.S)
 arabicListExpWrap = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}(\s*\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,})*", re.S)
 delkursExp = re.compile("Delkurs([^\\-•*·–…;]*?)hp")
@@ -532,6 +535,8 @@ umuSkaHaExpWrap = re.compile("Efter avslutad kurs ska den studerande ha\s*(\s{2,
 umuSkaHaExp2 = re.compile("\s+((([^\s.])|(\s[^\s])){4,})\\.", re.S)
 umuSkaHaExpWrap2 = re.compile("Efter avslutad kurs ska den studerande ha\s*(\s*[a-zåäö](([^\s])|(\s[^\s])){4,}\\.)+", re.S)
 
+umuHypHaExp = re.compile("- ([A-ZÅÄÖ](([^-])|(-[^ ])){4,})", re.S)
+umuHypHaExpWrap = re.compile("- [A-ZÅÄÖ](([^-])|(-[^ ])){4,}(- [A-ZÅÄÖ](([^-])|(-[^ ])){4,})+", re.S)
 
 ### Courses from UMU often have one goal per line, with no sentence
 ### structure. Some patterns to capture such goals.
@@ -653,6 +658,24 @@ ochExp = re.compile("\soch([a-zåäö]+)")
 attExp = re.compile("\satt([b-df-hj-npqs-zåäö]+)")
 
 htmlTrash = re.compile("(<[^>]*[-][^>]*>)|(</?w[^>]*>)|(<![^>]*>)|(</?m[^>]*>)|(X-NONE)")
+
+##################################################################
+### Remove hyphens that are part of the text so they don't get ###
+### mistaken for list heading markup hyphens.                  ###
+##################################################################
+def stripHyphens(inp):
+    txt = inp
+    txt = re.sub("IT-([^ ])", "IT\\1", txt)
+    txt = re.sub("([A-ZÅÄÖa-zåäö])- och ", "\\1 och ", txt)
+    txt = re.sub("eller -([^ ])", "eller \\1", txt)
+    txt = re.sub("([23]D)-", "\\1", txt)
+    txt = re.sub("(GUI)-", "\\1", txt)
+    # txtEn = re.sub("Karush-Kuhn-Tucker", "Karush Kuhn Tucker", txtEn)
+    txt = re.sub("Karush-Kuhn-Tucker", "Karush Kuhn Tucker", txt)
+    txt = re.sub("Stream-", "Stream", txt)
+
+    return txt
+    
 ################################################################################
 ### Use heuristics to extract sentences with goals from the ILO-sv free text ###
 ################################################################################
@@ -716,15 +739,7 @@ def extractGoals(c):
 
     # sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
     sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1till\\2", sv)
-    sv = re.sub("IT-([^ ])", "IT\\1", sv)
-    sv = re.sub("eller -([^ ])", "eller \\1", sv)
-    sv = re.sub("([23]D)-", "\\1", sv)
-    sv = re.sub("(GUI)-", "\\1", sv)
-    en = re.sub("Karush-Kuhn-Tucker", "Karush Kuhn Tucker", en)
-    sv = re.sub("Karush-Kuhn-Tucker", "Karush Kuhn Tucker", sv)
-    sv = re.sub("Stream-", "Stream", sv)
     sv = re.sub("X((Pointer)|(Path)|(Link))", "\\1", sv)
-    
     
     en = gradeparExp.sub("", en)
 
@@ -815,12 +830,20 @@ def extractGoals(c):
 
     sv, en = matchAndConsume(XxListExpWrap, XxListExp, sv, XxListExpWrap, XxListExp, en, "Xx-list", iloList, iloListEn)
     
+    sv, en = matchAndConsume(arabicPListExpWrap, arabicPListExp, sv, arabicPListExpWrap, arabicPListExp, en, "arabic-P-list", iloList, iloListEn)
+
+    if pHypListIndicator.search(sv) or pHypListIndicator.search(en): # faster check before slow matching
+        sv, en = matchAndConsume(pHypListExpWrap, pHypListExp, sv, pHypListExpWrapEn, pHypListExp, en, "p-hyp-list", iloList, iloListEn)
+
     tmp = sv.replace(".o", ". o").replace("Färdighet och förmåga", " ").replace("Kunskap och förståelse", " ").replace("Värderingsförmåga och förhållningssätt", " ")
     sv, en = matchAndConsume(oListExpWrap, oListExp, tmp, oListExpWrap, oListExp, en, "o-list", iloList, iloListEn)
 
     sv, en = matchAndConsume(umuHaLinesWrap, umuHaLines, sv, umuHaLinesWrapEn, umuHaLines, en, "umu-ha-lines", iloList, iloListEn)
-    
-    sv, tmp = matchAndConsumeSpecial(umuEfterHypWrapSpec2, umuEfterHyp, sv, umuEfterHyp, umuEfterHyp, "", "efter-hyphen-Spec-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuFSRexpWrap, umuFSRexp, sv, umuFSRexp, umuFSRexp, en, "FSR-list", iloList, iloListEn)
+
+    svTmp = stripHyphens(sv)
+    sv, tmp = matchAndConsumeSpecial(umuEfterHypWrapSpec2, umuEfterHyp, svTmp, umuEfterHyp, umuEfterHyp, "", "efter-hyphen-Spec-list", iloList, iloListEn)
     
     if umuEfterHypIndicator.search(sv) and not umuEfterHypNegativeIndicator.search(sv):
         sv, en = matchAndConsumeSpecial(umuEfterHypWrapSpec, umuEfterHyp, sv, umuEfterHyp, umuEfterHyp, en, "efter-hyphen-Spec-list", iloList, iloListEn)
@@ -829,7 +852,9 @@ def extractGoals(c):
     sv, en = matchAndConsume(vetaHurExp, vetaHurExp, sv, vetaHurExp, vetaHurExp, en, "veta-hur-list", iloList, iloListEn)
     
     sv, tmp = matchAndConsume(formuleraExp, formuleraExp, sv, formuleraExp, formuleraExp, "", "formulera-list", iloList, iloListEn)
-    
+
+    sv, tmp = matchAndConsume(umuHypHaExpWrap, umuHypHaExp, sv, umuHypHaExp, umuHypHaExp, "", "umu-hyphen-Ha-exp", iloList, iloListEn) 
+
     if inlineHyphenIndicator.search(sv) or inlineHyphenIndicator.search(en):
         sv, en = matchAndConsume(inlineHyphenListExpWrap, inlineHyphenListExp, sv, inlineHyphenListExpWrap, inlineHyphenListExp, en, "inline-hyphen-list", iloList, iloListEn)
     
@@ -847,8 +872,6 @@ def extractGoals(c):
     sv, en = matchAndConsume(umuAvseendeExpWrap, umuAvseendeExp, sv, umuAvseendeExp, umuAvseendeExp, en, "avseende-list", iloList, iloListEn)
 
     sv, en = matchAndConsume(umuSamtligaMomentExpWrap, umuSamtligaMomentExp, sv, umuSamtligaMomentExp, umuSamtligaMomentExp, en, "Samtliga-moment-list", iloList, iloListEn)
-
-    sv, en = matchAndConsume(umuFSRexpWrap, umuFSRexp, sv, umuFSRexp, umuFSRexp, en, "FSR-list", iloList, iloListEn)
 
     sv, tmp = matchAndConsume(forGodkandExpWrap, forGodkandExp, sv, forGodkandExpWrap, forGodkandExp, "", "for-godkand-list", iloList, iloListEn)
     sv, tmp = matchAndConsume(forGodkandExpWrap2, forGodkandExpWrap2, sv, forGodkandExpWrap, forGodkandExp, "", "for-godkand-list", iloList, iloListEn)
@@ -877,9 +900,6 @@ def extractGoals(c):
 
     sv, en = matchAndConsume(kunnaHypExpWrap, kunnaHypExp, sv, kunnaHypExpWrapEn, kunnaHypExp, en, "kunna-hyp-exp", iloList, iloListEn)
     sv, en = matchAndConsume(kunnaHypExpWrap2, kunnaHypExp, sv, kunnaHypExpWrap2, kunnaHypExp, en, "kunna-hyp-exp-2", iloList, iloListEn)
-
-    if pHypListIndicator.search(sv) or pHypListIndicator.search(en): # faster check before slow matching
-        sv, en = matchAndConsume(pHypListExpWrap, pHypListExp, sv, pHypListExpWrapEn, pHypListExp, en, "p-hyp-list", iloList, iloListEn)
 
     if len(iloList) <= 0 and pRawListIndicator.search(sv):
         sv, tmp = matchAndConsume(pRawListExpWrap, pRawListExp, sv, pRawListExpWrapEn, pRawListExp, "", "p-raw-list", iloList, iloListEn)
