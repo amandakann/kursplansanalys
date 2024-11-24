@@ -847,7 +847,7 @@ def tokenMatchTags(tok, src, sIdx, isSwedish, everyWordCanMatch):
                 
                 for cIdx in range(len(clauses)):
                     clTag = clauses[cIdx]
-                    if clauses[:len(el)] == el:
+                    if clTag[:len(el)] == el:
                         # rest of match should be inside this clause
                         noClauseMatch = False
 
@@ -863,13 +863,13 @@ def tokenMatchTags(tok, src, sIdx, isSwedish, everyWordCanMatch):
                                 clauses2 = src[sIdx2]["c"].split("|")
                                 clauses2.reverse()
                                 if cIdx < len(clauses2) and clauses2[cIdx][:len(el)] == clauses[cIdx][:len(el)] and not clauses2[cIdx][-1] == "B": # if we have the clause continues
-                                    matchPhrase.append(src[sIdx2])
+                                    matchClause.append(src[sIdx2])
                                 else:
                                     break
 
                             # make a copy of the match, but strip out the outer phrases
                             copy = []
-                            for wtl in matchPhrase:
+                            for wtl in matchClause:
                                 newWtl = {"w":wtl["w"], "t":wtl["t"], "l":wtl["l"], "p":wtl["p"]}
                                 newWtl["c"] = wtl["c"][cIdx:]
                                 copy.append(newWtl)
