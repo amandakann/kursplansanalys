@@ -486,7 +486,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         #          with expressions "verb1 * object"
                         #          overlapping "verb2" or "verb3"
                         overlapIsOK = 0
-                        if ifirst < jfirst:
+                        if ifirst <= jfirst:
                             overlapIsOK = checkOverlapsForOch(candidates[i], candidates[j], s, isSwedish)
                         elif jfirst < ifirst:
                             overlapIsOK = checkOverlapsForOch(candidates[j], candidates[i], s, isSwedish)
