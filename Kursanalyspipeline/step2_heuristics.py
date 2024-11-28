@@ -321,7 +321,7 @@ htmlListExpIndicator = re.compile("<[lL][Ii]>")
 ###   "<p>Efter genomförd kurs ska studenten kunna</p><p>• upprätta resurser för ... ,</p><p>\u2022 utföra spaning ..."
 ###   (example course KTH FEP3370)
 pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)", re.S)
-pListExpWrap = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?kunna:?\s*(</\s*p>)?(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>)+", re.S)
+pListExpWrap = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?kunna:?\s*(</\s*p>)?\s*(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>\s*)+", re.S)
 pListExpWrapEn = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?((know\s*how)|(able))\s*to:?\s*(</\s*p>)?(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>)+", re.S)
 
 ### KTH courses with LM1, LM2 ... etc
