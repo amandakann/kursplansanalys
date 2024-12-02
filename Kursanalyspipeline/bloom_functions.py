@@ -352,7 +352,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
         # Try suggestions from the spell check
         if isSwedish and spelling and not lemma in lex:
             found = 0
-            if lemma.lower() in spellings:
+            if lemma.lower() in spellings and s[i]["t"][:2] != "pm":
                 for v in spellings[lemma.lower()]:
                     if v in lex:
                         lemma = v
@@ -360,7 +360,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         s[i]["t"] = "vb.inf.akt"
                         found = 1
                         break
-            if not found and s[i]["w"].lower() in spellings:
+            if not found and s[i]["w"].lower() in spellings and s[i]["t"][:2] != "pm":
                 for v in spellings[s[i]["w"].lower()]:
                     if v in lex:
                         lemma = v
@@ -746,11 +746,11 @@ def tokenMatch(tok, src, isSwedish):
                 # log("Regex match: " + r + " matched " + str(src))
                 return 1
             if spelling:
-                if src["w"] in spellings:
+                if src["w"] in spellings and src["t"][:2] != "pm":
                     for v in spellings[src["w"]]:
                         if re.fullmatch(r, v, re.I):
                             return 1
-                if src["l"] in spellings:
+                if src["l"] in spellings and src["t"][:2] != "pm":
                     for v in spellings[src["l"]]:
                         if re.fullmatch(r, v, re.I):
                             return 1
@@ -764,11 +764,11 @@ def tokenMatch(tok, src, isSwedish):
             if tl == src["w"].lower() or tl == src["l"].lower():
                 return 1
             if spelling:
-                if src["w"] in spellings:
+                if src["w"] in spellings and src["t"][:2] != "pm":
                     for v in spellings[src["w"]]:
                         if tl == v:
                             return 1
-                if src["l"] in spellings:
+                if src["l"] in spellings and src["t"][:2] != "pm":
                     for v in spellings[src["l"]]:
                         if tl == v:
                             return 1
