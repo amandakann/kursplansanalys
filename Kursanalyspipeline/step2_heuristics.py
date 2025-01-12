@@ -370,8 +370,8 @@ XxListExp = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*(([^XM\n\s]|( [^X\n\s])){4,}
 XxListExpWrap = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*([^XM\n\s]|( [^X\n\s])){4,}(\s*.*?[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,})+", re.S)
 
 ###    (example course UMU 2PS273)
-oListExp = re.compile("[.\s][oO]\s(.*?)\\.")
-oListExpWrap = re.compile("([.\s][oO]\s.*){3,}")
+oListExp = re.compile("[oO]\s((([^\n])|(\n[^\n])){4,}?)\\.")
+oListExpWrap = re.compile("([.\s][oO]\s(([^\n])|(\n[^\n]))*){3,}")
 
 ### Some courses list goals on one long line with " - " as a marker for each goal
 ###   "ska studenten kunna 1. Kunskap och förståelse - Redogöra
@@ -380,7 +380,8 @@ oListExpWrap = re.compile("([.\s][oO]\s.*){3,}")
 ###   (kunskap) - Förstå och med egna ord förklara teorier ..."
 ###   (example course SU SV7098)
 inlineHyphenListExp = re.compile(" - +(([^ ]|( [^- ]))+)", re.S)
-inlineHyphenListExpWrap = re.compile("( - +([^ ]|( [^- ])){4,})((\s{2,}[^-]*)?( - +([^ ]|( [^- ])){4,}))*", re.S)
+# inlineHyphenListExpWrap = re.compile("( - +([^ ]|( [^- ])){4,})((\s{2,}[^-]*)?( - +([^ ]|( [^- ])){4,}))*", re.S)
+inlineHyphenListExpWrap = re.compile("( - +([^ ]|( [^- ])){4,})(.*( - +(([^\n ])|( [^- ])|(\n[^\n])){4,}))+", re.S)
 inlineHyphenIndicator = re.compile(" - ")
 
 ### Some courses enumerate goals with Roman numerals
@@ -389,7 +390,8 @@ inlineHyphenIndicator = re.compile(" - ")
 ###     II.    formulera statistiska modeller för elementära problem inom olika tillämpningsområden,
 ###     ... "
 ###   (example course SU ST111G)
-romanListExp = re.compile("[IVX]+\s*[.]\s+([^IVX]*)", re.S)
+# romanListExp = re.compile("[IVX]+\s*[.]\s+([^IVX]*)", re.S)
+romanListExp = re.compile("[IVX]+\s*[.]\s+((([^IVX\n])|(\n[^\n]))*)", re.S)
 romanListExpWrap = re.compile("([A-ZÅÄÖ].*?kunna:?\s*)(\s*I\s*[.]\s+([^IVX ]|( [^IVX ]))+)(\s*[IVX]+\s*[.]\s+([^IVX ]|( [^IVX ]))+)*", re.S)
 
 romanListIndicator = re.compile("kunna:?\s*I")
@@ -435,7 +437,7 @@ skaKunnaExpEn = re.compile("[Aa]ble\s*to(.{4,}?)[\n]")
 ### Some courses write goals as "Efter kursen kan ... " (less common than "ska kunna")
 ###   "Studenten kan tillämpa grundläggande arbetsmarknadsekonomiska begrepp ..."
 ###   (example course SU ATF012)
-kanExp = re.compile("\skan\s(([a-zåäö]*[^s]\s[^.]+)[\.]|(\s\s)|\n)", re.I)
+kanExp = re.compile("\skan\s([a-zåäö]*[^s]\s[^.]+)(?=$|\n|\s\s|[.])", re.I);
 kanExpEn = re.compile("\s(((know\s*how)|(able))\s*to\s(([^.]+\s[^.]+)[\.]|(\s\s)|\n))", re.I)
 
 ### Goals can be written as "studenten ska vara förtrogen med" or
@@ -454,8 +456,8 @@ formagaExpEn = re.compile("\sability.*?to\s*(([^.]{4,}?)(\.|\s\s))", re.I)
 ###   "... ska studenten kunna 1.Redovisa, diskutera och jämföra olika
 ###   historiskt kriminologiska studier. 2.Beskriva, ..."
 ###   (example course SU AKA132)
-kunna1exp = re.compile("[0-9]+[. ]?\s*([^0-9]{4,})")
-kunna1expWrap = re.compile("kunna.*(1.*?[^0-9]{4,}2.*?[^0-9]{4,}([0-9].*?[^0-9]{4,})*)")
+kunna1exp = re.compile("[0-9]+[. ]?\s*([^0-9]{4,})(?=$|\n\n|\s\s|[.0-9])")
+kunna1expWrap = re.compile("kunna[^\n]*(1[0-9]+[^0-9]{4,}2[0-9]+[^0-9]{4,}([0-9]+[^0-9]{4,}?)*)(?=$|(\n\n)|(\s\s)|[.])")
 kunna1expWrapEn = re.compile("((know\s*how)|(able))\s*to.*(1.*?[^0-9]{4,}2.*?[^0-9]{4,}([0-9].*?[^0-9]{4,})*)")
 
 kunna1sub = re.compile("(,?\s*Efter avslutad kurs ska studenten)*\s*för betyget (.*?) kunna")
@@ -465,28 +467,29 @@ kunna1sub = re.compile("(,?\s*Efter avslutad kurs ska studenten)*\s*för betyget
 ###    "Efter avslutad kurs ska studenten kunna Visa goda kunskaper
 ###    ... konsekvenser. Analysera och tolka händelser ... "
 ###   (example course KTH MJ2416)
-kunnaCapExp = re.compile("[\s>]([A-ZÅÄÖ](([^\s<\n])|([^<\n][^\s<\n])){4,})", re.S)
-kunnaCapExpWrap = re.compile("kunna:?\s*[A-ZÅÄÖ][^\n]*", re.S)
+kunnaCapExp = re.compile("[\s>]([A-ZÅÄÖ](([^<\n\s])|(\s[^\s])|(\s\s[^\sA-ZÅÄÖ])|(\n[^\nA-ZÅÄÖ])){4,})", re.S)
+kunnaCapExpWrap = re.compile("kunna:?\s*([A-ZÅÄÖ]([^\n]|(\n[^\n]))*){2,}?(?=$|\n\n)", re.S)
 kunnaCapExpWrapEn = re.compile("((know\s*how)|(able))\s*to:?\s*[A-ZÅÄÖ].*", re.S)
 
-kunnaHypExp = re.compile(" -([a-zåäöA-ZÅÄÖ][^\-<]*[^\-<\s])", re.S)
-kunnaHypExpWrap = re.compile("[A-ZÅÄÖ][^A-ZÅÄÖ]*?((\sska)|(kunna))[^-]*:?(\s+-[a-zåäöA-ZÅÄÖ][^\-<]*[^\-<\s])+", re.S)
+kunnaHypExp = re.compile("\s*-\s*([a-zåäöA-ZÅÄÖ]([^\-<]|([a-zA-ZåäöÅÄÖ0-9]-[a-zA-ZåäöÅÄÖ0-9]))*[^\-<\s])", re.S)
+kunnaHypExpWrap = re.compile("[A-ZÅÄÖ][^A-ZÅÄÖ]*?((\sska)|(kunna))[^-]*:?(\s*-\s?[a-zåäöA-ZÅÄÖ]([^\-<\n]|(\n[^\n]))*)(.*?\s*-\s?[a-zåäöA-ZÅÄÖ]([^\-<\n]|(\n[^\n]))*)+", re.S)
+
 kunnaHypExpWrapEn = re.compile("[A-Z][^A-Z]*?((know\s*how)|(able))\s*to:?\s*(\s+ -[a-zA-Z][^\-<]*[^\-<\s])+", re.S)
 
-kunnaHypExpWrap2 = re.compile("([^a-zåäöA-ZÅÄÖ]-[a-zåäöA-ZÅÄÖ][^\-<]*[^\-<\s])+", re.S)
+kunnaHypExpWrap2 = re.compile("([^a-zåäöA-ZÅÄÖ]-[a-zåäöA-ZÅÄÖ][^\-<]{4,}[^\-<\s])(.*?([^a-zåäöA-ZÅÄÖ]-[a-zåäöA-ZÅÄÖ][^\-<]{4,}[^\-<\s]))+", re.S)
 
 # Courses can have lists using HTML <p>-tags for list items but not be
 # captured by the more precise pattern above. For example the course
 # KTH IE1205 which has "<p>- "
 
-pHypListExp = re.compile("<p>-\s(.*?)\s*(?:</?p>)", re.S)
-pHypListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))[^<>]*(</\s*p>)?(<p>-\s[^<>]*</?p>)([^<>]*<p>-\s[^<>]*</?p>)+", re.S)
+pHypListExp = re.compile("<p>-\s?(.*?)\s*(?:</?p>)", re.S)
+pHypListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))[^<>]*(</\s*p>)?(<p>-\s?[^<>]*</?p>)([^<>]*<p>-\s?[^<>]*</?p>)+", re.S)
 pHypListExpWrapEn = re.compile("(<p>)?[^<>]*((can)|(know\s*how\s*to)|(able\s*to))[^<>]*(</\s*p>)?(<p>-\s[^<>]*</?p>)([^<>]*<p>-\s[^<>]*</?p>)+", re.S)
 
 pHypListIndicator = re.compile("<p>-")
 # Courses KTH CM2006 CM1004 has "<p>" but no dot or hyphen at all
 pRawListExp = re.compile("<p>(.*?)(?:</?p>)", re.S)
-pRawListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))\s*:?\s*(</\s*p>)?(<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+", re.S)
+pRawListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))\s*:?\s*((</\s*p>)?(\s*<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+?)\s*(?:((\n\n)|$|(<p>för att)))", re.S)
 pRawListExpWrapEn = re.compile("(<p>)?[^<>]*((can)|(know\s*how\s*to)|(able\s*to))\s*:?\s*(</\s*p>)?(<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+", re.S)
 
 pRawListIndicator = re.compile("((ska)|(kunna))\s*:?\s*</\s*p>")
@@ -580,8 +583,8 @@ umuHaLinesWrapEn = re.compile("((able\s*to).*\n[a-zåäö](.*)(\n[a-zåäö].*){
 ###    (example course UMU 5BI261)
 ###    'delFSR1 tillämpa ett analytiskt förhållningsätt till ekologin i terrestra arktiska och subarktiska ekosystem från process till ett landskapsperspektiv och över olika tidsskalorFSR2 tillämpa ett analytiskt förhållningssätt till pågående och möjliga framtida effekter av klimatförändringar på arktiska som inkluderar subarktiska ekosystem och hur terrestra processer återkopplar till dessa.FSR3 formulera genomförbara hypoteser som relaterar till effekterna av en eller två potentiella interagerande ekologiska faktorer i arktiska ekosystem processer.Modul 2, ProjektarbeteFSR4tillämpa ett vetenskapligt förhållningssätt för att planera och genomföra en fördjupad vetenskaplig studie inom arktisk terrester ekologiFSR5 inhämta, bearbeta, analysera och tolka information om ekologiska processer,FSR6 analysera och jämför resultaten i relation till publicerad litteratur inom ämnet,FSR7 presentera resultaten i skrift i form av en individuellt skriven vetenskaplig rapport och muntligt i form av seminarium. Efter avklarad kurs skall studenten för betyget Väl Godkänd kunna FSR8 kritiskt granska vetenskaplig litteratur för att tolka vetenskapliga resultat.FSR9kritiskt granska vetenskaplig litteratur för att formulera följder eller konsekvenser av egna och/eller publicerade resultat i ett vidare perspektivFSR10 tillämpa kursens innehåll för att formulera nya frågeställningar och hypoteser.'
 
-umuFSRexp = re.compile('FSR[0-9]+\s*((([^F])|(F[^S])|(FS[^R])){4,})')
-umuFSRexpWrap = re.compile('(FSR[0-9]+\s*(([^FE])|(F[^S])|(FS[^R])|(E[f])|(Ef[^t])){4,}).*((FSR[0-9]+\s*(([^FE])|(F[^S])|(FS[^R])|(E[f])|(Ef[^t])){4,}).*)+')
+umuFSRexp = re.compile('FSR\s*[0-9]+[.]?\s*(.{4,}?)(?=((FSR)|(Modul)|(\n\n)|$|(Förvänt)|(Efter)))', re.S)
+umuFSRexpWrap = re.compile('(FSR\s*[0-9]+[.]?\s*.{4,})(.*(FSR\s*[0-9]+[.]?\s*.{4,}))+', re.S)
 
 ###    (example course UMU )
 efterKunnaExp = re.compile("\n[^\n]{4,}")
@@ -770,7 +773,7 @@ def extractGoals(c):
     ########################################
 
     sv = ochExp.sub(" och \\1", sv)
-    sv = attExp.sub(" och \\1", sv)
+    sv = attExp.sub(" att \\1", sv)
     
     ###################################################################
     ### Remove motivation for having these goals from the goal text ###
@@ -974,8 +977,10 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
     iloList = []
 
     startime = timer()
+    log("matchAndConsume starting!", name)
     m = allExp.search(sv)
-    
+    log("matchAndConsume initial search finished!", name)
+
     while m:
         log("\nFOUND", name)
         log("\n" + str(m.start()) + " " + str(m.end()), "'" + sv[m.start():m.end()] + "'\n")
@@ -1264,7 +1269,7 @@ def startcheck(ls):
             continue # most likely a faulty match, skip
         if s[-5:] == "skall":
             continue # most likely a faulty match, skip
-        if not s[-1] in string.punctuation:
+        if len(s) and not s[-1] in string.punctuation:
             s += " ."
         res.append(s)
     if len(res) == 0 and len(ls) == 1:
