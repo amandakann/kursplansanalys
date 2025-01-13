@@ -409,6 +409,11 @@ arabicPListExpWrap = re.compile("(p>\\(?\s*[0-9]+\s*[).]\s*([^<]){4,}(.*<p>\s*\\
 
 arabicListExp = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}))", re.S)
 arabicListExpWrap = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}(\s*\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,})*", re.S)
+
+arabicListExpB = re.compile("\\(?\s*[0-9]+\s*[).]?\s+([^0-9 ].{4,}?)(?=$|\n|(\s\s)|(\\(?[0-9]))", re.S)
+arabicListExpBWrap = re.compile("\\(?\s*1\s*[).]?\s*.{4,}\\(?\s*2\s*[).]?\s*.{4,}\\(?\s*3\s*[).]?\s*.{4,}\\(?\s*4\s*[).]?\s*.{4,}\\(?\s*[0-9]+\s*[).]?\s*.{4,}(?=$|\n|(\s\s))", re.S)
+
+
 delkursExp = re.compile("Delkurs([^\\-•*·–…;]*?)hp")
 delkursExp2 = re.compile("Delkurs\s[0-9]+[.]?,?(\s*[^A-ZÅÄÖ\\-,•*·–…;\n]*)")
 
@@ -457,7 +462,7 @@ formagaExpEn = re.compile("\sability.*?to\s*(([^.]{4,}?)(\.|\s\s))", re.I)
 ###   historiskt kriminologiska studier. 2.Beskriva, ..."
 ###   (example course SU AKA132)
 kunna1exp = re.compile("[0-9]+[. ]?\s*([^0-9]{4,})(?=$|\n\n|\s\s|[.0-9])")
-kunna1expWrap = re.compile("kunna[^\n]*(1[0-9]+[^0-9]{4,}2[0-9]+[^0-9]{4,}([0-9]+[^0-9]{4,}?)*)(?=$|(\n\n)|(\s\s)|[.])")
+kunna1expWrap = re.compile("kunna[^\n]*(1[0-9]*[^0-9]{4,}2[0-9]*[^0-9]{4,}([0-9]+[^0-9]{4,}?)*)(?=$|(\n\n)|(\s\s)|[.])")
 kunna1expWrapEn = re.compile("((know\s*how)|(able))\s*to.*(1.*?[^0-9]{4,}2.*?[^0-9]{4,}([0-9].*?[^0-9]{4,})*)")
 
 kunna1sub = re.compile("(,?\s*Efter avslutad kurs ska studenten)*\s*för betyget (.*?) kunna")
@@ -866,6 +871,8 @@ def extractGoals(c):
 
     sv, en = matchAndConsume(arabicListExpWrap, arabicListExp, sv, arabicListExpWrap, arabicListExp, en, "arabic-list", iloList, iloListEn)
 
+    sv, en = matchAndConsume(arabicListExpBWrap, arabicListExpB, sv, arabicListExpWrap, arabicListExp, en, "arabic-list-B", iloList, iloListEn)
+
     sv, en = matchAndConsume(umuSkaHaExpWrap2, umuSkaHaExp2, sv, umuSkaHaExp, umuSkaHaExp, en, "umu-ska-ha-list-2", iloList, iloListEn)
     sv, en = matchAndConsume(umuSkaHaExpWrap, umuSkaHaExp, sv, umuSkaHaExp, umuSkaHaExp, en, "umu-ska-ha-list", iloList, iloListEn)
                              
@@ -992,6 +999,7 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
         txt = sv[m.start():m.end()]
         
         ls = goalExp.findall(txt)
+        
         for l in ls:
             if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
                 l = l[0]
@@ -1079,6 +1087,7 @@ def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, l
         
         txt = sv[m.start():m.end()]
         ls = goalExp.findall(txt)
+
         for l in ls: 
             if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
                 l = l[0]
