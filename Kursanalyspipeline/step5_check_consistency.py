@@ -508,12 +508,24 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
                 if votes[vv] > vm:
                     vm = votes[vv]
                     v = vv
+
+            # handle ties
+            topAlternatives = []
+            for vv in votes:
+                if votes[vv] == vm:
+                    topAlternatives.append(vv)
+            voteWeight = 1
+            if len(topAlternatives) > 1:
+                voteWeight = 1 / float(len(topAlternatives))
+            
             if not "common" in lex:
                 lex["common"] = {}
-            if not v in lex["common"]:
-                lex["common"][v] = 1
-            else:
-                lex["common"][v] += 1
+            
+            for v in topAlternatives:
+                if not v in lex["common"]:
+                    lex["common"][v] = voteWeight
+                else:
+                    lex["common"][v] += voteWeight
 
     flat.sort()
             
@@ -545,6 +557,15 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
             if votes[vv] > vm:
                 vm = votes[vv]
                 v = vv
+        
+        # handle ties
+        topAlternatives = []
+        for vv in votes:
+            if votes[vv] == vm:
+                topAlternatives.append(vv)
+        voteWeight = 1
+        if len(topAlternatives) > 1:
+            voteWeight = 1 / float(len(topAlternatives))
         
         for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
             if not "max" in lex:
@@ -581,10 +602,12 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
 
             if not "common" in lex:
                 lex["common"] = {}
-            if not v in lex["common"]:
-                lex["common"][v] = 1
-            else:
-                lex["common"][v] += 1
+                
+            for v in topAlternatives:
+                if not v in lex["common"]:
+                    lex["common"][v] = voteWeight
+                else:
+                    lex["common"][v] += voteWeight
 
             if not "mean" in lex:
                 lex["mean"] = []
@@ -905,7 +928,10 @@ def printBloomStats():
             if totGoals > 0:
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+            if isinstance(c, float):
+                print ("{0: >2}: {1: >5} ({2:})".format(val, "{:4.1f}".format(c), procs))
+            else:
+                print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
         else:
             print ("{0: >2}: {1: >5} (0%)".format(val, 0))
     print (tmp, "goals with Bloom data")
@@ -1334,13 +1360,19 @@ def printBloomHelper(f, label, lex, n):
                     proc = c / float(tot)
                 else:
                     proc = 0
-                s += "{0: >6} ".format(c)
+                if isinstance(c, float):
+                    s += "{0: >6} ".format("{:4.1f}".format(c))
+                else:
+                    s += "{0: >6} ".format(c)
 
                 s2 += "{0: >6} ".format("{0: 2.1%}".format(proc))
             else:
                 s += "{0: >6} ".format(0)
                 s2 += "    0% "
-        s += "{0: >9}".format(tot)
+        if isinstance(tot, float):
+            s += "{0: >8.1f}".format(tot)
+        else:
+            s += "{0: >9}".format(tot)
         print (s)
 
         if tots > 0:
@@ -1403,13 +1435,19 @@ def printBloomHelper2(f, label, lex):
                     proc = c / float(tot)
                 else:
                     proc = 0
-                s += "{0: >9} ".format(c)
+                if isinstance(c, float):
+                    s += "{0: >6} ".format("{:4.1f}".format(c))
+                else:
+                    s += "{0: >6} ".format(c)
 
                 s2 += "{0: >9} ".format("{0: 2.1%}".format(proc))
             else:
                 s += "{0: >9} ".format(0)
                 s2 += "       0% "
-        s += "{0: >9}".format(tot)
+        if isinstance(tot, float):
+            s += "{0: >8.1f}".format(tot)
+        else:
+            s += "{0: >9}".format(tot)
         print (s)
 
         if tots > 0:
