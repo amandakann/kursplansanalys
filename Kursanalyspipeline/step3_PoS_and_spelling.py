@@ -509,7 +509,7 @@ for chunk in chunks:
             try:
                 t = reply.decode("latin-1")
                 p = t.find("<Root>")
-                t = t[p:].replace(">&</w>", ">&amp;</w>")
+                t = t[p:].replace(">&</w>", ">&amp;</w>").replace("><</w>", ">&lt;</w>").replace(">></w>", ">&gt;</w>")
                 xml = XML.fromstring(t)
             except Exception as e:
                 log ("WARNING: XML parsing failed:\n\n" + str(e) + "\n\n" + t + "\n\n" + text + "\n\n")
