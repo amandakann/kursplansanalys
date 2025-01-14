@@ -632,6 +632,8 @@ kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
 
 # KTH EF1113, praktisk erfarenhet av att
 
+onelineExp = re.compile("(.{4,})", re.S)
+onelineExpWrap = re.compile("^[^\n]*((godkän)|(efter)|(avslutad)|(avklarad))[^\n]*((förväntas)|(ska)|(kunna))([^\n]{4,})(?=\n*$)", re.I)
 
 
 #########################################################################
@@ -953,6 +955,9 @@ def extractGoals(c):
 
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
         sv, en = matchAndConsume(kanExp, kanExp, sv, kanExpEn, kanExpEn, en, "kan-exp", iloList, iloListEn) 
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(onelineExpWrap, onelineExp, sv, onelineExpWrap, onelineExp, en, "one-line", iloList, iloListEn)
 
     ### If nothing is found, try to add the whole text ###
     if len(iloList) <= 0:
