@@ -445,9 +445,16 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
                 votes[bLevel] = 1
             else:
                 votes[bLevel] += 1
+        
         ls.sort()
         med = median(ls)
-        
+
+        if nVerbs == 0:
+            mx = "0 vb"
+            mn = "0 vb"
+            mean = "0 vb"
+            med = "0 vb"
+            
         for lex in [bloomStatsGoal["all"], bloomStatsGoal["scb"][scb], bloomStatsGoal["level"][level], bloomStatsGoal["type"][ctype], bloomStatsGoal["uni"][uni], bloomStatsGoal["scbG"][scbGroup], bloomStatsGoal["levelG"][levelGroup], bloomStatsGoal["cred"][creditsGroup]]:
             if not "max" in lex:
                 lex["max"] = {}
@@ -463,15 +470,20 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
             else:
                 lex["min"][mn] += 1
 
-            spn = mx - mn
-            if spn < 0: #  mn and mx are not available because we have 0 verbs
-                spn = " - "
+            if nVerbs == 0:
+                spn = "0 vb"
+            elif nVerbs == 1:
+                spn = "1 verb"
+            else:
+                spn = mx - mn
+
             if not "span" in lex:
                 lex["span"] = {}
             if not spn in lex["span"]:
                 lex["span"][spn] = 0
             lex["span"][spn] += 1
-                
+
+            
             if not "nVerbs" in lex:
                 lex["nVerbs"] = {}
 
@@ -490,17 +502,21 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
 
             if not "mean" in lex:
                 lex["mean"] = []
-            if tot > 0:
+            if nVerbs > 0:
                 lex["mean"].append(mean / float(tot))
-
+            else:
+                lex["mean"].append("0 vb")
+                
             if not "median" in lex:
                 lex["median"] = []
             lex["median"].append(med)
 
             if not "variance" in lex:
                 lex["variance"] = []
-            if tot > 0:
+            if nVerbs > 0:
                 lex["variance"].append(abs((mean*mean / float(tot) - s2) / float(tot)))
+            else:
+                lex["variance"].append("0 vb")
                 
             v = -1
             vm = 0
@@ -520,13 +536,20 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
             
             if not "common" in lex:
                 lex["common"] = {}
-            
-            for v in topAlternatives:
+
+            if nVerbs > 0:
+                for v in topAlternatives:
+                    if not v in lex["common"]:
+                        lex["common"][v] = voteWeight
+                    else:
+                        lex["common"][v] += voteWeight
+            else:
+                v = "0 vb"
                 if not v in lex["common"]:
                     lex["common"][v] = voteWeight
                 else:
                     lex["common"][v] += voteWeight
-
+    
     flat.sort()
             
     if len(flat) > 0:
@@ -629,7 +652,7 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
                 else:
                     lex["val"][b] += 1
 
-    else:
+    else: # no verbs
         for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
 
             if not "nVerbs" in lex:
@@ -641,30 +664,88 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
 
             if not "nVerbsG" in lex:
                 lex["nVerbsG"] = {}
+                
             n0 = numberOfVerbsGroup(0)
             if not n0 in lex["nVerbsG"]:
                 lex["nVerbsG"][n0] = 1
             else:
                 lex["nVerbsG"][n0] += 1
         
-        nGoals = 0
-        for lex in [bloomStatsCC["scb"][scb]["goalCounts"], bloomStatsCC["level"][level]["goalCounts"], bloomStatsCC["type"][ctype]["goalCounts"], bloomStatsCC["uni"][uni]["goalCounts"], bloomStatsCC["scbG"][scbGroup]["goalCounts"], bloomStatsCC["levelG"][levelGroup]["goalCounts"], bloomStatsCC["cred"][creditsGroup]["goalCounts"]]:
-            if not nGoals in lex:
-                lex[nGoals] = 0
-            lex[nGoals] += 1
+        # nGoals = 0
+        nVerbs = 0
+        mn = "0 vb"
+        mx = "0 vb"
+        tot = 0
+        mean = "0 vb"
+        
+        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
+            if not "max" in lex:
+                lex["max"] = {}
+            if not mx in lex["max"]:
+                lex["max"][mx] = 1
+            else:
+                lex["max"][mx] += 1
 
-            if not "tot" in lex:
-                lex["tot"] = 0
-            lex["tot"] += nGoals
+            if not "min" in lex:
+                lex["min"] = {}
+            if not mn in lex["min"]:
+                lex["min"][mn] = 1
+            else:
+                lex["min"][mn] += 1
 
-            if not "N" in lex:
-                lex["N"] = 0
-            lex["N"] += 1
+            if not "nVerbs" in lex:
+                lex["nVerbs"] = {}
+
+            n = 0
+            if not n in lex["nVerbs"]:
+                lex["nVerbs"][n] = 1
+            else:
+                lex["nVerbs"][n] += 1
+
+            if not "nVerbsG" in lex:
+                lex["nVerbsG"] = {}
+            nG = numberOfVerbsGroup(n)
+            if not nG in lex["nVerbsG"]:
+                lex["nVerbsG"][nG] = 1
+            else:
+                lex["nVerbsG"][nG] += 1
+
+            if not "common" in lex:
+                lex["common"] = {}
+                
+            v = "0 vb"
+            if not v in lex["common"]:
+                lex["common"][v] = 1
+            else:
+                lex["common"][v] += 1
+
+            if not "mean" in lex:
+                lex["mean"] = []
+            lex["mean"].append(mean)
+
+            if not "variance" in lex:
+                lex["variance"] = []
+            lex["variance"].append("0 vb")
+
+            if not "median" in lex:
+                lex["median"] = []
+            lex["median"].append("0 vb")
+
+            if not "val" in lex:
+                lex["val"] = {}
+            b = "0 vb"
+            if not b in lex["val"]:
+                lex["val"][b] = 1
+            else:
+                lex["val"][b] += 1
+
 
 def printBloomStats():
     if not "all" in bloomStatsCC or not "max" in bloomStatsCC["all"]:
         return
     
+    commonVals = ["0 vb", 0, 1, 2, 3, 4, 5]
+
     print ("-"*15, "Bloom classifications", "-"*15)
 
     print ("\n" + "-"*10, "Verbs per Bloom level", "-"*10)
@@ -698,49 +779,53 @@ def printBloomStats():
     
     print ("-"*10, "Maximum Bloom level per course", "-"*10)
     tmp = 0
-    for val in range(6):
+    for val in commonVals:
         if val in bloomStatsCC["all"]["max"]:
             c = bloomStatsCC["all"]["max"][val]
             tmp += c
             if totCourses > 0:
                 proc = c / float(totCourses)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+            print ("{0: >5}: {1: >5} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+            print ("{0: >5}: {1: >5} (0%)".format(val, 0))
     print (tmp, "courses with Bloom data")
     
     print ("-"*10, "Minimum Bloom level per course", "-"*10)
     tmp = 0
-    for val in range(6):
+    for val in commonVals:
         if val in bloomStatsCC["all"]["min"]:
             c = bloomStatsCC["all"]["min"][val]
             tmp += c
             if totCourses > 0:
                 proc = c / float(totCourses)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+            print ("{0: >5}: {1: >5} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+            print ("{0: >5}: {1: >5} (0%)".format(val, 0))
     print (tmp, "courses with Bloom data")
 
     print ("-"*10, "Average Mean Bloom level per course", "-"*10)
     m = 0
-    n = len(bloomStatsCC["all"]["mean"])
+    n = 0 
     for v in bloomStatsCC["all"]["mean"]:
-        m += v
+        if v != "0 vb":
+            m += v
+            n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2}".format(m))
+    print ("{0: .2} from {1: >1} courses with at least one verb.".format(m, n))
         
     print ("-"*10, "Average Variance in Bloom level per course", "-"*10)
     m = 0
-    n = len(bloomStatsCC["all"]["variance"])
+    n = 0
     for v in bloomStatsCC["all"]["variance"]:
-        m += v
+        if v != "0 vb":
+            m += v
+            n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2}".format(m))
+    print ("{0: .2} from {1: >1} courses with at least one verb.".format(m, n))
 
     print ("-"*10, "Median Bloom level per course", "-"*10)
     tmp = 0
@@ -748,6 +833,8 @@ def printBloomStats():
     ls = []
     tmpLex = {}
     for val in bloomStatsCC["all"]["median"]:
+        if val == "0 vb":
+            continue
         if not val in tmpLex:
             tmpLex[val] = 0
             ls.append(val)
@@ -766,22 +853,22 @@ def printBloomStats():
         else:
             print ("{0: <3}: {1: >5} (0%)".format(val, 0))
     if tmp > 0:
-        print("Average median value:", str(tmpTot / tmp))
-    print (tmp, "courses with Bloom data")
+        print("Average median value:", str("{0: 5.1f}".format(tmpTot / tmp)))
+    print (tmp, "courses with at least one verb.")
 
     print ("-"*10, "Most common Bloom level per course", "-"*10)
     tmp = 0
-    for val in range(6):
+    for val in commonVals:
         if val in bloomStatsCC["all"]["common"]:
             c = bloomStatsCC["all"]["common"][val]
             tmp += c
             if totCourses > 0:
                 proc = c / float(totCourses)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+            print ("{0: >5}: {1: >5.1f} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
-    print (tmp, "courses with Bloom data")
+            print ("{0: >5}: {1: >5.1f} (0%)".format(val, 0))
+    print ("{0: 5.0f}".format(tmp), "courses with Bloom data")
 
     print ("-"*10, "Number of Bloom verbs per course", "-"*10)
     tmp = 0
@@ -824,43 +911,43 @@ def printBloomStats():
     #############################
 
     print ("\n" + "-"*15, "Statistics per goal", "-"*15)
-
+    
     totGoals = 0
     for v in bloomStatsGoal["all"]["max"]:
         totGoals += bloomStatsGoal["all"]["max"][v]
     
     print ("-"*10, "Maximum Bloom level per goal", "-"*10)
     tmp = 0
-    for val in range(6):
+    for val in commonVals:
         if val in bloomStatsGoal["all"]["max"]:
             c = bloomStatsGoal["all"]["max"][val]
             tmp += c
             if totGoals > 0:
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+            print ("{0: >7}: {1: >5} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+            print ("{0: >7}: {1: >5} (0%)".format(val, 0))
     print (tmp, "goals with Bloom data")
     
     print ("-"*10, "Minimum Bloom level per goal", "-"*10)
     tmp = 0
-    for val in range(6):
+    for val in commonVals:
         if val in bloomStatsGoal["all"]["min"]:
             c = bloomStatsGoal["all"]["min"][val]
             tmp += c
             if totGoals > 0:
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+            print ("{0: >7}: {1: >5} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
+            print ("{0: >7}: {1: >5} (0%)".format(val, 0))
     print (tmp, "goals with Bloom data")
 
 
     print ("-"*10, "Difference beteween max and min Bloom level in goal", "-"*10)
     tmp = 0
-    vals = [" - ", 0, 1, 2, 3, 4, 5]
+    vals = ["0 vb", "1 verb", 0, 1, 2, 3, 4, 5]
     for val in vals:
         if val in bloomStatsGoal["all"]["span"]:
             c = bloomStatsGoal["all"]["span"][val]
@@ -868,36 +955,42 @@ def printBloomStats():
             if totGoals > 0:
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
+            print ("{0: >7}: {1: >5} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >4}: {1: >5} (0%)".format(val, 0))
+            print ("{0: >7}: {1: >5} (0%)".format(val, 0))
     print (tmp, "goals with Bloom data")
 
     
     print ("-"*10, "Average Mean Bloom level per goal", "-"*10)
     m = 0
-    n = len(bloomStatsGoal["all"]["mean"])
+    n = 0
     for v in bloomStatsGoal["all"]["mean"]:
-        m += v
+        if v != "0 vb":
+            m += v
+            n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2}".format(m))
+    print ("{0: .2f} from {1: >1} goals with at least one verb.".format(m, n))
         
     print ("-"*10, "Average Variance in Bloom level per goal", "-"*10)
     m = 0
-    n = len(bloomStatsGoal["all"]["variance"])
+    n = 0
     for v in bloomStatsGoal["all"]["variance"]:
-        m += v
+        if v != "0 vb":
+            m += v
+            n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2}".format(m))
-        
+    print ("{0: .2f} from {1: >1} goals with at least one verb.".format(m, n))
+    
     print ("-"*10, "Median Bloom level per goal", "-"*10)
     tmp = 0
     tmpTot = 0
     ls = []
     tmpLex = {}
     for val in bloomStatsGoal["all"]["median"]:
+        if val == "0 vb":
+            continue
         if not val in tmpLex:
             tmpLex[val] = 0
             ls.append(val)
@@ -916,12 +1009,12 @@ def printBloomStats():
         else:
             print ("{0: <3}: {1: >5} (0%)".format(val, 0))
     if tmp > 0:
-        print("Average median value:", str(tmpTot / tmp))
-    print (tmp, "goals with Bloom data")
+        print("Average median value: {0: 2.1f}".format(tmpTot / tmp))
+    print (tmp, "goals with at least one verb.")
 
     print ("-"*10, "Most common Bloom level per goal", "-"*10)
     tmp = 0
-    for val in range(6):
+    for val in commonVals:
         if val in bloomStatsGoal["all"]["common"]:
             c = bloomStatsGoal["all"]["common"][val]
             tmp += c
@@ -929,12 +1022,12 @@ def printBloomStats():
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
             if isinstance(c, float):
-                print ("{0: >2}: {1: >5} ({2:})".format(val, "{:4.1f}".format(c), procs))
+                print ("{0: >7}: {1: >5} ({2:})".format(val, "{:4.1f}".format(c), procs))
             else:
-                print ("{0: >2}: {1: >5} ({2:})".format(val, c, procs))
+                print ("{0: >7}: {1: >5} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >2}: {1: >5} (0%)".format(val, 0))
-    print (tmp, "goals with Bloom data")
+            print ("{0: >7}: {1: >5} (0%)".format(val, 0))
+    print ("{0: 2.0f} goals with Bloom data".format(tmp))
 
     print ("-"*10, "Number of Bloom verbs per goal", "-"*10)
     tmp = 0
@@ -1123,9 +1216,11 @@ def printBloomStats():
 
                     if "mean" in lex[row]:
                         m = 0
-                        n = len(lex[row]["mean"])
+                        n = 0
                         for v in lex[row]["mean"]:
-                            m += v
+                            if v != "0 vb":
+                                m += v
+                                n += 1
                         if n > 0:
                             m = m / n
                         s += "{0: .2} ".format(m)
@@ -1154,9 +1249,11 @@ def printBloomStats():
 
                     if "variance" in lex[row]:
                         m = 0
-                        n = len(lex[row]["variance"])
+                        n = 0
                         for v in lex[row]["variance"]:
-                            m += v
+                            if v != "0 vb":
+                                m += v
+                                n += 1
                         if n > 0:
                             m = m / n
                         s += "{0: .2} ".format(m)
@@ -1185,9 +1282,11 @@ def printBloomStats():
 
                     if "median" in lex[row]:
                         m = 0
-                        n = len(lex[row]["median"])
+                        n = 0
                         for v in lex[row]["median"]:
-                            m += v
+                            if v != "0 vb":
+                                m += v
+                                n += 1
                         if n > 0:
                             m = m / n
                         s += "{0: .2} ".format(m)
@@ -1233,9 +1332,11 @@ def printBloomStats():
 
                     if "mean" in lex[row]:
                         m = 0
-                        n = len(lex[row]["mean"])
+                        n = 0
                         for v in lex[row]["mean"]:
-                            m += v
+                            if v != "0 vb":
+                                m += v
+                                n += 1
                         if n > 0:
                             m = m / n
                         s += "{0: .2} ".format(m)
@@ -1264,9 +1365,11 @@ def printBloomStats():
 
                     if "variance" in lex[row]:
                         m = 0
-                        n = len(lex[row]["variance"])
+                        n = 0
                         for v in lex[row]["variance"]:
-                            m += v
+                            if v != "0 vb":
+                                m += v
+                                n += 1
                         if n > 0:
                             m = m / n
                         s += "{0: .2} ".format(m)
@@ -1295,9 +1398,11 @@ def printBloomStats():
 
                     if "median" in lex[row]:
                         m = 0
-                        n = len(lex[row]["median"])
+                        n = 0
                         for v in lex[row]["median"]:
-                            m += v
+                            if v != "0 vb":
+                                m += v
+                                n += 1
                         if n > 0:
                             m = m / n
                         s += "{0: .2} ".format(m)
@@ -1309,7 +1414,7 @@ def printBloomStats():
                 printBloomHelper("common", "most common Bloom level (per goal)", lex, 6)
 
                 printBloomHelper("nVerbs", "#verbs/goal", lex, VERBS_BEFORE_MORE_THAN+1)
-                printBloomHelper2("nVerbsG", "#verbs/course (grouped)", lex)
+                printBloomHelper2("nVerbsG", "#verbs/goal (grouped)", lex)
 
     
 def printBloomHelper(f, label, lex, n):
@@ -1436,9 +1541,9 @@ def printBloomHelper2(f, label, lex):
                 else:
                     proc = 0
                 if isinstance(c, float):
-                    s += "{0: >6} ".format("{:4.1f}".format(c))
+                    s += "{0: >9} ".format("{:4.1f}".format(c))
                 else:
-                    s += "{0: >6} ".format(c)
+                    s += "{0: >9} ".format(c)
 
                 s2 += "{0: >9} ".format("{0: 2.1%}".format(proc))
             else:
