@@ -1179,7 +1179,7 @@ def applyGeneralPrinciples(s):
 
                 sawMad = 0
                 for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
-                    if s[j]["t"] == "mad":
+                    if s[j]["t"] == "mad" or s[j]["w"] == "samt":
                         sawMad = 1
                     if sawMad:
                         new.append(s[j])
