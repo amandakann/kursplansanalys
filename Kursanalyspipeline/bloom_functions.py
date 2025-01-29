@@ -955,7 +955,17 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(0, len(s)):
+            ignoreSom = 1
             if s[i]["w"].lower() == "som" and (s[i]["t"] == "hp" or (i+3 < len(s) and (s[i+1]["w"] == "kan" or s[i+2]["w"] == "kan" or s[i+3]["w"] == "kan"))):
+                ignoreSom = 0
+                
+                j = i - 3
+                while j >= 0:
+                    if s[j]["w"] == "med" and s[j+1]["w"] == "hjälp" and s[j+2]["w"] == "av":
+                        ignoreSom = 1
+                    j = j - 1
+            
+            if not ignoreSom:
                 new = []
                 for j in range(i): # add everything on the left
                     new.append(s[j])
