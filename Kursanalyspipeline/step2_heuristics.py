@@ -305,22 +305,21 @@ def checkPre(c):
 ### KTH courses often use HTML <li>-lists for goals
 ###  "<p>Efter avslutad kurs skall studenten kunna:</p><ul><li>förklara grundläggande koncept av ... </li><li>..."
 ### (example course KTH SG2226)
+htmlListExpIndicator = re.compile("<[lL][Ii]>")
+
 htmlListExpWrap = re.compile("(<[Pp]>)?[^<>]*kunna:?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
 htmlListExpWrap2 = re.compile("<.[Ll]>.*?</.[Ll]>", re.S)
-htmlListExp = re.compile("<[lL][Ii]>(.*?)(?:</?[Ll][Ii]>)", re.S)
+htmlListExpWrap3 = re.compile("(<[Pp]>)?[^<>]*kunna\s*([^<>]{4,}):?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
+
+htmlListExp = re.compile("<[lL][Ii]>(.*?)(?=</?[Ll][Ii]>)", re.S)
 
 htmlListExpWrapEn = re.compile("(<[Pp]>)?[^<>]*((know\s*how)|(able))\s*to:?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
-
-htmlListExpWrap3 = re.compile("(<[Pp]>)?[^<>]*kunna\s*([^<>]{4,}):?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
 htmlListExpWrapEn3 = re.compile("(<[Pp]>)?[^<>]*((know\s*how)|(able))\s*to\s*([^<>]{4,}):?\s*(</?[Pp]>\s*)*<.[lL]>.*?</.[lL]>", re.S)
-
-
-htmlListExpIndicator = re.compile("<[lL][Ii]>")
 
 ### KTH courses can use HTML <p>-elements for goals
 ###   "<p>Efter genomförd kurs ska studenten kunna</p><p>• upprätta resurser för ... ,</p><p>\u2022 utföra spaning ..."
 ###   (example course KTH FEP3370)
-pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?:</?p>)", re.S)
+pListExp = re.compile("<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*(?=</?p>)", re.S)
 pListExpWrap = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?kunna:?\s*(</\s*p>)?\s*(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>\s*)+", re.S)
 pListExpWrapEn = re.compile("(<p>)?[A-ZÅÄÖ][^<>]*?((know\s*how)|(able))\s*to:?\s*(</\s*p>)?(<p>\s*[-o•*·–]\s*[0-9]*\s*[.]?\s*(.*?)\s*</?p>)+", re.S)
 
@@ -350,24 +349,27 @@ newlineListExpWrap = re.compile("(\n\s*[-o•*·–.—]\s*[0-9]*[.]?\s*([^\n]*)
 ### Courses can use various dots/hyphens/stars as markers for goals
 ###   "Efter genomförd kurs ska du kunna * identifiera grundläggande begrepp, ... inom reinforcement learning * utveckla och systematiskt testa ... inom reinforcement learning * experimentellt ..."
 ###   (example course KTH FDD3359)
-dotListExp = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*(([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})", re.S)
-dotListExpWrap = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–])){4,}(\s*.*?[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})+", re.S)
+# dotListExp = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*(([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})", re.S)
+dotListExp = re.compile("[-–•*·…]\s*[0-9]*[.]?\s*(([^-–•*·…\n\s]|( [^-–•*·…\n\s])){4,})(?=$|[.]|<|[-–•*·…\n\s]|([(]Del))", re.S)
+# dotListExpWrap = re.compile("[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–])){4,}(\s*.*?[•*·–…;]\s*[0-9]*[.]?\s*([^•*·…;\n\s\\–]|( [^•*·…;\n\\–\s])){4,})+", re.S)
+dotListExpWrap = re.compile(r'[-–•*·…]\s*[0-9]*[.]?\s*([^-–•*·…\n\s]|( [^-–•*·…\n])){4,}(\s*.*?[-–•*·…]\s*[0-9]*[.]?\s*([^-–•*·…\n\s]|( [^-–•*·…\n\s])){4,})+', re.S)
+
+
+dotListBeforeExp = re.compile("\s\s([a-zåäöA-Zåäö\s]{4,}[–•*·…]\s*[0-9]*[.]?\s*([^–•*·…\n\s]|( [^–•*·…\n\s])){4,})(?=$|[.]|<|[–•*·…\n\s]|([(]Del))", re.S)
+dotListBeforeExpWrap = re.compile("\s\s([a-zåäöA-Zåäö\s]{4,})[–•*·…]\s*[0-9]*[.]?\s*([^–•*·…\n\s]|( [^–•*·…\n])){4,}(\s*.*?\s\s([a-zåäöA-Zåäö\s]{4,})[–•*·…]\s*[0-9]*[.]?\s*([^–•*·…\n\s]|( [^–•*·…\n\s])){4,})+", re.S)
+
 
 ### Studenten skall efter avslutad kurs behärska en grundläggande
 ### orientering i ämnesområdet teater i Sverige och kunna visa en
 ### förmåga att o diskutera olika aspekter av historiografi med
 ### avseende på teater i Sverige o analysera och diskutera olika
 ### aspekter av svensk kultur- och teaterpolitik.
-dotListOExp = re.compile(" o ((([^ o])|( [^o])|( o[^ ])){4,}[^ o])", re.S)
-dotListOExpWrap = re.compile("(Delkurs\s[0-9]+)?( o ((([^ o])|( [^o])|( o[^ ])){4,}))+", re.S)
+dotListOExp = re.compile(" o ((([^ \n])|(\n[^\n])|( [^o])|( o[^ ])){4,}[^ ])", re.S)
+dotListOExpWrap = re.compile("(Delkurs\s[0-9]+)?( o ((([^ ])|( [^o])|( o[^ ])){4,}))+", re.S)
 
-### Courses can use X as markers for goals
-###   "Efter genomgången kurs ska deltagarna kunna XReflektera kring och diskutera ämnet hållbar utveckling och koppla begreppen till det egna ämne
-###    sområdet XPresentera hållbar utveckling som ett ämne som kräver kritisk reflektion och diskussion utifrån olika perspektiv och visa hur detta bör komma f
-###    ram i utbildningen för studenter XDesigna kursmål ..."
-###   (example course KTH LH215V)
-XxListExp = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*(([^XM\n\s]|( [^X\n\s])){4,}[^X\n\s])", re.S)
-XxListExpWrap = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*([^XM\n\s]|( [^X\n\s])){4,}(\s*.*?[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,})+", re.S)
+threedotListExp = re.compile("\.\.\.\s*([^.]{4,}.*?)(?=$|(\s*\.\.\.)|(\n\n))", re.S)
+threedotListExpWrap = re.compile("\.\.\.(.*?)(\.\.\..*){3,}", re.S)
+
 
 ###    (example course UMU 2PS273)
 oListExp = re.compile("[oO]\s((([^\n])|(\n[^\n])){4,}?)\\.")
@@ -380,9 +382,8 @@ oListExpWrap = re.compile("([.\s][oO]\s(([^\n])|(\n[^\n]))*){3,}")
 ###   (kunskap) - Förstå och med egna ord förklara teorier ..."
 ###   (example course SU SV7098)
 inlineHyphenListExp = re.compile(" - +(([^ ]|( [^- ]))+)", re.S)
-# inlineHyphenListExpWrap = re.compile("( - +([^ ]|( [^- ])){4,})((\s{2,}[^-]*)?( - +([^ ]|( [^- ])){4,}))*", re.S)
 inlineHyphenListExpWrap = re.compile("( - +([^ ]|( [^- ])){4,})(.*( - +(([^\n ])|( [^- ])|(\n[^\n])){4,}))+", re.S)
-inlineHyphenIndicator = re.compile(" - ")
+inlineHyphenIndicator = re.compile("^(.(?!innehålla))* - ", re.S)
 
 ### Some courses enumerate goals with Roman numerals
 ###   "För godkänt resultat skall studenten kunna:
@@ -394,8 +395,8 @@ inlineHyphenIndicator = re.compile(" - ")
 romanListExp = re.compile("[IVX]+\s*[.]\s+((([^IVX\n])|(\n[^\n]))*)", re.S)
 romanListExpWrap = re.compile("([A-ZÅÄÖ].*?kunna:?\s*)(\s*I\s*[.]\s+([^IVX ]|( [^IVX ]))+)(\s*[IVX]+\s*[.]\s+([^IVX ]|( [^IVX ]))+)*", re.S)
 
-romanListIndicator = re.compile("kunna:?\s*I")
-romanListIndicatorEn = re.compile("((know\s*how)|(able))\s*to:?\s*I")
+romanListIndicator = re.compile("kunna:?\s*I", re.S)
+romanListIndicatorEn = re.compile("((know\s*how)|(able))\s*to:?\s*I", re.S)
 
 ### Some courses enumerate goals with Arabic numerals
 ###    "För godkänt resultat på kursen ska studenten kunna:
@@ -404,28 +405,28 @@ romanListIndicatorEn = re.compile("((know\s*how)|(able))\s*to:?\s*I")
 ###     2. Beskriva våra vanligaste folkhälsoproblem och folksjukdomar och redogöra för förekomst och sjukdomsorsaker
 ###     ... "
 ###   (example course SU PH03G0)
-arabicPListExp = re.compile("p>\s*\\(?\s*[0-9]+\s*[).]\s*([^<]{4,})", re.S)
-arabicPListExpWrap = re.compile("(p>\\(?\s*[0-9]+\s*[).]\s*([^<]){4,}(.*<p>\s*\\(?\s*[0-9]+\s*[).]\s*([^<]){4,})*)", re.S)
+arabicPListExp = re.compile(r'>\s*\(?\s*[0-9]+\s*[).]\s*([^<]{8,})', re.S)
+arabicPListExpWrap = re.compile(r'(p>\(?\s*[0-9]+\s*[).]\s*([^<]){8,}(.*>\s*\(?\s*[0-9]+\s*[).]\s*([^<]){8,}){2,})', re.S)
+arabicPListIndicator = re.compile("(>.*[0-9]+\s*[).][^<]{8,}.*<){3,3}", re.S)
 
-arabicListExp = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}))", re.S)
-arabicListExpWrap = re.compile("\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,}(\s*\\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){4,})*", re.S)
+arabicListExpWrap123 = re.compile(r'(1\s*[).]\s*)([^\n\s3KFV].*2\s*[).]\s*)([^\n\s4KFV].*3\s*[).]\s*)([^\s\nKFV].*?)(?=((\n\n)|$))', re.S + re.I)
+arabicListExpWrap12345 = re.compile(r'1\s*[).]\s*(.*)2\s*[).]\s*(.*)3\s*[).]\s*(.*)4\s*[).]\s*(.*)5\s*[).]\s*(.*).*?(?=(\n\n)|$)', re.S + re.I)
+arabicListExp12345 = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]((([^0-9 \n][^0-9\n])|(\n[^\n])|( [^0-9 ])|( [0-9]+[^0-9().])|([^0-9 ][0-9])|( ?[0-9A-F]+\s*((till)|[-–])\s*[0-9]+)){8,}))', re.S)
 
-arabicListExpB = re.compile("\\(?\s*[0-9]+\s*[).]?\s+([^0-9 ].{4,}?)(?=$|\n|(\s\s)|(\\(?[0-9]))", re.S)
-arabicListExpBWrap = re.compile("\\(?\s*1\s*[).]?\s*.{4,}\\(?\s*2\s*[).]?\s*.{4,}\\(?\s*3\s*[).]?\s*.{4,}\\(?\s*4\s*[).]?\s*.{4,}\\(?\s*[0-9]+\s*[).]?\s*.{4,}(?=$|\n|(\s\s))", re.S)
+arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,}))', re.S)
+arabicListExpWrap = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){8,}(\s*\(?\s*[0-9]+\s*[).]\s*([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,})+', re.S)
 
-
-delkursExp = re.compile("Delkurs([^\\-•*·–…;]*?)hp")
-delkursExp2 = re.compile("Delkurs\s[0-9]+[.]?,?(\s*[^A-ZÅÄÖ\\-,•*·–…;\n]*)")
-
+arabicListExpB = re.compile(r'\(?\s*[0-9]+\s*[).]?\s+([^0-9 ]([^h]|(h[^p])){8,}?)(?=$|\n|(\s\s)|(\(?[0-9]))', re.S)
+arabicListExpBWrap = re.compile(r'\(?\s*1\s*[).]?\s*([^h]|(h[^p])){8,}\(?\s*2\s*[).]?\s*([^h]|(h[^p])){8,}\(?\s*3\s*[).]?\s*([^h]|(h[^p])){8,}\(?\s*4\s*[).]?\s*([^h]|(h[^p])){8,}\(?\s*[0-9]+\s*[).]?\s*([^h]|(h[^p])){8,}(?=$|\n|(\s\s))', re.S)
 
 ### Some courses enumerate goals with (a), (b), or (1), (2), etc. 
 ###    "Kursen syftar till (a) att öka deltagarnas förståelse ... ; (b) att ge de färdigheter som behövs för tillämpad dataanalys ... ; och (c) att ge träning i ... "
 ###   (example course SU PSMT15)
-parListExp = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)") # not very common
-parListExpWrap = parListExp
+parListExp = re.compile("\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)", re.S) # not very common
+parListExpWrap = re.compile("\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*).*\n\s*\\([0-9a-zA-Z]\\)\s*([^\n]*)", re.S)
 
-parListExp2 = re.compile("[\s\.][0-9a-hA-H]{1,2}\\)\s*((([^\s\\)<>])|(\s[^a-zA-Z0-9\s<>])|(\s[a-zA-Z0-9][^\\)])){4,}([^\\)\s</>\.0-9]){2})", re.S) # mainly this pattern is used
-parListExpWrap2 = parListExp2
+parListExp2 = re.compile("[\s.(][0-9a-hA-H.]{1,3}\)\s*((([^()<>\s.])|(ex.)|(\s[^a-zA-Z0-9<>().\s])|(\s[a-zA-Z0-9][^()]))*([^()\s<>/0-9.]){2}[.]?)", re.S) # mainly this pattern is used
+parListExpWrap2 = re.compile("([\s.(][0-9a-hA-H.]{1,3}\)\s*((([^()<>\s])|(\s[^a-zA-Z0-9<>])|(\s[a-zA-Z0-9][^()]))*([^()\s<>/0-9]){2})){2,}", re.S)
 
 ### Some courses specify goals with lines like "ska ... kunna ..."
 ###   "Den studerande skall efter genomgången kurs kunna
@@ -436,13 +437,15 @@ parListExpWrap2 = parListExp2
 ###   konventionen och en förmåga att relatera iakttagelserna till
 ###   en vidare samhällelig och kulturell kontext."
 ###  (example course SU LV1011)
-skaKunnaExp = re.compile("[Kk]unna(\s*[^0-9\s]((([^\s])|([^\n][^\s])){4,}))")
-skaKunnaExpEn = re.compile("[Aa]ble\s*to(.{4,}?)[\n]")
+skaKunnaExp = re.compile(r'[Kk]unna:?\s*([^0-9\s]((([^\s])|([^\n][^\s])|(\n[^\nA-ZÅÄÖ])){8,}))', re.S)
+skaKunnaExpWrap = re.compile(r'[Kk]unna:?(\s*[^n0-9\s]((([^\s])|([^\n][^\s])|(\n[^\n])){8,}))', re.S)
+skaKunnaExpEn = re.compile(r'be able:?(\s*[^0-9\s]((([^\s])|([^\n][^\s])|(\n[^\nA-Z])){8,}))', re.S)
 
 ### Some courses write goals as "Efter kursen kan ... " (less common than "ska kunna")
 ###   "Studenten kan tillämpa grundläggande arbetsmarknadsekonomiska begrepp ..."
 ###   (example course SU ATF012)
 kanExp = re.compile("\skan\s([a-zåäö]*[^s]\s[^.]+)(?=$|\n|\s\s|[.])", re.I);
+kanExpWrap = kanExp
 kanExpEn = re.compile("\s(((know\s*how)|(able))\s*to\s(([^.]+\s[^.]+)[\.]|(\s\s)|\n))", re.I)
 
 ### Goals can be written as "studenten ska vara förtrogen med" or
@@ -451,21 +454,24 @@ kanExpEn = re.compile("\s(((know\s*how)|(able))\s*to\s(([^.]+\s[^.]+)[\.]|(\s\s)
 ###    1)      vara förtrogen med begreppen kultur, mångkulturalism och andra för kunskapsområdet centrala begrepp som exkluderings- och inkluderingprocesser präglar relationer mellan majoritets- och minoritetsbefolkningen samt aktuella teorier kring mångkulturalism och etnicitet
 ###    2)      ha förmåga att integrera relevanta teorier och metoder om mångkulturalism i en vägledningssituation samt kunna reflektera över hur kulturella normer, värderingar och tankemönster påverkar förhållningssätt till människor i andra etniska grupper
 ###   (example course SU UC119F)
-fortrogenExp = re.compile("\sförtrogen\s*med\s(([^.]{4,}?)(\.|\s\s))", re.I)
-formagaExp = re.compile("\sförmåga.*?att\s*(([^.]{4,}?)(\.|\s\s))", re.I)
+fortrogenExp = re.compile("\s(förtrogen\s*med\s([^.]{8,}?))(?=$|\n|\s\s|[.])", re.I)
+fortrogenExpEn = re.compile("\s(scomfortable\s*with\s([^.]{8,}?))(?=$|\n|\s\s|[.])", re.I)
 
-fortrogenExpEn = re.compile("\scomfortable\s*with\s(([^.]{4,}?)(\.|\s\s))", re.I)
-formagaExpEn = re.compile("\sability.*?to\s*(([^.]{4,}?)(\.|\s\s))", re.I)
+formagaExp = re.compile("\sförmåga.*?att\s*([^.]{8,}?)(?=$|\n|\s\s|[.])", re.I)
+formagaExpEn = re.compile("\sability.*?to\s*([^.]{8,}?)(?=$|\n|\s\s|[.])", re.I)
 
 ### Some courses list all goals on one line with arabic numerals enumerating, starting with "... kunna 1."
 ###   "... ska studenten kunna 1.Redovisa, diskutera och jämföra olika
 ###   historiskt kriminologiska studier. 2.Beskriva, ..."
 ###   (example course SU AKA132)
-kunna1exp = re.compile("[0-9]+[. ]?\s*([^0-9]{4,})(?=$|\n\n|\s\s|[.0-9])")
-kunna1expWrap = re.compile("kunna[^\n]*(1[0-9]*[^0-9]{4,}2[0-9]*[^0-9]{4,}([0-9]+[^0-9]{4,}?)*)(?=$|(\n\n)|(\s\s)|[.])")
-kunna1expWrapEn = re.compile("((know\s*how)|(able))\s*to.*(1.*?[^0-9]{4,}2.*?[^0-9]{4,}([0-9].*?[^0-9]{4,})*)")
+kunna1exp = re.compile("[0-9. ()]*[0-9]+[0-9. ()]*\s*([^0-9]{8,})(?=$|\n\n|\s\s|[.0-9]|(\([0-9])|(Färdighet)|(Moment)|(Kunskap)|(Värdering)|(Del ))", re.S)
+kunna1expWrap = re.compile("kunna[^\n]*(1[- ()0-9]*.*\w{8,}.*2.*\w{8,}.*([0-9].*\w{8,}.*)+)(?=$|(\n\n))", re.S)
+
+kunna1expWrapEn = re.compile("((know\s*how)|(able))\s*to[^\n]*(1[- ()0-9]*[^0-9]{8,}2[- ()0-9]+?[^0-9]{8,}([- ()0-9]+[^0-9]{8,})*)(?=$|(\n\n)|(\s\s)|[.])", re.S)
 
 kunna1sub = re.compile("(,?\s*Efter avslutad kurs ska studenten)*\s*för betyget (.*?) kunna")
+
+kunna1indicator = re.compile("kunna.*1.*2.*[0-9]+.*", re.S)
 
 ### Courses can have lists where each item starts with a Capital
 ### letter but not other wise noted:
@@ -476,33 +482,126 @@ kunnaCapExp = re.compile("[\s>]([A-ZÅÄÖ](([^<\n\s])|(\s[^\s])|(\s\s[^\sA-ZÅ�
 kunnaCapExpWrap = re.compile("kunna:?\s*([A-ZÅÄÖ]([^\n]|(\n[^\n]))*){2,}?(?=$|\n\n)", re.S)
 kunnaCapExpWrapEn = re.compile("((know\s*how)|(able))\s*to:?\s*[A-ZÅÄÖ].*", re.S)
 
+
+kunnaHypIndicator = re.compile("^(.(?!innehålla))*-", re.S)
 kunnaHypExp = re.compile("\s*-\s*([a-zåäöA-ZÅÄÖ]([^\-<]|([a-zA-ZåäöÅÄÖ0-9]-[a-zA-ZåäöÅÄÖ0-9]))*[^\-<\s])", re.S)
-kunnaHypExpWrap = re.compile("[A-ZÅÄÖ][^A-ZÅÄÖ]*?((\sska)|(kunna))[^-]*:?(\s*-\s?[a-zåäöA-ZÅÄÖ]([^\-<\n]|(\n[^\n]))*)(.*?\s*-\s?[a-zåäöA-ZÅÄÖ]([^\-<\n]|(\n[^\n]))*)+", re.S)
+kunnaHypExpWrap = re.compile("[A-ZÅÄÖ][^A-ZÅÄÖ]*?((\sska)|(kunna))[^-–]*:?(\s*[-–]\s?[a-zåäöA-ZÅÄÖ]([^\-–<\n]|(\n[^\n]))*)(.*?\s*[-–]\s?[a-zåäöA-ZÅÄÖ]([^\-–<\n]|(\n[^\n]))*)+", re.S)
+kunnaHypExpWrap2 = re.compile("([^a-zåäöA-ZÅÄÖ][-–][a-zåäöA-ZÅÄÖ][^\-–<]{4,}[^\-–<\s])(.*?([^a-zåäöA-ZÅÄÖ][-–][a-zåäöA-ZÅÄÖ][^\-–<]{4,}[^\-–<\s]))+", re.S)
 
 kunnaHypExpWrapEn = re.compile("[A-Z][^A-Z]*?((know\s*how)|(able))\s*to:?\s*(\s+ -[a-zA-Z][^\-<]*[^\-<\s])+", re.S)
-
-kunnaHypExpWrap2 = re.compile("([^a-zåäöA-ZÅÄÖ]-[a-zåäöA-ZÅÄÖ][^\-<]{4,}[^\-<\s])(.*?([^a-zåäöA-ZÅÄÖ]-[a-zåäöA-ZÅÄÖ][^\-<]{4,}[^\-<\s]))+", re.S)
 
 # Courses can have lists using HTML <p>-tags for list items but not be
 # captured by the more precise pattern above. For example the course
 # KTH IE1205 which has "<p>- "
 
-pHypListExp = re.compile("<p>-\s?(.*?)\s*(?:</?p>)", re.S)
+pHypListExp = re.compile("<p>-\s?(.*?)\s*(?=</?p>)", re.S)
 pHypListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))[^<>]*(</\s*p>)?(<p>-\s?[^<>]*</?p>)([^<>]*<p>-\s?[^<>]*</?p>)+", re.S)
 pHypListExpWrapEn = re.compile("(<p>)?[^<>]*((can)|(know\s*how\s*to)|(able\s*to))[^<>]*(</\s*p>)?(<p>-\s[^<>]*</?p>)([^<>]*<p>-\s[^<>]*</?p>)+", re.S)
-
 pHypListIndicator = re.compile("<p>-")
+
 # Courses KTH CM2006 CM1004 has "<p>" but no dot or hyphen at all
-pRawListExp = re.compile("<p>(.*?)(?:</?p>)", re.S)
-pRawListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))\s*:?\s*((</\s*p>)?(\s*<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+?)\s*(?:((\n\n)|$|(<p>för att)))", re.S)
+pRawListExp = re.compile("<p>(.*?)(?=</?p>)", re.S)
+pRawListExpWrap = re.compile("(<p>)?[^<>]*((ska)|(kunna))\s*:?\s*((</\s*p>)?(\s*<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+?)\s*(?=((\n\n)|$|(<p>för att)))", re.S)
 pRawListExpWrapEn = re.compile("(<p>)?[^<>]*((can)|(know\s*how\s*to)|(able\s*to))\s*:?\s*(</\s*p>)?(<p>[^<>]*</?p>)([^<>]*<p>[^<>]*</?p>)+", re.S)
 
 pRawListIndicator = re.compile("((ska)|(kunna))\s*:?\s*</\s*p>")
 pRawListIndicatorEn = re.compile("((can)|(know\s*how\s*to)|(able\s*to))\s*:?\s*</\s*p>")
 
+# UMU courses with "ska ... - ha ... - ha ..."
+umuHypHaAndStarExp = re.compile("\n?[*–\-]\s(.{4,}?)(?=(\n|([;*–\-]\s)|(Det innebär)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+umuHypHaAndStarExpWrap = re.compile("((godkän)|(efter)).*([–\-]\s?((ha)|(i)|(ge)|(kunna))([^*]*[*]){2,}.*){2,}", re.S + re.I)
+
+umuHypHaExp = re.compile("\n?[–\-]\s?((([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna))\s.{4,}?)(?=(\n|([–\-]\s)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Del)))", re.S)
+umuHypHaExpWrap = re.compile("((godkän)|(efter)).*([–\-]\s?((ha)|(i)|(ge)|(kunna))\s(.(?! [-–] ))*){2,}", re.S+re.I)
+
+###    (example course UMU 5BI261)
+###    'delFSR1 tillämpa ett analytiskt förhållningsätt till ekologin i terrestra arktiska och subarktiska ekosystem från process till ett landskapsperspektiv och över olika tidsskalorFSR2 tillämpa ett analytiskt förhållningssätt till pågående och möjliga framtida effekter av klimatförändringar på arktiska som inkluderar subarktiska ekosystem och hur terrestra processer återkopplar till dessa.FSR3 formulera genomförbara hypoteser som relaterar till effekterna av en eller två potentiella interagerande ekologiska faktorer i arktiska ekosystem processer.Modul 2, ProjektarbeteFSR4tillämpa ett vetenskapligt förhållningssätt för att planera och genomföra en fördjupad vetenskaplig studie inom arktisk terrester ekologiFSR5 inhämta, bearbeta, analysera och tolka information om ekologiska processer,FSR6 analysera och jämför resultaten i relation till publicerad litteratur inom ämnet,FSR7 presentera resultaten i skrift i form av en individuellt skriven vetenskaplig rapport och muntligt i form av seminarium. Efter avklarad kurs skall studenten för betyget Väl Godkänd kunna FSR8 kritiskt granska vetenskaplig litteratur för att tolka vetenskapliga resultat.FSR9kritiskt granska vetenskaplig litteratur för att formulera följder eller konsekvenser av egna och/eller publicerade resultat i ett vidare perspektivFSR10 tillämpa kursens innehåll för att formulera nya frågeställningar och hypoteser.'
+
+umuFSRexp = re.compile('FSR\s*[0-9]+[.]?\s*(.{4,}?)(?=((FSR)|(Modul)|(\n\n)|$|(Förvänt)|(Efter)))', re.S)
+umuFSRexpWrap = re.compile('(FSR\s*[0-9]+[.]?\s*.{4,})(.*(FSR\s*[0-9]+[.]?\s*.{4,}))+', re.S)
+
+efterSkallExp = re.compile("((För.*?)?(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*((förväntas)|(ska))[ A-Za-zåäöÅÄÖ]*((kunna)|(ha)|(också))\s*(.*?))(?=$|(\s\s)|\n|[–•*·….])")
+efterSkallExpWrap = re.compile("(För.*?)?(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*((förväntas)|(ska))[ A-Za-zåäöÅÄÖ]*((kunna)|(ha)|(också)) *[a-zåäöA-ZÅÄÖ][a-zåäöA-ZÅÄÖ, ]{4,}?(?=$|(\n$)|(  )|(\n[^a-zåäöA-ZÅÄÖ])|[–•*·….])")
+
+kunnaNLExp = re.compile("\n([a-zåäö][^\n]{4,})(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+kunnaNLExpWrap = re.compile("[Kk]unna([^\n]*att)?:?\s*((\n([a-zåäö][^\n]{4,})){3,})", re.S)
+
+kunnaNLExp2 = re.compile("\n\s*([A-ZÅÄÖ][^\n]{4,})(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+kunnaNLExp2Wrap = re.compile("[Kk]unna([^\n]*((att)|(följande)))?:?\s*((\n\s*([A-ZÅÄÖ][^\n]{4,})){3,})", re.S)
+
+kunnaNLExp3 = re.compile("\n\s*([a-zåäöA-ZÅÄÖ][^\n]{4,})(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+kunnaNLExp3Wrap = re.compile("[Kk]unna([^\n]*((att)|(följande)))?:?\s*((\n\s*([a-zåäöA-ZÅÄÖ][^\n]{4,})){3,})", re.S)
+
+umuNLHaExp = re.compile("\n\s*((([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna))\s.{4,}?)(?=((;?\n)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(För god)))", re.S)
+umuNLHaExpWrap = re.compile("((godkän)|(efter)).*(\n((ha)|(kunna))\s.*?){2,}?(?=((\n\n)|$|(\n[^hH\s])|(\s\sFör\s)))", re.S + re.I)
+
+umuAstExp = re.compile("((\\n?[*]\\s?(.{4,}?))|(kunna:?\\s.{10,}?))(?=(\\n|[*]|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+umuAstExpWrap = re.compile(r'((godkän)|(efter)).*([*]\s?.{4,}){2,}', re.S + re.I)
+
+umuHaExp = re.compile("((( - )|(ha\s)).{4,}?)(?=(\n|(ha\s)|( - )|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+umuHaExpWrap = re.compile("((godkän)|(efter)).*kunskap och förståelse.*(ha\s(förmåga att)?[^\n]{4,}){2,}", re.S + re.I)
+
+umuNLExp = re.compile("(\n\s*[A-ZÅÄÖ].{4,}?)(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+umuNLExpWrap = re.compile("(([Gg]odkän)|([Ee]fter)).*[Kk]unskap och [Ff]örståelse.*(\n\s?[A-ZÅÄÖ].*){2,}", re.S)
+
+umuNLExp2 = re.compile("(\n\s*[a-zåäö].{4,}?)(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+umuNLExp2Wrap = re.compile("(([Gg]odkän)|([Ee]fter)).*[Kk]unskap och [Ff]örståelse.*(\n\s?[a-zåäö].*){3,}", re.S)
+
+# umuWSExp = re.compile("  (.{4,}?)(?=(\n|(\s\s)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+# umuWSExpWrap = re.compile("(([Gg]odkän)|([Ee]fter)).*[Kk]unskap och [Ff]örståelse.*(([^0-9\n]|([^ \n][0-9]))  [^\s0-9*][^*\n]{4}.*){3,}", re.S)
+# umuWSindicator = re.compile("((godkän)|(efter)).*kunskap och förståelse.*(  [^\s]{4,}.*){3,}", re.S + re.I)
+
+umuWSExp = re.compile(r'  (.{4,}?)(?=(\n|(\s\s)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))', re.S)
+umuWSExpWrap = re.compile(r'(([Gg]odkän)|([Ee]fter)).*[Kk]unskap och [Ff]örståelse.*(([^0-9\n]|([^ \n][0-9]))  [^\s0-9*][^*\n]{4}.*){3,}')
+umuWSindicator = re.compile(r'((godkän)|(efter)).*kunskap och förståelse.*(  [^\s]{4,}.*){3,}', re.S + re.I)
+
+
+
+umuCatchallExp = re.compile("(.{4,}?)(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)))", re.S)
+umuCatchallExpWrap = re.compile("((godkän)|(efter)).*?kunskap och förståelse(.*färdighet och förmåga.*)", re.S)
+
+onelineExp = re.compile("(.{4,})")
+onelineExpWrap = re.compile("^[^\n]*((godkän)|(efter)|(avslutad)|(avklarad))[^\n]*((förväntas)|(ska)|(kunna))([^\n]{4,})(?=\n*$)", re.S + re.I)
+
+efterModulExp = re.compile("\n((.){4,}?)(?=([Mm]odul )|([Ee]fter)|$|\n)", re.S + re.I)
+efterModulExpWrap = re.compile("(efter.*?modul.*?((ska)|(kunna)).*){3,}?(?=(\n\n)|$)", re.S + re.I)
+
+del1del2Exp = re.compile("Del\s*[0-9]+\s*((.*?[0-9]\s*[Hh][Pp])?(.{4,}?))(?=(Del\s)|(\n\n)|$)", re.S)
+del1del2ExpWrap = re.compile("(Del\s*1.*?Del\s*2.*(Del\s*[0-9].*)*)(?=(\n\n)|$)", re.S)
+
+abcExp = re.compile("\s[a-z]\s*[).]\s*(.*?)(?=(\n\n)|$|(\s[a-z]\s*[).]))", re.S)
+abcExpWrap = re.compile("\s*a\s*[).]\s*(.*)\sb\s*[).]\s*(.*)\sc\s*[).]\s*.*?(?=(\n\n)|$)", re.S)
+
+iIIiiiExp = re.compile("\\(i+\\)\s*(.*?)(?=(\n\n)|$|(\\(i+\\)))", re.S + re.I)
+iIIiiiExpWrap = re.compile("\\(i\\)\s*(.*)\\(ii\\)\s*(.*)\\(iii\\).*?(?=(\n\n)|$)", re.S + re.I)
+
+avenKunnaExp = re.compile("[A-ZÅÄÖ].*?även kunna(.*?)(?=$|(\n\n)|[.])", re.I + re.S)
+avenKunnaExpWrap = re.compile("[A-ZÅÄÖ].*?även kunna.*?(?=$|(\n\n)|[.])", re.I + re.S)
+
+
+
+
+### Courses can use X as markers for goals
+###   "Efter genomgången kurs ska deltagarna kunna XReflektera kring och diskutera ämnet hållbar utveckling och koppla begreppen till det egna ämne
+###    sområdet XPresentera hållbar utveckling som ett ämne som kräver kritisk reflektion och diskussion utifrån olika perspektiv och visa hur detta bör komma f
+###    ram i utbildningen för studenter XDesigna kursmål ..."
+###   (example course KTH LH215V)
+XxListExp = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*(([^XM\n\s]|( [^X\n\s])){4,}[^X\n\s])", re.S)
+XxListExpWrap = re.compile("[^a-zåäöA-ZÅÄÖ][Xx]\s*([^XM\n\s]|( [^X\n\s])){4,}(\s*.*?[^a-zåäöA-ZÅÄÖ][Xx]\s*([^X\n\s]|( [^X\n\s])){4,})+", re.S)
+
+
+delkursExp = re.compile("Delkurs([^\\-•*·–…;]*?)hp")
+delkursExp2 = re.compile("Delkurs\s[0-9]+[.]?,?(\s*[^A-ZÅÄÖ\\-,•*·–…;\n]*)")
+
 # # Courses KTH FAG3184 FAG3185 have a set of <p>...</p> that are one
 # # goal each, and nothing else.
-# onlyPListExp = re.compile("<p>(.*?)(?:</?p>)", re.S)
+# onlyPListExp = re.compile("<p>(.*?)(?=</?p>)", re.S)
+
+
+umuHypHaExpMaybe = re.compile("- ([A-ZÅÄÖ](([^-])|(-[^ ])){4,})", re.S)
+umuHypHaExpWrapMaybe = re.compile("- [A-ZÅÄÖ](([^-])|(-[^ ])){4,}(- [A-ZÅÄÖ](([^-])|(-[^ ])){4,})+", re.S)
+
+
 
 ### Some courses only have one sentence with "studenter ska kunna ..."
 ### This pattern tends to over generate, so it should be used after
@@ -543,9 +642,6 @@ umuSkaHaExpWrap = re.compile("Efter avslutad kurs ska den studerande ha\s*(\s{2,
 umuSkaHaExp2 = re.compile("\s+((([^\s.])|(\s[^\s])){4,})\\.", re.S)
 umuSkaHaExpWrap2 = re.compile("Efter avslutad kurs ska den studerande ha\s*(\s*[a-zåäö](([^\s])|(\s[^\s])){4,}\\.)+", re.S)
 
-umuHypHaExp = re.compile("- ([A-ZÅÄÖ](([^-])|(-[^ ])){4,})", re.S)
-umuHypHaExpWrap = re.compile("- [A-ZÅÄÖ](([^-])|(-[^ ])){4,}(- [A-ZÅÄÖ](([^-])|(-[^ ])){4,})+", re.S)
-
 ### Courses from UMU often have one goal per line, with no sentence
 ### structure. Some patterns to capture such goals.
 ###    (example course UMU 6PE264)
@@ -585,11 +681,6 @@ umuHaLines = re.compile("\n[a-zåäö][^\n]{4,}")
 umuHaLinesWrap = re.compile("(((kunna)|(Kunskap och förståelse)|(Kunskap, undervisning och lärande,?\s?[0-9]*h?p?))\s*\n[a-zåäö](.*)(\n[a-zåäö].*){2,}(\n[a-zåäö][^\n]*))") # at least 4 lines starting with lower case
 umuHaLinesWrapEn = re.compile("((able\s*to).*\n[a-zåäö](.*)(\n[a-zåäö].*){2,}(\n[a-zåäö][^\n]*))")
 
-###    (example course UMU 5BI261)
-###    'delFSR1 tillämpa ett analytiskt förhållningsätt till ekologin i terrestra arktiska och subarktiska ekosystem från process till ett landskapsperspektiv och över olika tidsskalorFSR2 tillämpa ett analytiskt förhållningssätt till pågående och möjliga framtida effekter av klimatförändringar på arktiska som inkluderar subarktiska ekosystem och hur terrestra processer återkopplar till dessa.FSR3 formulera genomförbara hypoteser som relaterar till effekterna av en eller två potentiella interagerande ekologiska faktorer i arktiska ekosystem processer.Modul 2, ProjektarbeteFSR4tillämpa ett vetenskapligt förhållningssätt för att planera och genomföra en fördjupad vetenskaplig studie inom arktisk terrester ekologiFSR5 inhämta, bearbeta, analysera och tolka information om ekologiska processer,FSR6 analysera och jämför resultaten i relation till publicerad litteratur inom ämnet,FSR7 presentera resultaten i skrift i form av en individuellt skriven vetenskaplig rapport och muntligt i form av seminarium. Efter avklarad kurs skall studenten för betyget Väl Godkänd kunna FSR8 kritiskt granska vetenskaplig litteratur för att tolka vetenskapliga resultat.FSR9kritiskt granska vetenskaplig litteratur för att formulera följder eller konsekvenser av egna och/eller publicerade resultat i ett vidare perspektivFSR10 tillämpa kursens innehåll för att formulera nya frågeställningar och hypoteser.'
-
-umuFSRexp = re.compile('FSR\s*[0-9]+[.]?\s*(.{4,}?)(?=((FSR)|(Modul)|(\n\n)|$|(Förvänt)|(Efter)))', re.S)
-umuFSRexpWrap = re.compile('(FSR\s*[0-9]+[.]?\s*.{4,})(.*(FSR\s*[0-9]+[.]?\s*.{4,}))+', re.S)
 
 ###    (example course UMU )
 efterKunnaExp = re.compile("\n[^\n]{4,}")
@@ -631,9 +722,6 @@ kunnaColonExp = re.compile("kunna:\s*?\n", re.I)
 # KTH HS202X, skall </p><p>Visa sig ha kunskap och kompetens för att utveckla och genomföra ett självständigt examensarbete inom området, ’Architectural Lighting Design and Health’.</p><p>Visa sig ha kapacitet att strukturera en frågeställning, problematisera och definiera en användbar relevant metod för arbetsp
 
 # KTH EF1113, praktisk erfarenhet av att
-
-onelineExp = re.compile("(.{4,})", re.S)
-onelineExpWrap = re.compile("^[^\n]*((godkän)|(efter)|(avslutad)|(avklarad))[^\n]*((förväntas)|(ska)|(kunna))([^\n]{4,})(?=\n*$)", re.I)
 
 
 #########################################################################
@@ -685,7 +773,41 @@ def stripHyphens(inp):
     txt = re.sub("Stream-", "Stream", txt)
 
     return txt
+
+def cleanCommonWritingProblems(text):
+    res = text
+    tmp = res
     
+    res = res.replace(u"\u00A0", " ").replace(u"\u00AD", "")
+    res = res.replace(u"\u0095", "*").replace("<U+0095>", "*")
+
+    res = res.replace("\n -", "\n –").replace("\n-", "\n–").replace("\n−", "\n–").replace(" — ", " - ").replace("\uF095", "–")
+    res = re.sub("([0-9]{4})–([0-9]{4})", "\\1-\\2", res)
+    res = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1till\\2", res); # Hyphens are used as list item markers, but also for other things, try to avoid confusion
+    res = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1till\\2", res)
+    res = re.sub("([a-zåäöA-Zåäö]{3,})-(\s*((och)|(eller)))", "\\1HYPHEN\\2", res)
+    res = re.sub("([a-zåäöA-Zåäö]{3,})–(\s*((och)|(eller)))", "\\1HyPHEN\\2", res)
+    res = re.sub("([A-ZÅÄÖ]{2,})-([a-zåäöA-ZÅÄÖ])", "\\1HYPHEN\\2", res)
+    res = re.sub("([A-ZÅÄÖ]{2,})–([a-zåäöA-ZÅÄÖ])", "\\1HyPHEN\\2", res)
+    res = re.sub("([a-zåäöA-Zåäö]{2,})-([,/])", "\\1HYPHEN\\2", res)
+    res = re.sub("(non)-", "\\1HYPHEN", res)
+    res = re.sub("-(historisk)", "HYPHEN\\1", res)
+    res = re.sub("-in-", "HYPHENinHYPHEN", res)
+    res = re.sub("-on-", "HYPHENonHYPHEN", res)
+    res = re.sub("([A-ZÅÄÖa-zåäö])-([a-zåäö]{2,}[.])", "\\1HYPHEN\\2", res)
+    res = re.sub("([A-ZÅÄÖa-zåäö])–([a-zåäö]{2,}[.])", "\\1HyPHEN\\2", res)
+    res = re.sub("Hamilton-Jacobi-", "HamiltonHYPHENJacobiHYPHEN", res)    
+    res = re.sub("X((Pointer)|(Path)|(Link))", "\\1", res)
+    
+    res = res.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace("&eacute;", "é") # replace some weird codings
+    res = re.sub(u"\uF02D", "•", res)
+
+    res = htmlTrash.sub(" ", res)
+    res = re.sub("(<[^>]*[-][^>]*>)|(<\/?w[^>]*>)|(<![^>]*>)|(<\/?m[^>]*>)|(X-NONE)", " ", res); # remove some HTML markup we do not use
+    
+    return res
+
+
 ################################################################################
 ### Use heuristics to extract sentences with goals from the ILO-sv free text ###
 ################################################################################
@@ -727,37 +849,56 @@ def extractGoals(c):
     #####################################################
     ### unify hyphens to simplify expression matching ###
     #####################################################
-    sv = sv.replace(u"\u00A0", " ").replace(u"\u00AD", "")
-    en = en.replace(u"\u00A0", " ").replace(u"\u00AD", "")
+    # sv = sv.replace(u"\u00A0", " ").replace(u"\u00AD", "")
+    # en = en.replace(u"\u00A0", " ").replace(u"\u00AD", "")
 
-    sv = sv.replace("\n -", "\n–").replace("\n-", "\n–").replace("\n−", "\n–").replace(u"\uF095", "–")
-    sv = re.sub("([0-9]{4})–([0-9]{4})", "\\1-\\2", sv)
-    sv = sv.replace(" — ", " - ")
-    sv = sv.replace("\t", " ")
-
-    sv = parHeadingsExp.sub(" ", sv) # remove things like "(Lärandemål 3 och 4)" or "(Modul 5, 6, och 7)"
-    sv = parHeadingsExp2.sub(" modul", sv)
-
-    sv = delkursExp.sub("", sv)
-    sv = delkursExp2.sub("", sv)
-
-
-    sv = delparExp.sub("", sv)
-    sv = ccparExp.sub("", sv)
-    sv = betygparExp.sub("", sv)
-    sv = momentExp.sub("", sv)
-
-    # sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
-    sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1till\\2", sv)
-    sv = re.sub("X((Pointer)|(Path)|(Link))", "\\1", sv)
+    # sv = sv.replace(u"\u0095", "*").replace("<U+0095>", "*")
+    # en = en.replace(u"\u0095", "*").replace("<U+0095>", "*")
     
-    en = gradeparExp.sub("", en)
+    # sv = sv.replace("\n -", "\n–").replace("\n-", "\n–").replace("\n−", "\n–").replace(u"\uF095", "–")
+    # sv = re.sub("([0-9]{4})–([0-9]{4})", "\\1-\\2", sv)
+    # sv = sv.replace(" — ", " - ")
+    # sv = sv.replace("\t", " ")
 
-    ##############################
-    ### Fix some weird codings ###
-    ##############################
-    sv = sv.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ").replace(u'\uf02d', "•")
-    sv = sv.replace("&eacute;", "é")
+    # sv = parHeadingsExp.sub(" ", sv) # remove things like "(Lärandemål 3 och 4)" or "(Modul 5, 6, och 7)"
+    # sv = parHeadingsExp2.sub(" modul", sv)
+
+    # sv = delkursExp.sub("", sv)
+    # sv = delkursExp2.sub("", sv)
+
+
+    # sv = delparExp.sub("", sv)
+    # sv = ccparExp.sub("", sv)
+    # sv = betygparExp.sub("", sv)
+    # sv = momentExp.sub("", sv)
+
+    # # sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1 till \\2", sv)
+    # sv = re.sub("([F0-9]+)\s*[-–]\s*([0-9]+)", "\\1till\\2", sv)
+    # sv = re.sub("([a-zåäöA-Zåäö]{3,})-(\s*((och)|(eller)))", "\\1HYPHEN\\2", sv)
+    # sv = re.sub("([a-zåäöA-Zåäö]{3,})–(\s*((och)|(eller)))", "\\1HyPHEN\\2", sv)
+    # sv = re.sub("([A-ZÅÄÖ]{2,})-([a-zåäöA-ZÅÄÖ])", "\\1HYPHEN\\2", sv)
+    # sv = re.sub("([A-ZÅÄÖ]{2,})–([a-zåäöA-ZÅÄÖ])", "\\1HyPHEN\\2", sv)
+    # sv = re.sub("([a-zåäöA-Zåäö]{2,})-([,/])", "\\1HYPHEN\\2", sv)
+    # sv = re.sub("(non)-", "\\1HYPHEN", sv)
+    # sv = re.sub("-(historisk)", "HYPHEN\\1", sv)
+    # sv = re.sub("-in-", "HYPHENinHYPHEN", sv)
+    # sv = re.sub("-on-", "HYPHENonHYPHEN", sv)
+    # sv = re.sub("([A-ZÅÄÖa-zåäö])-([a-zåäö]{2,}[.])", "\\1HYPHEN\\2", sv)
+    # sv = re.sub("([A-ZÅÄÖa-zåäö])–([a-zåäö]{2,}[.])", "\\1HyPHEN\\2", sv)
+    # sv = re.sub("Hamilton-Jacobi-", "HamiltonHYPHENJacobiHYPHEN", sv)    
+    # sv = re.sub("X((Pointer)|(Path)|(Link))", "\\1", sv)
+    
+    # en = gradeparExp.sub("", en)
+
+    # ##############################
+    # ### Fix some weird codings ###
+    # ##############################
+    # sv = sv.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace(":", " ").replace(u'\uf02d', "•")
+    # sv = sv.replace("&eacute;", "é")
+
+    sv = cleanCommonWritingProblems(sv)
+    en = cleanCommonWritingProblems(en)
+    
     sv = sv.strip()
     while len(sv) and sv[0] == '"':
         sv = sv[1:]
@@ -766,13 +907,12 @@ def extractGoals(c):
     
     iloList = []
     iloListEn = []
-
     
-    #############################
-    ### Remove some HTML tags ###
-    #############################
-    sv = htmlTrash.sub(" ", sv)
-    en = htmlTrash.sub(" ", en)
+    # #############################
+    # ### Remove some HTML tags ###
+    # #############################
+    # sv = htmlTrash.sub(" ", sv)
+    # en = htmlTrash.sub(" ", en)
     
     
     ########################################
@@ -817,43 +957,143 @@ def extractGoals(c):
 
     if htmlListExpIndicator.search(sv) or htmlListExpIndicator.search(en): # This expression is slow to match, so only try if a faster expression matches
         sv, en = matchAndConsume(htmlListExpWrap, htmlListExp, sv, htmlListExpWrapEn, htmlListExp, en, "html-list", iloList, iloListEn)
-
         sv, en = matchAndConsumeSpecial(htmlListExpWrap3, htmlListExp, sv, htmlListExpWrapEn3, htmlListExp, en, "html-list-3", iloList, iloListEn) # should run before #2
-            
         sv, en = matchAndConsume(htmlListExpWrap2, htmlListExp, sv, htmlListExpWrap2, htmlListExp, en, "html-list-2", iloList, iloListEn)
 
-        
     if sv.find("<p>") >= 0 or en.find("<p>") >= 0:
         sv, en = matchAndConsume(pListExpWrap, pListExp, sv, pListExpWrapEn, pListExp, en, "p-list", iloList, iloListEn)
 
+    sv, en = matchAndConsume(umuFSRexpWrap, umuFSRexp, sv, umuFSRexp, umuFSRexp, en, "FSR-list", iloList, iloListEn)
+    
+    sv, en = matchAndConsume(efterModulExpWrap, efterModulExp, sv, efterModulExpWrap, efterModulExp, en, "efter-modul-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(threedotListExpWrap, threedotListExp, sv, threedotListExpWrap, threedotListExp, en, "three-dot-list", iloList, iloListEn)
+    sv, en = matchAndConsume(abcExpWrap, abcExp, sv, abcExpWrap, abcExp, en, "abc-list", iloList, iloListEn)
+    sv, en = matchAndConsume(iIIiiiExpWrap, iIIiiiExp, sv, iIIiiiExpWrap, iIIiiiExp, en, "i-ii-iii-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuNLHaExpWrap, umuNLHaExp, sv, umuNLHaExpWrap, umuNLHaExp, en, "umu-NL-ha-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuHypHaAndStarExpWrap, umuHypHaAndStarExp, sv, umuHypHaAndStarExpWrap, umuHypHaAndStarExp, en, "umu-Hyp-Ha-and-Star-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuHypHaExpWrap, umuHypHaExp, sv, umuHypHaExpWrap, umuHypHaExp, en, "umu-Hyp-Ha-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuHaExpWrap, umuHaExp, sv, umuHaExpWrap, umuHaExp, en, "umu-Ha-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuNLExp2Wrap, umuNLExp2, sv, umuNLExp2Wrap, umuNLExp2, en, "umu-NL-list-2", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuNLExpWrap, umuNLExp, sv, umuNLExpWrap, umuNLExp, en, "umu-NL-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(umuAstExpWrap, umuAstExp, sv, umuAstExpWrap, umuAstExp, en, "umu-Asterisk-list", iloList, iloListEn)
+
     if sv.find("LM1") >= 0 or en.find("LM1") >= 0:
         sv, en = matchAndConsume(lm1ExpWrap, lm1Exp, sv, lm1ExpWrap, lm1Exp, en, "LM-1-list", iloList, iloListEn)
-                        
+
     if brListIndicator.search(sv) or brListIndicator.search(en):
         sv, en = matchAndConsume(brListExpWrap, brListExp, sv, brListExpWrapEn, brListExp, en, "br-list", iloList, iloListEn)
         sv, en = matchAndConsume(brListExpWrap2, brListExp, sv, brListExpWrap2, brListExp, en, "br-list-2", iloList, iloListEn)
 
     sv, en = matchAndConsume(newlineListExpWrap, newlineListExp, sv, newlineListExpWrap, newlineListExp, en, "newline-list", iloList, iloListEn)
     
+    sv, en = matchAndConsume(dotListBeforeExpWrap, dotListBeforeExp, sv, dotListBeforeExpWrap, dotListBeforeExp, en, "dot-before-list", iloList, iloListEn)
     sv, en = matchAndConsume(dotListExpWrap, dotListExp, sv, dotListExpWrap, dotListExp, en, "dot-list", iloList, iloListEn)
     sv, en = matchAndConsume(dotListOExpWrap, dotListOExp, sv, dotListOExpWrap, dotListOExp, en, "dot-list-O", iloList, iloListEn)
 
-    sv, en = matchAndConsume(XxListExpWrap, XxListExp, sv, XxListExpWrap, XxListExp, en, "Xx-list", iloList, iloListEn)
-    
-    sv, en = matchAndConsume(arabicPListExpWrap, arabicPListExp, sv, arabicPListExpWrap, arabicPListExp, en, "arabic-P-list", iloList, iloListEn)
+    # tmp = sv.replace(".o", ". o").replace("Färdighet och förmåga", " ").replace("Kunskap och förståelse", " ").replace("Värderingsförmåga och förhållningssätt", " ")
+    # sv, en = matchAndConsume(oListExpWrap, oListExp, tmp, oListExpWrap, oListExp, en, "o-list", iloList, iloListEn)
+    sv, en = matchAndConsume(oListExpWrap, oListExp, sv, oListExpWrap, oListExp, en, "o-list", iloList, iloListEn)
 
-    if pHypListIndicator.search(sv) or pHypListIndicator.search(en): # faster check before slow matching
+    if inlineHyphenIndicator.search(sv) or inlineHyphenIndicator.search(en):
+        sv, en = matchAndConsume(inlineHyphenListExpWrap, inlineHyphenListExp, sv, inlineHyphenListExpWrap, inlineHyphenListExp, en, "inline-hyphen-list", iloList, iloListEn)
+    
+    if romanListIndicator.search(sv) or romanListIndicatorEn.search(en): # This expression is slow to match, so only try if a faster expression matches
+        sv, en = matchAndConsume(romanListExpWrap, romanListExp, sv, romanListExpWrap, romanListExp, en, "roman-list", iloList, iloListEn)
+
+    if arabicPListIndicator.search(sv):
+        sv, en = matchAndConsume(arabicPListExpWrap, arabicPListExp, sv, arabicPListExpWrap, arabicPListExp, en, "arabic-P-list", iloList, iloListEn)
+
+    sv, en = matchAndConsume(parListExpWrap, parListExp, sv, parListExpWrap, parListExp, en, "par-list", iloList, iloListEn)
+    sv, en = matchAndConsume(parListExpWrap2, parListExp2, sv, parListExpWrap2, parListExp2, en, "par-list-2", iloList, iloListEn)
+    
+    sv, en = matchAndConsume(arabicListExpWrap123, arabicListExp, sv, arabicListExpWrap123, arabicListExp, en, "arabic-list-123", iloList, iloListEn)
+    sv, en = matchAndConsume(arabicListExpWrap12345, arabicListExp12345, sv, arabicListExpWrap12345, arabicListExp12345, en, "arabic-list-12345", iloList, iloListEn)
+        
+    if umuWSindicator.search(sv):
+        sv, en = matchAndConsume(umuWSExpWrap, umuWSExp, sv, umuWSExpWrap, umuWSExp, en, "umu-WS-list", iloList, iloListEn)
+    else:
+        log("umu-ws, indicator failed, TEXT:", sv)
+
+    if kunna1indicator.search(sv):
+        sv, en = matchAndConsume(kunna1expWrap, kunna1exp, sv, kunna1expWrapEn, kunna1exp, en, "kunna-1-exp", iloList, iloListEn)
+    else:
+        log("kunna-1 indicator failed, TEXT:", sv)
+        
+    for i in range(len(iloList)): # this captures too much in common UMU patterns, so we add a small correction here
+        iloList[i] = kunna1sub.sub(" ", iloList[i])
+
+    sv, en = matchAndConsume(kunnaCapExpWrap, kunnaCapExp, sv, kunnaCapExpWrapEn, kunnaCapExp, en, "kunna-Cap-exp", iloList, iloListEn)
+
+    if kunnaHypIndicator.search(sv):
+        sv, en = matchAndConsume(kunnaHypExpWrap, kunnaHypExp, sv, kunnaHypExpWrapEn, kunnaHypExp, en, "kunna-hyp-exp", iloList, iloListEn)
+        sv, en = matchAndConsume(kunnaHypExpWrap2, kunnaHypExp, sv, kunnaHypExpWrap2, kunnaHypExp, en, "kunna-hyp-exp-2", iloList, iloListEn)
+
+    sv, en = matchAndConsume(efterSkallExpWrap, efterSkallExp, sv, efterSkallExpWrap, efterSkallExp, en, "efter-ska-kunna-exp", iloList, iloListEn)
+
+    sv, en = matchAndConsume(avenKunnaExpWrap, avenKunnaExp, sv, avenKunnaExpWrap, avenKunnaExp, en, "aven-kunna-exp", iloList, iloListEn)
+    
+    if len(iloList) <= 0:
+        sv, en = matchAndConsume(umuCatchallExpWrap, umuCatchallExp, sv, umuCatchallExpWrap, umuCatchallExp, en, "umu-Catch-All-list", iloList, iloListEn)
+    
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(arabicListExpWrap, arabicListExp, sv, arabicListExpWrap, arabicListExp, en, "arabic-list", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(arabicListExpBWrap, arabicListExpB, sv, arabicListExpWrap, arabicListExp, en, "arabic-list-B", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kunnaNLExpWrap, kunnaNLExp, sv, kunnaNLExpWrap, kunnaNLExp, en, "kunna-NL-list", iloList, iloListEn)
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kunnaNLExp2Wrap, kunnaNLExp2, sv, kunnaNLExp2Wrap, kunnaNLExp2, en, "kunna-NL-list-2", iloList, iloListEn)
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kunnaNLExp3Wrap, kunnaNLExp3, sv, kunnaNLExp3Wrap, kunnaNLExp3, en, "kunna-NL-list-3", iloList, iloListEn)
+
+    #if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+    sv, en = matchAndConsume(skaKunnaExp, skaKunnaExp, sv, skaKunnaExpEn, skaKunnaExpEn, en, "ska-kunna-list", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(kanExp, kanExp, sv, kanExpEn, kanExpEn, en, "kan-exp", iloList, iloListEn) 
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(fortrogenExp, fortrogenExp, sv, fortrogenExpEn, fortrogenExpEn, en, "fortrogen-exp", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(formagaExp, formagaExp, sv, formagaExpEn, formagaExpEn, en, "formaga-exp", iloList, iloListEn)
+    
+    if len(iloList) <= 0 and (pHypListIndicator.search(sv) or pHypListIndicator.search(en)): # faster check before slow matching
         sv, en = matchAndConsume(pHypListExpWrap, pHypListExp, sv, pHypListExpWrapEn, pHypListExp, en, "p-hyp-list", iloList, iloListEn)
 
-    tmp = sv.replace(".o", ". o").replace("Färdighet och förmåga", " ").replace("Kunskap och förståelse", " ").replace("Värderingsförmåga och förhållningssätt", " ")
-    sv, en = matchAndConsume(oListExpWrap, oListExp, tmp, oListExpWrap, oListExp, en, "o-list", iloList, iloListEn)
+    if len(iloList) <= 0 and pRawListIndicator.search(sv):
+        sv, tmp = matchAndConsume(pRawListExpWrap, pRawListExp, sv, pRawListExpWrapEn, pRawListExp, "", "p-raw-list", iloList, iloListEn)
+    if len(iloListEn) <= 0 and pRawListIndicatorEn.search(en): # faster check before slow matching
+        tmp, en = matchAndConsume(pRawListExpWrap, pRawListExp, "", pRawListExpWrapEn, pRawListExp, en, "p-raw-list", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(onelineExpWrap, onelineExp, sv, onelineExpWrap, onelineExp, en, "one-line", iloList, iloListEn)
+
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(del1del2ExpWrap, del1del2Exp, sv, del1del2ExpWrap, del1del2Exp, en, "del1-del2", iloList, iloListEn)
+        
+
+        
+                        
+
+    
+
+    sv, en = matchAndConsume(XxListExpWrap, XxListExp, sv, XxListExpWrap, XxListExp, en, "Xx-list", iloList, iloListEn)
 
     sv, en = matchAndConsume(umuHaLinesWrap, umuHaLines, sv, umuHaLinesWrapEn, umuHaLines, en, "umu-ha-lines", iloList, iloListEn)
 
-    sv, en = matchAndConsume(umuFSRexpWrap, umuFSRexp, sv, umuFSRexp, umuFSRexp, en, "FSR-list", iloList, iloListEn)
-
-    svTmp = stripHyphens(sv)
-    sv, tmp = matchAndConsumeSpecial(umuEfterHypWrapSpec2, umuEfterHyp, svTmp, umuEfterHyp, umuEfterHyp, "", "efter-hyphen-Spec-list", iloList, iloListEn)
+    # svTmp = stripHyphens(sv)
+    # sv, tmp = matchAndConsumeSpecial(umuEfterHypWrapSpec2, umuEfterHyp, svTmp, umuEfterHyp, umuEfterHyp, "", "efter-hyphen-Spec-list", iloList, iloListEn)
     
     if umuEfterHypIndicator.search(sv) and not umuEfterHypNegativeIndicator.search(sv):
         sv, en = matchAndConsumeSpecial(umuEfterHypWrapSpec, umuEfterHyp, sv, umuEfterHyp, umuEfterHyp, en, "efter-hyphen-Spec-list", iloList, iloListEn)
@@ -863,24 +1103,9 @@ def extractGoals(c):
     
     sv, tmp = matchAndConsume(formuleraExp, formuleraExp, sv, formuleraExp, formuleraExp, "", "formulera-list", iloList, iloListEn)
 
-    sv, tmp = matchAndConsume(umuHypHaExpWrap, umuHypHaExp, sv, umuHypHaExp, umuHypHaExp, "", "umu-hyphen-Ha-exp", iloList, iloListEn) 
-
-    if inlineHyphenIndicator.search(sv) or inlineHyphenIndicator.search(en):
-        sv, en = matchAndConsume(inlineHyphenListExpWrap, inlineHyphenListExp, sv, inlineHyphenListExpWrap, inlineHyphenListExp, en, "inline-hyphen-list", iloList, iloListEn)
-    
-    if romanListIndicator.search(sv) or romanListIndicatorEn.search(en): # This expression is slow to match, so only try if a faster expression matches
-        sv, en = matchAndConsume(romanListExpWrap, romanListExp, sv, romanListExpWrap, romanListExp, en, "roman-list", iloList, iloListEn)
-
-    sv, en = matchAndConsume(arabicListExpWrap, arabicListExp, sv, arabicListExpWrap, arabicListExp, en, "arabic-list", iloList, iloListEn)
-
-    sv, en = matchAndConsume(arabicListExpBWrap, arabicListExpB, sv, arabicListExpWrap, arabicListExp, en, "arabic-list-B", iloList, iloListEn)
-
     sv, en = matchAndConsume(umuSkaHaExpWrap2, umuSkaHaExp2, sv, umuSkaHaExp, umuSkaHaExp, en, "umu-ska-ha-list-2", iloList, iloListEn)
     sv, en = matchAndConsume(umuSkaHaExpWrap, umuSkaHaExp, sv, umuSkaHaExp, umuSkaHaExp, en, "umu-ska-ha-list", iloList, iloListEn)
                              
-    sv, en = matchAndConsume(parListExpWrap, parListExp, sv, parListExpWrap, parListExp, en, "par-list", iloList, iloListEn)
-    sv, en = matchAndConsume(parListExpWrap2, parListExp2, sv, parListExpWrap2, parListExp2, en, "par-list-2", iloList, iloListEn)
-    
     sv, en = matchAndConsume(umuAvseendeExpWrap, umuAvseendeExp, sv, umuAvseendeExp, umuAvseendeExp, en, "avseende-list", iloList, iloListEn)
 
     sv, en = matchAndConsume(umuSamtligaMomentExpWrap, umuSamtligaMomentExp, sv, umuSamtligaMomentExp, umuSamtligaMomentExp, en, "Samtliga-moment-list", iloList, iloListEn)
@@ -896,36 +1121,15 @@ def extractGoals(c):
     if kunnaNewlineExpWrap2Indicator.search(sv):
         sv, en = matchAndConsume(kunnaNewlineExpWrap2, kunnaNewlineExp, sv, kunnaNewlineExpWrapEn, kunnaNewlineExp, en, "kunna-newline-list-2", iloList, iloListEn)
 
-    sv, en = matchAndConsume(kunnaCapExpWrap, kunnaCapExp, sv, kunnaCapExpWrapEn, kunnaCapExp, en, "kunna-Cap-exp", iloList, iloListEn)
-
     sv, tmp = matchAndConsume(umuNewlinesExpWrap4, umuNewlinesExp, sv, umuNewlinesExp, umuNewlinesExp, "", "umu-newlines-4", iloList, iloListEn) 
     sv, tmp = matchAndConsume(umuNewlinesExpWrap5, umuNewlinesExp, sv, umuNewlinesExp, umuNewlinesExp, "", "umu-newlines-5", iloList, iloListEn) 
         
     sv, en = matchAndConsume(kunnaAexpWrap, kunnaAexp, sv, kunnaAexpWrapEn, kunnaAexp, en, "kunna-a-exp", iloList, iloListEn)
     
-    sv, en = matchAndConsume(skaKunnaExp, skaKunnaExp, sv, skaKunnaExpEn, skaKunnaExpEn, en, "ska-kunna-list", iloList, iloListEn)
-
-    sv, en = matchAndConsume(kunna1expWrap, kunna1exp, sv, kunna1expWrapEn, kunna1exp, en, "kunna-1-exp", iloList, iloListEn)
-
-    for i in range(len(iloList)): # this captures too much in common UMU patterns, so we add a small correction here
-        iloList[i] = kunna1sub.sub(" ", iloList[i])
-
-    sv, en = matchAndConsume(kunnaHypExpWrap, kunnaHypExp, sv, kunnaHypExpWrapEn, kunnaHypExp, en, "kunna-hyp-exp", iloList, iloListEn)
-    sv, en = matchAndConsume(kunnaHypExpWrap2, kunnaHypExp, sv, kunnaHypExpWrap2, kunnaHypExp, en, "kunna-hyp-exp-2", iloList, iloListEn)
-
-    if len(iloList) <= 0 and pRawListIndicator.search(sv):
-        sv, tmp = matchAndConsume(pRawListExpWrap, pRawListExp, sv, pRawListExpWrapEn, pRawListExp, "", "p-raw-list", iloList, iloListEn)
-    if len(iloListEn) <= 0 and pRawListIndicatorEn.search(en): # faster check before slow matching
-        tmp, en = matchAndConsume(pRawListExpWrap, pRawListExp, "", pRawListExpWrapEn, pRawListExp, en, "p-raw-list", iloList, iloListEn)
-        
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
         sv, en = matchAndConsume(kunnaSentenceExp, kunnaSentenceExp, sv, kunnaSentenceExpEn, kunnaSentenceExpEn, en, "kunna-sentence-exp", iloList, iloListEn)
     
-    sv, en = matchAndConsume(formagaExp, formagaExp, sv, formagaExpEn, formagaExpEn, en, "formaga-exp", iloList, iloListEn)
-    
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
-        sv, en = matchAndConsume(fortrogenExp, fortrogenExp, sv, fortrogenExpEn, fortrogenExpEn, en, "fortrogen-exp", iloList, iloListEn)
-
         sv, en = matchAndConsume(tillfalleExp, tillfalleExp, sv, tillfalleExpEn, tillfalleExpEn, en, "tillfalle-exp", iloList, iloListEn)
         sv, en = matchAndConsume(traningExp, traningExp, sv, traningExpEn, traningExpEn, en, "traning-exp", iloList, iloListEn)
                     
@@ -953,11 +1157,6 @@ def extractGoals(c):
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
         sv, en = matchAndConsume(whitespacesExpWrap2, whitespacesExp2, sv, whitespacesExpWrap2, whitespacesExp2, en, "whitespace", iloList, iloListEn)
 
-    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
-        sv, en = matchAndConsume(kanExp, kanExp, sv, kanExpEn, kanExpEn, en, "kan-exp", iloList, iloListEn) 
-
-    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
-        sv, en = matchAndConsume(onelineExpWrap, onelineExp, sv, onelineExpWrap, onelineExp, en, "one-line", iloList, iloListEn)
 
     ### If nothing is found, try to add the whole text ###
     if len(iloList) <= 0:
@@ -974,7 +1173,26 @@ def extractGoals(c):
 
     iloList = iloListFixes(iloList)
     iloListEn = iloListFixes(iloListEn)
-   
+
+    tmp = []
+    for ilo in iloList:
+        iloFix = ilo
+        iloFix = re.sub("([F0-9]+)till([0-9]+)", "\\1 - \\2", iloFix)
+        iloFix = re.sub("([a-zåäöA-ZÅÄÖ]{3,})HYPHEN(\s*((och)|(eller)))", "\\1-\\2", iloFix)
+        iloFix = re.sub("([a-zåäöA-ZÅÄÖ]{3,})HyPHEN(\s*((och)|(eller)))", "\\1–\\2", iloFix)
+        iloFix = re.sub("([A-ZÅÄÖ]{2,})HYPHEN([a-zåäöA-ZÅÄÖ])", "\\1-\\2", iloFix)
+        iloFix = re.sub("([A-ZÅÄÖ]{2,})HyPHEN([a-zåäöA-ZÅÄÖ])", "\\1–\\2", iloFix)
+        iloFix = re.sub("([a-zåäöA-ZÅÄÖ]{2,})HYPHEN([,/])", "\\1-\\2", iloFix)
+        iloFix = re.sub("(non)HYPHEN", "\\1-", iloFix)
+        iloFix = re.sub("HYPHEN(historisk)", "-\\1", iloFix)
+        iloFix = re.sub("HYPHENinHYPHEN", "-in-", iloFix)
+        iloFix = re.sub("HYPHENonHYPHEN", "-on-", iloFix)
+        iloFix = re.sub("([A-ZÅÄÖa-zåäö])HyPHEN([a-zåäö]{2,}[.])", "\\1–\\2", iloFix)
+        iloFix = re.sub("([A-ZÅÄÖa-zåäö])HYPHEN([a-zåäö]{2,}[.])", "\\1-\\2", iloFix)
+        iloFix = re.sub("HamiltonHYPHENJacobiHYPHEN", "Hamilton-Jacobi-", iloFix)
+        tmp.append(iloFix)
+    iloList = tmp
+    
     return (iloList, iloListEn)
 
 ##########################################################################
@@ -990,6 +1208,12 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
 
     startime = timer()
     log("matchAndConsume starting!", name)
+
+    #if(name == "dot-list" or name == "efter-ska-kunna-exp" and name == "arabic-list-12345" and name == "arabic-list-123"):
+    if name == "ska-kunna-list":
+        log("TEXT:", sv)
+        log("MATCH:", allExp.search(sv))
+    
     m = allExp.search(sv)
     log("matchAndConsume initial search finished!", name)
 
@@ -1015,6 +1239,7 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
                 found = 1
         if found:
             sv = sv[:m.start()] + " " + sv[m.end():]
+            # log("We found something, NEW TEXT:", sv)
             m = allExp.search(sv)
         else:
             m = allExp.search(sv, m.end() + 1)
@@ -1060,6 +1285,9 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
     if not name in times:
         times[name] = 0
     times[name] += endtime - startime
+
+    # log("\nReturning this text:", sv + "\n")
+    
     return (sv, en)
 
 ##########################################################################
