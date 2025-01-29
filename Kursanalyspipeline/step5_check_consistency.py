@@ -28,6 +28,8 @@ defaultSv = "data/bloom_revised_sv.txt"
 defaultEn = "data/bloom_revised_en.txt"
 stoplistFile = "data/stoplist.txt"
 
+print_tables_for_paper = 0
+
 ##################################
 ### Check command line options ###
 ##################################
@@ -44,6 +46,10 @@ for i in range(1, len(sys.argv)):
         moreInputs.extend(sys.argv[i+1].split())
     elif sys.argv[i] == "-sl" and i + 1 < len(sys.argv):
         stoplistFile = sys.argv[i+1]
+    elif sys.argv[i] == "-pp":
+        print_tables_for_paper = 1 # Print tables for paper separately
+        paper_out = open("tables_for_paper.txt", "w")
+        goals_with_0_verbs = []
     else:
         if sys.argv[i-1] != "-b" and sys.argv[i-1] != "-c" and sys.argv[i-1] != "-inp" and sys.argv[i-1] != "-sl":
             unknown = 1
@@ -777,7 +783,7 @@ def printBloomStats():
     
     print ("\n" + "-"*15, "Statistics per course", "-"*15)
     
-    print ("-"*10, "Maximum Bloom level per course", "-"*10)
+    tab = ("-"*10) + " Maximum Bloom level per course " + ("-"*10) + "\n"
     tmp = 0
     for val in commonVals:
         if val in bloomStatsCC["all"]["max"]:
@@ -786,12 +792,15 @@ def printBloomStats():
             if totCourses > 0:
                 proc = c / float(totCourses)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >5}: {1: >5} ({2:})".format(val, c, procs))
+            tab += "{0: >5}: {1: >5} ({2:})\n".format(val, c, procs)
         else:
-            print ("{0: >5}: {1: >5} (0%)".format(val, 0))
-    print (tmp, "courses with Bloom data")
+            tab += "{0: >5}: {1: >5} (0%)\n".format(val, 0)
+    tab += "{0:} courses with Bloom data\n".format(tmp)
+    print (tab)
+    if print_tables_for_paper:
+        paper_out.write(tab)
     
-    print ("-"*10, "Minimum Bloom level per course", "-"*10)
+    tab = ("-"*10) + " Minimum Bloom level per course " + ("-"*10) + "\n"
     tmp = 0
     for val in commonVals:
         if val in bloomStatsCC["all"]["min"]:
@@ -800,10 +809,13 @@ def printBloomStats():
             if totCourses > 0:
                 proc = c / float(totCourses)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >5}: {1: >5} ({2:})".format(val, c, procs))
+            tab += "{0: >5}: {1: >5} ({2:})\n".format(val, c, procs)
         else:
-            print ("{0: >5}: {1: >5} (0%)".format(val, 0))
-    print (tmp, "courses with Bloom data")
+            tab += "{0: >5}: {1: >5} (0%)\n".format(val, 0)
+    tab += "{0:} courses with Bloom data\n".format(tmp)
+    print (tab)
+    if print_tables_for_paper:
+        paper_out.write(tab)
 
     print ("-"*10, "Average Mean Bloom level per course", "-"*10)
     m = 0
@@ -865,9 +877,9 @@ def printBloomStats():
             if totCourses > 0:
                 proc = c / float(totCourses)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >5}: {1: >5.1f} ({2:})".format(val, c, procs))
+            print ("{0: >5}: {1: >7.1f} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >5}: {1: >5.1f} (0%)".format(val, 0))
+            print ("{0: >5}: {1: >7.1f} (0%)".format(val, 0))
     print ("{0: 5.0f}".format(tmp), "courses with Bloom data")
 
     print ("-"*10, "Number of Bloom verbs per course", "-"*10)
@@ -890,7 +902,7 @@ def printBloomStats():
             print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
     print (tmp, "courses in data")
 
-    print ("-"*10, "Number of Bloom verbs per course (grouped)", "-"*10)
+    tab = ("-"*10) + " Number of Bloom verbs per course (grouped) " + ("-"*10) + "\n"
     tmp = 0
     ls = []
     for val in bloomStatsCC["all"]["nVerbsG"]:
@@ -904,7 +916,10 @@ def printBloomStats():
         else:
             proc = 0
         procs = "{:>5}".format("{:2.1%}".format(proc))
-        print ("{0: >9}: {1: >5} ({2:})".format(val, c, procs))
+        tab += "{0: >9}: {1: >5} ({2:})\n".format(val, c, procs)
+    print (tab)
+    if print_tables_for_paper:
+        paper_out.write(tab)
     
     #############################
     ### Print stats per goal ####
@@ -916,7 +931,7 @@ def printBloomStats():
     for v in bloomStatsGoal["all"]["max"]:
         totGoals += bloomStatsGoal["all"]["max"][v]
     
-    print ("-"*10, "Maximum Bloom level per goal", "-"*10)
+    tab = ("-"*10) + " Maximum Bloom level per goal " + ("-"*10) + "\n"
     tmp = 0
     for val in commonVals:
         if val in bloomStatsGoal["all"]["max"]:
@@ -925,12 +940,15 @@ def printBloomStats():
             if totGoals > 0:
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >7}: {1: >5} ({2:})".format(val, c, procs))
+            tab += "{0: >7}: {1: >5} ({2:})\n".format(val, c, procs)
         else:
-            print ("{0: >7}: {1: >5} (0%)".format(val, 0))
-    print (tmp, "goals with Bloom data")
+            tab += "{0: >7}: {1: >5} (0%)\n".format(val, 0)
+    tab += "{0:} goals with Bloom data\n".format(tmp)
+    print (tab)
+    if print_tables_for_paper:
+        paper_out.write(tab)
     
-    print ("-"*10, "Minimum Bloom level per goal", "-"*10)
+    tab = ("-"*10) + " Minimum Bloom level per goal " + ("-"*10) + "\n"
     tmp = 0
     for val in commonVals:
         if val in bloomStatsGoal["all"]["min"]:
@@ -939,10 +957,13 @@ def printBloomStats():
             if totGoals > 0:
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
-            print ("{0: >7}: {1: >5} ({2:})".format(val, c, procs))
+            tab += "{0: >7}: {1: >5} ({2:})\n".format(val, c, procs)
         else:
-            print ("{0: >7}: {1: >5} (0%)".format(val, 0))
-    print (tmp, "goals with Bloom data")
+            tab += "{0: >7}: {1: >5} (0%)\n".format(val, 0)
+    tab += "{0:} goals with Bloom data\n".format(tmp)
+    print (tab)
+    if print_tables_for_paper:
+        paper_out.write(tab)
 
 
     print ("-"*10, "Difference beteween max and min Bloom level in goal", "-"*10)
@@ -1022,14 +1043,14 @@ def printBloomStats():
                 proc = c / float(totGoals)
             procs = "{:>5}".format("{:2.1%}".format(proc))
             if isinstance(c, float):
-                print ("{0: >7}: {1: >5} ({2:})".format(val, "{:4.1f}".format(c), procs))
+                print ("{0: >7}: {1: >7} ({2:})".format(val, "{:4.1f}".format(c), procs))
             else:
-                print ("{0: >7}: {1: >5} ({2:})".format(val, c, procs))
+                print ("{0: >7}: {1: >7} ({2:})".format(val, c, procs))
         else:
-            print ("{0: >7}: {1: >5} (0%)".format(val, 0))
+            print ("{0: >7}: {1: >7} (0%)".format(val, 0))
     print ("{0: 2.0f} goals with Bloom data".format(tmp))
 
-    print ("-"*10, "Number of Bloom verbs per goal", "-"*10)
+    tab = ("-"*10) + " Number of Bloom verbs per goal " + ("-"*10) + "\n"
     tmp = 0
     ls = []
     for val in bloomStatsGoal["all"]["nVerbs"]:
@@ -1044,10 +1065,13 @@ def printBloomStats():
             proc = 0
         procs = "{:>5}".format("{:2.1%}".format(proc))
         if val == ls[-1]:
-            print ("{0: >3}+: {1: >5} ({2:})".format(val, c, procs))
+            tab += "{0: >3}+: {1: >5} ({2:})\n".format(val, c, procs)
         else:
-            print ("{0: >4}: {1: >5} ({2:})".format(val, c, procs))
-    print (tmp, "goals in data")
+            tab += "{0: >4}: {1: >5} ({2:})\n".format(val, c, procs)
+    tab += "{0:} goals in data\n".format(tmp)
+    print (tab)
+    if print_tables_for_paper:
+        paper_out.write(tab)
 
     print ("-"*10, "Number of Bloom verbs per goal (grouped)", "-"*10)
     tmp = 0
@@ -1076,7 +1100,7 @@ def printBloomStats():
 
             if len(lex.keys()) > 1:
             
-                print("\n" + "-"*10, "Statistics per", label, "-"*10)
+                tab = ("\n") + ("-"*10) + " Statistics per " + label + ("-"*10) + "\n"
                 
                 cats = []
                 for cat in lex:
@@ -1090,17 +1114,20 @@ def printBloomStats():
                         totGoals = lex[k]["goalCounts"]["tot"]
                         totCourses = lex[k]["goalCounts"]["N"]
                         if totCourses > 0:
-                            print("{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course.".format(k, totCourses, totGoals, totGoals/float(totCourses)))
+                            tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course.\n".format(k, totCourses, totGoals, totGoals/float(totCourses))
                         else:
-                            print("{0:}\n {1: >5} courses {2: >6} goals {3: 3.f2} goals per course.".format(k, totCourses, totGoals, 0))
+                            tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.f2} goals per course.\n".format(k, totCourses, totGoals, 0)
 
                     else:
-                        print ("No goalCounts for label " + label + " key " + k)
-                        print (str(lex.keys()))
+                        tab += "No goalCounts for label " + label + " key " + k + "\n"
+                        tab +=  str(lex.keys()) + "\n"
                         for k in lex:
-                            print(str(lex[k].keys()))
-                    
-                print("-"*10, "Most common verbs", "-"*10)
+                            tab += str(lex[k].keys()) + "\n"
+                print (tab)
+                if print_tables_for_paper and (label == "University" or label == "Credits" or label == "SCB grouped"):
+                    paper_out.write(tab)
+                
+                tab = ("-"*10) + " Most common verbs " + ("-"*10) + "\n"
                 for cat in cats:
                     ls = []
                     catTot = 0
@@ -1111,13 +1138,15 @@ def printBloomStats():
                     if catTot == 0:
                         catTot = 1
                     
-                    print ("--->", cat)
+                    tab += "---> " + cat + "\n"
                     catTotTop = 0
                     for vi in range(min(len(ls),TOP_VERBS)):
-                        print ("{0: >5} ({1: >5}): {2:}".format(ls[vi][0], "{:2.1%}".format(ls[vi][0] / float(catTot)), ls[vi][1]))
+                        tab += "{0: >5} ({1: >5}): {2:}\n".format(ls[vi][0], "{:2.1%}".format(ls[vi][0] / float(catTot)), ls[vi][1])
                         catTotTop += ls[vi][0]
-                    print ("Top "+str(min(len(ls),TOP_VERBS))+" verbs cover {: 2.2%} of all verb occurrences.".format(catTotTop  / float(catTot)))
-                print()
+                    tab += "Top "+str(min(len(ls),TOP_VERBS))+" verbs cover {: 2.2%} of all verb occurrences.\n".format(catTotTop  / float(catTot))
+                print(tab)
+                if print_tables_for_paper and (label == "University" or label == "SCB grouped"):
+                    paper_out.write(tab)
 
                 if (label == "University"):
                     print("-"*10, "Most common verbs per bloom level", "-"*10)
@@ -1150,9 +1179,10 @@ def printBloomStats():
                 for v in range(6):
                     s += "{0: >6} ".format(v)
                 s += "{0: >9}".format("Total")
-                print ("-"*len(s))
-                print (s)
-                print ("-"*len(s))
+                tab = ""
+                tab += ("-"*len(s) + "\n")
+                tab += (s + "\n")
+                tab +=  ("-"*len(s) + "\n")
 
                 tots = 0
                 for row in ls:
@@ -1186,16 +1216,18 @@ def printBloomStats():
                             s += "{0: >6} ".format(0)
                             s2 += "{0: >6} ".format("{0: 2.1%}".format(0))
                     s += "{0: >9}".format(tot)
-                    print (s)
+                    tab += (s + "\n")
                     if tots > 0:
                         s2 += "{: >9}".format("{0: 2.1%}".format(tot/float(tots)))
-                    print (s2)
-                    print ()
-                print()
+                    tab += (s2 + "\n")
+                    tab += "\n"
+                print (tab)
+                if print_tables_for_paper and (label == "University" or label == "Credits" or label == "CourseLevel grouped" or label == "SCB grouped"):
+                    paper_out.write(tab)
 
-                printBloomHelper("max", "max Bloom/course", lex, 6)
+                printBloomHelper("max", "max Bloom/course", lex, 6, 0)
 
-                printBloomHelper("min", "min Bloom/course", lex, 6)
+                printBloomHelper("min", "min Bloom/course", lex, 6, 0)
 
                 ls = []
                 rowLabel = "average mean Bloom per course"
@@ -1208,7 +1240,8 @@ def printBloomStats():
 
                 s = "{0: >" + str(longest) + "}: "
                 s = s.format(rowLabel)
-                print (s)
+                tab = ""
+                tab += (s + "\n")
 
                 for row in ls:
                     s = "{0: >" + str(longest) + "}: "
@@ -1226,8 +1259,10 @@ def printBloomStats():
                         s += "{0: .2} ".format(m)
                     else:
                         s += "{0: >5} ".format(0)
-                    print (s)
-                print()
+                    tab += (s + "\n")
+                print (tab)
+                if print_tables_for_paper and (label == "University" or label == "Credits" or label == "CourseLevel grouped" or label == "SCB grouped"):
+                    paper_out.write(tab)
 
                 ### Variance ###
                 ls = []
@@ -1241,7 +1276,7 @@ def printBloomStats():
 
                 s = "{0: >" + str(longest) + "}: "
                 s = s.format(rowLabel)
-                print (s)
+                tab = (s + "\n")
 
                 for row in ls:
                     s = "{0: >" + str(longest) + "}: "
@@ -1259,8 +1294,11 @@ def printBloomStats():
                         s += "{0: .2} ".format(m)
                     else:
                         s += "{0: >5} ".format(0)
-                    print (s)
-                print()
+                    tab += (s + "\n")
+                tab += "\n"
+                print (tab)
+                if print_tables_for_paper and (label == "CourseLevel grouped"):
+                    paper_out.write(tab)
                 
                 ### Median ###
                 ls = []
@@ -1294,10 +1332,14 @@ def printBloomStats():
                         s += "{0: >5} ".format(0)
                     print (s)
                 print()
-                
-                printBloomHelper("common", "most common Bloom level (per course)", lex, 6)
 
-                printBloomHelper("nVerbs", "#verbs/course", lex, VERBS_BEFORE_MORE_THAN+1)
+                toFile = 0
+                if print_tables_for_paper and (label == "University" or label == "CourseLevel grouped" or label == "SCB grouped"):
+                    toFile = 1
+                    
+                printBloomHelper("common", "most common Bloom level (per course)", lex, 6, toFile)
+
+                printBloomHelper("nVerbs", "#verbs/course", lex, VERBS_BEFORE_MORE_THAN+1, 0)
                 printBloomHelper2("nVerbsG", "#verbs/course (grouped)", lex)
                 
             #########################################
@@ -1307,11 +1349,11 @@ def printBloomStats():
 
             if len(lex.keys()) > 1:
 
-                printBloomHelper("max", "max Bloom/goal", lex, 6)
+                printBloomHelper("max", "max Bloom/goal", lex, 6, 0)
 
-                printBloomHelper("min", "min Bloom/goal", lex, 6)
+                printBloomHelper("min", "min Bloom/goal", lex, 6, 0)
 
-                printBloomHelper("span", "diff. max and min Bloom/goal", lex, 6)
+                printBloomHelper("span", "diff. max and min Bloom/goal", lex, 6, 0)
                 
                 ls = []
                 rowLabel = "average mean Bloom per goal"
@@ -1324,7 +1366,7 @@ def printBloomStats():
 
                 s = "{0: >" + str(longest) + "}: "
                 s = s.format(rowLabel)
-                print (s)
+                tab = (s + "\n")
 
                 for row in ls:
                     s = "{0: >" + str(longest) + "}: "
@@ -1342,8 +1384,11 @@ def printBloomStats():
                         s += "{0: .2} ".format(m)
                     else:
                         s += "{0: >5} ".format(0)
-                    print (s)
-                print()
+                    tab += (s + "\n")
+                tab += "\n"
+                print (tab)
+                if print_tables_for_paper and (label == "CourseLevel grouped"):
+                    paper_out.write(tab)
 
                 ### Variance ###
                 ls = []
@@ -1411,13 +1456,13 @@ def printBloomStats():
                     print (s)
                 print()
                 
-                printBloomHelper("common", "most common Bloom level (per goal)", lex, 6)
+                printBloomHelper("common", "most common Bloom level (per goal)", lex, 6, 0)
 
-                printBloomHelper("nVerbs", "#verbs/goal", lex, VERBS_BEFORE_MORE_THAN+1)
+                printBloomHelper("nVerbs", "#verbs/goal", lex, VERBS_BEFORE_MORE_THAN+1, 0)
                 printBloomHelper2("nVerbsG", "#verbs/goal (grouped)", lex)
 
     
-def printBloomHelper(f, label, lex, n):
+def printBloomHelper(f, label, lex, n, alsoPrintToFile):
     ls = []
     rowLabel = label
     longest = len(rowLabel)
@@ -1427,23 +1472,35 @@ def printBloomHelper(f, label, lex, n):
             longest = len(row)
     ls.sort()
 
+    vals = range(n)
+    SHOW_0_VERB_GOALS = 0
+    if SHOW_0_VERB_GOALS:
+        for row in ls:
+            if f in lex[row] and "0 vb" in lex[row][f]:
+                vals = ["0 vb"]
+                for v in range(n):
+                    vals.append(v)
+                break
+        
+    
     s = "{0: >" + str(longest) + "}: "
     s = s.format(rowLabel)
-    for v in range(n):
+    for v in vals:
         if v == n -1 and f == "nVerbs":
             s += "{0: >6}+".format(v)
         else:
             s += "{0: >6} ".format(v)
             
     s += "{0: >9}".format("Total")
-    print ("-"*len(s))
-    print (s)
-    print ("-"*len(s))
+    tab = ""
+    tab += ("-"*len(s) + "\n")
+    tab += (s + "\n")
+    tab += ("-"*len(s) + "\n")
 
     tots = 0
     for row in ls:
         tot = 0
-        for v in range(n):
+        for v in vals:
             if f in lex[row] and v in lex[row][f]:
                 tot += lex[row][f][v]
         tots += tot
@@ -1454,11 +1511,11 @@ def printBloomHelper(f, label, lex, n):
         s2 = " "*len(s)
 
         tot = 0
-        for v in range(n):
+        for v in vals:
             if f in lex[row] and v in lex[row][f]:
                 tot += lex[row][f][v]
 
-        for v in range(n):
+        for v in vals:
             if "max" in lex[row] and v in lex[row][f]:
                 c = lex[row][f][v]
                 if tot > 0:
@@ -1478,13 +1535,17 @@ def printBloomHelper(f, label, lex, n):
             s += "{0: >8.1f}".format(tot)
         else:
             s += "{0: >9}".format(tot)
-        print (s)
+        tab += (s + "\n")
 
         if tots > 0:
             s2 += "{: >9}".format("{0: 2.1%}".format(tot/float(tots)))
-        print (s2)
-        print ()
-    print()
+        tab += (s2 + "\n")
+        tab += "\n"
+    tab += "\n"
+
+    print (tab)
+    if alsoPrintToFile:
+        paper_out.write(tab)
 
 def printBloomHelper2(f, label, lex):
     ls = []
@@ -1600,7 +1661,9 @@ def addGoals(ls):
     goalCounts["N"] += 1
     if n > goalCounts["max"]:
         goalCounts["max"] = n
-    
+
+
+        
 typeCounts = {}
 def addType(t):
     if not t in typeCounts:
@@ -2368,6 +2431,11 @@ for cl in data:
             addBloomList(c["Bloom-list-sv"], scb, level, thisType, c["University"], scbGr, levelGr, creditsGr)
         else:
             addBloomList([], scb, level, thisType, c["University"], scbGr, levelGr, creditsGr)
+
+        if "Bloom-list-sv" in c and len(c["ILO-list-sv"]) == len(c["Bloom-list-sv"]):
+            for g in range(len(c["Bloom-list-sv"])):
+                if g < len(c["ILO-list-sv"]) and not c["Bloom-list-sv"][g]:
+                    goals_with_0_verbs.append(c["ILO-list-sv"][g])
             
         if checks["ilo"]:
             if "ILO-list-sv-tagged" in c and c["ILO-list-sv-tagged"] and "Bloom-list-sv" in c and c["Bloom-list-sv"]:
@@ -2629,3 +2697,14 @@ for cl in data:
     printSCB()
     printBloomStats()
     print ()
+
+    if print_tables_for_paper:
+        paper_out.write("-"*10)
+        paper_out.write("Goals with no Bloom verbs")
+        paper_out.write("-"*10)
+        goals_with_0_verbs.sort()
+        for g in goals_with_0_verbs:
+            paper_out.write("\n")
+            paper_out.write(str(g))
+        paper_out.write("\n")
+
