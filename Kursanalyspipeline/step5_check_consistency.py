@@ -2434,7 +2434,7 @@ for cl in data:
 
         if "Bloom-list-sv" in c and len(c["ILO-list-sv"]) == len(c["Bloom-list-sv"]):
             for g in range(len(c["Bloom-list-sv"])):
-                if g < len(c["ILO-list-sv"]) and not c["Bloom-list-sv"][g]:
+                if print_tables_for_paper and g < len(c["ILO-list-sv"]) and not c["Bloom-list-sv"][g]:
                     goals_with_0_verbs.append(c["ILO-list-sv"][g])
             
         if checks["ilo"]:
