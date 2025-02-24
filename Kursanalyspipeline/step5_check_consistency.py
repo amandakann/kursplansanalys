@@ -1126,7 +1126,85 @@ def printBloomStats():
                 print (tab)
                 if print_tables_for_paper and (label == "University" or label == "Credits" or label == "SCB grouped"):
                     paper_out.write(tab)
-                
+
+                if label == "SCB grouped":
+                    ### Print table with grundkurs/avancerad etc. per SCB-group
+                    tab = ("-"*10) + " Course levels per SCB-group " + ("-"*10) + "\n"
+                    longest = 0
+                    for lev in scbLevCountsUniq:
+                        if len(lev) > longest:
+                            longest = len(lev)
+                    longestS = 0
+                    for scb in scbLevCounts:
+                        if len(scb) > longestS:
+                            longestS = len(scb)
+
+                    s = ("{0: >" + str(longestS) + "} ").format(" ")
+                    ls = []
+                    for lev in scbLevCountsUniq:
+                        ls.append(lev)
+                    ls.sort()
+                    for lev in ls:
+                        s += ("  {: >" + str(len(lev)) + "} ").format(lev)
+                    s += "{: >10}\n".format("Summa")
+                    tab += s
+
+                    for scb in scbLevCounts:
+                        tot = 0
+                        s = ("{0: >" + str(longestS) + "} ").format(scb)
+                        sp = ("{0: >" + str(longestS) + "} ").format(" ")
+                        for lev in ls:
+                            if lev in scbLevCounts[scb]:
+                                c = scbLevCounts[scb][lev]
+                                tot += c
+                        for lev in ls:
+                            if lev in scbLevCounts[scb]:
+                                c = scbLevCounts[scb][lev]
+                                sp += ("  {: >" + str(len(lev)) + "} ").format("{: 2.1%}".format(c/float(tot)))
+                            else:
+                                c = 0
+                                sp += ("  {: >" + str(len(lev)) + "} ").format("{: 2.1%}".format(0))
+                            s += ("  {: >" + str(len(lev)) + "} ").format(c)
+                        s += "{: >10}\n".format(tot)
+                        sp += "\n\n"
+                        tab += s
+                        tab += sp
+
+                    tab += "\n--------------------------------------\n"
+                    s = ("{0: >" + str(longestS) + "} ").format(" ")
+                    ls = ["Grundnivå", "Grundnivåexjobb", "Avancerad nivå", "Avancerad nivå exjobb"]
+                    lss = ["Humaniora och teologi", "Juridik och samhällsvetenskap", "Naturvetenskap", "Teknik"]
+                    for lev in ls:
+                        s += ("  {: >" + str(len(lev)) + "} ").format(lev)
+                    s += "{: >10}\n".format("Summa")
+                    tab += s
+                    for scb in lss:
+                        tot = 0
+                        s = ("{0: >" + str(longestS) + "} ").format(scb)
+                        sp = ("{0: >" + str(longestS) + "} ").format(" ")
+                        for lev in ls:
+                            if lev in scbLevCounts[scb]:
+                                c = scbLevCounts[scb][lev]
+                                tot += c
+                        for lev in ls:
+                            if lev in scbLevCounts[scb]:
+                                c = scbLevCounts[scb][lev]
+                                sp += ("  {: >" + str(len(lev)) + "} ").format("{: 2.1%}".format(c/float(tot)))
+                            else:
+                                c = 0
+                                sp += ("  {: >" + str(len(lev)) + "} ").format("{: 2.1%}".format(0))
+                            s += ("  {: >" + str(len(lev)) + "} ").format(c)
+                        s += "{: >10}\n".format(tot)
+                        sp += "\n\n"
+                        tab += s
+                        tab += sp
+
+                        
+                    print (tab)
+                    if print_tables_for_paper:
+                        paper_out.write(tab)
+                        
+                    
                 tab = ("-"*10) + " Most common verbs " + ("-"*10) + "\n"
                 for cat in cats:
                     ls = []
@@ -1848,6 +1926,22 @@ def addLevel(l):
         levCounts[l] = 0
     levCounts[l] += 1
 
+scbLevCounts = {}
+scbLevCountsUniq = {}
+def addLevelSCB(ll, ss):
+    if ss in scbToSCBGroup:
+        s = scbToSCBGroup[ss]
+    else:
+        s = ss
+    l = levelGroup(ll)
+    scbLevCountsUniq[l] = 1
+    
+    if not s in scbLevCounts:
+        scbLevCounts[s] = {}
+    if not l in scbLevCounts[s]:
+        scbLevCounts[s][l] = 0
+    scbLevCounts[s][l] += 1
+    
 def printLevel():
     print ("\n", "-"*15, "Course Levels","-"*15)
     ls = []
@@ -2394,7 +2488,8 @@ for cl in data:
         addType(thisType)
         addLevel(level)
         addSCB(scb)
-
+        addLevelSCB(level, scb)
+        
         if scb in scbToSCBGroup:
             scbGr = scbToSCBGroup[scb]
         elif scb == "":
