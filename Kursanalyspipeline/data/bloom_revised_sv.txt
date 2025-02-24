@@ -86,6 +86,7 @@ renodla
 rita
 plotta
 illustrera * *skiss
+illustrera * *skisser
 referera
 summera
 sluta sig till
@@ -209,6 +210,7 @@ göra * projektplan
 göra * dokumentation
 göra * modell
 göra * *beräkning
+göra * *beräkningar
 göra * budget
 göra * frekvensuppdelning
 göra * *avslut
@@ -243,6 +245,7 @@ erbjuda
 instrumentalisera
 följa * regel
 följa * *föreskrift
+följa * *föreskrifter
 hänvisa
 handha
 montera
@@ -360,11 +363,15 @@ vägleda
 engagera
 utveckla * förståelse
 utveckla * *kompetens
+utveckla * *kompetenser
 utveckla * *förmåga
+utveckla * *förmågor
 utveckla * *färdighet
+utveckla * *färdigheter
 utveckla * *tänkande
 utveckla * *förhållningssätt
 utveckla * *kunskap
+utveckla * *kunskaper
 --- Analyze 3 ---
 givet * identifiera
 identifiera * *korrekt
@@ -400,6 +407,10 @@ utföra * *analys
 genomföra * *analys
 utveckla * *analys
 föra * *analys
+utföra * *analyser
+genomföra * *analyser
+utveckla * *analyser
+föra * *analyser
 ordna
 införliva
 strukturera
@@ -417,6 +428,7 @@ systematisera
 situationsanpassa
 granska
 genomföra * *granskning
+genomföra * *granskningar
 korrigera
 jämföra
 utforska
@@ -424,6 +436,7 @@ utreda
 ställa * *frågor
 undersöka # ambiguous
 genomföra * *undersökning
+genomföra * *undersökningar
 (redogöra)
 rangordna
 dekonstruera
@@ -435,6 +448,7 @@ kvantifiera
 partitionera
 dimensionsanalysera
 göra * *analys
+göra * *analyser
 göra * *val
 indela
 avgränsa
@@ -455,6 +469,7 @@ ge * nyanserad framställning
 --- Evaluate 4 ---
 värdera
 genomföra * *värdering
+genomföra * *värderingar
 jämföra och värdera
 jämföra och välja
 jämföra * i relation till
@@ -485,6 +500,7 @@ kontrollera
 koordinera
 prova ut
 fälla * *omdöme
+fälla * *omdömen
 lämna * synpunkt
 interpolera
 samordna
@@ -496,7 +512,9 @@ observera
 övervaka
 bedöma
 genomföra * *bedömning
+genomföra * *bedömningar
 ge * *omdöme
+ge * *omdömen
 kritiskt granska
 kvalitetsgranska
 kvalitetsbedöma
@@ -542,20 +560,37 @@ opponera
 genomföra * *opposition
 ge * *feedback
 ge * *återkoppling
+ge * *återkopplingar
 ge * *tolkning
+ge * *tolkningar
 ge * *uppskattning
+ge * *uppskattningar
 göra * *approximation
+göra * *approximationer
 göra * *tolkning
+göra * *tolkningar
 göra * *bedömning
+göra * *bedömningar
 göra * *uppskattning
+göra * *uppskattningar
 göra * *prognos
+göra * *prognoser
 göra * *granskning
+göra * *granskningar
 göra * *jämförelse
+göra * *jämförelser
 göra * *värdering
+göra * *värderingar
 göra * *avvägning
+göra * *avvägningar
 göra * *vägande
+göra * *väganden
 göra * *reflektion
+göra * *reflektioner
 göra * *diskussion
+göra * *diskussioner
+göra * *mätning
+göra * *mätningar
 --- Create 5 ---
 kombinera
 ställa samman
@@ -601,9 +636,14 @@ tidsplanera
 föreslå * teknisk *lösning
 föreslå * möjlig *lösning
 föreslå * hållbar *lösning
+föreslå * teknisk *lösningar
+föreslå * möjlig *lösningar
+föreslå * hållbar *lösningar
 föreslå * teknisk modifiering
 föreslå * effektiv *design
 föreslå * effektiv *lösning
+föreslå * effektiv *designer
+föreslå * effektiv *lösningar
 föreslå * adekvat strategi
 föreslå * forskningsprojekt
 föreslå * utformas så att
@@ -637,15 +677,22 @@ komponera
 förutspå
 prediktera
 göra * *antagande
+göra * *antaganden
 göra * *plan
+göra * *planer
 göra * *planering
+göra * *planeringar
 göra * detaljplanekarta
 göra * *studie
+göra * *studier
 inkludera * helhetsperspektiv
 inkludera * i utvecklingen
 överblicka
 ge * *överblick
 ge * *översikt
+ge * *överblickar
+ge * *översikter
 ställa upp * *hypotes
+ställa upp * *hypoteser
 översätta * *metoder till
 översätta * *resultat till
