@@ -1003,7 +1003,7 @@ def applyGeneralPrinciples(s):
                     # "Använda innovativ teknik för nya system och förbättring av gamla system för att få bättre funktion och uppfyller kraven i samhället ."
                     j = i - 2
                     while j >= 0:
-                        if s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera":
+                        if (s[j]["l"] == "applicera" or s[j]["l"] == "använda" or s[j]["w"].lower() == "använda" or s[j]["w"].lower() == "applicera") and (s[j]["t"][-4:] != ".sfo" and (j == 0 or s[j-1]["l"] != "och")):
                             useLeft = 0
                             break
                         if s[j]["t"] == "mad":
