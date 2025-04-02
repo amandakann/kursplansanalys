@@ -29,6 +29,13 @@ defaultEn = "data/bloom_revised_en.txt"
 stoplistFile = "data/stoplist.txt"
 
 print_tables_for_paper = 0
+wordsForWordTable = ["förklara", "kritiskt granska", "presentera", "reflektera", "utvärdera", "värdera"]
+wordsForWordTableData = {"förklara":{"all":{"count":0, "tot":0}},
+                         "kritiskt granska":{"all":{"count":0, "tot":0}},
+                         "presentera":{"all":{"count":0, "tot":0}},
+                         "reflektera":{"all":{"count":0, "tot":0}},
+                         "utvärdera":{"all":{"count":0, "tot":0}},
+                         "värdera":{"all":{"count":0, "tot":0}}}
 
 ##################################
 ### Check command line options ###
@@ -1226,6 +1233,65 @@ def printBloomStats():
                 if print_tables_for_paper and (label == "University" or label == "SCB grouped"):
                     paper_out.write(tab)
 
+                if print_tables_for_paper and label == "SCB grouped":
+                    for cat in ["Humaniora och teologi", "Juridik och samhällsvetenskap", "Naturvetenskap", "Teknik"]:                        
+                        ls = []
+                        catTot = 0
+                        for v in lex[cat]["verbCounts"]:
+                            ls.append([lex[cat]["verbCounts"][v], v])
+                            catTot += lex[cat]["verbCounts"][v]
+                        ls.sort(reverse=True)
+                        if catTot == 0:
+                            catTot = 1
+                        
+                        for verb in wordsForWordTable:
+                            if not cat in wordsForWordTableData[verb]:
+                                wordsForWordTableData[verb][cat] = {"count":0, "tot":0}
+                                
+                            wordsForWordTableData[verb][cat]["count"] = lex[cat]["verbCounts"][verb]
+                            wordsForWordTableData[verb][cat]["tot"] = catTot
+
+                    tab = "\n ---------- Relativ skillnad (i promille) ----------\n , "
+                    for verb in wordsForWordTable:
+                        tab += verb + ", "
+                    tab = tab[:-2]
+                    tab += "\n"
+                    for cat in ["Humaniora och teologi", "Juridik och samhällsvetenskap", "Naturvetenskap", "Teknik"]:
+                        # tab += cat + " antal, "
+                        # for verb in wordsForWordTable:
+                        #     tab += "{0: }, ".format(wordsForWordTableData[verb][cat]["count"])
+                        # tab = tab[:-2]
+                        # tab += "\n"
+                        
+                        # tab += cat + " procent, "
+                        # for verb in wordsForWordTable:
+                        #     tab += "{0: }, ".format(wordsForWordTableData[verb][cat]["count"] / wordsForWordTableData[verb][cat]["tot"])
+                        # tab = tab[:-2]
+                        # tab += "\n"
+
+                        tab += cat + " skillnad i promille, "
+                        for verb in wordsForWordTable:
+                            tab += "{0: }, ".format((wordsForWordTableData[verb][cat]["count"] / wordsForWordTableData[verb][cat]["tot"] - wordsForWordTableData[verb]["all"]["count"] / wordsForWordTableData[verb]["all"]["tot"]) * 1000)
+                        tab = tab[:-2]
+                        tab += "\n"
+
+                    tab += "\n , "
+                    for cat in ["Humaniora och teologi", "Juridik och samhällsvetenskap", "Naturvetenskap", "Teknik"]:
+                        tab += cat + ", "
+                    tab = tab[:-2]
+                    tab += "\n"
+                    
+                    for verb in wordsForWordTable:
+                        tab += verb + " skillnad i promille, "
+                        for cat in ["Humaniora och teologi", "Juridik och samhällsvetenskap", "Naturvetenskap", "Teknik"]:
+                            tab += "{0: }, ".format((wordsForWordTableData[verb][cat]["count"] / wordsForWordTableData[verb][cat]["tot"] - wordsForWordTableData[verb]["all"]["count"] / wordsForWordTableData[verb]["all"]["tot"]) * 1000)
+                        tab = tab[:-2]
+                        tab += "\n"
+                    tab += "\n"
+
+                    tab += "\n"
+                    paper_out.write(tab)
+                    
                 if (label == "University"):
                     print("-"*10, "Most common verbs per bloom level", "-"*10)
                     for bloomL in range(6):
@@ -1816,6 +1882,16 @@ def printBloom():
         toptot += ls[i][0]
     print ("Top "+str(min(len(ls),TOP_VERBS))+" verbs cover {:2.2%} of all verb occurrences.".format(toptot  / float(totC)))
     print ("-"*30)
+
+    
+    if print_tables_for_paper:
+        for verb in wordsForWordTable:
+            wordsForWordTableData[verb]["all"]["count"] = verbCounts[verb]
+            wordsForWordTableData[verb]["all"]["tot"] = totC
+
+    
+
+    
     atot = 0
     avs = 0
     for v in ambiguousVerbs:
