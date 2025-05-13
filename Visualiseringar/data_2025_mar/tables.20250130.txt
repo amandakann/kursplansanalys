@@ -1,0 +1,503 @@
+---------- Maximum Bloom level per course ----------
+ 0 vb:   479 ( 3.4%)
+    0:    76 ( 0.5%)
+    1:   485 ( 3.5%)
+    2:  1099 ( 7.8%)
+    3:  1376 ( 9.8%)
+    4:  3436 (24.5%)
+    5:  7087 (50.5%)
+14038 courses with Bloom data
+
+---------- Minimum Bloom level per course ----------
+ 0 vb:   479 ( 3.4%)
+    0:  7235 (51.5%)
+    1:  4509 (32.1%)
+    2:  1344 ( 9.6%)
+    3:   293 ( 2.1%)
+    4:   116 ( 0.8%)
+    5:    62 ( 0.4%)
+14038 courses with Bloom data
+
+---------- Number of Bloom verbs per course (grouped) ----------
+ 0 (  0 ):   958 ( 6.8%)
+ 1 (1-4 ):  3592 (25.6%)
+ 2 (5-10):  6195 (44.1%)
+ 3 ( 11+):  3772 (26.9%)
+
+---------- Maximum Bloom level per goal ----------
+   0 vb: 14556 (16.6%)
+      0:  5343 ( 6.1%)
+      1: 16113 (18.3%)
+      2: 13948 (15.9%)
+      3: 10261 (11.7%)
+      4: 15077 (17.1%)
+      5: 12635 (14.4%)
+87933 goals with Bloom data
+
+---------- Minimum Bloom level per goal ----------
+   0 vb: 14556 (16.6%)
+      0: 12663 (14.4%)
+      1: 21584 (24.5%)
+      2: 17425 (19.8%)
+      3:  8823 (10.0%)
+      4:  7937 ( 9.0%)
+      5:  4945 ( 5.6%)
+87933 goals with Bloom data
+
+---------- Number of Bloom verbs per goal ----------
+   0: 14556 (16.6%)
+   1: 43250 (49.2%)
+   2: 20944 (23.8%)
+   3:  6428 ( 7.3%)
+   4:  2100 ( 2.4%)
+   5:   459 ( 0.5%)
+   6:   115 ( 0.1%)
+   7:    35 ( 0.0%)
+   8:    11 ( 0.0%)
+   9:    12 ( 0.0%)
+  10:     3 ( 0.0%)
+  11:     5 ( 0.0%)
+  12:     3 ( 0.0%)
+  13:     4 ( 0.0%)
+  14:     4 ( 0.0%)
+ 15+:     4 ( 0.0%)
+87933 goals in data
+
+---------- Statistics per University----------
+KTH
+  2902 courses  15387 goals  5.30 goals per course.
+Mittuniversitetet
+  3585 courses  20543 goals  5.73 goals per course.
+SU
+  4880 courses  30684 goals  6.29 goals per course.
+UMU
+  2671 courses  21319 goals  7.98 goals per course.
+
+---------- Most common verbs ----------
+
+---> KTH
+ 1396 ( 6.1%): analysera
+ 1336 ( 5.9%): redogöra
+ 1232 ( 5.4%): diskutera
+ 1200 ( 5.3%): förklara
+ 1186 ( 5.2%): beskriva
+  910 ( 4.0%): tillämpa
+  800 ( 3.5%): identifiera
+  788 ( 3.5%): utvärdera
+  725 ( 3.2%): använda
+  552 ( 2.4%): planera
+  533 ( 2.3%): genomföra
+Top 11 verbs cover  46.84% of all verb occurrences.
+
+---> Mittuniversitetet
+ 2433 ( 9.3%): redogöra
+ 1604 ( 6.1%): tillämpa
+ 1568 ( 6.0%): beskriva
+ 1264 ( 4.8%): analysera
+ 1114 ( 4.3%): förklara
+ 1082 ( 4.1%): diskutera
+  898 ( 3.4%): identifiera
+  810 ( 3.1%): reflektera
+  804 ( 3.1%): värdera
+  789 ( 3.0%): använda
+  622 ( 2.4%): genomföra
+Top 11 verbs cover  49.75% of all verb occurrences.
+
+---> SU
+ 5192 (12.7%): redogöra
+ 3149 ( 7.7%): diskutera
+ 3004 ( 7.4%): analysera
+ 1754 ( 4.3%): tillämpa
+ 1700 ( 4.2%): reflektera
+ 1506 ( 3.7%): identifiera
+ 1251 ( 3.1%): beskriva
+ 1242 ( 3.0%): använda
+ 1017 ( 2.5%): värdera
+  988 ( 2.4%): formulera
+  967 ( 2.4%): genomföra
+Top 11 verbs cover  53.43% of all verb occurrences.
+
+---> UMU
+ 2661 ( 9.9%): redogöra
+ 1689 ( 6.3%): analysera
+ 1531 ( 5.7%): diskutera
+ 1417 ( 5.3%): tillämpa
+ 1171 ( 4.3%): reflektera
+ 1123 ( 4.2%): värdera
+ 1050 ( 3.9%): beskriva
+  779 ( 2.9%): genomföra
+  775 ( 2.9%): förklara
+  708 ( 2.6%): identifiera
+  653 ( 2.4%): planera
+Top 11 verbs cover  50.33% of all verb occurrences.
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+                  KTH:   3384   4350   5381   3198   3415   3025     22753
+                        14.9%  19.1%  23.6%  14.1%  15.0%  13.3%     19.5%
+
+    Mittuniversitetet:   4758   4710   5952   3333   4387   2967     26107
+                        18.2%  18.0%  22.8%  12.8%  16.8%  11.4%     22.4%
+
+                   SU:   3039  11769   6988   6664   7456   4827     40743
+                         7.5%  28.9%  17.2%  16.4%  18.3%  11.8%     35.0%
+
+                  UMU:   1954   6985   5525   4140   5251   3079     26934
+                         7.3%  25.9%  20.5%  15.4%  19.5%  11.4%     23.1%
+
+average mean Bloom per course: 
+                          KTH:  2.3 
+            Mittuniversitetet:  2.2 
+                           SU:  2.4 
+                          UMU:  2.5 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                                 KTH:  383.0  608.0  797.8  262.1  424.1  264.0   2739.0
+                                       14.0%  22.2%  29.1%   9.6%  15.5%   9.6%     20.2%
+
+                   Mittuniversitetet:  650.2  647.7  879.3  348.1  545.9  348.9   3420.0
+                                       19.0%  18.9%  25.7%  10.2%  16.0%  10.2%     25.2%
+
+                                  SU:  132.4 1930.8  761.6  629.0  911.8  454.4   4820.0
+                                        2.7%  40.1%  15.8%  13.1%  18.9%   9.4%     35.5%
+
+                                 UMU:   72.1  937.5  579.7  321.5  500.1  169.2   2580.0
+                                        2.8%  36.3%  22.5%  12.5%  19.4%   6.6%     19.0%
+
+
+
+---------- Statistics per Credits----------
+0: 0-5
+   736 courses   3042 goals  4.13 goals per course.
+1: 5,5-10
+  5358 courses  26419 goals  4.93 goals per course.
+2: 10,5-15
+  1571 courses  10558 goals  6.72 goals per course.
+3: 15+
+  1345 courses  16099 goals  11.97 goals per course.
+4: (No HP info)
+  5028 courses  31815 goals  6.33 goals per course.
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+               0: 0-5:    591    997    816    494    810    387      4095
+                        14.4%  24.3%  19.9%  12.1%  19.8%   9.5%      3.5%
+
+            1: 5,5-10:   3434   9912   7153   5420   5449   3599     34967
+                         9.8%  28.3%  20.5%  15.5%  15.6%  10.3%     30.0%
+
+           2: 10,5-15:   1348   3320   2927   2358   2884   2113     14950
+                         9.0%  22.2%  19.6%  15.8%  19.3%  14.1%     12.8%
+
+               3: 15+:   1943   5260   4085   3475   4035   2912     21710
+                         8.9%  24.2%  18.8%  16.0%  18.6%  13.4%     18.6%
+
+      4: (No HP info):   5819   8325   8865   5588   7331   4887     40815
+                        14.3%  20.4%  21.7%  13.7%  18.0%  12.0%     35.0%
+
+average mean Bloom per course: 
+                       0: 0-5:  2.2 
+                    1: 5,5-10:  2.3 
+                   2: 10,5-15:  2.5 
+                       3: 15+:  2.6 
+              4: (No HP info):  2.3 
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+         (Level: -  ):     81     67     93     48     82     43       414
+                        19.6%  16.2%  22.5%  11.6%  19.8%  10.4%      0.4%
+
+         (Level: BXX):     21     25     55      5     10     12       128
+                        16.4%  19.5%  43.0%   3.9%   7.8%   9.4%      0.1%
+
+      (No level info):    570    988    772    553    678    393      3954
+                        14.4%  25.0%  19.5%  14.0%  17.1%   9.9%      3.4%
+
+       Avancerad nivå:   3779   8454   7299   6476   7526   4668     38202
+                         9.9%  22.1%  19.1%  17.0%  19.7%  12.2%     32.8%
+
+Avancerad nivå exjobb:   1079    909   1551   1220   1833   1719      8311
+                        13.0%  10.9%  18.7%  14.7%  22.1%  20.7%      7.1%
+
+            Grundnivå:   7116  16368  12921   8214   9233   6238     60090
+                        11.8%  27.2%  21.5%  13.7%  15.4%  10.4%     51.6%
+
+      Grundnivåexjobb:    489   1003   1155    819   1147    825      5438
+                         9.0%  18.4%  21.2%  15.1%  21.1%  15.2%      4.7%
+
+average mean Bloom per course: 
+                 (Level: -  ):  2.2 
+                 (Level: BXX):  1.9 
+              (No level info):  2.2 
+               Avancerad nivå:  2.5 
+        Avancerad nivå exjobb:  2.8 
+                    Grundnivå:  2.2 
+              Grundnivåexjobb:  2.7 
+
+average variance Bloom per course: 
+                     (Level: -  ):  1.8 
+                     (Level: BXX):  1.8 
+                  (No level info):  1.8 
+                   Avancerad nivå:  1.8 
+            Avancerad nivå exjobb:  2.7 
+                        Grundnivå:  1.7 
+                  Grundnivåexjobb:  2.3 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                        (Level: -  ):   15.3    8.8   15.6    2.6   12.9    6.8     62.0
+                                       24.7%  14.2%  25.1%   4.2%  20.8%  10.9%      0.5%
+
+                        (Level: BXX):    3.3    2.5    7.3      0    0.5    1.3     15.0
+                                       22.2%  16.7%  48.9%     0%   3.3%   8.9%      0.1%
+
+                     (No level info):   79.7  164.5  121.1   65.4  102.6   40.7    574.0
+                                       13.9%  28.7%  21.1%  11.4%  17.9%   7.1%      4.2%
+
+                      Avancerad nivå:  274.6 1379.9  913.2  715.1 1004.7  461.6   4749.0
+                                        5.8%  29.1%  19.2%  15.1%  21.2%   9.7%     35.0%
+
+               Avancerad nivå exjobb:   68.0   42.3   60.5   37.7  253.4  161.1    623.0
+                                       10.9%   6.8%   9.7%   6.0%  40.7%  25.9%      4.6%
+
+                           Grundnivå:  778.7 2453.8 1766.4  701.9  921.7  520.5   7143.0
+                                       10.9%  34.4%  24.7%   9.8%  12.9%   7.3%     52.7%
+
+                     Grundnivåexjobb:   18.0   72.1  134.3   38.0   86.2   44.4    393.0
+                                        4.6%  18.3%  34.2%   9.7%  21.9%  11.3%      2.9%
+
+
+average mean Bloom per goal: 
+               (Level: -  ):  2.1 
+               (Level: BXX):  1.8 
+            (No level info):  2.2 
+             Avancerad nivå:  2.4 
+      Avancerad nivå exjobb:  2.8 
+                  Grundnivå:  2.2 
+            Grundnivåexjobb:  2.6 
+
+
+---------- Statistics per SCB grouped----------
+(No SCB)
+   490 courses   1911 goals  3.90 goals per course.
+Humaniora och teologi
+  3158 courses  20088 goals  6.36 goals per course.
+Juridik och samhällsvetenskap
+  4229 courses  28123 goals  6.65 goals per course.
+Konstnärligt område
+   241 courses   1332 goals  5.53 goals per course.
+Medicin och odontologi
+   321 courses   2946 goals  9.18 goals per course.
+Naturvetenskap
+  2030 courses  11305 goals  5.57 goals per course.
+Teknik
+  2646 courses  16036 goals  6.06 goals per course.
+Vård och omsorg
+   567 courses   4283 goals  7.55 goals per course.
+Övrigt område
+   356 courses   1909 goals  5.36 goals per course.
+
+---------- Most common verbs ----------
+---> (No SCB)
+  288 (11.5%): diskutera
+  140 ( 5.6%): presentera
+  135 ( 5.4%): identifiera
+  130 ( 5.2%): förklara
+  129 ( 5.1%): analysera
+  125 ( 5.0%): tillämpa
+  123 ( 4.9%): reflektera
+  119 ( 4.7%): beskriva
+  118 ( 4.7%): redogöra
+   95 ( 3.8%): kritiskt granska
+   59 ( 2.4%): använda
+Top 11 verbs cover  58.25% of all verb occurrences.
+
+---> Humaniora och teologi
+ 3477 (13.8%): redogöra
+ 2258 ( 9.0%): diskutera
+ 1704 ( 6.8%): analysera
+ 1212 ( 4.8%): tillämpa
+  931 ( 3.7%): använda
+  893 ( 3.6%): reflektera
+  862 ( 3.4%): identifiera
+  722 ( 2.9%): beskriva
+  697 ( 2.8%): värdera
+  602 ( 2.4%): formulera
+  434 ( 1.7%): planera
+Top 11 verbs cover  54.88% of all verb occurrences.
+
+---> Juridik och samhällsvetenskap
+ 3466 ( 9.4%): redogöra
+ 2773 ( 7.5%): analysera
+ 2622 ( 7.1%): diskutera
+ 1857 ( 5.0%): reflektera
+ 1640 ( 4.4%): tillämpa
+ 1424 ( 3.9%): identifiera
+ 1328 ( 3.6%): beskriva
+ 1259 ( 3.4%): värdera
+  936 ( 2.5%): genomföra
+  901 ( 2.4%): formulera
+  884 ( 2.4%): planera
+Top 11 verbs cover  51.75% of all verb occurrences.
+
+---> Konstnärligt område
+  148 ( 9.4%): tillämpa
+  139 ( 8.9%): redogöra
+  107 ( 6.8%): reflektera
+   70 ( 4.5%): analysera
+   69 ( 4.4%): genomföra
+   58 ( 3.7%): använda
+   48 ( 3.1%): förklara
+   45 ( 2.9%): planera
+   44 ( 2.8%): beskriva
+   42 ( 2.7%): presentera
+   38 ( 2.4%): utföra
+Top 11 verbs cover  51.50% of all verb occurrences.
+
+---> Medicin och odontologi
+  407 (11.2%): redogöra
+  281 ( 7.7%): beskriva
+  223 ( 6.1%): tillämpa
+  211 ( 5.8%): förklara
+  145 ( 4.0%): identifiera
+  144 ( 4.0%): reflektera
+  143 ( 3.9%): analysera
+  137 ( 3.8%): värdera
+  118 ( 3.3%): bedöma
+   96 ( 2.6%): diskutera
+   93 ( 2.6%): genomföra
+Top 11 verbs cover  55.07% of all verb occurrences.
+
+---> Naturvetenskap
+1764 (11.7%): redogöra
+  766 ( 5.1%): beskriva
+  742 ( 4.9%): tillämpa
+  730 ( 4.9%): analysera
+  710 ( 4.7%): förklara
+  571 ( 3.8%): genomföra
+  517 ( 3.4%): lösa
+  497 ( 3.3%): använda
+  492 ( 3.3%): diskutera
+  410 ( 2.7%): presentera
+  392 ( 2.6%): planera
+Top 11 verbs cover  50.47% of all verb occurrences.
+
+---> Teknik
+ 1539 ( 6.9%): redogöra
+ 1298 ( 5.8%): analysera
+ 1216 ( 5.5%): beskriva
+ 1194 ( 5.4%): förklara
+  934 ( 4.2%): tillämpa
+  837 ( 3.8%): diskutera
+  821 ( 3.7%): använda
+  798 ( 3.6%): utvärdera
+  643 ( 2.9%): identifiera
+  572 ( 2.6%): planera
+  555 ( 2.5%): genomföra
+Top 11 verbs cover  46.68% of all verb occurrences.
+
+---> Vård och omsorg
+  522 ( 7.8%): tillämpa
+  431 ( 6.4%): redogöra
+  429 ( 6.4%): värdera
+  429 ( 6.4%): beskriva
+  368 ( 5.5%): reflektera
+  367 ( 5.5%): analysera
+  350 ( 5.2%): förklara
+  316 ( 4.7%): identifiera
+  205 ( 3.1%): diskutera
+  199 ( 3.0%): bedöma
+  174 ( 2.6%): planera
+Top 11 verbs cover  56.52% of all verb occurrences.
+
+---> Övrigt område
+  281 (10.1%): redogöra
+  172 ( 6.2%): reflektera
+  162 ( 5.8%): diskutera
+  150 ( 5.4%): beskriva
+  139 ( 5.0%): tillämpa
+  139 ( 5.0%): analysera
+  105 ( 3.8%): förklara
+   99 ( 3.6%): identifiera
+   86 ( 3.1%): värdera
+   78 ( 2.8%): genomföra
+   58 ( 2.1%): presentera
+Top 11 verbs cover  52.98% of all verb occurrences.
+
+
+----------------------------------------------------------------------------------
+        Verbs per Bloom level:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------------------
+                     (No SCB):    460    593    443    323    440    249      2508
+                                18.3%  23.6%  17.7%  12.9%  17.5%   9.9%      2.2%
+
+        Humaniora och teologi:   2570   7076   4564   4186   4043   2692     25131
+                                10.2%  28.2%  18.2%  16.7%  16.1%  10.7%     21.6%
+
+Juridik och samhällsvetenskap:   3619   8559   6408   6151   7757   4394     36888
+                                 9.8%  23.2%  17.4%  16.7%  21.0%  11.9%     31.7%
+
+          Konstnärligt område:    154    292    462    181    230    250      1569
+                                 9.8%  18.6%  29.4%  11.5%  14.7%  15.9%      1.3%
+
+       Medicin och odontologi:    487    910    863    392    691    285      3628
+                                13.4%  25.1%  23.8%  10.8%  19.0%   7.9%      3.1%
+
+               Naturvetenskap:   1500   4217   3848   1745   1873   1859     15042
+                                10.0%  28.0%  25.6%  11.6%  12.5%  12.4%     12.9%
+
+                       Teknik:   3124   4168   5444   3069   3117   3370     22292
+                                14.0%  18.7%  24.4%  13.8%  14.0%  15.1%     19.1%
+
+              Vård och omsorg:    841   1306   1354    864   1793    548      6706
+                                12.5%  19.5%  20.2%  12.9%  26.7%   8.2%      5.8%
+
+                Övrigt område:    380    693    460    424    565    251      2773
+                                13.7%  25.0%  16.6%  15.3%  20.4%   9.1%      2.4%
+
+average mean Bloom per course: 
+                     (No SCB):  2.1 
+        Humaniora och teologi:  2.3 
+Juridik och samhällsvetenskap:  2.5 
+          Konstnärligt område:  2.5 
+       Medicin och odontologi:  2.1 
+               Naturvetenskap:  2.1 
+                       Teknik:  2.4 
+              Vård och omsorg:  2.4 
+                Övrigt område:  2.2 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                            (No SCB):   77.0  101.4   75.4   48.5   78.6   35.1    416.0
+                                       18.5%  24.4%  18.1%  11.7%  18.9%   8.4%      3.1%
+
+               Humaniora och teologi:  268.8 1101.7  553.2  395.2  449.5  252.5   3021.0
+                                        8.9%  36.5%  18.3%  13.1%  14.9%   8.4%     22.3%
+
+       Juridik och samhällsvetenskap:  279.5 1202.6  707.3  614.8  982.6  321.3   4108.0
+                                        6.8%  29.3%  17.2%  15.0%  23.9%   7.8%     30.3%
+
+                 Konstnärligt område:   21.8   46.7   87.6   16.7   23.8   34.4    231.0
+                                        9.4%  20.2%  37.9%   7.2%  10.3%  14.9%      1.7%
+
+              Medicin och odontologi:   37.5  111.2   95.2   13.5   49.2    8.5    315.0
+                                       11.9%  35.3%  30.2%   4.3%  15.6%   2.7%      2.3%
+
+                      Naturvetenskap:  126.1  737.3  619.0  132.6  179.0  207.9   2002.0
+                                        6.3%  36.8%  30.9%   6.6%   8.9%  10.4%     14.8%
+
+                              Teknik:  337.1  559.4  730.5  259.7  333.5  343.8   2564.0
+                                       13.1%  21.8%  28.5%  10.1%  13.0%  13.4%     18.9%
+
+                     Vård och omsorg:   46.4  147.1   94.1   39.3  209.8   13.2    550.0
+                                        8.4%  26.7%  17.1%   7.1%  38.1%   2.4%      4.1%
+
+                       Övrigt område:   43.6  116.5   56.2   40.3   75.9   19.5    352.0
+                                       12.4%  33.1%  16.0%  11.5%  21.6%   5.5%      2.6%

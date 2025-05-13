@@ -3,7 +3,7 @@ library(tidyverse)
 library(grafify)
 
 datafil <- "kurser_nivå.csv"
-gruppnamn <- "Lärosäte"
+gruppnamn <- "Nivåklassning"
 # färgskala <- scale_fill_manual(
 #     values = c(
 #         "#332288", 
@@ -15,7 +15,7 @@ gruppnamn <- "Lärosäte"
 # färgskala <- scale_fill_grafify(palette = "fishy")
 färgskala <- scale_fill_brewer(palette = "YlGnBu")
 
-df <- read.csv(file.path("Visualiseringar", "data", datafil), sep=";") %>%
+df <- read.csv(file.path("data_2025_mar", datafil), sep=";") %>%
     mutate(Grupp = factor(Grupp, unique(Grupp)))
 
 
@@ -52,13 +52,17 @@ plot <- ggplot(df, aes(x="", y = Courses, fill = Grupp)) +
     )
 
 
-utdata <- file.path("Visualiseringar", "figurer", paste(substring(datafil, 1, nchar(datafil) - 4), ".png", sep=""))
+utdata <- file.path("figurer_2025_mar", paste(substring(datafil, 1, nchar(datafil) - 4), ".png", sep=""))
 #ggsave(utdata, plot = plot, width = 20, height = 8, units = "cm")
 ggsave(utdata, plot = plot, width = 15, height = 15, units = "cm")
 
 
 plot <- ggplot(df, aes(x = Grupp, y = GpC, fill = Grupp)) +
     geom_bar(stat="identity") +
+    geom_text(aes(
+        label = round(GpC, 1),
+        y = GpC + 0.3
+    ), size = 14) +
     labs(
         title = "Genomsnittligt antal mål per kurs",
     ) +
@@ -67,18 +71,20 @@ plot <- ggplot(df, aes(x = Grupp, y = GpC, fill = Grupp)) +
     färgskala +
     theme(
         plot.title = element_text(
-            size = 20,
+            size = 35,
             face = "bold",
             hjust = 0.5
         ),
         axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
+        axis.text.x = element_text(
+          size=28
+        ),
         axis.title.y = element_blank(),
         axis.text.y = element_text(
-            size = 15
+            size = 30
         ),
         legend.position = "none"
     )
 
-utdata <- file.path("Visualiseringar", "figurer", paste(substring(datafil, 1, nchar(datafil) - 4), "_mål.png", sep=""))
-ggsave(utdata, plot = plot, width = 15, height = 10, units = "cm")
+utdata <- file.path("figurer_2025_mar", paste(substring(datafil, 1, nchar(datafil) - 4), "_mål.png", sep=""))
+ggsave(utdata, plot = plot, width = 40, height = 30, units = "cm")

@@ -2,9 +2,9 @@ library(tidyverse)
 library(ggpubr)
 options(OutDec= ",")
 
-datafil <- "verbpernivå_uni.csv"
+datafil <- "verbpernivå_alla.csv"
 titel <- "Andel verb per Bloomnivå"
-format <- "platt"
+format <- "ruta"
 
 if (format == "platt") {
     col <- 4
@@ -33,7 +33,7 @@ if (format == "platt") {
 }
 
 
-df <- read.csv(file.path("Visualiseringar", "data", datafil), sep=";")
+df <- read.csv(file.path("data_2025_mar", datafil), sep=";")
 df_t <- df %>%
     pivot_longer(cols = 2:7, names_to = "level", values_to = "counts") %>%
     group_by(Grupp) %>%
@@ -56,7 +56,7 @@ for (i in names(df_split)) {
     annotate("text", x = 0.14, y = df$Snitt[df$Grupp==i]+0.65, label = df$Snitt[df$Grupp==i], vjust = 0, hjust = 0, size = s_annot) +
     geom_text(aes(
         x = 0, 
-        label = scales::percent(round(perc, 3), decimal.mark = ",")), 
+        label = scales::percent(round(perc, 3), decimal.mark = ",", accuracy = 0.1)), 
         size = s_label
         ) +
     labs(
@@ -100,5 +100,5 @@ gridplot <- ggarrange(plotlist = plots, ncol = col, nrow = row) +
             hjust = 0.5)
     )
 
-utdata <- file.path("Visualiseringar", "figurer", paste(substring(datafil, 1, nchar(datafil) - 4), ".png", sep=""))
-ggsave(utdata, plot = gridplot, width = w, height = h, units = "cm")
+#utdata <- file.path("figurer_2025_mar", paste(substring(datafil, 1, nchar(datafil) - 4), ".png", sep=""))
+#ggsave(utdata, plot = gridplot, width = w, height = h, units = "cm")
