@@ -2620,6 +2620,7 @@ for cl in data:
 ###################################################
 ### For each course, check for ambiguities etc. ###
 ###################################################
+nonSkipped = 0
 for cl in data:
     unis = ""
     first = 0
@@ -2672,6 +2673,8 @@ for cl in data:
             addSCB(scb + " (skipped)")
             continue
 
+        nonSkipped += 1
+        
         # ------------------------------------------------------------------------
         # Everything below is for courses that remain after filtering on type etc.
         # ------------------------------------------------------------------------
@@ -3003,6 +3006,9 @@ for cl in data:
                                                     vbPerGoal])
 
     print(len(data[cl]), "courses in data")
+    # if goalCounts:
+    #     print(goalCounts["N"], "courses used after removing filtered courses")
+    print(nonSkipped, "courses left after removing filtered courses")
     printStats()
 
     if checks["bloom"]:
