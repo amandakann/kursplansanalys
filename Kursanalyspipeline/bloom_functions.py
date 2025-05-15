@@ -387,7 +387,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                     if tokens[k] == "*": # Whole token is a wildcard
                         tmp = 0
                         starOK = 0
-                        while tmp + i + ii < len(s):
+                        while tmp + i + ii < len(s) and s[i + ii + tmp]["t"] != "mad":
                             if tokenMatch(tokens[k + 1], s[i + ii + tmp], isSwedish):
                                 ii += tmp
                                 starOK = 1
@@ -487,7 +487,10 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         #          overlapping "verb2" or "verb3"
                         overlapIsOK = 0
                         if ifirst <= jfirst:
-                            overlapIsOK = checkOverlapsForOch(candidates[i], candidates[j], s, isSwedish)
+                            if ifirst == jfirst and jlast > ilast:
+                                overlapIsOK = checkOverlapsForOch(candidates[j], candidates[i], s, isSwedish)
+                            else:
+                                overlapIsOK = checkOverlapsForOch(candidates[i], candidates[j], s, isSwedish)
                         elif jfirst < ifirst:
                             overlapIsOK = checkOverlapsForOch(candidates[j], candidates[i], s, isSwedish)
                         if not overlapIsOK:
@@ -537,9 +540,22 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                             # i and j overlap
                             if ifirst < jfirst:
                                 overlapIsOK = checkOverlapsForOch(candidates[i], candidates[j], s, isSwedish)
+                                # log("Overlap OK?:" + str(overlapIsOK) + "\n" + str(candidates[j]) + "\n" + str(candidates[i]) + "\ntext: " + str(s))
                             elif jfirst < ifirst:
                                 overlapIsOK = checkOverlapsForOch(candidates[j], candidates[i], s, isSwedish)
+                                # log("Overlap OK?:" + str(overlapIsOK) + "\n" + str(candidates[j]) + "\n" + str(candidates[i]) + "\ntext: " + str(s))
                             else:
+                                # same start
+                                if ilast < jlast:
+                                    overlapIsOK = checkOverlapsForOch(candidates[j], candidates[i], s, isSwedish)
+                                    # log("Overlap OK?:" + str(overlapIsOK) + "\n" + str(candidates[j]) + "\n" + str(candidates[i]) + "\ntext: " + str(s))
+                                elif ilast > jlast:
+                                    overlapIsOK = checkOverlapsForOch(candidates[i], candidates[j], s, isSwedish)
+                                    # log("Overlap OK?:" + str(overlapIsOK) + "\n" + str(candidates[j]) + "\n" + str(candidates[i]) + "\ntext: " + str(s))
+                                else:
+                                    # log("Overlap NOT ok:" + str(candidates[j]) + "\n" + str(candidates[i]) + "\ntext: " + str(s))
+                                    overlapIsOK = 0; # always bad?
+                                
                                 overlapIsOK = 0
                                 
                         if not overlapIsOK:
@@ -564,7 +580,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                                 # log("Longer expr tie-break:\nuse " + str(ilen) + ":" + str(candidates[i]) + "\nskip " + str(jlen) + ":" + str(candidates[j]))
                             elif jlen > ilen:
                                 use = j
-                            #     log("Longer expr tie-break:\nuse " + str(jlen) + ":" + str(candidates[j]) + "\nskip " + str(ilen) + ":" + str(candidates[i]))
+                                # log("Longer expr tie-break:\nuse " + str(jlen) + ":" + str(candidates[j]) + "\nskip " + str(ilen) + ":" + str(candidates[i]))
                             # else:
                             #      log("Expr lengths same, i=" + str(i) + ", j=" + str(j) + " " + str(ilen) + "=" + str(jlen) + ", " + str(candidates[i]) + " and " + str(candidates[j]))
                             if use < 0:
@@ -936,6 +952,20 @@ def checkOverlapsForOch(exp1, exp2, s, isSwedish):
                 if t == "and" or t == ",":
                     # log("Check overlap for 'och', " + str(exp1) + " has 'och' as token.")
                     return 0
+        tmp = exp2[2][1].split()
+        if exp1[0] == exp2[0] and len(tmp) < 2:
+            # log("Check overlap for 'och', " + str(exp2) + " is too short.")
+            return 0
+        for t in tmp:
+            if isSwedish:                                      
+                if t == "och" or t == ",":
+                    # log("Check overlap for 'och', " + str(exp2) + " has 'och' as token.")
+                    return 0
+            else:
+                if t == "and" or t == ",":
+                    # log("Check overlap for 'och', " + str(exp2) + " has 'och' as token.")
+                    return 0
+            
         return 1
     return 0
 
@@ -996,7 +1026,7 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(1, len(s)):            
-            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "för":
+            if s[i]["w"].lower() == "att" and i > 0 and  s[i-1]["w"].lower() == "för":
                 useLeft = 1
                 if not (i + 1 < len(s) and s[i+1]["w"].lower() == "få"):
                     # never 'use right' even if we find "använda" or "applicera" if we have "för att få", example:
@@ -1099,7 +1129,7 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(1, len(s)):
-            if s[i]["w"].lower() == "att" and s[i-1]["w"].lower() == "genom" and (i < 2 or s[i-2]["w"] != "eller"):
+            if s[i]["w"].lower() == "att" and i > 0 and s[i-1]["w"].lower() == "genom" and (i < 2 or s[i-2]["w"] != "eller"):
                 # use right side
                 new = []
                 sawMad = 0
