@@ -37,6 +37,8 @@ wordsForWordTableData = {"förklara":{"all":{"count":0, "tot":0}},
                          "utvärdera":{"all":{"count":0, "tot":0}},
                          "värdera":{"all":{"count":0, "tot":0}}}
 
+raw_lists_for_significance_test = []
+
 ##################################
 ### Check command line options ###
 ##################################
@@ -363,6 +365,7 @@ nonBloomVerbs = {}
 nonBloomVerbsAlone = {}
 nonBloomVerbsInfo = {}
 ambiguousVerbs = {}
+disambiguationCounts = {}
 
 # bloomStats = {"course":{"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}, "goal":"course":{"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}}}
 bloomStatsCC = {"all":{}, "scb":{}, "level":{}, "type":{}, "uni":{}, "cred":{}, "levelG":{}, "scbG":{}}
@@ -1766,6 +1769,16 @@ def printBloomHelper2(f, label, lex):
         print ()
     print()
 
+def addVerbAndExpAndAmbi(verb, exp, amb):
+    if not verb in disambiguationCounts:
+        disambiguationCounts[verb] = {"neverAmbiguous":1, "exps":{}}
+    if amb:
+        disambiguationCounts[verb]["neverAmbiguous"] = 0
+    if exp in disambiguationCounts[verb]["exps"]:
+        disambiguationCounts[verb]["exps"][exp] += 1
+    else:
+        disambiguationCounts[verb]["exps"][exp] = 1
+        
 def addVerb(v, lev):
     if not v in verbCounts:
         verbCounts[v] = 0
@@ -1865,7 +1878,7 @@ def printBloom():
     ls.sort(reverse=True)
     
     print ("\n","-"*15, "VERBS", "-"*15)
-    print (vs, "different verbs seen,", tot, "total occurrences of these verbs.")
+    print (vs, "different verb expressions seen,", tot, "total occurrences of these expressions.")
     print("Number of Bloom classifications of each level:")
     for c in range(6):
         if c in bloomLevelCounts:
@@ -1880,7 +1893,7 @@ def printBloom():
     for i in range(min(len(ls),TOP_VERBS)):
         print ("{0: >5} ({1: >5}): {2:}".format(ls[i][0], "{:2.1%}".format(ls[i][0] / float(totC)), ls[i][1]))
         toptot += ls[i][0]
-    print ("Top "+str(min(len(ls),TOP_VERBS))+" verbs cover {:2.2%} of all verb occurrences.".format(toptot  / float(totC)))
+    print ("Top "+str(min(len(ls),TOP_VERBS))+" verbs expressions cover {:2.2%} of all verb occurrences.".format(toptot  / float(totC)))
     print ("-"*30)
 
     
@@ -1888,8 +1901,6 @@ def printBloom():
         for verb in wordsForWordTable:
             wordsForWordTableData[verb]["all"]["count"] = verbCounts[verb]
             wordsForWordTableData[verb]["all"]["tot"] = totC
-
-    
 
     
     atot = 0
@@ -1907,7 +1918,70 @@ def printBloom():
     ls.sort(reverse=True)
     for vv in ls:
         print ("{0: <35}: {1: >5} {2: >4}".format(vv[1],vv[0], vv[2]))
+
+
+    neverAmbigVerbs = 0
+    neverAmbigVerbsWithMoreThanOneExp = 0
+    onlyOneExpVerbs = 0
+    onlyOneExpVerbsAmbi = 0
+    ambigOccurrences = 0
+    disambigOccurrencesOfAmbigVerbs = 0
+    disambigOccurrencesOfMultiexpVerbs = 0
+    uniqVerbs = 0
+    totOccurrences = 0
+    totExps = 0
+    neverAmbiOcc = 0
+    onlyOneExpVerbsOcc = 0
     
+    for v in disambiguationCounts:
+        uniqVerbs += 1
+        never = 0
+        if disambiguationCounts[v]["neverAmbiguous"]:
+            never = 1
+            neverAmbigVerbs += 1
+        noofExps = 0
+        for vx in disambiguationCounts[v]["exps"]:
+            noofExps += 1
+            totExps += 1
+            occ = disambiguationCounts[v]["exps"][vx]
+            totOccurrences += occ
+            if vx in ambig:
+                ambigOccurrences += occ
+            if not vx in ambig and not never:
+                disambigOccurrencesOfAmbigVerbs += occ
+            if never:
+                neverAmbiOcc += occ
+        if noofExps == 1:
+            onlyOneExpVerbs += 1
+            onlyOneExpVerbsOcc += occ
+            if not never:
+                onlyOneExpVerbsAmbi += 1
+        if noofExps > 1:
+            for vx in disambiguationCounts[v]["exps"]:
+                occ = disambiguationCounts[v]["exps"][vx]
+                disambigOccurrencesOfMultiexpVerbs += occ
+        if noofExps > 1 and never:
+            neverAmbigVerbsWithMoreThanOneExp += 1
+
+    print ("-"*30)
+    print ("{0: >7} total verb occurrences.".format(totOccurrences))
+    print ("{0: >7} unique verbs found in data.".format(uniqVerbs))
+    print ("{0: >7} verb expressions found.".format(totExps))
+
+    print ("{0: >7} verbs only had one expression ({1: 2.2f}% of {2: } verbs).".format(onlyOneExpVerbs, 100*float(onlyOneExpVerbs)/uniqVerbs, uniqVerbs))
+    print ("{0: >7} verbs only had one expression and were (always) ambiguos ({1: 2.2f}% of {2: } ambiguous verbs).".format(onlyOneExpVerbsAmbi, 100*float(onlyOneExpVerbsAmbi)/uniqVerbs, uniqVerbs))
+    print ("{0: >7} verbs were never ambiguous ({1: 2.2f}% of {2: } verbs).".format(neverAmbigVerbs, 100*float(neverAmbigVerbs)/uniqVerbs, uniqVerbs))
+    print ("{0: >7} verbs were never ambiguous but had more than one expression (disambiguated verbs) ({1: 2.2f}% of {2: } verbs).".format(neverAmbigVerbsWithMoreThanOneExp, 100*float(neverAmbigVerbsWithMoreThanOneExp)/uniqVerbs, uniqVerbs))
+    print ("-"*20)
+    print ("{0: >7} occurrences were verbs that are never ambiguous ({1: 2.2f}% of {2: } occurrences).".format(neverAmbiOcc, 100*float(neverAmbiOcc)/totOccurrences, totOccurrences))
+    print ("{0: >10} because they are not ambiguous and have only one expression ({1: 2.2f}% of {2: } occurrences).".format(onlyOneExpVerbsOcc, 100*float(onlyOneExpVerbsOcc)/totOccurrences, totOccurrences))
+    print ("{0: >10} because they have more than one expression that disambiguates the meaning ({1: 2.2f}% of {2: } occurrences).".format(neverAmbiOcc - onlyOneExpVerbsOcc, 100*float(neverAmbiOcc - onlyOneExpVerbsOcc)/totOccurrences, totOccurrences))
+    print ("{0: >7} occurrences were ambiguous ({1: 2.2f}% of {2: } occurrences).".format(ambigOccurrences, 100*float(ambigOccurrences)/totOccurrences, totOccurrences))
+    print ("{0: >7} occurrences were disambiguated occurrences of verbs that can be ambiguous ({1: 2.2f}% of {2: } occurrences).".format(disambigOccurrencesOfAmbigVerbs, 100*float(disambigOccurrencesOfAmbigVerbs)/totOccurrences, totOccurrences))
+    print ("-"*10)
+    print ("{0: >7} occurrences were occurrences of verbs that have more than one expression ({1: 2.2f}% of {2: } occurrences).".format(disambigOccurrencesOfMultiexpVerbs, 100*float(disambigOccurrencesOfMultiexpVerbs)/totOccurrences, totOccurrences))
+
+            
 def printNonBloom():
     if not checks["nonBloom"]:
         return
@@ -2444,6 +2518,22 @@ def levelGroup(level):
         return "(No level info)"
     else:
         return "(Level: " + level + ")"
+
+def levelGroupNum(level):
+    if level == "No level info":
+        return -1
+    if level in ["GXX", "G1N", "G1F", "G2F"]:
+        return 1
+    elif level in ["G1E", "G2E"]:
+        return 2
+    elif level in ["AXX", "A1N", "A1F"]:
+        return 3
+    elif level in ["A1E", "A2E"]:
+        return 4
+    elif level == "":
+        return -1
+    else:
+        return 0
     
 ##################################
 ### Grouping based on credits. ###
@@ -2467,7 +2557,28 @@ def creditsGroup(creds):
             return "5: (Unexpected credits: " + str(f) + ")"
     except:
         return "4: (No HP info)"
-        
+
+def creditsGroupNum(creds):
+    if not creds:
+        return 4
+
+    try:
+        f = float(creds.replace(",", "."))
+
+        if f >= 0 and f <= 5:
+            return 0
+        elif f > 5 and f <= 10:
+            return 1
+        elif f > 10 and f <= 15:
+            return 2
+        elif f > 15:
+            return 3
+        else:
+            return 5
+    except:
+        return 4
+
+    
 ##########################################
 ### Grouping based on number of verbs. ###
 ##########################################
@@ -2561,6 +2672,10 @@ for cl in data:
             addSCB(scb + " (skipped)")
             continue
 
+        # ------------------------------------------------------------------------
+        # Everything below is for courses that remain after filtering on type etc.
+        # ------------------------------------------------------------------------
+        
         addType(thisType)
         addLevel(level)
         addSCB(scb)
@@ -2847,14 +2962,45 @@ for cl in data:
                         verb = bloom[0]
                         exp = bloom[1]
                         level = bloom[2]
+                        amb = 0
                         if exp in ambig:
+                            amb = 1
                             if prints["ambig"]:
                                 print(c["CourseCode"] + " ambiguous Bloom: '" + exp + "' " + str(ambig[exp]) + " in: " + thisGoal)
                             addAmbig(exp)
-
+                        addVerbAndExpAndAmbi(verb, exp, amb)
         
         if printed:
             cPrint("\n " + "-"*30 + "\n")
+
+        if print_tables_for_paper:
+
+            if "ILO-list-sv-tagged" in c:
+                ls = c["ILO-list-sv-tagged"]
+            elif "ILO-list-sv" in c:
+                ls = c["ILO-list-sv"]
+            else:
+                ls = []
+            nGoals = len(ls)
+
+            if "Bloom-list-sv" in c:
+                ls = c["Bloom-list-sv"]
+            else:
+                ls = []
+
+            nVerbs = 0
+            for goal in ls:
+                nVerbs += len(goal)
+
+            vbPerGoal = 0
+            if nGoals != 0:
+                vbPerGoal = float(nVerbs) / nGoals
+            raw_lists_for_significance_test.append([c["University"] + c["CourseCode"],
+                                                    creditsGroupNum(creds),
+                                                    levelGroupNum(level),
+                                                    nGoals,
+                                                    nVerbs,
+                                                    vbPerGoal])
 
     print(len(data[cl]), "courses in data")
     printStats()
@@ -2879,3 +3025,9 @@ for cl in data:
             paper_out.write(str(g))
         paper_out.write("\n")
 
+    if print_tables_for_paper:
+        significance_out = open("tables_for_paper.signigicance.csv", "w")
+        significance_out.write("UniAndCC,Credits(0=0-5HP 1=5.5-10 2=10.5-15 3=15+ 4=NoInfo 5=ThisShouldNotHappen),Level(-1=NoInfo 0=Other 1=Grundn. 2=Grund.Exj. 3=Av. 4=Av.Exj.),Goals,Verbs,VerbsPerGoal\n")
+        for c in raw_lists_for_significance_test:
+            significance_out.write("{:},{:},{:},{:},{:},{:}\n".format(c[0], c[1], c[2], c[3], c[4], c[5]))
+        significance_out.close()
