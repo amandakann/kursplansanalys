@@ -2019,21 +2019,45 @@ def printBloom():
         if diff == "":
             print (e)
         else:
-            print ("{0:} (overshadowed by {1:})".format(e, diff))
+            print ("{0:} (similar rule {1:})".format(e, diff))
     print ("-"*30)
 
 def similarRule(exp, useCounts):
     for e2 in useCounts:
         if useCounts[e2] > 0:
             tmp = ""
+
             for i,s in enumerate(difflib.ndiff(e2, exp)):
                 if s[0] == ' ':
                     # context
                     pass
                 else:
-                    tmp += s[1:].strip()
-            if len(tmp) < 2:
-                return "'{0:}', {1:} matches".format(e2, useCounts[e2])
+                    d = s[1:].strip()
+                    if len(d) and i == 0:
+                        tmp = ""
+                        break # difference at start means different rule
+                    tmp += d
+            
+            if len(tmp) < 3 and len(tmp) > 0:
+                lastIsSpace = 0
+                lastIsChange = 0
+                seemsOK = 0
+                for i,s in enumerate(difflib.ndiff(e2, exp)):
+                    if s[0] != ' ':
+                        if lastIsSpace:
+                            seemsOK = 1
+                        lastIsChange = 1
+                    else:
+                        lastIsChange = 0
+                        
+                    if s[1:].strip() == "":
+                        lastIsSpace = 1
+                    else:
+                        lastIsSpace = 0
+                if lastIsChange:
+                    seemsOK = 1
+                if seemsOK:
+                    return "'{0:}', {1:} matches".format(e2, useCounts[e2])
     return ""
     
 def sortExps(e):
