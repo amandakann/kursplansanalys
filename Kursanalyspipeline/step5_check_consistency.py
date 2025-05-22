@@ -3,6 +3,8 @@ import string
 import json
 import re
 
+import difflib
+
 VERBS_BEFORE_MORE_THAN=15 # How many verbs to show before lumping the rest as "more than X"
 VERBS_BEFORE_WARNING=50   # How many Bloom-classified verbs can a course have before warning for "very many verbs"?
 
@@ -1778,7 +1780,7 @@ def addVerbAndExpAndAmbi(verb, exp, amb):
         disambiguationCounts[verb]["exps"][exp] += 1
     else:
         disambiguationCounts[verb]["exps"][exp] = 1
-        
+
 def addVerb(v, lev):
     if not v in verbCounts:
         verbCounts[v] = 0
@@ -1981,6 +1983,63 @@ def printBloom():
     print ("-"*10)
     print ("{0: >7} occurrences were occurrences of verbs that have more than one expression ({1: 2.2f}% of {2: } occurrences).".format(disambigOccurrencesOfMultiexpVerbs, 100*float(disambigOccurrencesOfMultiexpVerbs)/totOccurrences, totOccurrences))
 
+    rulesTot = 0
+    rulesNeverUsed = 0
+    rulesUsedOnce = 0
+    totUses = 0
+    useCounts = {}
+    neverUsedList = []
+    allExps = []
+    
+    for exp in bloomLex:
+        useCounts[exp] = 0
+        if exp in verbCounts:
+            useCounts[exp] = verbCounts[exp]
+        if useCounts[exp] == 0:
+            neverUsedList.append(exp)
+            rulesNeverUsed += 1
+        elif useCounts[exp] == 1:
+            rulesUsedOnce += 1
+        totUses += useCounts[exp]
+        rulesTot += 1
+        allExps.append(exp)
+    allExps.sort(key=sortExps)
+
+    print ("-"*10, "Bloom rules", "-"*10)
+    print ("{0: >7} rules in Bloom file.".format(rulesTot))
+    print ("{0: >7} rules were never used.".format(rulesNeverUsed))
+    print ("{0: >7} rules were used only once.".format(rulesUsedOnce))
+    print ("{0: >7} total matches (uses), average of {1: .2f} matches per rule.".format(totUses, float(totUses)/rulesTot))
+    print ("\nTop rules by match count:")
+    for i in range(20):
+        print ("{0: >7} matches for '{1:}'".format(sortExps(allExps[-1 - i]), allExps[-1 - i]))
+    print ("\nThe following rules were never used:")
+    for e in neverUsedList:
+        diff = similarRule(e, useCounts)
+        if diff == "":
+            print (e)
+        else:
+            print ("{0:} (overshadowed by {1:})".format(e, diff))
+    print ("-"*30)
+
+def similarRule(exp, useCounts):
+    for e2 in useCounts:
+        if useCounts[e2] > 0:
+            tmp = ""
+            for i,s in enumerate(difflib.ndiff(e2, exp)):
+                if s[0] == ' ':
+                    # context
+                    pass
+                else:
+                    tmp += s[1:].strip()
+            if len(tmp) < 2:
+                return "'{0:}', {1:} matches".format(e2, useCounts[e2])
+    return ""
+    
+def sortExps(e):
+    if e in verbCounts:
+        return verbCounts[e]
+    return -1
             
 def printNonBloom():
     if not checks["nonBloom"]:
