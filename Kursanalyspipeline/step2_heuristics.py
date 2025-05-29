@@ -587,6 +587,8 @@ umuWSExp = re.compile(r'  (.{4,}?)(?=(\n|(\s\s)|(Moment)|$|(Färdighet)|(Kunskap
 umuWSExpWrap = re.compile(r'(([Gg]odkän)|([Ee]fter)).*[Kk]unskap och [Ff]örståelse.*(([^0-9\n]|([^ \n][0-9]))  [^\s0-9*][^*\n]{4}.*){3,}')
 umuWSindicator = re.compile(r'((godkän)|(efter)).*kunskap och förståelse.*(  [^\s]{4,}.*){3,}', re.S + re.I)
 
+miunWSexp = re.compile("\n\s{3,}([^\n]{4,})")
+miunWSexpWrap = re.compile("(\n\s{3,}[^\n]{4,}){3,}")
 
 
 umuCatchallExp = re.compile("(.{4,}?)(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
@@ -1101,6 +1103,8 @@ def extractGoals(c):
         sv, en = matchAndConsume(umuWSExpWrap, umuWSExp, sv, umuWSExpWrap, umuWSExp, en, "umu-WS-list", iloList, iloListEn)
     else:
         log("umu-ws, indicator failed, TEXT:", sv)
+
+    sv, en = matchAndConsume(miunWSexpWrap, miunWSexp, sv, miunWSexpWrap, miunWSexp, en, "miun-ws", iloList, iloListEn)
 
     sv, en = matchAndConsume(kunnaSemiColonExpWrap, kunnaSemiColonExp, sv, kunnaSemiColonExpWrap, kunnaSemiColonExp, en, "semi-colon-list", iloList, iloListEn)
         
