@@ -449,6 +449,11 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
                 else:
                     lex["verbCounts"][verb[1]] += 1
 
+                if not "N" in lex["verbCounts"]:
+                    lex["verbCounts"]["N"] = 1
+                else:
+                    lex["verbCounts"]["N"] += 1
+
             bLevel = verb[2]
             if bLevel > mx:
                 mx = bLevel
@@ -671,23 +676,23 @@ def addBloomList(ls, scb, level, ctype, uni, scbGroup, levelGroup, creditsGroup)
                     lex["val"][b] += 1
 
     else: # no verbs
-        for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
+        # for lex in [bloomStatsCC["scb"][scb], bloomStatsCC["level"][level], bloomStatsCC["type"][ctype], bloomStatsCC["all"], bloomStatsCC["uni"][uni], bloomStatsCC["scbG"][scbGroup], bloomStatsCC["levelG"][levelGroup], bloomStatsCC["cred"][creditsGroup]]:
 
-            if not "nVerbs" in lex:
-                lex["nVerbs"] = {}
-            if not 0 in lex["nVerbs"]:
-                lex["nVerbs"][0] = 1
-            else:
-                lex["nVerbs"][0] += 1
+        #     if not "nVerbs" in lex:
+        #         lex["nVerbs"] = {}
+        #     if not 0 in lex["nVerbs"]:
+        #         lex["nVerbs"][0] = 1
+        #     else:
+        #         lex["nVerbs"][0] += 1
 
-            if not "nVerbsG" in lex:
-                lex["nVerbsG"] = {}
+        #     if not "nVerbsG" in lex:
+        #         lex["nVerbsG"] = {}
                 
-            n0 = numberOfVerbsGroup(0)
-            if not n0 in lex["nVerbsG"]:
-                lex["nVerbsG"][n0] = 1
-            else:
-                lex["nVerbsG"][n0] += 1
+        #     n0 = numberOfVerbsGroup(0)
+        #     if not n0 in lex["nVerbsG"]:
+        #         lex["nVerbsG"][n0] = 1
+        #     else:
+        #         lex["nVerbsG"][n0] += 1
         
         # nGoals = 0
         nVerbs = 0
@@ -1125,8 +1130,9 @@ def printBloomStats():
                     if "goalCounts" in lex[k] and "tot" in lex[k]["goalCounts"] and "N" in lex[k]["goalCounts"]:
                         totGoals = lex[k]["goalCounts"]["tot"]
                         totCourses = lex[k]["goalCounts"]["N"]
+                        totVerbs = lex[k]["verbCounts"]["N"]
                         if totCourses > 0:
-                            tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course.\n".format(k, totCourses, totGoals, totGoals/float(totCourses))
+                            tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course. {4: >6} verbs {5: 3.2f} verbs per course {6: 3.2f} verbs per goal\n".format(k, totCourses, totGoals, totGoals/float(totCourses), totVerbs, totVerbs/float(totCourses), totVerbs/float(totGoals))
                         else:
                             tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.f2} goals per course.\n".format(k, totCourses, totGoals, 0)
 
@@ -1934,8 +1940,13 @@ def printBloom():
     totExps = 0
     neverAmbiOcc = 0
     onlyOneExpVerbsOcc = 0
+
+    occCounts = {}
     
     for v in disambiguationCounts:
+        if not v in occCounts:
+            occCounts[v] = 0
+            
         uniqVerbs += 1
         never = 0
         if disambiguationCounts[v]["neverAmbiguous"]:
@@ -1947,6 +1958,7 @@ def printBloom():
             totExps += 1
             occ = disambiguationCounts[v]["exps"][vx]
             totOccurrences += occ
+            occCounts[v] += occ
             if vx in ambig:
                 ambigOccurrences += occ
             if not vx in ambig and not never:
@@ -1971,7 +1983,7 @@ def printBloom():
     print ("{0: >7} verb expressions found.".format(totExps))
 
     print ("{0: >7} verbs only had one expression ({1: 2.2f}% of {2: } verbs).".format(onlyOneExpVerbs, 100*float(onlyOneExpVerbs)/uniqVerbs, uniqVerbs))
-    print ("{0: >7} verbs only had one expression and were (always) ambiguos ({1: 2.2f}% of {2: } ambiguous verbs).".format(onlyOneExpVerbsAmbi, 100*float(onlyOneExpVerbsAmbi)/uniqVerbs, uniqVerbs))
+    print ("{0: >7} verbs only had one expression and were (always) ambiguos ({1: 2.2f}% of {2: } verbs).".format(onlyOneExpVerbsAmbi, 100*float(onlyOneExpVerbsAmbi)/uniqVerbs, uniqVerbs))
     print ("{0: >7} verbs were never ambiguous ({1: 2.2f}% of {2: } verbs).".format(neverAmbigVerbs, 100*float(neverAmbigVerbs)/uniqVerbs, uniqVerbs))
     print ("{0: >7} verbs were never ambiguous but had more than one expression (disambiguated verbs) ({1: 2.2f}% of {2: } verbs).".format(neverAmbigVerbsWithMoreThanOneExp, 100*float(neverAmbigVerbsWithMoreThanOneExp)/uniqVerbs, uniqVerbs))
     print ("-"*20)
@@ -2021,6 +2033,18 @@ def printBloom():
         else:
             print ("{0:} (similar rule {1:})".format(e, diff))
     print ("-"*30)
+
+    print ("-"*10, "Verb counts, all rules for same verb", "-"*10)
+    ls = []
+    for v in occCounts:
+        ls.append([occCounts[v], v])
+    ls.sort()
+    sum = 0
+    for i in range(20):
+        sum += ls[-i-1][0]
+        print ("{: >6} {: 3.1f} {:} {: 3.1f}".format(ls[-i-1][0], float(ls[-i-1][0]*100)/totOccurrences, ls[-i-1][1], float(sum*100)/totOccurrences))
+    print ("-"*30)
+
 
 def similarRule(exp, useCounts):
     for e2 in useCounts:
@@ -2738,24 +2762,29 @@ for cl in data:
         if "SCB-ID" in c:
             scb = c["SCB-ID"]
 
+        shouldSkip = 0
+        
         ### Filter based on type of course
         if thisType in types and not types[thisType]:
             addType(thisType + " (skipped)")
-            continue
+            shouldSkip = 1 # continue
         
         ### Filter based on course level
         if level in levels and not levels[level]:
             addLevel(level + " (skipped)")
-            continue
+            shouldSkip = 1 # continue
 
         ### Filter based on SCB field
         if scb in scbs and not scbs[scb]:
             addSCB(scb + " (skipped)")
-            continue
+            shouldSkip = 1 # continue
         elif not scb in scbs and not scbs["other"]:
             addSCB(scb + " (skipped)")
-            continue
+            shouldSkip = 1 # continue
 
+        if shouldSkip:
+            continue
+        
         nonSkipped += 1
         
         # ------------------------------------------------------------------------
