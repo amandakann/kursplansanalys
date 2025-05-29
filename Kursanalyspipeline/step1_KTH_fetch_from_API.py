@@ -337,9 +337,9 @@ for i in range(1, len(sys.argv)):
     elif sys.argv[i] == "-noCache" or sys.argv[i] == "-nc":
         noCache = 1
     elif (sys.argv[i] == "-delay") and i + 1 < len(sys.argv):
-        delaySeconds = sys.argv[i + 1]
+        delaySeconds = int(sys.argv[i + 1])
     elif (sys.argv[i] == "-retry") and i + 1 < len(sys.argv):
-        delayMinutes = sys.argv[i + 1]
+        delayMinutes = int(sys.argv[i + 1])
     elif sys.argv[i] == "-log":
         logging = 1
 
