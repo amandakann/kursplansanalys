@@ -563,8 +563,8 @@ skaEfterAvslutadRevExp = re.compile("[Ee]fter avslutad .* ska[^\s]* (.{10,}?)(?=
 skaEfterAvslutadRevExpWrap = re.compile("([Ee]fter avslutad .* ska[^\s]* (.{15,}?))(?=[.]|$|(\n\n))", re.S)
 
 
-umuNLHaExp = re.compile("\n\s*((.*?)(([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Vv]isa)|([Bb]esitta)|([Bb]eskriva)|([Kk]änna)|([Ff]örstå)|([Mm]ed\shjälp\sav)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([Vv]ad)|([Ss]jälv(ständigt))|([Aa]tt)),?\s.{4,}?)(?=((;?\n)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
-umuNLHaExpWrap = re.compile("((godkän)|(efter))[^\n]*(\n((ha)|(kunna)|(vara)|(besitta)|(beskriva)|(förstå)|(känna)|(med\shjälp\sav)|(redogöra)|(genom)|(genomföra)|(arbeta)|(jämföra)|(planera)|(exemplifiera)|(förklara)|(modellera)|(göra)|(formulera)|(identifiera)|(utifrån)|(dokumentera)|(tillämpa)|(upprätta)|(värdera)|(använda)|(vad)|(själv(ständigt))|([Aa]tt)),?\s([^\n]*?)){2,}(?=((\n\n)|$|(\s\sFör\s)|\n|(Efter )))", re.S + re.I)
+umuNLHaExp = re.compile("\n\s*((.*?)(([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Vv]isa)|([Bb]esitta)|([Bb]eskriva)|([Kk]änna)|([Ff]örstå)|([Mm]ed\shjälp\sav)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([A-ZÅÄÖa-zåäö][a-zåäö]+a)|([Vv]ad)|([Ss]jälv(ständigt))|([Aa]tt)),?\s.{4,}?)(?=((;?\n)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
+umuNLHaExpWrap = re.compile("((godkän)|(efter))[^\n]*(\n((ha)|(kunna)|(vara)|(besitta)|(beskriva)|(förstå)|(känna)|(med\shjälp\sav)|(redogöra)|(genom)|(genomföra)|(arbeta)|(jämföra)|(planera)|(exemplifiera)|(förklara)|(modellera)|(göra)|(formulera)|(identifiera)|(utifrån)|(dokumentera)|(tillämpa)|(upprätta)|(värdera)|(använda)|([a-zåäö]+a)|(vad)|(själv(ständigt))|([Aa]tt)),?\s([^\n]*?)){2,}(?=((\n\n)|$|(\s\sFör\s)|\n|(Efter )))", re.S + re.I)
 
 
 umuAstExp = re.compile("((\\n?[*]\\s?(.{4,}?))|(kunna:?\\s.{10,}?))(?=(\\n|[*]|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
@@ -847,6 +847,9 @@ def cleanCommonWritingProblems(text):
     
     res = res.replace("å", "å").replace("ä", "ä").replace("ö", "ö").replace("&eacute;", "é") # replace some weird codings
     res = re.sub(u"\uF02D", "•", res)
+
+    res = re.sub("(\s+)o([\n ]+)ch(\s+)", "\\1och\\3", res)
+    res = re.sub("(\s+)oc([\n ]+)h(\s+)", "\\1och\\3", res)
 
     res = htmlTrash.sub(" ", res)
     res = re.sub("(<[^>]*[-][^>]*>)|(<\/?w[^>]*>)|(<![^>]*>)|(<\/?m[^>]*>)|(X-NONE)", " ", res); # remove some HTML markup we do not use
