@@ -184,6 +184,7 @@ upprätta
 simulera
 faktorisera
 kompilera
+dekompilera
 konfigurera
 reglera
 addera
