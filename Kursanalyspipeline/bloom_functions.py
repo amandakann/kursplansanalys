@@ -408,6 +408,8 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                         if i + ii < len(s) and tokenMatch(tokens[k], s[i + ii], isSwedish):
                             if isSwedish and s[i + ii]["t"][:2] == "vb" and s[i + ii]["t"][-4:] != ".sfo":
                                 hasVB = 1
+                            if isSwedish and s[i + ii]["l"] == "formge":
+                                hasVB = 1
                             if isSwedish and s[i + ii]["w"][0].isupper():
                                 hasUpper = 1
                             ii += 1
