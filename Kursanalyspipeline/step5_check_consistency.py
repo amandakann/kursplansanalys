@@ -5,6 +5,9 @@ import re
 
 import difflib
 
+import numpy
+import scipy.stats
+
 VERBS_BEFORE_MORE_THAN=15 # How many verbs to show before lumping the rest as "more than X"
 VERBS_BEFORE_WARNING=50   # How many Bloom-classified verbs can a course have before warning for "very many verbs"?
 
@@ -3057,26 +3060,19 @@ for cl in data:
                 bl = c["Bloom-list-sv"]
                 for goal in bl:
                     thisGoal = ""
-                    mx = -1
-                    mn = 6
                     for bloom in goal:
                         verb = bloom[0]
                         exp = bloom[1]
-                        level = bloom[2]
-                        if level > mx:
-                            mx = level
-                        if level < mn:
-                            mn = level
+                        blevel = bloom[2]
                         if len(thisGoal):
                             thisGoal += ", "
-                        thisGoal += exp + " (" + str(level) + ")"
+                        thisGoal += exp + " (" + str(blevel) + ")"
 
-                        addVerb(exp, level)
+                        addVerb(exp, blevel)
                         
                     for bloom in goal:
                         verb = bloom[0]
                         exp = bloom[1]
-                        level = bloom[2]
                         amb = 0
                         if exp in ambig:
                             amb = 1
@@ -3110,12 +3106,29 @@ for cl in data:
             vbPerGoal = 0
             if nGoals != 0:
                 vbPerGoal = float(nVerbs) / nGoals
+
+
+            nBloom = 0
+            totBloom = 0
+            if "Bloom-list-sv" in c and len(c["Bloom-list-sv"]) >= 1:
+                bl = c["Bloom-list-sv"]
+                for goal in bl:
+                    for bloom in goal:
+                        blevel = bloom[2]
+                        nBloom += 1
+                        totBloom += int(blevel)
+            if nBloom > 0:
+                avBloom = totBloom / float(nBloom)
+            else:
+                avBloom = -1
+                
             raw_lists_for_significance_test.append([c["University"] + c["CourseCode"],
                                                     creditsGroupNum(creds),
                                                     levelGroupNum(level),
                                                     nGoals,
                                                     nVerbs,
-                                                    vbPerGoal])
+                                                    vbPerGoal,
+                                                    avBloom])
 
     print(len(data[cl]), "courses in data")
     # if goalCounts:
@@ -3149,3 +3162,338 @@ for cl in data:
         for c in raw_lists_for_significance_test:
             significance_out.write("{:},{:},{:},{:},{:},{:}\n".format(c[0], c[1], c[2], c[3], c[4], c[5]))
         significance_out.close()
+
+        ### Calculate significance for some group differences
+
+
+        # Bloom level
+        
+        lsGr = []
+        lsAdv = []
+        lsGrEx = []
+        lsAdvEx = []
+
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][6] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][2] == 1: # grundnivå
+                lsGr.append(raw_lists_for_significance_test[i][6])
+            elif raw_lists_for_significance_test[i][2] == 2: # grundnivå, exjobb
+                lsGrEx.append(raw_lists_for_significance_test[i][6])
+            elif raw_lists_for_significance_test[i][2] == 3: # avancerad nivå
+                lsAdv.append(raw_lists_for_significance_test[i][6])
+            elif raw_lists_for_significance_test[i][2] == 4: # avancerad nivå, exjobb
+                lsAdvEx.append(raw_lists_for_significance_test[i][6])
+
+        signfGrAdv = scipy.stats.ttest_ind(lsGr, lsAdv)
+        signfGrAdvEx = scipy.stats.ttest_ind(lsGrEx, lsAdvEx)
+        signfGrEx = scipy.stats.ttest_ind(lsGr, lsGrEx)
+        signfAdvEx = scipy.stats.ttest_ind(lsAdv, lsAdvEx)
+
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing average Bloom level of Grundkurs vs. Avancerad kurs")
+        print (len(lsGr), len(lsAdv))
+        print (signfGrAdv)
+        print ("\nTesting average Bloom level of Grundkurs Exjobb vs. Avancerad kurs exjobb")
+        print (len(lsGrEx), len(lsAdvEx))
+        print (signfGrAdvEx)
+        print ("\nTesting average Bloom level of Grundkurs vs. Grundkurs exjobb")
+        print (len(lsGr), len(lsGrEx))
+        print (signfGrEx)
+        print ("\nTesting average Bloom level of Avancerad kurs vs. Avancerad kurs exjobb")
+        print (len(lsAdv), len(lsAdvEx))
+        print (signfAdvEx)
+
+        # number of goals
+        
+        lsGr = []
+        lsAdv = []
+        lsGrEx = []
+        lsAdvEx = []
+        lsEx = []
+        lsNoEx = []
+        
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][3] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][2] == 1: # grundnivå
+                lsGr.append(raw_lists_for_significance_test[i][3])
+                lsNoEx.append(raw_lists_for_significance_test[i][3])
+            elif raw_lists_for_significance_test[i][2] == 2: # grundnivå, exjobb
+                lsGrEx.append(raw_lists_for_significance_test[i][3])
+                lsEx.append(raw_lists_for_significance_test[i][3])
+            elif raw_lists_for_significance_test[i][2] == 3: # avancerad nivå
+                lsAdv.append(raw_lists_for_significance_test[i][3])
+                lsNoEx.append(raw_lists_for_significance_test[i][3])
+            elif raw_lists_for_significance_test[i][2] == 4: # avancerad nivå, exjobb
+                lsAdvEx.append(raw_lists_for_significance_test[i][3])
+                lsEx.append(raw_lists_for_significance_test[i][3])
+
+        signfGrAdv = scipy.stats.ttest_ind(lsGr, lsAdv)
+        signfGrAdvEx = scipy.stats.ttest_ind(lsGrEx, lsAdvEx)
+        signfGrEx = scipy.stats.ttest_ind(lsGr, lsGrEx)
+        signfAdvEx = scipy.stats.ttest_ind(lsAdv, lsAdvEx)
+        signfEx = scipy.stats.ttest_ind(lsNoEx, lsEx)
+        
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing #GOALS for Grundkurs vs. Avancerad kurs")
+        print (len(lsGr), len(lsAdv))
+        print (signfGrAdv)
+        print ("\nTesting #GOALS for Grundkurs Exjobb vs. Avancerad kurs exjobb")
+        print (len(lsGrEx), len(lsAdvEx))
+        print (signfGrAdvEx)
+        print ("\nTesting #GOALS for Grundkurs vs. Grundkurs exjobb")
+        print (len(lsGr), len(lsGrEx))
+        print (signfGrEx)
+        print ("\nTesting #GOALS for Avancerad kurs vs. Avancerad kurs exjobb")
+        print (len(lsAdv), len(lsAdvEx))
+        print (signfAdvEx)
+        print ("\nTesting #GOALS for Not Exjobb vs. Exjobb")
+        print (len(lsNoEx), len(lsEx))
+        print (signfEx)
+
+        # number of verbs / goal
+        
+        lsGr = []
+        lsAdv = []
+        lsGrEx = []
+        lsAdvEx = []
+        lsEx = []
+        lsNoEx = []
+        
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][5] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][2] == 1: # grundnivå
+                lsGr.append(raw_lists_for_significance_test[i][5])
+                lsNoEx.append(raw_lists_for_significance_test[i][5])
+            elif raw_lists_for_significance_test[i][2] == 2: # grundnivå, exjobb
+                lsGrEx.append(raw_lists_for_significance_test[i][5])
+                lsEx.append(raw_lists_for_significance_test[i][5])
+            elif raw_lists_for_significance_test[i][2] == 3: # avancerad nivå
+                lsAdv.append(raw_lists_for_significance_test[i][5])
+                lsNoEx.append(raw_lists_for_significance_test[i][5])
+            elif raw_lists_for_significance_test[i][2] == 4: # avancerad nivå, exjobb
+                lsAdvEx.append(raw_lists_for_significance_test[i][5])
+                lsEx.append(raw_lists_for_significance_test[i][5])
+
+        signfGrAdv = scipy.stats.ttest_ind(lsGr, lsAdv)
+        signfGrAdvEx = scipy.stats.ttest_ind(lsGrEx, lsAdvEx)
+        signfGrEx = scipy.stats.ttest_ind(lsGr, lsGrEx)
+        signfAdvEx = scipy.stats.ttest_ind(lsAdv, lsAdvEx)
+        signfEx = scipy.stats.ttest_ind(lsNoEx, lsEx)
+        
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing #VERBS/GOAL for Grundkurs vs. Avancerad kurs")
+        print (len(lsGr), len(lsAdv))
+        print (signfGrAdv)
+        print ("\nTesting #VERBS/GOAL for Grundkurs Exjobb vs. Avancerad kurs exjobb")
+        print (len(lsGrEx), len(lsAdvEx))
+        print (signfGrAdvEx)
+        print ("\nTesting #VERBS/GOAL for Grundkurs vs. Grundkurs exjobb")
+        print (len(lsGr), len(lsGrEx))
+        print (signfGrEx)
+        print ("\nTesting #VERBS/GOAL for Avancerad kurs vs. Avancerad kurs exjobb")
+        print (len(lsAdv), len(lsAdvEx))
+        print (signfAdvEx)
+        print ("\nTesting #VERBS/GOAL for Not Exjobb vs. Exjobb")
+        print (len(lsNoEx), len(lsEx))
+        print (signfEx)
+
+
+        # number of goals
+        
+        ls5 = []
+        ls5t10 = []
+        ls10t15 = []
+        ls15 = []
+
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][3] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][1] == 0: # 0-5 hp
+                ls5.append(raw_lists_for_significance_test[i][3])
+            elif raw_lists_for_significance_test[i][1] == 1: # 5-10 hp
+                ls5t10.append(raw_lists_for_significance_test[i][3])
+            elif raw_lists_for_significance_test[i][1] == 2: # 10-15 hp
+                ls10t15.append(raw_lists_for_significance_test[i][3])
+            elif raw_lists_for_significance_test[i][1] == 3: # 15+ hp
+                ls15.append(raw_lists_for_significance_test[i][3])
+
+        signf0 = scipy.stats.ttest_ind(ls5, ls5t10)
+        signf5 = scipy.stats.ttest_ind(ls5t10, ls10t15)
+        signf10 = scipy.stats.ttest_ind(ls10t15, ls15)
+
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing number of GOALS per course for 0-5 HP vs. 5.5-10 HP")
+        print (len(ls5), len(ls5t10))
+        print (signf0)
+        print ("\nTesting number of GOALS per course for 5.5-10 HP vs. 10.5-15 HP")
+        print (len(ls5t10), len(ls10t15))
+        print (signf5)
+        print ("\nTesting number of GOALS per course for 10.5-15 HP vs. 15+ HP")
+        print (len(ls10t15), len(ls15))
+        print (signf10)
+
+        # number of verbs
+        
+        ls5 = []
+        ls5t10 = []
+        ls10t15 = []
+        ls15 = []
+
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][4] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][1] == 0: # 0-5 hp
+                ls5.append(raw_lists_for_significance_test[i][4])
+            elif raw_lists_for_significance_test[i][1] == 1: # 5-10 hp
+                ls5t10.append(raw_lists_for_significance_test[i][4])
+            elif raw_lists_for_significance_test[i][1] == 2: # 10-15 hp
+                ls10t15.append(raw_lists_for_significance_test[i][4])
+            elif raw_lists_for_significance_test[i][1] == 3: # 15+ hp
+                ls15.append(raw_lists_for_significance_test[i][4])
+
+        signf0 = scipy.stats.ttest_ind(ls5, ls5t10)
+        signf5 = scipy.stats.ttest_ind(ls5t10, ls10t15)
+        signf10 = scipy.stats.ttest_ind(ls10t15, ls15)
+
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing number of VERBS per course for 0-5 HP vs. 5.5-10 HP")
+        print (len(ls5), len(ls5t10))
+        print (signf0)
+        print ("\nTesting number of VERBS per course for 5.5-10 HP vs. 10.5-15 HP")
+        print (len(ls5t10), len(ls10t15))
+        print (signf5)
+        print ("\nTesting number of VERBS per course for 10.5-15 HP vs. 15+ HP")
+        print (len(ls10t15), len(ls15))
+        print (signf10)
+
+        # number of verbs per goal
+        
+        ls5 = []
+        ls5t10 = []
+        ls10t15 = []
+        ls15 = []
+
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][5] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][1] == 0: # 0-5 hp
+                ls5.append(raw_lists_for_significance_test[i][5])
+            elif raw_lists_for_significance_test[i][1] == 1: # 5-10 hp
+                ls5t10.append(raw_lists_for_significance_test[i][5])
+            elif raw_lists_for_significance_test[i][1] == 2: # 10-15 hp
+                ls10t15.append(raw_lists_for_significance_test[i][5])
+            elif raw_lists_for_significance_test[i][1] == 3: # 15+ hp
+                ls15.append(raw_lists_for_significance_test[i][5])
+
+        signf0 = scipy.stats.ttest_ind(ls5, ls5t10)
+        signf5 = scipy.stats.ttest_ind(ls5t10, ls10t15)
+        signf10 = scipy.stats.ttest_ind(ls10t15, ls15)
+
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing number of VERBS / GOAL for 0-5 HP vs. 5.5-10 HP")
+        print (len(ls5), len(ls5t10))
+        print (signf0)
+        print ("\nTesting number of VERBS / GOAL for 5.5-10 HP vs. 10.5-15 HP")
+        print (len(ls5t10), len(ls10t15))
+        print (signf5)
+        print ("\nTesting number of VERBS / GOAL for 10.5-15 HP vs. 15+ HP")
+        print (len(ls10t15), len(ls15))
+        print (signf10)
+
+        # Bloom level
+        
+        ls5 = []
+        ls5t10 = []
+        ls10t15 = []
+        ls15 = []
+
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][6] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][1] == 0: # 0-5 hp
+                ls5.append(raw_lists_for_significance_test[i][6])
+            elif raw_lists_for_significance_test[i][1] == 1: # 5-10 hp
+                ls5t10.append(raw_lists_for_significance_test[i][6])
+            elif raw_lists_for_significance_test[i][1] == 2: # 10-15 hp
+                ls10t15.append(raw_lists_for_significance_test[i][6])
+            elif raw_lists_for_significance_test[i][1] == 3: # 15+ hp
+                ls15.append(raw_lists_for_significance_test[i][6])
+
+        signf0 = scipy.stats.ttest_ind(ls5, ls5t10)
+        signf5 = scipy.stats.ttest_ind(ls5t10, ls10t15)
+        signf10 = scipy.stats.ttest_ind(ls10t15, ls15)
+
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing average Bloom level of 0-5 HP vs. 5.5-10 HP")
+        print (len(ls5), len(ls5t10))
+        print (signf0)
+        print ("\nTesting average Bloom level of 5.5-10 HP vs. 10.5-15 HP")
+        print (len(ls5t10), len(ls10t15))
+        print (signf5)
+        print ("\nTesting average Bloom level of 10.5-15 HP vs. 15+ HP")
+        print (len(ls10t15), len(ls15))
+        print (signf10)
+        
+
+
+        # number of goals
+        
+        lsK = []
+        lsU = []
+
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][3] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][0].find("KTH") >= 0:
+                lsK.append(raw_lists_for_significance_test[i][3])
+            if raw_lists_for_significance_test[i][0].find("UMU") >= 0:
+                lsU.append(raw_lists_for_significance_test[i][3])
+
+        signfKU = scipy.stats.ttest_ind(lsK, lsU)
+
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing number of GOALS per course for KTH vs. UMU")
+        print (len(lsK), len(lsU))
+        print (signfKU)
+
+        # number of verbs/goal
+        
+        lsK = []
+        lsU = []
+
+        for i in range(len(raw_lists_for_significance_test)):
+            if raw_lists_for_significance_test[i][5] < 0:
+                continue # no Bloom verbs
+                
+            if raw_lists_for_significance_test[i][0].find("KTH") >= 0:
+                lsK.append(raw_lists_for_significance_test[i][5])
+            if raw_lists_for_significance_test[i][0].find("UMU") >= 0:
+                lsU.append(raw_lists_for_significance_test[i][5])
+
+        signfKU = scipy.stats.ttest_ind(lsK, lsU)
+
+        print ("-"*30)
+        print ("-"*10, "Significance testing", "-"*10)
+        print ("Testing number of VERBS/GOAL per course for KTH vs. UMU")
+        print (len(lsK), len(lsU))
+        print (signfKU)
+        
