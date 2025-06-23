@@ -478,7 +478,7 @@ kunna1indicator = re.compile("kunna.*1.*2.*[0-9]+.*", re.S)
 ###    ... konsekvenser. Analysera och tolka händelser ... "
 ###   (example course KTH MJ2416)
 kunnaCapExp = re.compile("[\s>]([A-ZÅÄÖ](([^<\n\s])|(\s[^\s])|(\s\s[^\sA-ZÅÄÖ])|(\n[^\nA-ZÅÄÖ])){4,})", re.S)
-kunnaCapExpWrap = re.compile("kunna:?\s*([A-ZÅÄÖ]([^\n]|(\n[^\n]))*){2,}?(?=$|\n\n)", re.S)
+kunnaCapExpWrap = re.compile("kunna:?\s*([A-ZÅÄÖ]([^\n]|(\n[^\n])){4,})(\n\n\s*[A-ZÅÄÖ]([^\n]|(\n[^\n])){4,})*(?=$|(\n\n))", re.S)
 kunnaCapExpWrapEn = re.compile("((know\s*how)|(able))\s*to:?\s*[A-ZÅÄÖ].*", re.S)
 
 kunnaSemiColonExp = re.compile("([a-zåäö][^;]{4,})(?=[.]|;|$|\")", re.S);
@@ -509,11 +509,14 @@ pRawListIndicator = re.compile("((ska)|(kunna))\s*:?\s*</\s*p>")
 pRawListIndicatorEn = re.compile("((can)|(know\s*how\s*to)|(able\s*to))\s*:?\s*</\s*p>")
 
 # UMU courses with "ska ... - ha ... - ha ..."
-umuHypHaAndStarExp = re.compile("\n?[*–\-]\s(.{4,}?)(?=(\n|([;*–\-]\s)|(Det innebär)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
-umuHypHaAndStarExpWrap = re.compile("((godkän)|(efter)).*([–\-]\s?((ha)|(i)|(ge)|(kunna)|(vara)|(besitta)|(beskriva)|(förstå)|(känna)|(med\shjälp\sav)|(redogöra)|(genom)|(genomföra)|(arbeta)|(jämföra)|(planera)|(exemplifiera)|(förklara)|(modellera)|(göra)|(formulera)|(identifiera)|(utifrån)|(dokumentera)|(tillämpa)|(upprätta)|(värdera)|(använda))([^*]*[*]){2,}.*){2,}", re.S + re.I)
+umuHypHaAndStarExp = re.compile("\n?[*–\-]\s?(.{4,}?)(?=(\n|([;*–\-]\s)|(Det innebär)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
+umuHypHaAndStarExpWrap = re.compile("((godkän)|(efter)).*([–\-*]\s?((ha)|(i)|(ge)|([a-zåäö]{3,}a)|(kritiskt)|(förstå)|(med\shjälp\sav)|(genom)|(utifrån))(.*?)){2,}(?=$|\n)", re.S + re.I)
 
-umuHypHaExp = re.compile("\n?[–\-]\s?(([^\s]*\s*)?(([a-zåäö][^\s]*a)|([A-ZÅÄÖ][^\s]*)|([Hh]a)|([Ii]\s*)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Vv]isa)|([Bb]esitta)|(([Bb]e)?[Ss]kriva)|([Kk]änna)|([Ff]örstå)|([Mm]ed\shjälp\sav)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([Vv]älja)|(([Åå]ter)?[Ss]kapa)|([Ss]tödja)|([Kk]ommunicera)|([Dd]iskutera)|([Ss]ammanställa)|([Tt]olka)|([Ss]öka)|([Gg]ranska)|([Tt]änka)|([Mm]untlig[^\s]*)|([Ss]jälv(ständigt))|([Aa]tt)|([Bb]ehärska)|([Uu]rskilja)|([Dd]elta(ga)?)|([Uu]tföra)|([Aa]nalysera)|([Vv]isualisera)|([Uu]tveckla)|([Ii]ntervjua)|([Ss]amla)|([Vv]isa)|([Ff]örbereda)|([Pp]å)|([Pp]resentera)|([Rr]eflektera)|([Mm]ed)|([Ss]krift[^\s]*)|([Aa]ktiv[^\s]*)|([Ff]öreslå)|([Ii]nom)|([Uu]tforma)|([Ss]kydda)|([Vv]ad)|([Tt]eoretiskt)|([Pp]rocessen)|([Kk]ritiskt)|([Bb]åde)),?\s.{4,}?)(?=(\n|([–\-]\s)|(\(?Moment)|$|(\(?Färdighet)|(\(?Kunskap)|(\(?Värdering)|(\(?Modul)|(För god)|(Område [0-9])|(Del)))", re.S)
-umuHypHaExpWrap = re.compile("(([Gg]odkän)|([Ee]fter))([^.–\-]*)([–\-]\s{0,2}(([a-zåäö][^\s]*a)|([A-ZÅÄÖ][^\s]*)|([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Bb]esitta)|(([Bb]e)?[Ss]kriva)|([Ff]örstå)|([Kk]änna)|([Mm]ed\s[Hh]jälp\s[Aa]v)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([Vv]älja)|(([Åå]ter)?[Ss]kapa)|([Ss]tödja)|([Kk]ommunicera)|([Dd]iskutera)|([Ss]ammanställa)|([Tt]olka)|([Ss]öka)|([Gg]ranska)|([Tt]änka)|([Mm]untlig[^\s]*)|([Bb]ehärska)|([Uu]rskilja)|([Dd]elta(ga)?)|([Uu]tföra)|([Aa]nalysera)|([Vv]isualisera)|([Uu]tveckla)|([Ii]ntervjua)|([Ss]amla)|([Vv]isa)|([Ff]örbereda)|([Pp]å)|([Pp]resentera)|([Rr]eflektera)|([Mm]ed)|([Ss]krift[^\s]*)|([Aa]ktiv[^\s]*)|([Ff]öreslå)|([Ii]nom)|([Uu]tforma)|([Ss]kydda)|([Vv]ad)|([Tt]eoretiskt)|([Pp]rocessen)|([Aa]tt)|([Kk]ritiskt)|([Bb]åde)),?\s(([^\s]|(\s[^–\-])|(\s[–\-][^\s])){4,}\s?)){2,}", re.S)
+umuHypHaExp = re.compile("\n?[–\-]\s?(([^\s]*\s*)?(([a-zåäö][^\s]*a)|([A-ZÅÄÖ][^\s]*)|([Ii]\s)|([Gg]e)|([Ff]örstå)|([Mm]ed\s[Hh]jälp\s[Aa]v)|([Gg]enom)|([Uu]tifrån)|([Mm]untlig[^\s]*)|([Pp]å)|([Ss]jälv(ständigt)?)|([Aa]tt)|([Mm]ed)|([Ss]krift[^\s]*)|([Aa]ktiv[^\s]*)|([Ff]öreslå)|([Ii]nom)|([Vv]ad)|([Tt]eoretiskt)|([Pp]rocessen)|([Kk]ritiskt)|([Bb]åde)),?\s.{4,}?)(?=(\n|([–\-]\s)|(\(?Moment)|$|(\(?Färdighet)|(\(?Kunskap)|(\(?Värdering)|(\(?Modul)|(För god)|(Område [0-9])|(Del)))", re.S)
+umuHypHaExpWrap = re.compile("(([Gg]odkän)|([Ee]fter))([^.–\-]*)([–\-]\s{0,2}(([a-zåäö][^\s]*a)|([A-ZÅÄÖ][^\s]*)|([Ii]\s)|([Gg]e)|([Ff]örstå)|([Mm]ed\s[Hh]jälp\s[Aa]v)|([Gg]enom)|([Uu]tifrån)|([Mm]untlig[^\s]*)|([Pp]å)|([Ss]jälv(ständigt)?)|([Aa]tt)|([Mm]ed)|([Ss]krift[^\s]*)|([Aa]ktiv[^\s]*)|([Ff]öreslå)|([Ii]nom)|([Vv]ad)|([Tt]eoretiskt)|([Pp]rocessen)|([Kk]ritiskt)|([Bb]åde)),?\s(([^\s]|(\s[^–\-])|(\s[–\-][^\s])){4,}\s?)){2,}", re.S)
+
+# umuHypHaExp = re.compile("\n?[–\-]\s?(([^\s]*\s*)?(([a-zåäö][^\s]*a)|([A-ZÅÄÖ][^\s]*)|([Hh]a)|([Ii]\s*)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Vv]isa)|([Bb]esitta)|(([Bb]e)?[Ss]kriva)|([Kk]änna)|([Ff]örstå)|([Mm]ed\shjälp\sav)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([Vv]älja)|(([Åå]ter)?[Ss]kapa)|([Ss]tödja)|([Kk]ommunicera)|([Dd]iskutera)|([Ss]ammanställa)|([Tt]olka)|([Ss]öka)|([Gg]ranska)|([Tt]änka)|([Mm]untlig[^\s]*)|([Ss]jälv(ständigt))|([Aa]tt)|([Bb]ehärska)|([Uu]rskilja)|([Dd]elta(ga)?)|([Uu]tföra)|([Aa]nalysera)|([Vv]isualisera)|([Uu]tveckla)|([Ii]ntervjua)|([Ss]amla)|([Vv]isa)|([Ff]örbereda)|([Pp]å)|([Pp]resentera)|([Rr]eflektera)|([Mm]ed)|([Ss]krift[^\s]*)|([Aa]ktiv[^\s]*)|([Ff]öreslå)|([Ii]nom)|([Uu]tforma)|([Ss]kydda)|([Vv]ad)|([Tt]eoretiskt)|([Pp]rocessen)|([Kk]ritiskt)|([Bb]åde)),?\s.{4,}?)(?=(\n|([–\-]\s)|(\(?Moment)|$|(\(?Färdighet)|(\(?Kunskap)|(\(?Värdering)|(\(?Modul)|(För god)|(Område [0-9])|(Del)))", re.S)
+# umuHypHaExpWrap = re.compile("(([Gg]odkän)|([Ee]fter))([^.–\-]*)([–\-]\s{0,2}(([a-zåäö][^\s]*a)|([A-ZÅÄÖ][^\s]*)|([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Bb]esitta)|(([Bb]e)?[Ss]kriva)|([Ff]örstå)|([Kk]änna)|([Mm]ed\s[Hh]jälp\s[Aa]v)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([Vv]älja)|(([Åå]ter)?[Ss]kapa)|([Ss]tödja)|([Kk]ommunicera)|([Dd]iskutera)|([Ss]ammanställa)|([Tt]olka)|([Ss]öka)|([Gg]ranska)|([Tt]änka)|([Mm]untlig[^\s]*)|([Bb]ehärska)|([Uu]rskilja)|([Dd]elta(ga)?)|([Uu]tföra)|([Aa]nalysera)|([Vv]isualisera)|([Uu]tveckla)|([Ii]ntervjua)|([Ss]amla)|([Vv]isa)|([Ff]örbereda)|([Pp]å)|([Pp]resentera)|([Rr]eflektera)|([Mm]ed)|([Ss]krift[^\s]*)|([Aa]ktiv[^\s]*)|([Ff]öreslå)|([Ii]nom)|([Uu]tforma)|([Ss]kydda)|([Vv]ad)|([Tt]eoretiskt)|([Pp]rocessen)|([Aa]tt)|([Kk]ritiskt)|([Bb]åde)),?\s(([^\s]|(\s[^–\-])|(\s[–\-][^\s])){4,}\s?)){2,}", re.S)
 
 ###    (example course UMU 5BI261)
 ###    'delFSR1 tillämpa ett analytiskt förhållningsätt till ekologin i terrestra arktiska och subarktiska ekosystem från process till ett landskapsperspektiv och över olika tidsskalorFSR2 tillämpa ett analytiskt förhållningssätt till pågående och möjliga framtida effekter av klimatförändringar på arktiska som inkluderar subarktiska ekosystem och hur terrestra processer återkopplar till dessa.FSR3 formulera genomförbara hypoteser som relaterar till effekterna av en eller två potentiella interagerande ekologiska faktorer i arktiska ekosystem processer.Modul 2, ProjektarbeteFSR4tillämpa ett vetenskapligt förhållningssätt för att planera och genomföra en fördjupad vetenskaplig studie inom arktisk terrester ekologiFSR5 inhämta, bearbeta, analysera och tolka information om ekologiska processer,FSR6 analysera och jämför resultaten i relation till publicerad litteratur inom ämnet,FSR7 presentera resultaten i skrift i form av en individuellt skriven vetenskaplig rapport och muntligt i form av seminarium. Efter avklarad kurs skall studenten för betyget Väl Godkänd kunna FSR8 kritiskt granska vetenskaplig litteratur för att tolka vetenskapliga resultat.FSR9kritiskt granska vetenskaplig litteratur för att formulera följder eller konsekvenser av egna och/eller publicerade resultat i ett vidare perspektivFSR10 tillämpa kursens innehåll för att formulera nya frågeställningar och hypoteser.'
@@ -853,6 +856,19 @@ def cleanCommonWritingProblems(text):
 
     res = htmlTrash.sub(" ", res)
     res = re.sub("(<[^>]*[-][^>]*>)|(<\/?w[^>]*>)|(<![^>]*>)|(<\/?m[^>]*>)|(X-NONE)", " ", res); # remove some HTML markup we do not use
+
+    res = re.sub("([A-ZÅÄÖa-zåäö]{3,})([0-9]+)([A-ZÅÄÖa-zåäö]{3,})", "\\1 \\2 \\3", res)
+    res = re.sub("([0-9]+)([A-ZÅÄÖa-zåäö]{3,})", "\\1 \\2", res)
+	
+    res = re.sub("\salysera", " analysera", res)
+    res = re.sub("\sförslå\s", " föreslå ", res)
+    res = re.sub("muntligtredovisa", "muntligt redovisa", res)
+    res = re.sub("redoföra", "redogöra", res)
+    res = re.sub("redgöra", "redogöra", res)
+    res = re.sub("redöra", "redogöra", res)
+    res = re.sub("refkeltera", "reflektera", res)
+    res = re.sub("studentenha", "studenten ha", res)
+    res = re.sub("studentenvisa", "studenten visa", res)
     
     return res
 
