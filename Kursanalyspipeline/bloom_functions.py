@@ -996,6 +996,12 @@ def applyGeneralPrinciples(s):
                     if s[j]["w"] == "med" and s[j+1]["w"] == "hjälp" and s[j+2]["w"] == "av":
                         ignoreSom = 1
                     j = j - 1
+
+                j = i - 1
+                while j >= 0 and j > i - 6:
+                    if s[j]["w"] == "såväl":
+                        ignoreSom = 1
+                    j = j - 1
             
             if not ignoreSom:
                 new = []
@@ -1214,7 +1220,7 @@ def applyGeneralPrinciples(s):
         check = 0
 
         for i in range(0, len(s) - 1):
-            if s[i]["w"].lower() == "hur" or ((s[i]["w"].lower() == "med" or s[i]["w"].lower() == "sätt") and s[i+1]["w"].lower() == "att"):
+            if s[i]["w"].lower() == "hur" or ((s[i]["w"].lower() == "med" or s[i]["w"].lower() == "sätt") and s[i+1]["w"].lower() == "att") or s[i]["w"].lower() == "varför":
                 new = []
                 for j in range(i): # add everything on the left
                     new.append(s[j])
