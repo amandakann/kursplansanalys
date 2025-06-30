@@ -1231,8 +1231,11 @@ def printBloomStats():
                     ls = []
                     catTot = 0
                     for v in lex[cat]["verbCounts"]:
+                        if v == "N":
+                            continue
                         ls.append([lex[cat]["verbCounts"][v], v])
                         catTot += lex[cat]["verbCounts"][v]
+                        
                     ls.sort(reverse=True)
                     if catTot == 0:
                         catTot = 1
@@ -1252,6 +1255,8 @@ def printBloomStats():
                         ls = []
                         catTot = 0
                         for v in lex[cat]["verbCounts"]:
+                            if v == "N":
+                                continue
                             ls.append([lex[cat]["verbCounts"][v], v])
                             catTot += lex[cat]["verbCounts"][v]
                         ls.sort(reverse=True)
@@ -1313,6 +1318,8 @@ def printBloomStats():
                         for cat in cats:
                             ls = []
                             for v in lex[cat]["verbCounts"]:
+                                if v == "N":
+                                    continue
                                 if v in bloomLex and bloomLex[v] == bloomL:
                                     ls.append([lex[cat]["verbCounts"][v], v])
                             ls.sort(reverse=True)
