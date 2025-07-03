@@ -1148,6 +1148,14 @@ def extractGoals(c):
     
     sv, en = matchAndConsume(umuMomentExpWrap, umuMomentExp, sv, umuMomentExpWrap, umuMomentExp, en, "moment-exp", iloList, iloListEn)
 
+    if len(iloList) <= 0 and (pHypListIndicator.search(sv) or pHypListIndicator.search(en)): # faster check before slow matching
+        sv, en = matchAndConsume(pHypListExpWrap, pHypListExp, sv, pHypListExpWrapEn, pHypListExp, en, "p-hyp-list", iloList, iloListEn)
+
+    if len(iloList) <= 0 and pRawListIndicator.search(sv):
+        sv, tmp = matchAndConsume(pRawListExpWrap, pRawListExp, sv, pRawListExpWrapEn, pRawListExp, "", "p-raw-list", iloList, iloListEn)
+    if len(iloListEn) <= 0 and pRawListIndicatorEn.search(en): # faster check before slow matching
+        tmp, en = matchAndConsume(pRawListExpWrap, pRawListExp, "", pRawListExpWrapEn, pRawListExp, en, "p-raw-list", iloList, iloListEn)
+
     sv, en = matchAndConsume(skaEfterAvslutadExpWrap, skaEfterAvslutadExp, sv, skaEfterAvslutadExpWrap, skaEfterAvslutadExp, en, "ska-efter-avslutad-exp", iloList, iloListEn)
 
     sv, en = matchAndConsume(skaEfterAvslutadRevExpWrap, skaEfterAvslutadRevExp, sv, skaEfterAvslutadRevExpWrap, skaEfterAvslutadRevExp, en, "ska-efter-avslutad-rev-exp", iloList, iloListEn)
@@ -1187,14 +1195,6 @@ def extractGoals(c):
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
         sv, en = matchAndConsume(formagaExp, formagaExp, sv, formagaExpEn, formagaExpEn, en, "formaga-exp", iloList, iloListEn)
     
-    if len(iloList) <= 0 and (pHypListIndicator.search(sv) or pHypListIndicator.search(en)): # faster check before slow matching
-        sv, en = matchAndConsume(pHypListExpWrap, pHypListExp, sv, pHypListExpWrapEn, pHypListExp, en, "p-hyp-list", iloList, iloListEn)
-
-    if len(iloList) <= 0 and pRawListIndicator.search(sv):
-        sv, tmp = matchAndConsume(pRawListExpWrap, pRawListExp, sv, pRawListExpWrapEn, pRawListExp, "", "p-raw-list", iloList, iloListEn)
-    if len(iloListEn) <= 0 and pRawListIndicatorEn.search(en): # faster check before slow matching
-        tmp, en = matchAndConsume(pRawListExpWrap, pRawListExp, "", pRawListExpWrapEn, pRawListExp, en, "p-raw-list", iloList, iloListEn)
-
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
         sv, en = matchAndConsume(oneparExpWrap, oneparExp, sv, oneparExpWrap, oneparExp, en, "one-par", iloList, iloListEn)
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
