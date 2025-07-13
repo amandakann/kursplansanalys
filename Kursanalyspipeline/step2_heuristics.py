@@ -538,6 +538,9 @@ efterSkaKunnaExpWrap = re.compile("(Efter[^\n]*ska[^\n]*((studenten)|(kunna))[^\
 
 efterSkaKunnaExp2Wrap = re.compile("(För[^\n]*godkän[^\n]*ska[^\n]*((stude)|(kunna))[^\n]*)\n\s*(([a-zåäö][^\n]{4,}\n)\s*){3,}?([a-zåäö][^\n]{4,}?(?=$|(\n$)|(\n\n)|(Efter )|(För )|(Modul )|(Moment )))", re.S)
 
+borKunnaExp = re.compile("([A-ZÅÄÖa-zåäö][^\n]{4,}?)(?=$|(\n$)|\n|<|(\n\n)|(Efter )|(För )|(Modul )|(Moment ))", re.S)
+borKunnaExpWrap = re.compile("[Bb]ör[^\n]*((studenten)|(kunna))([^\n]{4,}?(?=$|(\n$)|\n|<|(\n\n)|(Efter )|(För )|(Modul )|(Moment )))", re.S)
+
 umuMomentExp = re.compile("\n\s*([a-zåäö][^\n]{4,}?)(?=$|\n|(Moment)|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område))", re.S)
 umuMomentExpWrap = re.compile("Moment 1.*\n[a-zåäö].*Moment 2.*\n[a-zåäö].*(Moment.*\n[a-zåäö].*)", re.S)
 
@@ -784,7 +787,7 @@ forAttExp = re.compile("<p>\s*för\s+att", re.I)
 forAttGodkandExp = re.compile("<p>\s*för\s+att.*bli.*godkänd", re.I)
 forAttExpEn = re.compile("<p>\s*in\s+order\s+to", re.I)
 
-malExp = re.compile("(<p>(([Kk]urs)|(([Dd]et\s)?[Öö]vergripande))[^<]*?\smål[^<]*\sär\satt[^<]*?)(?=(<\/p>)|(Efter))", re.S)
+malExp = re.compile("(<p>(([Kk]urs)|(([Dd]et\s)?[Öö]vergripande))[^<]*?\smål[^<]*\sär\satt[^<]*?)(?=(<\/p>)|(Efter)|(Kursen))", re.S)
 
 godkandExp = re.compile("[Ff]ör\s*(betyg(e[nt])?)?\s*((G)|([Gg]odkänd))")
 vgExp = re.compile("(((Förväntat)|(Efter))[^A-ZÅÄÖ<>]+)?[Ff]ör\s*(betyg(e[tn])?)?\s*((VG)|([Vv]äl\s*[Gg]odkänd)|([Hh]ögre\s*[Bb]etyg))")
@@ -1206,6 +1209,8 @@ def extractGoals(c):
     if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
         sv, en = matchAndConsume(del1del2ExpWrap, del1del2Exp, sv, del1del2ExpWrap, del1del2Exp, en, "del1-del2", iloList, iloListEn)
         
+    if len(iloList) <= 0: # This tends to overgenerate, so avoid if we have something else already
+        sv, en = matchAndConsume(borKunnaExpWrap, borKunnaExp, sv, borKunnaExpWrap, borKunnaExp, en, "bor-kunna", iloList, iloListEn)
 
         
                         
