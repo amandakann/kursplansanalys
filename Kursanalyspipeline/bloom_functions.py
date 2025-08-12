@@ -387,7 +387,7 @@ def bloomVerbsInSentence(s, lex, aLex, isSwedish):
                     if tokens[k] == "*": # Whole token is a wildcard
                         tmp = 0
                         starOK = 0
-                        while tmp + i + ii < len(s) and s[i + ii + tmp]["t"] != "mad":
+                        while tmp + i + ii < len(s) and s[i + ii + tmp]["t"] != "mad" and (s[i + ii + tmp]["c"] != "CLB" or tmp < 15) and (s[i + ii + tmp]["t"] != "mid" or tmp < 15):
                             if tokenMatch(tokens[k + 1], s[i + ii + tmp], isSwedish):
                                 ii += tmp
                                 starOK = 1
@@ -1227,7 +1227,8 @@ def applyGeneralPrinciples(s):
 
                 sawMad = 0
                 for j in range(i+1, len(s)): # add everything after sentence separator, if more than one sentence
-                    if s[j]["t"] == "mad" or s[j]["w"] == "samt":
+                    # if s[j]["t"] == "mad" or s[j]["w"] == "samt":
+                    if s[j]["t"] == "mad" or s[j]["w"] == "samt" or (s[j]["t"] == "mid" and j < len(s) - 1 and (s[j+1]["l"] == "ha" or s[j+1]["l"] == "förmåga")):
                         sawMad = 1
                     if sawMad:
                         new.append(s[j])
