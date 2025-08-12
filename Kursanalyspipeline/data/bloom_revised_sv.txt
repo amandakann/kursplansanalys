@@ -380,6 +380,7 @@ identifiera * *lämplig
 identifiera * *relevant
 identifiera * *viktig
 identifiera * *ytterlig
+identifiera * ytterligare
 skilja
 urskilja
 peka ut
