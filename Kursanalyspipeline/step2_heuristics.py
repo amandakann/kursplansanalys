@@ -412,7 +412,8 @@ arabicListExpWrap123 = re.compile(r'(1\s*[).]\s*)([^\n\s3].*2\s*[).]\s*)([^\n\s4
 arabicListExpWrap12345 = re.compile(r'1\s*[).]\s*(.*)2\s*[).]\s*(.*)3\s*[).]\s*(.*)4\s*[).]\s*(.*)5\s*[).]\s*(.*).*?(?=(\n\n)|$)', re.S + re.I)
 arabicListExp12345 = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]((([^0-9 \n][^0-9\n])|(\n[^\n])|( [^0-9 ])|( [0-9]+[^0-9().])|([^0-9 ][0-9])|( ?[0-9A-F]+\s*((till)|[-–])\s*[0-9]+)){8,}))', re.S)
 
-arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,}))', re.S)
+# arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,}))', re.S)
+arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*(((Kunskap och förståelse)|(Värdering och förhållningssätt)|(Färdighet och förmåga))?\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,})))', re.S)
 arabicListExpWrap = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){8,}(\s*\(?\s*[0-9]+\s*[).]\s*([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,})+', re.S)
 
 arabicListExpB = re.compile(r'\(?\s*[0-9]+\s*[).]?\s+([^0-9 ]([^h]|(h[^p])){8,}?)(?=$|\n|(\s\s)|(\(?[0-9]))', re.S)
@@ -1077,6 +1078,8 @@ def extractGoals(c):
 
     sv, en = matchAndConsume(umuNLHaExpWrap, umuNLHaExp, sv, umuNLHaExpWrap, umuNLHaExp, en, "umu-NL-ha-list", iloList, iloListEn)
 
+    sv, en = matchAndConsume(arabicListExpWrap12345, arabicListExp12345, sv, arabicListExpWrap12345, arabicListExp12345, en, "arabic-list-12345", iloList, iloListEn)
+
     sv, en = matchAndConsume(umuHypHaAndStarExpWrap, umuHypHaAndStarExp, sv, umuHypHaAndStarExpWrap, umuHypHaAndStarExp, en, "umu-Hyp-Ha-and-Star-list", iloList, iloListEn)
 
     sv, en = matchAndConsume(umuHypHaExpWrap, umuHypHaExp, sv, umuHypHaExpWrap, umuHypHaExp, en, "umu-Hyp-Ha-list", iloList, iloListEn)
@@ -1119,8 +1122,7 @@ def extractGoals(c):
     sv, en = matchAndConsume(parListExpWrap2, parListExp2, sv, parListExpWrap2, parListExp2, en, "par-list-2", iloList, iloListEn)
     
     sv, en = matchAndConsume(arabicListExpWrap123, arabicListExp, sv, arabicListExpWrap123, arabicListExp, en, "arabic-list-123", iloList, iloListEn)
-    sv, en = matchAndConsume(arabicListExpWrap12345, arabicListExp12345, sv, arabicListExpWrap12345, arabicListExp12345, en, "arabic-list-12345", iloList, iloListEn)
-        
+
     if umuWSindicator.search(sv):
         sv, en = matchAndConsume(umuWSExpWrap, umuWSExp, sv, umuWSExpWrap, umuWSExp, en, "umu-WS-list", iloList, iloListEn)
     else:
@@ -1364,11 +1366,24 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
         txt = sv[m.start():m.end()]
         
         ls = goalExp.findall(txt)
+
+        first = True
         
         for l in ls:
             if isinstance(l, tuple): # regular expression with nested paranthesis return tuples, with the whole match at index 0
                 l = l[0]
-            ll = cleanStr(l)
+
+            if first:
+                first = False
+                p1 = txt.find(l)
+                p2 = txt.find("kunna")
+                header = ""
+                if p1 > 0 and p2 > 0 and p1 - p2 > 10:
+                    header = txt[p2 + 5: p1]
+                ll = cleanStr(header + " "+ l)
+            else:
+                ll = cleanStr(l)
+                
             if len(ll):
                 iloListSv.append(ll)
                 log(name, ll)
