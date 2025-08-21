@@ -465,3 +465,15 @@ Hon ska kunna fördjupning, 5,5 hp .
 Hon ska kunna fördjupning, 6,5 hp .
 Du ska kunna fördjupning, 5,5 hp .
 Du ska kunna fördjupning, 6,5 hp .
+Med hänsyn till kunskap och förståelse
+Med hänsyn till kunskap och förståelse .
+Med hänsyn till kunskap och förståelse;
+Med hänsyn till kunskap och förståelse ;
+Med hänsyn till färdighet och förmåga
+Med hänsyn till färdighet och förmåga .
+Med hänsyn till färdighet och förmåga;
+Med hänsyn till färdighet och förmåga ;
+Med hänsyn till värderingsförmåga och förhållningssätt
+Med hänsyn till värderingsförmåga och förhållningssätt .
+Med hänsyn till värderingsförmåga och förhållningssätt;
+Med hänsyn till värderingsförmåga och förhållningssätt ;
