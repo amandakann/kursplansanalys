@@ -1317,7 +1317,40 @@ def applyGeneralPrinciples(s):
                     s = new
                     check = 1
                     break
-    
+
+    # "ha rätt att ... "
+    check = 1
+    while check:
+        check = 0
+
+        for i in range(0, len(s) - 3):
+            if s[i]["l"].lower() == "ha" and s[i+1]["l"].lower() == "rätt" and s[i+2]["w"].lower() == "att":
+                new = []
+                for j in range(i): # add everything on the left
+                    new.append(s[j])
+
+                sawMad = 0
+                for j in range(i+2, len(s)): # add everything after sentence separator, if more than one sentence
+                    if s[j]["t"] == "mad":
+                        sawMad = 1
+                    if sawMad:
+                        new.append(s[j])
+                if len(s) != len(new):
+
+                    ss = ""
+                    for t in s:
+                        ss += " " + t["w"]
+                        nn = ""
+                    for t in new:
+                        nn += " " + t["w"]
+                    log("....... Principle 'ha rätt att'\n" + ss + "\nuse only:" + nn)
+
+                    s = new
+                    check = 1
+                    break
+
+
+                
     return s
 
 ##########################################################################################
@@ -1439,3 +1472,22 @@ def checkEnglishWhenSwedishIsAmbiguous(svBloom, enBloom, enILO, enText):
                             changes[exp] = 0
                         changes[exp] += 1
     return changes
+
+
+#############################################################
+### Reset dictionaries, for example if you want to read a ###
+### different data file                                   ###
+#############################################################
+def resetDictionaries():
+    global bloomLex
+    global ambiLex
+    global bloomLexEn
+    global ambiLexEn
+    global translationsSuggs
+
+    bloomLex = {}
+    ambiLex = {}
+    bloomLexEn = {}
+    ambiLexEn = {}
+    translationsSuggs = {}
+
