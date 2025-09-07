@@ -411,7 +411,7 @@ arabicPListIndicator = re.compile("(>.*[0-9]+\s*[).]?[^<]{8,}.*<){3,3}", re.S)
 
 arabicListExpWrap123 = re.compile(r'(1\s*[).]\s*)([^\n\s3].*2\s*[).]\s*)([^\n\s4].*3\s*[).]\s*)([^\s\n].*?)(?=((\n\n)|$))', re.S + re.I)
 arabicListExpWrap12345 = re.compile(r'1\s*[).]\s*(.*)2\s*[).]\s*(.*)3\s*[).]\s*(.*)4\s*[).]\s*(.*)5\s*[).]\s*(.*).*?(?=(\n\n)|$)', re.S + re.I)
-arabicListExp12345 = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]((([^0-9 \n][^0-9\n])|(\n[^\n])|( [^0-9 ])|( [0-9]+[^0-9().])|([^0-9 ][0-9])|( ?[0-9A-F]+\s*((till)|[-–])\s*[0-9]+)){8,}))', re.S)
+arabicListExp12345 = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]((([^0-9 \n][^0-9\n])|(\n[^\n])|( [^0-9 ])|( [0-9]+[^0-9().])|([^0-9 ][0-9])|( ?[0-9A-F]+\s*((till)|[-–])\s*[0-9]+)){8,}[a-zåäö]?))', re.S)
 
 # arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,}))', re.S)
 arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*(((Kunskap och förståelse)|(Värdering och förhållningssätt)|(Färdighet och förmåga))?\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,})))', re.S)
