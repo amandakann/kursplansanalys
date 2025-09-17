@@ -1355,10 +1355,36 @@ def extractGoals(c):
         iloFix = re.sub("metaHYPHENdata", "meta-data", iloFix)
         iloFix = re.sub("(\s)RHYPHEN([A-ZÅÄÖa-zåäö])", "\\1R-\\2", iloFix)
         iloFix = re.sub("metaHYPHEN([a-zåäö])", "meta-\\1", iloFix)
-        tmp.append(iloFix)
+
+        if not iloFix in goalStoplist:
+            tmp.append(iloFix)
     iloList = tmp
     
     return (iloList, iloListEn)
+
+
+goalStoplist2 = {
+    "Kunskap och förståelse .":1,		      
+    "Kunskap och förmåga .":1,
+    "Färdighet och förmåga .":1,
+    "Värderingsförmåga och förhållningssätt .":1,
+    "studenten kunna: .":1, "studenten kunna .":1,
+    "Med hänsyn till kunskap och förståelse":1,
+    "Med hänsyn till kunskap och förståelse .":1,
+    "Med hänsyn till kunskap och förståelse;":1,
+    "Med hänsyn till färdighet och förmåga":1,
+    "Med hänsyn till färdighet och förmåga .":1,
+    "Med hänsyn till färdighet och förmåga;":1,
+    "Med hänsyn till värderingsförmåga och förhållningssätt":1,
+    "Med hänsyn till värderingsförmåga och förhållningssätt .":1,
+    "Med hänsyn till värderingsförmåga och förhållningssätt;":1,
+    "Studenten kunna":1
+}
+goalStoplist = {}
+for g in goalStoplist2:
+    goalStoplist[re.sub("[.,!:?]", "", re.sub("\s+", "",  g.lower()))] = 1
+
+
 
 ##########################################################################
 ### Match parts of the ILO text, and removed the matched text so other ###
