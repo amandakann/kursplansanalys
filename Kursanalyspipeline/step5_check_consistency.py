@@ -245,7 +245,8 @@ print ()
 ### Import and initialize the Bloom-verb related functions ###
 ##############################################################
 import bloom_functions
-    
+
+allVerbsInRuleFile = []
 if checks["bloom"]:
     bloomLex, ambig, bloomLexEn, ambigEn = bloom_functions.readBloomFiles(bloomFile, bloomFileEn, 1, 1, 0)
     translationsSuggs = bloom_functions.bloomTranslations("data/bloom_translations_sv_to_en.txt")
@@ -257,6 +258,7 @@ if checks["bloom"]:
             for j in range(i+1, len(ls)):
                 if ls[i][1] == ls[j][1]:
                     print ("WARNING: " + svFileName + " has verb '" + v + "' listed twice, for level " + str(ls[i][2]) + " and level " + str(ls[j][2]) + "\n")
+        allVerbsInRuleFile.append(v)
     
     for v in ambig:
         found = 0
@@ -795,8 +797,12 @@ def printBloomStats():
         else:
             print ("{0: >2}: {1: >5} (0%)".format(val, 0))
 
-    print ("\n" + str(totBloom), "classified verbs\n")
-
+    print ("\n" + str(totBloom), "classified verbs")
+    if(totCourses > 0):
+        print (str(totBloom / float(totCourses)), " verbs/course in " + str(totCourses) + " courses \n")
+    else:
+        print ()
+        
     ###############################
     ### Print stats per course ####
     ###############################
@@ -2029,6 +2035,7 @@ def printBloom():
 
     print ("-"*10, "Bloom rules", "-"*10)
     print ("{0: >7} rules in Bloom file.".format(rulesTot))
+    print ("{0: >7} verbs in Bloom file.".format(len(allVerbsInRuleFile)))
     print ("{0: >7} rules were never used.".format(rulesNeverUsed))
     print ("{0: >7} rules were used only once.".format(rulesUsedOnce))
     print ("{0: >7} total matches (uses), average of {1: .2f} matches per rule.".format(totUses, float(totUses)/rulesTot))
