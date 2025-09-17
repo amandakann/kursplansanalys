@@ -7,6 +7,7 @@
 #Verb som förekommer på flera nivåer står inom parentes på alla
 #nivåer utom den där dom förekommer oftast.
 --- Remember 0 ---
+benämna
 definiera
 (beskriva)
 beskriva * begrepp
@@ -45,6 +46,10 @@ deltaga
 presentera
 ge * beskrivning
 --- Understand 1 ---
+avläsa * *analyser
+ringa in
+skandera
+framlägga * rön
 förklara
 ge * förklaring
 ge skäl för
@@ -124,6 +129,20 @@ klarlägga
 föra * diskussion
 tyda
 --- Apply 2 ---
+annotera
+ansluta <NP>
+budgetera
+läsa upp
+diskretisera
+ersätta
+framlägga * abstrakt
+framlägga * synpunkt
+förskriva
+hålla * anförande
+hålla * föredrag
+tillaga
+driftsoptimera
+sammanfoga
 tillämpa
 beräkna
 kalkylera
@@ -374,6 +393,12 @@ utveckla * *förhållningssätt
 utveckla * *kunskap
 utveckla * *kunskaper
 --- Analyze 3 ---
+dra paralleller
+formulera frågeställning
+framlägga * syn på
+sammanföra
+fläta samman
+väva samman
 givet * identifiera
 identifiera * *korrekt
 identifiera * *lämplig
@@ -469,6 +494,8 @@ föreslå
 ge * förslag
 ge * nyanserad framställning
 --- Evaluate 4 ---
+lämna * rekommendation
+sammanväga
 värdera
 genomföra * *värdering
 genomföra * *värderingar
@@ -594,6 +621,7 @@ göra * *diskussioner
 göra * *mätning
 göra * *mätningar
 --- Create 5 ---
+motbevisa
 kombinera
 ställa samman
 sammanställa
