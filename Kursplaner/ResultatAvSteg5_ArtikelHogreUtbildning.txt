@@ -1,0 +1,4179 @@
+ --------------- Course types ---------------
+12604 (89.7%) courses of type grundutbildning
+  168 ( 1.2%) courses of type vidareutbildning (skipped)
+  841 ( 6.0%) courses of type forskarutbildning
+   54 ( 0.4%) courses of type förberedande utbildning (skipped)
+  378 ( 2.7%) courses of type uppdragsutbildning (skipped)
+
+ --------------- Course Goals ---------------
+85365 goals in 13445 courses, averaging  6.3 goals per course.
+
+The number of courses with a specific number of goals
+ 0: 260
+ 1: 398
+ 2: 760
+ 3: 1918
+ 4: 2125
+ 5: 1831
+ 6: 1562
+ 7: 1023
+ 8: 882
+ 9: 585
+10: 482
+11: 317
+12: 232
+13: 203
+14: 133
+15: 121
+16: 102
+17: 84
+18: 64
+19: 43
+20: 52
+21: 44
+22: 35
+23: 30
+24: 15
+25: 17
+26: 16
+27: 10
+28: 8
+29: 6
+30: 15
+31: 10
+32: 8
+33: 6
+34: 3
+35: 6
+36: 2
+37: 4
+38: 3
+39: 3
+40: 4
+41: 1
+44: 2
+46: 3
+48: 1
+49: 1
+52: 1
+53: 2
+54: 1
+56: 1
+58: 1
+61: 2
+67: 1
+71: 1
+72: 3
+76: 2
+
+ --------------- VERBS ---------------
+600 different verb expressions seen, 113670 total occurrences of these expressions.
+Number of Bloom classifications of each level:
+ 0: 12909
+ 1: 27121
+ 2: 23203
+ 3: 17223
+ 4: 20047
+ 5: 13167
+
+ --------------- Most common verbs ---------------
+11460 (10.1%): redogöra
+ 7155 ( 6.3%): analysera
+ 6768 ( 6.0%): diskutera
+ 5538 ( 4.9%): tillämpa
+ 4724 ( 4.2%): beskriva
+ 4050 ( 3.6%): reflektera
+ 3855 ( 3.4%): förklara
+ 3850 ( 3.4%): identifiera
+ 3442 ( 3.0%): använda
+ 3091 ( 2.7%): värdera
+ 2807 ( 2.5%): genomföra
+Top 11 verbs expressions cover 49.92% of all verb occurrences.
+------------------------------
+15 different ambiguous verbs seen, 21068 total occurrences of these verbs, 951 of these disambiguated by English translation.
+redogöra                           : 11460  943
+beskriva                           :  4724    0
+tolka                              :  1423    0
+välja                              :   971    0
+skriva                             :   865    7
+relatera                           :   830    0
+dra * slutsats                     :   331    1
+undersöka                          :   190    0
+kontrastera                        :   113    0
+förutsäga                          :    66    0
+förbättra                          :    37    0
+åtgärda                            :    29    0
+skissa                             :    14    0
+skissera                           :    10    0
+examinera                          :     5    0
+------------------------------
+ 113670 total verb occurrences.
+    425 unique verbs found in data.
+    600 verb expressions found.
+    386 verbs only had one expression ( 90.82% of  425 verbs).
+     12 verbs only had one expression and were (always) ambiguos ( 2.82% of  425 verbs).
+    410 verbs were never ambiguous ( 96.47% of  425 verbs).
+     36 verbs were never ambiguous but had more than one expression (disambiguated verbs) ( 8.47% of  425 verbs).
+--------------------
+  91228 occurrences were verbs that are never ambiguous ( 80.26% of  113670 occurrences).
+     84237 because they are not ambiguous and have only one expression ( 74.11% of  113670 occurrences).
+      6991 because they have more than one expression that disambiguates the meaning ( 6.15% of  113670 occurrences).
+  21068 occurrences were ambiguous ( 18.53% of  113670 occurrences).
+   1374 occurrences were disambiguated occurrences of verbs that can be ambiguous ( 1.21% of  113670 occurrences).
+----------
+  29433 occurrences were occurrences of verbs that have more than one expression ( 25.89% of  113670 occurrences).
+---------- Bloom rules ----------
+    694 rules in Bloom file.
+    471 verbs in Bloom file.
+     94 rules were never used.
+     67 rules were used only once.
+ 113670 total matches (uses), average of  163.79 matches per rule.
+
+Top rules by match count:
+  11460 matches for 'redogöra'
+   7155 matches for 'analysera'
+   6768 matches for 'diskutera'
+   5538 matches for 'tillämpa'
+   4724 matches for 'beskriva'
+   4050 matches for 'reflektera'
+   3855 matches for 'förklara'
+   3850 matches for 'identifiera'
+   3442 matches for 'använda'
+   3091 matches for 'värdera'
+   2807 matches for 'genomföra'
+   2539 matches for 'planera'
+   2322 matches for 'utvärdera'
+   2109 matches for 'formulera'
+   2098 matches for 'presentera'
+   1913 matches for 'bedöma'
+   1685 matches for 'kritiskt granska'
+   1423 matches for 'tolka'
+   1107 matches for 'utföra'
+   1107 matches for 'redovisa'
+
+The following rules were never used:
+recitera
+påminna sig
+memorera
+rubricera
+uppge
+ge * skäl för (similar rule 'ge skäl för', 5 matches)
+ge * *omdömen (similar rule 'ge * *omdöme', 2 matches)
+ge * *återkopplingar (similar rule 'ge * *återkoppling', 84 matches)
+ge * *uppskattningar (similar rule 'ge * *uppskattning', 1 matches)
+ge * *överblickar (similar rule 'ge * *överblick', 8 matches)
+ge * *översikter (similar rule 'ge * *översikt', 21 matches)
+förtydliga
+omskriva
+illustrera * *skisser (similar rule 'illustrera * *skiss', 1 matches)
+matcha
+sluta sig till
+konkludera
+inflika
+para ihop
+bevisa * teorem
+bevisa viktiga * resultat
+föra * förhandling
+föra * *analyser (similar rule 'föra * *analys', 5 matches)
+hålla * tidsgräns
+upptäcka * utifrån
+upptäcka * givet
+upptäcka * baserat på
+genomföra * *bedömningar (similar rule 'genomföra * *bedömning', 50 matches)
+fastslå
+byta
+överslagsberäkna
+multiplicera
+segmentera
+faktorisera
+kompilera
+addera
+inverstransformera
+invertera
+monteringsanpassa
+datorbearbeta
+kvadratkomplettera
+linearisera
+lineärisera
+göra * kurvanpassning
+göra * budget
+göra * *avslut
+göra * *utvecklingar
+göra * nätverksdesign
+göra * *approximation (similar rule 'göra * *approximationer', 8 matches)
+göra * *prognoser (similar rule 'göra * *prognos', 2 matches)
+göra * *granskningar (similar rule 'göra * *granskning', 2 matches)
+göra * *reflektioner (similar rule 'göra * *reflektion', 5 matches)
+göra * *diskussioner (similar rule 'göra * *diskussion', 1 matches)
+göra * *antaganden (similar rule 'göra * *antagande', 4 matches)
+göra * *planeringar (similar rule 'göra * *planering', 2 matches)
+göra * detaljplanekarta
+instrumentalisera
+växla
+allokera
+avveckla
+ställa upp * *hypoteser (similar rule 'ställa upp * *hypotes', 2 matches)
+köra * program
+logga in
+utveckla * *kompetenser (similar rule 'utveckla * *kompetens', 157 matches)
+utveckla * *förmågor
+utveckla * *färdigheter (similar rule 'utveckla * *färdighet', 32 matches)
+utveckla * *kunskaper (similar rule 'utveckla * *kunskap', 65 matches)
+utveckla * *analyser (similar rule 'utveckla * *analys', 23 matches)
+dela in
+hänföra
+tillräkna
+dimensionsanalysera
+föreslå * *åtgärd som leder till
+föreslå adekvat * utifrån
+föreslå * teknisk *lösningar (similar rule 'föreslå * teknisk *lösning', 5 matches)
+föreslå * möjlig *lösningar (similar rule 'föreslå * möjlig *lösning', 7 matches)
+föreslå * hållbar *lösningar (similar rule 'föreslå * hållbar *lösning', 1 matches)
+föreslå * teknisk modifiering
+föreslå * effektiv *designer (similar rule 'föreslå * effektiv *design', 1 matches)
+föreslå * effektiv *lösningar (similar rule 'föreslå * effektiv *lösning', 1 matches)
+föreslå * adekvat strategi
+föreslå * utformas så att
+prova ut
+fälla * *omdöme
+fälla * *omdömen
+interpolera
+alstra
+frambringa
+antaga
+kreera
+uppföra
+extrapolera
+studieplanera
+inkludera * helhetsperspektiv
+------------------------------
+---------- Verb counts, all rules for same verb ----------
+ 11460  10.1 redogöra  10.1
+  7155  6.3 analysera  16.4
+  6768  6.0 diskutera  22.3
+  6025  5.3 beskriva  27.6
+  5538  4.9 tillämpa  32.5
+  5319  4.7 identifiera  37.2
+  4050  3.6 reflektera  40.7
+  3855  3.4 förklara  44.1
+  3704  3.3 genomföra  47.4
+  3442  3.0 använda  50.4
+  3091  2.7 värdera  53.1
+  2539  2.2 planera  55.4
+  2322  2.0 utvärdera  57.4
+  2317  2.0 formulera  59.5
+  2098  1.8 presentera  61.3
+  1913  1.7 bedöma  63.0
+  1868  1.6 kritiskt  64.6
+  1423  1.3 tolka  65.9
+  1373  1.2 utföra  67.1
+  1209  1.1 utveckla  68.2
+------------------------------
+
+ --------------- Non-Bloom ---------------
+  434 verbs found that did not get a Bloom classification.
+ 7603 total occurrences of these verbs.
+ 3108 occurrences in goals with no Bloom score.
+----------
+   All No-Bloom Verb
+  2321      999 förstå
+   556      316 känna
+   406        0 samla
+   400      113 läsa
+   368       67 ta
+   301      197 beakta
+   254      204 behärska
+   244       55 följa
+   228       91 ge
+   175       55 inhämta
+   164       69 göra
+   135       92 förvärva
+   126       78 tillägna
+   125       73 förhålla
+   101       34 sätta
+    94       67 påvisa
+    74       47 orientera
+    66       26 fördjupa
+    54       33 motverka
+    52       35 främja
+    50       18 inkludera
+    46        0 lyssna
+    44       33 veta
+    36       25 erhålla
+    30        0 formulera
+    26        7 ansvara
+    26        4 uppfatta
+    25       23 inneha
+    25       15 inta
+    24       11 inse
+    24        9 fungera
+    24        8 föra
+    20        5 ställa
+    20        4 anta
+    19        5 öka
+    16        0 hjälpa
+    14        7 uppmärksamma
+    14        5 möjliggöra
+    12        8 lämna
+    12        5 prestera
+    12        3 vila
+    11        3 lägga
+    11        0 begreppsliggöra
+    10        3 öva
+    10        1 besluta
+     9        7 respektera
+     9        6 forska
+     9        2 förekomma
+     9        1 utbilda
+     9        0 basera
+     8        7 värna
+     8        4 synliggöra
+     8        3 positionera
+     8        0 fylla
+     7        7 delge
+     7        4 räkna
+     7        3 hålla
+     7        3 gå
+     7        3 dela
+     7        1 dra
+     7        0 underlätta
+     7        0 underbygga
+     7        0 inleda
+     7        0 grunda
+     6        6 konsolidera
+     6        4 medvetandegöra
+     6        4 knyta
+     6        3 utmana
+     6        3 filma
+     6        3 bibehålla
+     6        2 prova
+     6        2 introducera
+     6        1 uppdatera
+     6        1 köra
+     6        0 hämta
+     6        0 framträda
+     6        0 exekvera
+     6        0 ansluta
+     5        3 resultera
+     5        3 leverera
+     5        2 spåra
+     5        2 justera
+     5        0 föreligga
+     5        0 efterfråga
+     5        0 begripliggöra
+     4        4 vinna
+     4        3 tillskansa
+     4        3 betrakta
+     4        3 bemästra
+     4        2 omhänderta
+     4        2 inverka
+     4        2 anskaffa
+     4        1 leta
+     4        1 formalisera
+     4        0 samspela
+     4        0 preparera
+     4        0 koda
+     3        3 återföra
+     3        3 vidga
+     3        3 produktutveckla
+     3        3 passa
+     3        3 haverera
+     3        3 förebilda
+     3        3 böja
+     3        3 bredda
+     3        2 hälsa
+     3        2 historisera
+     3        1 konfrontera
+     3        1 införa
+     3        1 höra
+     3        1 förhandla
+     3        1 förena
+     3        1 funktionstesta
+     3        1 avfatta
+     3        0 överlagra
+     3        0 återkoppla
+     3        0 väcka
+     3        0 uppräkna
+     3        0 undanröja
+     3        0 riskera
+     3        0 respondera
+     3        0 konceptualisera
+     3        0 iordningsställa
+     3        0 indexera
+     3        0 implementa
+     3        0 coacha
+     3        0 bruka
+     3        0 avlyssna
+     2        2 övergå
+     2        2 äta
+     2        2 uppmuntra
+     2        2 transforma
+     2        2 röra
+     2        2 reagera
+     2        2 prissätta
+     2        2 parametersätta
+     2        2 para
+     2        2 lönsamhetsberäkna
+     2        2 konstatera
+     2        2 improvisera
+     2        2 igenkänna
+     2        2 idealisera
+     2        2 hedga
+     2        2 gingiva
+     2        2 formera
+     2        2 eskalera
+     2        2 emulera
+     2        2 efterredigera
+     2        1 tillföra
+     2        1 stöta
+     2        1 mota
+     2        1 ingripa
+     2        1 garantera
+     2        1 företräda
+     2        1 editera
+     2        1 binda
+     2        1 bestå
+     2        0 ventilera
+     2        0 utvecklingslinka
+     2        0 utsöka
+     2        0 utskilja
+     2        0 uppställa
+     2        0 understödja
+     2        0 tränga
+     2        0 tabellera
+     2        0 stärka
+     2        0 stämma
+     2        0 stryka
+     2        0 skicka
+     2        0 selektera
+     2        0 schemalägga
+     2        0 samtkunna
+     2        0 riskbedöma
+     2        0 repetera
+     2        0 rehabilitera
+     2        0 reducera
+     2        0 processenförstå
+     2        0 odla
+     2        0 näringsvärdesberäkna
+     2        0 nyutveckla
+     2        0 meddela
+     2        0 löpa
+     2        0 ladda
+     2        0 kvartära
+     2        0 kravställa
+     2        0 konvergerar
+     2        0 konsumera
+     2        0 kollidera
+     2        0 juristförstå
+     2        0 isa
+     2        0 iordningställa
+     2        0 instantiera
+     2        0 influera
+     2        0 iaktta
+     2        0 hänga
+     2        0 hypotespröva
+     2        0 hindra
+     2        0 hamna
+     2        0 förädla
+     2        0 förutsätta
+     2        0 förklara
+     2        0 föreställa
+     2        0 föredra
+     2        0 fånga
+     2        0 funktionskontrollera
+     2        0 framhäva
+     2        0 elektronspektra
+     2        0 divergerar
+     2        0 bistå
+     2        0 bildbearbeta
+     2        0 bevaka
+     2        0 bekanta
+     2        0 avvika
+     1        1 vända
+     1        1 uttyda
+     1        1 uttolka
+     1        1 utrycka
+     1        1 uppbygga
+     1        1 täcka
+     1        1 transpilera
+     1        1 tillförsäkra
+     1        1 teckna
+     1        1 skörda
+     1        1 skärskåda
+     1        1 replikera
+     1        1 rektifiera
+     1        1 rationalisera
+     1        1 prägla
+     1        1 predicera
+     1        1 peka
+     1        1 operera
+     1        1 omge
+     1        1 notera
+     1        1 mpa
+     1        1 linjera
+     1        1 laborera
+     1        1 konkurrera
+     1        1 kompromissa
+     1        1 kommersialisera
+     1        1 kartera
+     1        1 jämfora
+     1        1 investera
+     1        1 inventera
+     1        1 identiera
+     1        1 homogenisera
+     1        1 heta
+     1        1 giva
+     1        1 genera
+     1        1 förse
+     1        1 förochdiskutera
+     1        1 förlika
+     1        1 förhöja
+     1        1 färgkorrigera
+     1        1 fråga
+     1        1 family
+     1        1 exponera
+     1        1 erövra
+     1        1 erfara
+     1        1 efterleva
+     1        1 efterbehandla
+     1        1 digitalisera
+     1        1 demontera
+     1        1 deklarera
+     1        1 bevara
+     1        1 betona
+     1        1 begripa
+     1        1 beforska
+     1        1 be
+     1        1 avväga
+     1        1 avlysa
+     1        1 aritmetik-uppvisa
+     1        1 ansätta
+     1        1 animera
+     1        0 översiktligtkunna
+     1        0 överbrygga
+     1        0 återinföra
+     1        0 återgå
+     1        0 återfå
+     1        0 åta
+     1        0 yrkesverksamhetenanalysera
+     1        0 växelvisa
+     1        0 växelverka
+     1        0 välja
+     1        0 vidta
+     1        0 vidareförmedla
+     1        0 varsebli
+     1        0 utvärdera
+     1        0 uträtta
+     1        0 utmynna
+     1        0 utbreda
+     1        0 uppövat
+     1        0 uppleva
+     1        0 upphöra
+     1        0 transaktionerför
+     1        0 tillämpa
+     1        0 tillordna
+     1        0 tillhöra
+     1        0 tidsbestämma
+     1        0 texturera
+     1        0 teorierför
+     1        0 tematisera
+     1        0 sök
+     1        0 sålla
+     1        0 säkra
+     1        0 säkerhetskopiera
+     1        0 systemera
+     1        0 stötta
+     1        0 städa
+     1        0 styrdokumentenkommunicera
+     1        0 strömma
+     1        0 slå
+     1        0 skolpraktikenplanera
+     1        0 skala
+     1        0 självdesigna
+     1        0 signalbehandla
+     1        0 seminarium-publicera
+     1        0 seminariebehandla
+     1        0 sekvensera
+     1        0 samvariera
+     1        0 samråda
+     1        0 samförhandla
+     1        0 safirlasrar
+     1        0 råda
+     1        0 rengöra
+     1        0 rena
+     1        0 rekrytera
+     1        0 redogöra
+     1        0 redoggöra
+     1        0 reda
+     1        0 ramanspektra
+     1        0 påtala
+     1        0 protokollföra
+     1        0 prognosticera
+     1        0 prognosbedöma
+     1        0 processera
+     1        0 problematiksärskilja
+     1        0 principerför
+     1        0 omtolka
+     1        0 omskapa
+     1        0 omdesigna
+     1        0 närläsa
+     1        0 näringsberäkna
+     1        0 nmr-spektra
+     1        0 nivåbestämma
+     1        0 navigera
+     1        0 multipla
+     1        0 motivera
+     1        0 modulera
+     1        0 metoderför
+     1        0 mediera
+     1        0 manövrera
+     1        0 läsbarhetdokumentera
+     1        0 lyfta
+     1        0 loopy
+     1        0 lindra
+     1        0 levandegöra
+     1        0 laga
+     1        0 kursmomentkunna
+     1        0 kundanpassa
+     1        0 kravspecificera
+     1        0 kontakta
+     1        0 konsultera
+     1        0 konstruktera
+     1        0 komponentera
+     1        0 komplettera
+     1        0 kompetenserför
+     1        0 katalysera
+     1        0 isolera
+     1        0 instrumentera
+     1        0 inspirera
+     1        0 inrikta
+     1        0 inpassa
+     1        0 innovera
+     1        0 igångsätta
+     1        0 harmonisera
+     1        0 gäldenärsskyddha
+     1        0 grundlägga
+     1        0 gender
+     1        0 gammaspektra
+     1        0 förvänta
+     1        0 förutsättningarmotivera
+     1        0 förstärka
+     1        0 förprojektera
+     1        0 förprocessera
+     1        0 förorsaka
+     1        0 förknippa
+     1        0 förflytta
+     1        0 förevisa
+     1        0 företa
+     1        0 förespråka
+     1        0 föreslå
+     1        0 föregå
+     1        0 förbränningssystem-bearbeta
+     1        0 framta
+     1        0 formatera
+     1        0 flytta
+     1        0 fjärrstyra
+     1        0 fixa
+     1        0 finansiera
+     1        0 filtrera
+     1        0 fallera
+     1        0 erfarenhetskapa
+     1        0 ellerbegränsar
+     1        0 eftersöka
+     1        0 efterforska
+     1        0 döma
+     1        0 dokumentations-eller
+     1        0 distribuera
+     1        0 dimensionalla
+     1        0 detektera
+     1        0 detaljera
+     1        0 datatrepresentationsformat
+     1        0 dataströmma
+     1        0 blanda
+     1        0 bifoga
+     1        0 beställa
+     1        0 bestycka
+     1        0 beröra
+     1        0 berättiga
+     1        0 bepröva
+     1        0 befolka
+     1        0 befinna
+     1        0 avstå
+     1        0 avslöja
+     1        0 avbilda
+     1        0 arrangera
+     1        0 arkivera
+     1        0 approximationsformlerför
+     1        0 anlita
+     1        0 andra-föra
+     1        0 aktivera
+     1        0 adresserar
+     1        0 adressera
+     1        0 acceptera
+
+ --------------- Course Levels ---------------
+    :   607 ( 4.5%)
+ -  :    58 ( 0.4%)
+ A1E:   134 ( 1.0%)
+ A1F:   953 ( 7.1%)
+ A1N:  1849 (13.8%)
+ A2E:   486 ( 3.6%)
+ AXX:  1894 (14.1%)
+ BXX:     4 ( 0.0%)
+ G1E:    28 ( 0.2%)
+ G1F:  1991 (14.8%)
+ G1N:  4033 (30.0%)
+ G2E:   363 ( 2.7%)
+ G2F:   787 ( 5.9%)
+ GXX:   258 ( 1.9%)
+
+ ............... Grouped Course Levels ...............
+          (Level: -  ):    58 ( 0.4%)
+          (Level: BXX):     4 ( 0.0%)
+       (No level info):   607 ( 4.5%)
+        Avancerad nivå:  4696 (34.9%)
+ Avancerad nivå exjobb:   620 ( 4.6%)
+             Grundnivå:  7069 (52.6%)
+       Grundnivåexjobb:   391 ( 2.9%)
+
+ --------------- SCB IDs ---------------
+    :   497 ( 1.8%)
+ AE1:    20 ( 0.1%)
+ AK1:    16 ( 0.1%)
+ AL1:   151 ( 0.6%)
+ AR1:    19 ( 0.1%)
+ AR2:   408 ( 1.5%)
+ AR3:    98 ( 0.4%)
+ AV1:    74 ( 0.3%)
+ BE9:     5 ( 0.0%)
+ BI1:   275 ( 1.0%)
+ BL1:    28 ( 0.1%)
+ BT1:    41 ( 0.2%)
+ BU2:    79 ( 0.3%)
+ BV1:     7 ( 0.0%)
+ BY1:    66 ( 0.2%)
+ DE1:   198 ( 0.7%)
+ DT1:   644 ( 2.4%)
+ DT2:    47 ( 0.2%)
+ EH1:    44 ( 0.2%)
+ EL1:   103 ( 0.4%)
+ EN1:   144 ( 0.5%)
+ EN2:    84 ( 0.3%)
+ ET1:    55 ( 0.2%)
+ ET2:   270 ( 1.0%)
+ FC1:    21 ( 0.1%)
+ FE1:   333 ( 1.2%)
+ FH1:   140 ( 0.5%)
+ FI1:    55 ( 0.2%)
+ FI2:    95 ( 0.4%)
+ FK1:     1 ( 0.0%)
+ FK2:    24 ( 0.1%)
+ FL1:    16 ( 0.1%)
+ FP1:     1 ( 0.0%)
+ FR1:    76 ( 0.3%)
+ FT1:    57 ( 0.2%)
+ FU1:    37 ( 0.1%)
+ FV1:    25 ( 0.1%)
+ FY1:   307 ( 1.1%)
+ GI1:    14 ( 0.1%)
+ GN1:   311 ( 1.2%)
+ GR1:    18 ( 0.1%)
+ GS1:    59 ( 0.2%)
+ GVA:     1 ( 0.0%)
+ HF9:    14 ( 0.1%)
+ HI2:   159 ( 0.6%)
+ HS1:     1 ( 0.0%)
+ ID1:    78 ( 0.3%)
+ IE1:   222 ( 0.8%)
+ IF1:   370 ( 1.4%)
+ IL1:    50 ( 0.2%)
+ IT1:    60 ( 0.2%)
+ JA1:    29 ( 0.1%)
+ JO1:   159 ( 0.6%)
+ JU1:   331 ( 1.2%)
+ KE1:   291 ( 1.1%)
+ KI1:    21 ( 0.1%)
+ KO1:    21 ( 0.1%)
+ KO9:     1 ( 0.0%)
+ KR1:    89 ( 0.3%)
+ KS1:   150 ( 0.6%)
+ KT1:   116 ( 0.4%)
+ KU2:     1 ( 0.0%)
+ KV1:    70 ( 0.3%)
+ KV2:    21 ( 0.1%)
+ LA1:    15 ( 0.1%)
+ LE1:     9 ( 0.0%)
+ LF1:     1 ( 0.0%)
+ LI1:     9 ( 0.0%)
+ LL1:    92 ( 0.3%)
+ LM1:     1 ( 0.0%)
+ LO1:    24 ( 0.1%)
+ LV1:   153 ( 0.6%)
+ MA1:   398 ( 1.5%)
+ MA2:    43 ( 0.2%)
+ MB1:     4 ( 0.0%)
+ ME1:   146 ( 0.5%)
+ ME9:    23 ( 0.1%)
+ MH1:    35 ( 0.1%)
+ MK1:   194 ( 0.7%)
+ MM1:    79 ( 0.3%)
+ MP1:    37 ( 0.1%)
+ MR1:     3 ( 0.0%)
+ MS1:    84 ( 0.3%)
+ MT1:   376 ( 1.4%)
+ MT2:    34 ( 0.1%)
+ MU1:    18 ( 0.1%)
+ MV1:   171 ( 0.6%)
+ MV2:    25 ( 0.1%)
+ NA1:   125 ( 0.5%)
+ NA9:    18 ( 0.1%)
+ NE1:     8 ( 0.0%)
+ NU1:    36 ( 0.1%)
+ OD1:    55 ( 0.2%)
+ OM1:   314 ( 1.2%)
+ PE1:   442 ( 1.6%)
+ PO1:    25 ( 0.1%)
+ PS1:   349 ( 1.3%)
+ PU1:    11 ( 0.0%)
+ PY1:    15 ( 0.1%)
+ RO1:     2 ( 0.0%)
+ RV1:    80 ( 0.3%)
+ RY1:    36 ( 0.1%)
+ RY2:    14 ( 0.1%)
+ SA1:    11 ( 0.0%)
+ SA9:     7 ( 0.0%)
+ SB1:   214 ( 0.8%)
+ SH1:    41 ( 0.2%)
+ SO1:   132 ( 0.5%)
+ SO2:    27 ( 0.1%)
+ SP1:    75 ( 0.3%)
+ SP2:    13 ( 0.0%)
+ SS1:    98 ( 0.4%)
+ SS2:   169 ( 0.6%)
+ ST1:    75 ( 0.3%)
+ ST2:   165 ( 0.6%)
+ SV1:   225 ( 0.8%)
+ SY1:    53 ( 0.2%)
+ TE1:    31 ( 0.1%)
+ TE9:   115 ( 0.4%)
+ TF1:    96 ( 0.4%)
+ TJ1:    18 ( 0.1%)
+ TL1:    26 ( 0.1%)
+ TO1:    21 ( 0.1%)
+ TO2:    88 ( 0.3%)
+ TP9:     1 ( 0.0%)
+ TR1:    89 ( 0.3%)
+ TS1:     6 ( 0.0%)
+ TU1:    68 ( 0.3%)
+ TV9:    19 ( 0.1%)
+ TY1:    68 ( 0.3%)
+ UV1:   309 ( 1.1%)
+ UV2:   336 ( 1.2%)
+ UV3:   120 ( 0.4%)
+ VV1:     7 ( 0.0%)
+
+ ............... Grouped SCB ...............
+                      (No SCB):   497 ( 1.8%)
+         Humaniora och teologi:  3068 (11.4%)
+ Juridik och samhällsvetenskap:  3946 (14.7%)
+           Konstnärligt område:   241 ( 0.9%)
+        Medicin och odontologi:   307 ( 1.1%)
+                Naturvetenskap:  1959 ( 7.3%)
+                        Teknik:  2541 ( 9.4%)
+               Vård och omsorg:   544 ( 2.0%)
+                 Övrigt område:   342 ( 1.3%)
+
+--------------- Bloom classifications ---------------
+
+---------- Verbs per Bloom level ----------
+ 0: 12909 (11.4%)
+ 1: 27121 (23.9%)
+ 2: 23203 (20.4%)
+ 3: 17223 (15.2%)
+ 4: 20047 (17.6%)
+ 5: 13167 (11.6%)
+
+113670 classified verbs
+8.454444031238378  verbs/course in 13445 courses 
+
+
+--------------- Statistics per course ---------------
+---------- Maximum Bloom level per course ----------
+ 0 vb:   458 ( 3.4%)
+    0:    72 ( 0.5%)
+    1:   458 ( 3.4%)
+    2:  1025 ( 7.6%)
+    3:  1312 ( 9.8%)
+    4:  3310 (24.6%)
+    5:  6810 (50.7%)
+13445 courses with Bloom data
+
+---------- Minimum Bloom level per course ----------
+ 0 vb:   458 ( 3.4%)
+    0:  6995 (52.0%)
+    1:  4328 (32.2%)
+    2:  1234 ( 9.2%)
+    3:   286 ( 2.1%)
+    4:    96 ( 0.7%)
+    5:    48 ( 0.4%)
+13445 courses with Bloom data
+
+---------- Average Mean Bloom level per course ----------
+ 2.3 from 12987 courses with at least one verb.
+---------- Average Variance in Bloom level per course ----------
+ 1.8 from 12987 courses with at least one verb.
+---------- Median Bloom level per course ----------
+0.0:   296 ( 2.2%)
+0.5:   137 ( 1.0%)
+1.0:  2620 (19.5%)
+1.5:   666 ( 5.0%)
+2  :  3600 (26.8%)
+2.5:   890 ( 6.6%)
+3  :  2942 (21.9%)
+3.5:   507 ( 3.8%)
+4  :  1113 ( 8.3%)
+4.5:    59 ( 0.4%)
+5  :   157 ( 1.2%)
+Average median value:   2.2
+12987 courses with at least one verb.
+---------- Most common Bloom level per course ----------
+ 0 vb:   458.0 ( 3.4%)
+    0:  1218.7 ( 9.1%)
+    1:  3935.5 (29.3%)
+    2:  2861.9 (21.3%)
+    3:  1602.7 (11.9%)
+    4:  2283.0 (17.0%)
+    5:  1085.1 ( 8.1%)
+ 13445 courses with Bloom data
+---------- Number of Bloom verbs per course ----------
+   0:   458 ( 3.4%)
+   1:   307 ( 2.3%)
+   2:   698 ( 5.2%)
+   3:  1110 ( 8.3%)
+   4:  1234 ( 9.2%)
+   5:  1329 ( 9.9%)
+   6:  1286 ( 9.6%)
+   7:  1065 ( 7.9%)
+   8:   891 ( 6.6%)
+   9:   702 ( 5.2%)
+  10:   653 ( 4.9%)
+  11:   554 ( 4.1%)
+  12:   495 ( 3.7%)
+  13:   383 ( 2.8%)
+  14:   352 ( 2.6%)
+ 15+:  1928 (14.3%)
+13445 courses in data
+---------- Number of Bloom verbs per course (grouped) ----------
+ 0 (  0 ):   458 ( 3.4%)
+ 1 (1-4 ):  3349 (24.9%)
+ 2 (5-10):  5926 (44.1%)
+ 3 ( 11+):  3712 (27.6%)
+
+
+--------------- Statistics per goal ---------------
+---------- Maximum Bloom level per goal ----------
+   0 vb: 13978 (16.4%)
+      0:  5195 ( 6.1%)
+      1: 15736 (18.4%)
+      2: 13437 (15.7%)
+      3: 10172 (11.9%)
+      4: 14724 (17.2%)
+      5: 12123 (14.2%)
+85365 goals with Bloom data
+
+---------- Minimum Bloom level per goal ----------
+   0 vb: 13978 (16.4%)
+      0: 12410 (14.5%)
+      1: 21112 (24.7%)
+      2: 16763 (19.6%)
+      3:  8590 (10.1%)
+      4:  7740 ( 9.1%)
+      5:  4772 ( 5.6%)
+85365 goals with Bloom data
+
+---------- Difference beteween max and min Bloom level in goal ----------
+   0 vb: 13978 (16.4%)
+ 1 verb: 41830 (49.0%)
+      0:  5286 ( 6.2%)
+      1:  7458 ( 8.7%)
+      2:  6015 ( 7.0%)
+      3:  6802 ( 8.0%)
+      4:  2465 ( 2.9%)
+      5:  1531 ( 1.8%)
+85365 goals with Bloom data
+---------- Average Mean Bloom level per goal ----------
+ 2.30 from 71387 goals with at least one verb.
+---------- Average Variance in Bloom level per goal ----------
+ 0.50 from 71387 goals with at least one verb.
+---------- Median Bloom level per goal ----------
+0  :  5316 ( 6.2%)
+0.5:  1807 ( 2.1%)
+1  : 15919 (18.6%)
+1.5:  2164 ( 2.5%)
+2  : 14743 (17.3%)
+2.5:  3479 ( 4.1%)
+3  :  9286 (10.9%)
+3.5:  3453 ( 4.0%)
+4  :  9359 (11.0%)
+4.5:   785 ( 0.9%)
+5  :  5076 ( 5.9%)
+Average median value:  2.3
+71387 goals with at least one verb.
+---------- Most common Bloom level per goal ----------
+   0 vb:   13978 (16.4%)
+      0:  8096.6 ( 9.5%)
+      1: 18588.1 (21.8%)
+      2: 15341.0 (18.0%)
+      3:  9957.4 (11.7%)
+      4: 11627.5 (13.6%)
+      5:  7776.3 ( 9.1%)
+ 85365 goals with Bloom data
+---------- Number of Bloom verbs per goal ----------
+   0: 13978 (16.4%)
+   1: 41830 (49.0%)
+   2: 20691 (24.2%)
+   3:  6190 ( 7.3%)
+   4:  1993 ( 2.3%)
+   5:   452 ( 0.5%)
+   6:   132 ( 0.2%)
+   7:    46 ( 0.1%)
+   8:    13 ( 0.0%)
+   9:    10 ( 0.0%)
+  10:     8 ( 0.0%)
+  11:     6 ( 0.0%)
+  12:     8 ( 0.0%)
+  13:     6 ( 0.0%)
+ 14+:     2 ( 0.0%)
+85365 goals in data
+
+---------- Number of Bloom verbs per goal (grouped) ----------
+ 0 (  0 ): 13978 (16.4%)
+ 1 (1-4 ): 70704 (82.8%)
+ 2 (5-10):   661 ( 0.8%)
+ 3 ( 11+):    22 ( 0.0%)
+
+---------- Statistics per University----------
+KTH
+  2723 courses  14488 goals  5.32 goals per course.  21462 verbs  7.88 verbs per course  1.48 verbs per goal
+Mittuniversitetet
+  3338 courses  18525 goals  5.55 goals per course.  24504 verbs  7.34 verbs per course  1.32 verbs per goal
+SU
+  4723 courses  29082 goals  6.16 goals per course.  39272 verbs  8.32 verbs per course  1.35 verbs per goal
+UMU
+  2661 courses  23270 goals  8.74 goals per course.  28432 verbs  10.68 verbs per course  1.22 verbs per goal
+
+---------- Most common verbs ----------
+---> KTH
+ 1311 ( 6.1%): analysera
+ 1283 ( 6.0%): redogöra
+ 1170 ( 5.5%): diskutera
+ 1098 ( 5.1%): förklara
+ 1088 ( 5.1%): beskriva
+  853 ( 4.0%): tillämpa
+  771 ( 3.6%): identifiera
+  759 ( 3.5%): utvärdera
+  739 ( 3.4%): använda
+  519 ( 2.4%): planera
+  505 ( 2.4%): genomföra
+Top 11 verbs cover  47.04% of all verb occurrences.
+---> Mittuniversitetet
+ 2330 ( 9.5%): redogöra
+ 1499 ( 6.1%): tillämpa
+ 1447 ( 5.9%): beskriva
+ 1154 ( 4.7%): analysera
+ 1085 ( 4.4%): förklara
+ 1042 ( 4.3%): diskutera
+  856 ( 3.5%): identifiera
+  790 ( 3.2%): värdera
+  762 ( 3.1%): reflektera
+  753 ( 3.1%): använda
+  565 ( 2.3%): genomföra
+Top 11 verbs cover  50.13% of all verb occurrences.
+---> SU
+ 5009 (12.8%): redogöra
+ 3018 ( 7.7%): diskutera
+ 2907 ( 7.4%): analysera
+ 1687 ( 4.3%): tillämpa
+ 1612 ( 4.1%): reflektera
+ 1459 ( 3.7%): identifiera
+ 1263 ( 3.2%): använda
+ 1103 ( 2.8%): beskriva
+  986 ( 2.5%): värdera
+  930 ( 2.4%): genomföra
+  832 ( 2.1%): formulera
+Top 11 verbs cover  52.98% of all verb occurrences.
+---> UMU
+ 2838 (10.0%): redogöra
+ 1783 ( 6.3%): analysera
+ 1538 ( 5.4%): diskutera
+ 1499 ( 5.3%): tillämpa
+ 1231 ( 4.3%): reflektera
+ 1146 ( 4.0%): värdera
+ 1086 ( 3.8%): beskriva
+  845 ( 3.0%): förklara
+  807 ( 2.8%): genomföra
+  764 ( 2.7%): identifiera
+  687 ( 2.4%): använda
+Top 11 verbs cover  50.03% of all verb occurrences.
+
+---------- Most common verbs per bloom level ----------
+Level 0 ............
+---> KTH
+  771: identifiera
+  485: presentera
+  204: beskriva <NP.sin.def>
+  138: delta
+  107: dokumentera
+  102: definiera
+---> Mittuniversitetet
+  856: identifiera
+  398: presentera
+  349: beskriva <NP.sin.def>
+  186: definiera
+  175: dokumentera
+  111: beskriva * begrepp
+---> SU
+ 1459: identifiera
+  644: presentera
+  231: definiera
+  166: dokumentera
+  127: beskriva <NP.sin.def>
+   84: beskriva * begrepp
+---> UMU
+  764: identifiera
+  571: presentera
+  276: beskriva <NP.sin.def>
+  192: dokumentera
+   84: definiera
+   55: delta
+Level 1 ............
+---> KTH
+ 1283: redogöra
+ 1170: diskutera
+ 1098: förklara
+ 1088: beskriva
+  145: redovisa
+   94: ge * exempel
+---> Mittuniversitetet
+ 2330: redogöra
+ 1447: beskriva
+ 1085: förklara
+ 1042: diskutera
+  295: redovisa
+   91: sammanfatta
+---> SU
+ 5009: redogöra
+ 3018: diskutera
+ 1103: beskriva
+  827: förklara
+  360: redovisa
+  132: rapportera
+---> UMU
+ 2838: redogöra
+ 1538: diskutera
+ 1086: beskriva
+  845: förklara
+  307: redovisa
+  143: sammanfatta
+Level 2 ............
+---> KTH
+  853: tillämpa
+  739: använda
+  505: genomföra
+  392: hantera
+  332: lösa
+  309: utföra
+---> Mittuniversitetet
+ 1499: tillämpa
+  753: använda
+  565: genomföra
+  286: utföra
+  221: söka
+  172: hantera
+---> SU
+ 1687: tillämpa
+ 1263: använda
+  930: genomföra
+  375: söka
+  259: lösa
+  233: hantera
+---> UMU
+ 1499: tillämpa
+  807: genomföra
+  687: använda
+  325: utföra
+  226: söka
+  190: lösa
+Level 3 ............
+---> KTH
+ 1311: analysera
+  310: identifiera * *ytterlig
+  286: välja
+  195: jämföra
+  102: föreslå
+   96: relatera
+---> Mittuniversitetet
+ 1154: analysera
+  230: välja
+  191: relatera
+  177: jämföra
+  161: problematisera
+  150: granska
+---> SU
+ 2907: analysera
+  424: problematisera
+  396: jämföra
+  345: relatera
+  267: granska
+  246: välja
+---> UMU
+ 1783: analysera
+  337: problematisera
+  234: granska
+  209: välja
+  205: jämföra
+  198: relatera
+Level 4 ............
+---> KTH
+  759: utvärdera
+  472: bedöma
+  445: reflektera
+  240: göra * *bedömning
+  194: kritiskt granska
+  169: värdera
+---> Mittuniversitetet
+  790: värdera
+  762: reflektera
+  430: utvärdera
+  326: bedöma
+  320: kritiskt granska
+  258: motivera
+---> SU
+ 1612: reflektera
+  986: värdera
+  688: bedöma
+  670: tolka
+  660: kritiskt granska
+  622: utvärdera
+---> UMU
+ 1231: reflektera
+ 1146: värdera
+  511: utvärdera
+  511: kritiskt granska
+  427: bedöma
+  365: tolka
+Level 5 ............
+---> KTH
+  519: planera
+  398: formulera
+  274: utveckla
+  223: integrera
+  211: implementera
+  160: skriva
+---> Mittuniversitetet
+  542: planera
+  420: formulera
+  224: kommunicera
+  198: skapa
+  192: utveckla
+  134: skriva
+---> SU
+  832: formulera
+  798: planera
+  398: skriva
+  266: kommunicera
+  252: författa
+  226: integrera
+---> UMU
+  680: planera
+  459: formulera
+  371: kommunicera
+  173: skriva
+  171: utforma
+  144: skapa
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+                  KTH:   3248   4051   5079   3028   3235   2821     21462
+                        15.1%  18.9%  23.7%  14.1%  15.1%  13.1%     18.9%
+
+    Mittuniversitetet:   4584   4446   5465   3207   4130   2672     24504
+                        18.7%  18.1%  22.3%  13.1%  16.9%  10.9%     21.6%
+
+                   SU:   2955  11280   6763   6612   7204   4458     39272
+                         7.5%  28.7%  17.2%  16.8%  18.3%  11.4%     34.5%
+
+                  UMU:   2122   7344   5896   4376   5478   3216     28432
+                         7.5%  25.8%  20.7%  15.4%  19.3%  11.3%     25.0%
+
+
+----------------------------------------------------------------------
+ max Bloom/course:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+              KTH:     23     58    242    246    596   1402      2567
+                     0.9%   2.3%   9.4%   9.6%  23.2%  54.6%     19.8%
+
+Mittuniversitetet:     44    106    329    358    808   1535      3180
+                     1.4%   3.3%  10.3%  11.3%  25.4%  48.3%     24.5%
+
+               SU:      3    226    334    532   1286   2281      4662
+                     0.1%   4.8%   7.2%  11.4%  27.6%  48.9%     35.9%
+
+              UMU:      2     68    120    176    620   1592      2578
+                     0.1%   2.6%   4.7%   6.8%  24.0%  61.8%     19.9%
+
+
+
+----------------------------------------------------------------------
+ min Bloom/course:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+              KTH:   1701    529    275     38     10     14      2567
+                    66.3%  20.6%  10.7%   1.5%   0.4%   0.5%     19.8%
+
+Mittuniversitetet:   2083    523    441     84     31     18      3180
+                    65.5%  16.4%  13.9%   2.6%   1.0%   0.6%     24.5%
+
+               SU:   1939   2251    318    106     38     10      4662
+                    41.6%  48.3%   6.8%   2.3%   0.8%   0.2%     35.9%
+
+              UMU:   1272   1025    200     58     17      6      2578
+                    49.3%  39.8%   7.8%   2.2%   0.7%   0.2%     19.9%
+
+
+
+average mean Bloom per course: 
+                          KTH:  2.3 
+            Mittuniversitetet:  2.2 
+                           SU:  2.4 
+                          UMU:  2.4 
+
+average variance Bloom per course: 
+                              KTH:  1.9 
+                Mittuniversitetet:  1.8 
+                               SU:  1.7 
+                              UMU:  1.8 
+
+
+average median Bloom per course: 
+                            KTH:  2.2 
+              Mittuniversitetet:  2.1 
+                             SU:  2.3 
+                            UMU:  2.3 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                                 KTH:  375.5  549.6  750.4  256.9  398.4  236.3   2567.0
+                                       14.6%  21.4%  29.2%  10.0%  15.5%   9.2%     19.8%
+
+                   Mittuniversitetet:  641.4  598.4  786.8  343.7  509.3  300.4   3180.0
+                                       20.2%  18.8%  24.7%  10.8%  16.0%   9.4%     24.5%
+
+                                  SU:  125.1 1846.4  740.1  666.7  901.3  382.4   4662.0
+                                        2.7%  39.6%  15.9%  14.3%  19.3%   8.2%     35.9%
+
+                                 UMU:   76.7  941.1  584.6  335.4  474.0  166.0   2578.0
+                                        3.0%  36.5%  22.7%  13.0%  18.4%   6.4%     19.9%
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+    #verbs/course:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+--------------------------------------------------------------------------------------------------------------------------------------------
+              KTH:    156     70    145    137    199    270    287    230    191    157    129    133    116     72     67    364      2723
+                     5.7%   2.6%   5.3%   5.0%   7.3%   9.9%  10.5%   8.4%   7.0%   5.8%   4.7%   4.9%   4.3%   2.6%   2.5%  13.4%     20.3%
+
+Mittuniversitetet:    158     90    227    318    367    336    355    275    249    165    153     97     78     73     86    311      3338
+                     4.7%   2.7%   6.8%   9.5%  11.0%  10.1%  10.6%   8.2%   7.5%   4.9%   4.6%   2.9%   2.3%   2.2%   2.6%   9.3%     24.8%
+
+               SU:     61    114    252    525    520    569    462    364    247    202    226    164    143    121    101    652      4723
+                     1.3%   2.4%   5.3%  11.1%  11.0%  12.0%   9.8%   7.7%   5.2%   4.3%   4.8%   3.5%   3.0%   2.6%   2.1%  13.8%     35.1%
+
+              UMU:     83     33     74    130    148    154    182    196    204    178    145    160    158    117     98    601      2661
+                     3.1%   1.2%   2.8%   4.9%   5.6%   5.8%   6.8%   7.4%   7.7%   6.7%   5.4%   6.0%   5.9%   4.4%   3.7%  22.6%     19.8%
+
+
+
+--------------------------------------------------------------------------
+#verbs/course (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+--------------------------------------------------------------------------
+                    KTH:       156       551      1264       752      2723
+                              5.7%     20.2%     46.4%     27.6%     20.3%
+
+      Mittuniversitetet:       158      1002      1533       645      3338
+                              4.7%     30.0%     45.9%     19.3%     24.8%
+
+                     SU:        61      1411      2070      1181      4723
+                              1.3%     29.9%     43.8%     25.0%     35.1%
+
+                    UMU:        83       385      1059      1134      2661
+                              3.1%     14.5%     39.8%     42.6%     19.8%
+
+
+----------------------------------------------------------------------
+   max Bloom/goal:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+              KTH:   1226   2192   2743   1709   2235   2599     12704
+                     9.7%  17.3%  21.6%  13.5%  17.6%  20.5%     17.8%
+
+Mittuniversitetet:   2417   2529   3444   1878   3059   2461     15788
+                    15.3%  16.0%  21.8%  11.9%  19.4%  15.6%     22.1%
+
+               SU:    820   6353   3881   4007   5323   4055     24439
+                     3.4%  26.0%  15.9%  16.4%  21.8%  16.6%     34.2%
+
+              UMU:    732   4662   3369   2578   4107   3008     18456
+                     4.0%  25.3%  18.3%  14.0%  22.3%  16.3%     25.9%
+
+
+
+----------------------------------------------------------------------
+   min Bloom/goal:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+              KTH:   3131   2749   3527   1325   1184    788     12704
+                    24.6%  21.6%  27.8%  10.4%   9.3%   6.2%     17.8%
+
+Mittuniversitetet:   4371   3147   3996   1690   1440   1144     15788
+                    27.7%  19.9%  25.3%  10.7%   9.1%   7.2%     22.1%
+
+               SU:   2871   9115   4821   3249   2809   1574     24439
+                    11.7%  37.3%  19.7%  13.3%  11.5%   6.4%     34.2%
+
+              UMU:   2037   6101   4419   2326   2307   1266     18456
+                    11.0%  33.1%  23.9%  12.6%  12.5%   6.9%     25.9%
+
+
+
+---------------------------------------------------------------------------------
+diff. max and min Bloom/goal:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------
+                         KTH:    709   1648   1178   1387    704    261      5887
+                               12.0%  28.0%  20.0%  23.6%  12.0%   4.4%     19.9%
+
+           Mittuniversitetet:   1070   1633   1265   1364    537    300      6169
+                               17.3%  26.5%  20.5%  22.1%   8.7%   4.9%     20.9%
+
+                          SU:   2047   2372   2285   2423    678    634     10439
+                               19.6%  22.7%  21.9%  23.2%   6.5%   6.1%     35.3%
+
+                         UMU:   1460   1805   1287   1628    546    336      7062
+                               20.7%  25.6%  18.2%  23.1%   7.7%   4.8%     23.9%
+
+
+
+average mean Bloom per goal: 
+                        KTH:  2.3 
+          Mittuniversitetet:  2.1 
+                         SU:  2.4 
+                        UMU:  2.4 
+
+
+average variance Bloom per goal: 
+                            KTH:  0.58 
+              Mittuniversitetet:  0.47 
+                             SU:  0.51 
+                            UMU:  0.44 
+
+average median Bloom per goal: 
+                          KTH:  2.3 
+            Mittuniversitetet:  2.1 
+                           SU:  2.4 
+                          UMU:  2.4 
+
+---------------------------------------------------------------------------------------
+most common Bloom level (per goal):      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------------
+                               KTH: 2000.3 2538.8 3209.6 1644.2 1763.7 1547.4  12704.0
+                                     15.7%  20.0%  25.3%  12.9%  13.9%  12.2%     17.8%
+
+                 Mittuniversitetet: 3248.6 2889.9 3781.9 1874.0 2316.4 1677.2  15788.0
+                                     20.6%  18.3%  24.0%  11.9%  14.7%  10.6%     22.1%
+
+                                SU: 1609.4 7764.6 4382.0 3855.8 4245.7 2581.4  24439.0
+                                      6.6%  31.8%  17.9%  15.8%  17.4%  10.6%     34.2%
+
+                               UMU: 1238.4 5394.8 3967.4 2583.4 3301.7 1970.3  18456.0
+                                      6.7%  29.2%  21.5%  14.0%  17.9%  10.7%     25.9%
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+      #verbs/goal:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+--------------------------------------------------------------------------------------------------------------------------------------------
+              KTH:   1784   6817   3849   1430    432    148     17      6      2      2      0      1      0      0      0      0     14488
+                    12.3%  47.1%  26.6%   9.9%   3.0%   1.0%   0.1%   0.0%   0.0%   0.0%     0%   0.0%     0%     0%     0%     0%     17.0%
+
+Mittuniversitetet:   2737   9619   4410   1246    379     72     28     21      2      2      2      3      3      1      0      0     18525
+                    14.8%  51.9%  23.8%   6.7%   2.0%   0.4%   0.2%   0.1%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     0%     21.7%
+
+               SU:   4643  14000   7303   2183    753    136     46     11      2      1      1      0      2      1      0      0     29082
+                    16.0%  48.1%  25.1%   7.5%   2.6%   0.5%   0.2%   0.0%   0.0%   0.0%   0.0%     0%   0.0%   0.0%     0%     0%     34.1%
+
+              UMU:   4814  11394   5129   1331    429     96     41      8      7      5      5      2      3      4      2      0     23270
+                    20.7%  49.0%  22.0%   5.7%   1.8%   0.4%   0.2%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     27.3%
+
+
+
+------------------------------------------------------------------------
+#verbs/goal (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+------------------------------------------------------------------------
+                  KTH:      1784     12528       175         1     14488
+                           12.3%     86.5%      1.2%      0.0%     17.0%
+
+    Mittuniversitetet:      2737     15654       127         7     18525
+                           14.8%     84.5%      0.7%      0.0%     21.7%
+
+                   SU:      4643     24239       197         3     29082
+                           16.0%     83.3%      0.7%      0.0%     34.1%
+
+                  UMU:      4814     18283       162        11     23270
+                           20.7%     78.6%      0.7%      0.0%     27.3%
+
+
+
+---------- Statistics per Credits----------
+0: 0-5
+   593 courses   2477 goals  4.18 goals per course.   3301 verbs  5.57 verbs per course  1.33 verbs per goal
+1: 5,5-10
+  5211 courses  25603 goals  4.91 goals per course.  34006 verbs  6.53 verbs per course  1.33 verbs per goal
+2: 10,5-15
+  1533 courses  10402 goals  6.79 goals per course.  14752 verbs  9.62 verbs per course  1.42 verbs per goal
+3: 15+
+  1327 courses  16227 goals  12.23 goals per course.  21796 verbs  16.43 verbs per course  1.34 verbs per goal
+4: (No HP info)
+  4781 courses  30656 goals  6.41 goals per course.  39815 verbs  8.33 verbs per course  1.30 verbs per goal
+
+---------- Most common verbs ----------
+---> 0: 0-5
+  348 (10.5%): diskutera
+  243 ( 7.4%): redogöra
+  211 ( 6.4%): reflektera
+  166 ( 5.0%): analysera
+  162 ( 4.9%): identifiera
+  147 ( 4.5%): tillämpa
+  146 ( 4.4%): presentera
+  144 ( 4.4%): beskriva
+  110 ( 3.3%): kritiskt granska
+   79 ( 2.4%): använda
+   76 ( 2.3%): förklara
+Top 11 verbs cover  55.50% of all verb occurrences.
+---> 1: 5,5-10
+ 3797 (11.2%): redogöra
+ 2406 ( 7.1%): analysera
+ 1956 ( 5.8%): diskutera
+ 1793 ( 5.3%): beskriva
+ 1707 ( 5.0%): tillämpa
+ 1652 ( 4.9%): förklara
+ 1243 ( 3.7%): använda
+ 1171 ( 3.4%): reflektera
+  927 ( 2.7%): identifiera
+  695 ( 2.0%): utvärdera
+  656 ( 1.9%): värdera
+Top 11 verbs cover  52.94% of all verb occurrences.
+---> 2: 10,5-15
+ 1289 ( 8.7%): redogöra
+ 1016 ( 6.9%): analysera
+  952 ( 6.5%): diskutera
+  595 ( 4.0%): identifiera
+  579 ( 3.9%): tillämpa
+  508 ( 3.4%): reflektera
+  505 ( 3.4%): genomföra
+  482 ( 3.3%): planera
+  433 ( 2.9%): värdera
+  432 ( 2.9%): formulera
+  417 ( 2.8%): beskriva
+Top 11 verbs cover  48.86% of all verb occurrences.
+---> 3: 15+
+ 2471 (11.3%): redogöra
+ 1613 ( 7.4%): diskutera
+ 1496 ( 6.9%): analysera
+  908 ( 4.2%): identifiera
+  875 ( 4.0%): tillämpa
+  765 ( 3.5%): reflektera
+  720 ( 3.3%): genomföra
+  630 ( 2.9%): använda
+  556 ( 2.6%): planera
+  552 ( 2.5%): värdera
+  532 ( 2.4%): utvärdera
+Top 11 verbs cover  51.01% of all verb occurrences.
+---> 4: (No HP info)
+ 3660 ( 9.2%): redogöra
+ 2230 ( 5.6%): tillämpa
+ 2071 ( 5.2%): analysera
+ 1936 ( 4.9%): beskriva
+ 1899 ( 4.8%): diskutera
+ 1505 ( 3.8%): förklara
+ 1396 ( 3.5%): värdera
+ 1395 ( 3.5%): reflektera
+ 1258 ( 3.2%): identifiera
+ 1116 ( 2.8%): använda
+ 1073 ( 2.7%): genomföra
+Top 11 verbs cover  49.07% of all verb occurrences.
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+               0: 0-5:    513    800    638    425    653    272      3301
+                        15.5%  24.2%  19.3%  12.9%  19.8%   8.2%      2.9%
+
+            1: 5,5-10:   3368   9623   6970   5284   5338   3423     34006
+                         9.9%  28.3%  20.5%  15.5%  15.7%  10.1%     29.9%
+
+           2: 10,5-15:   1327   3309   2906   2386   2830   1994     14752
+                         9.0%  22.4%  19.7%  16.2%  19.2%  13.5%     13.0%
+
+               3: 15+:   1977   5248   4115   3569   4073   2814     21796
+                         9.1%  24.1%  18.9%  16.4%  18.7%  12.9%     19.2%
+
+      4: (No HP info):   5724   8141   8574   5559   7153   4664     39815
+                        14.4%  20.4%  21.5%  14.0%  18.0%  11.7%     35.0%
+
+
+---------------------------------------------------------------------
+max Bloom/course:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------
+          0: 0-5:      5     37     51     51    227    198       569
+                    0.9%   6.5%   9.0%   9.0%  39.9%  34.8%      4.4%
+
+       1: 5,5-10:     17    227    490    695   1525   2094      5048
+                    0.3%   4.5%   9.7%  13.8%  30.2%  41.5%     38.9%
+
+      2: 10,5-15:      4     37     81     97    285    985      1489
+                    0.3%   2.5%   5.4%   6.5%  19.1%  66.2%     11.5%
+
+          3: 15+:      0      8     13     26    178   1069      1294
+                      0%   0.6%   1.0%   2.0%  13.8%  82.6%     10.0%
+
+ 4: (No HP info):     46    149    390    443   1095   2464      4587
+                    1.0%   3.2%   8.5%   9.7%  23.9%  53.7%     35.3%
+
+
+
+---------------------------------------------------------------------
+min Bloom/course:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------
+          0: 0-5:    312    168     72      8      6      3       569
+                   54.8%  29.5%  12.7%   1.4%   1.1%   0.5%      4.4%
+
+       1: 5,5-10:   2105   2301    464    120     40     18      5048
+                   41.7%  45.6%   9.2%   2.4%   0.8%   0.4%     38.9%
+
+      2: 10,5-15:    899    453     97     29      6      5      1489
+                   60.4%  30.4%   6.5%   1.9%   0.4%   0.3%     11.5%
+
+          3: 15+:    906    324     52      9      3      0      1294
+                   70.0%  25.0%   4.0%   0.7%   0.2%     0%     10.0%
+
+ 4: (No HP info):   2773   1082    549    120     41     22      4587
+                   60.5%  23.6%  12.0%   2.6%   0.9%   0.5%     35.3%
+
+
+
+average mean Bloom per course: 
+                       0: 0-5:  2.2 
+                    1: 5,5-10:  2.3 
+                   2: 10,5-15:  2.5 
+                       3: 15+:  2.6 
+              4: (No HP info):  2.3 
+
+average variance Bloom per course: 
+                           0: 0-5:  1.8 
+                        1: 5,5-10:  1.6 
+                       2: 10,5-15:  2.0 
+                           3: 15+:  2.2 
+                  4: (No HP info):  1.8 
+
+
+average median Bloom per course: 
+                         0: 0-5:  2.1 
+                      1: 5,5-10:  2.2 
+                     2: 10,5-15:  2.5 
+                         3: 15+:  2.5 
+                4: (No HP info):  2.2 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                              0: 0-5:   77.5  159.4  115.7   60.9  122.7   32.9    569.0
+                                       13.6%  28.0%  20.3%  10.7%  21.6%   5.8%      4.4%
+
+                           1: 5,5-10:  331.0 1867.9 1065.6  656.8  756.8  369.9   5048.0
+                                        6.6%  37.0%  21.1%  13.0%  15.0%   7.3%     38.9%
+
+                          2: 10,5-15:   52.8  443.7  357.4  217.1  285.7  132.4   1489.0
+                                        3.5%  29.8%  24.0%  14.6%  19.2%   8.9%     11.5%
+
+                              3: 15+:   72.8  367.2  231.1  146.2  337.3  139.5   1294.0
+                                        5.6%  28.4%  17.9%  11.3%  26.1%  10.8%     10.0%
+
+                     4: (No HP info):  684.7 1097.4 1092.1  521.8  780.6  410.4   4587.0
+                                       14.9%  23.9%  23.8%  11.4%  17.0%   8.9%     35.3%
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+  #verbs/course:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+------------------------------------------------------------------------------------------------------------------------------------------
+         0: 0-5:     24     29     37     60     69     98    103     57     41     11     14     10     13      6     10     11       593
+                   4.0%   4.9%   6.2%  10.1%  11.6%  16.5%  17.4%   9.6%   6.9%   1.9%   2.4%   1.7%   2.2%   1.0%   1.7%   1.9%      4.4%
+
+      1: 5,5-10:    163    133    340    573    599    660    605    502    369    288    229    190    148     80     87    245      5211
+                   3.1%   2.6%   6.5%  11.0%  11.5%  12.7%  11.6%   9.6%   7.1%   5.5%   4.4%   3.6%   2.8%   1.5%   1.7%   4.7%     38.8%
+
+     2: 10,5-15:     44     28     47     76     85    125    110    106     91    118    120     98     77     70     47    291      1533
+                   2.9%   1.8%   3.1%   5.0%   5.5%   8.2%   7.2%   6.9%   5.9%   7.7%   7.8%   6.4%   5.0%   4.6%   3.1%  19.0%     11.4%
+
+         3: 15+:     33      7      3     14     28     19     20     36     26     19     62     68     86     87     73    746      1327
+                   2.5%   0.5%   0.2%   1.1%   2.1%   1.4%   1.5%   2.7%   2.0%   1.4%   4.7%   5.1%   6.5%   6.6%   5.5%  56.2%      9.9%
+
+4: (No HP info):    194    110    271    387    453    427    448    364    364    266    228    188    171    140    135    635      4781
+                   4.1%   2.3%   5.7%   8.1%   9.5%   8.9%   9.4%   7.6%   7.6%   5.6%   4.8%   3.9%   3.6%   2.9%   2.8%  13.3%     35.6%
+
+
+
+--------------------------------------------------------------------------
+#verbs/course (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+--------------------------------------------------------------------------
+                 0: 0-5:        24       195       324        50       593
+                              4.0%     32.9%     54.6%      8.4%      4.4%
+
+              1: 5,5-10:       163      1645      2653       750      5211
+                              3.1%     31.6%     50.9%     14.4%     38.8%
+
+             2: 10,5-15:        44       236       670       583      1533
+                              2.9%     15.4%     43.7%     38.0%     11.4%
+
+                 3: 15+:        33        52       182      1060      1327
+                              2.5%      3.9%     13.7%     79.9%      9.9%
+
+        4: (No HP info):       194      1221      2097      1269      4781
+                              4.1%     25.5%     43.9%     26.5%     35.6%
+
+
+--------------------------------------------------------------------
+ max Bloom/goal:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------
+         0: 0-5:    167    381    409    286    554    250      2047
+                   8.2%  18.6%  20.0%  14.0%  27.1%  12.2%      2.9%
+
+      1: 5,5-10:   1401   5589   4543   3518   4128   3140     22319
+                   6.3%  25.0%  20.4%  15.8%  18.5%  14.1%     31.3%
+
+     2: 10,5-15:    346   1816   1304   1245   1933   1813      8457
+                   4.1%  21.5%  15.4%  14.7%  22.9%  21.4%     11.8%
+
+         3: 15+:    472   3104   2085   1919   2818   2602     13000
+                   3.6%  23.9%  16.0%  14.8%  21.7%  20.0%     18.2%
+
+4: (No HP info):   2809   4846   5096   3204   5291   4318     25564
+                  11.0%  19.0%  19.9%  12.5%  20.7%  16.9%     35.8%
+
+
+
+--------------------------------------------------------------------
+ min Bloom/goal:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------
+         0: 0-5:    508    526    484    219    216     94      2047
+                  24.8%  25.7%  23.6%  10.7%  10.6%   4.6%      2.9%
+
+      1: 5,5-10:   3232   7772   5066   2689   2240   1320     22319
+                  14.5%  34.8%  22.7%  12.0%  10.0%   5.9%     31.3%
+
+     2: 10,5-15:   1283   2567   2028   1042    986    551      8457
+                  15.2%  30.4%  24.0%  12.3%  11.7%   6.5%     11.8%
+
+         3: 15+:   1918   4044   2863   1693   1604    878     13000
+                  14.8%  31.1%  22.0%  13.0%  12.3%   6.8%     18.2%
+
+4: (No HP info):   5469   6203   6322   2947   2694   1929     25564
+                  21.4%  24.3%  24.7%  11.5%  10.5%   7.5%     35.8%
+
+
+
+---------------------------------------------------------------------------------
+diff. max and min Bloom/goal:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------
+                      0: 0-5:    115    187    195    152    225     21       895
+                               12.8%  20.9%  21.8%  17.0%  25.1%   2.3%      3.0%
+
+                   1: 5,5-10:   1653   2340   1908   1891    659    289      8740
+                               18.9%  26.8%  21.8%  21.6%   7.5%   3.3%     29.6%
+
+                  2: 10,5-15:    673    911    827    945    332    356      4044
+                               16.6%  22.5%  20.5%  23.4%   8.2%   8.8%     13.7%
+
+                      3: 15+:   1014   1401   1156   1534    387    359      5851
+                               17.3%  23.9%  19.8%  26.2%   6.6%   6.1%     19.8%
+
+             4: (No HP info):   1831   2619   1929   2280    862    506     10027
+                               18.3%  26.1%  19.2%  22.7%   8.6%   5.0%     33.9%
+
+
+
+average mean Bloom per goal: 
+                     0: 0-5:  2.2 
+                  1: 5,5-10:  2.2 
+                 2: 10,5-15:  2.5 
+                     3: 15+:  2.4 
+            4: (No HP info):  2.3 
+
+
+average variance Bloom per goal: 
+                         0: 0-5:  0.66 
+                      1: 5,5-10:  0.43 
+                     2: 10,5-15:  0.64 
+                         3: 15+:  0.53 
+                4: (No HP info):  0.47 
+
+average median Bloom per goal: 
+                       0: 0-5:  2.1 
+                    1: 5,5-10:  2.2 
+                   2: 10,5-15:  2.5 
+                       3: 15+:  2.4 
+              4: (No HP info):  2.3 
+
+---------------------------------------------------------------------------------------
+most common Bloom level (per goal):      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------------
+                            0: 0-5:  298.6  507.9  447.4  260.8  367.3  164.9   2047.0
+                                     14.6%  24.8%  21.9%  12.7%  17.9%   8.1%      2.9%
+
+                         1: 5,5-10: 2167.8 6749.4 4886.1 3175.1 3229.5 2111.1  22319.0
+                                      9.7%  30.2%  21.9%  14.2%  14.5%   9.5%     31.3%
+
+                        2: 10,5-15:  685.0 2202.1 1699.5 1243.0 1575.1 1052.3   8457.0
+                                      8.1%  26.0%  20.1%  14.7%  18.6%  12.4%     11.8%
+
+                            3: 15+: 1024.9 3561.5 2500.7 2024.7 2336.4 1551.7  13000.0
+                                      7.9%  27.4%  19.2%  15.6%  18.0%  11.9%     18.2%
+
+                   4: (No HP info): 3920.3 5567.2 5807.3 3253.8 4119.1 2896.3  25564.0
+                                     15.3%  21.8%  22.7%  12.7%  16.1%  11.3%     35.8%
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+    #verbs/goal:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+------------------------------------------------------------------------------------------------------------------------------------------
+         0: 0-5:    430   1152    577    288     24      4      0      1      1      0      0      0      0      0      0      0      2477
+                  17.4%  46.5%  23.3%  11.6%   1.0%   0.2%     0%   0.0%   0.0%     0%     0%     0%     0%     0%     0%     0%      2.9%
+
+      1: 5,5-10:   3284  13579   6609   1574    401     94     42     11      3      3      2      0      0      1      0      0     25603
+                  12.8%  53.0%  25.8%   6.1%   1.6%   0.4%   0.2%   0.0%   0.0%   0.0%   0.0%     0%     0%   0.0%     0%     0%     30.0%
+
+     2: 10,5-15:   1945   4413   2546    955    392    121     19      5      1      3      0      1      0      0      1      0     10402
+                  18.7%  42.4%  24.5%   9.2%   3.8%   1.2%   0.2%   0.0%   0.0%   0.0%     0%   0.0%     0%     0%   0.0%     0%     12.2%
+
+         3: 15+:   3227   7149   3767   1405    545    108     19      2      2      0      1      0      2      0      0      0     16227
+                  19.9%  44.1%  23.2%   8.7%   3.4%   0.7%   0.1%   0.0%   0.0%     0%   0.0%     0%   0.0%     0%     0%     0%     19.0%
+
+4: (No HP info):   5092  15537   7192   1968    631    125     52     27      6      4      5      5      6      5      1      0     30656
+                  16.6%  50.7%  23.5%   6.4%   2.1%   0.4%   0.2%   0.1%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     35.9%
+
+
+
+------------------------------------------------------------------------
+#verbs/goal (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+------------------------------------------------------------------------
+               0: 0-5:       430      2041         6         0      2477
+                           17.4%     82.4%      0.2%        0%      2.9%
+
+            1: 5,5-10:      3284     22163       155         1     25603
+                           12.8%     86.6%      0.6%      0.0%     30.0%
+
+           2: 10,5-15:      1945      8306       149         2     10402
+                           18.7%     79.9%      1.4%      0.0%     12.2%
+
+               3: 15+:      3227     12866       132         2     16227
+                           19.9%     79.3%      0.8%      0.0%     19.0%
+
+      4: (No HP info):      5092     25328       219        17     30656
+                           16.6%     82.6%      0.7%      0.1%     35.9%
+
+
+
+---------- Statistics per CourseLevel grouped----------
+(Level: -  )
+    58 courses    287 goals  4.95 goals per course.    332 verbs  5.72 verbs per course  1.16 verbs per goal
+(Level: BXX)
+     4 courses     13 goals  3.25 goals per course.      6 verbs  1.50 verbs per course  0.46 verbs per goal
+(No level info)
+   607 courses   2883 goals  4.75 goals per course.   3670 verbs  6.05 verbs per course  1.27 verbs per goal
+Avancerad nivå
+  4696 courses  26852 goals  5.72 goals per course.  36912 verbs  7.86 verbs per course  1.37 verbs per goal
+Avancerad nivå exjobb
+   620 courses   4713 goals  7.60 goals per course.   8372 verbs  13.50 verbs per course  1.78 verbs per goal
+Grundnivå
+  7069 courses  47140 goals  6.67 goals per course.  58910 verbs  8.33 verbs per course  1.25 verbs per goal
+Grundnivåexjobb
+   391 courses   3477 goals  8.89 goals per course.   5468 verbs  13.98 verbs per course  1.57 verbs per goal
+
+---------- Most common verbs ----------
+---> (Level: -  )
+   30 ( 9.0%): redogöra
+   27 ( 8.1%): värdera
+   21 ( 6.3%): tillämpa
+   21 ( 6.3%): analysera
+   19 ( 5.7%): beskriva
+   17 ( 5.1%): reflektera
+   13 ( 3.9%): identifiera
+   10 ( 3.0%): planera
+   10 ( 3.0%): förklara
+    8 ( 2.4%): genomföra
+    7 ( 2.1%): diskutera
+Top 11 verbs cover  55.12% of all verb occurrences.
+---> (Level: BXX)
+    1 (16.7%): utnyttja
+    1 (16.7%): uppskatta
+    1 (16.7%): lösa
+    1 (16.7%): fördela
+    1 (16.7%): definiera
+    1 (16.7%): bedöma
+Top 6 verbs cover  100.00% of all verb occurrences.
+---> (No level info)
+  370 (10.1%): diskutera
+  261 ( 7.1%): redogöra
+  210 ( 5.7%): analysera
+  185 ( 5.0%): tillämpa
+  185 ( 5.0%): identifiera
+  182 ( 5.0%): reflektera
+  166 ( 4.5%): presentera
+  147 ( 4.0%): beskriva
+  142 ( 3.9%): förklara
+  131 ( 3.6%): kritiskt granska
+   94 ( 2.6%): använda
+Top 11 verbs cover  56.49% of all verb occurrences.
+---> Avancerad nivå
+ 2958 ( 8.0%): analysera
+ 2726 ( 7.4%): redogöra
+ 2075 ( 5.6%): diskutera
+ 1919 ( 5.2%): tillämpa
+ 1534 ( 4.2%): beskriva
+ 1419 ( 3.8%): förklara
+ 1285 ( 3.5%): reflektera
+ 1230 ( 3.3%): identifiera
+ 1202 ( 3.3%): värdera
+  970 ( 2.6%): utvärdera
+  822 ( 2.2%): genomföra
+Top 11 verbs cover  49.14% of all verb occurrences.
+---> Avancerad nivå exjobb
+  553 ( 6.6%): diskutera
+  519 ( 6.2%): analysera
+  509 ( 6.1%): genomföra
+  503 ( 6.0%): identifiera
+  445 ( 5.3%): redogöra
+  444 ( 5.3%): planera
+  423 ( 5.1%): utvärdera
+  409 ( 4.9%): bedöma
+  339 ( 4.0%): hantera
+  328 ( 3.9%): integrera
+  300 ( 3.6%): identifiera * *ytterlig
+Top 11 verbs cover  57.00% of all verb occurrences.
+---> Grundnivå
+ 7598 (12.9%): redogöra
+ 3270 ( 5.6%): diskutera
+ 3214 ( 5.5%): analysera
+ 3116 ( 5.3%): tillämpa
+ 2973 ( 5.0%): beskriva
+ 2407 ( 4.1%): använda
+ 2362 ( 4.0%): reflektera
+ 2217 ( 3.8%): förklara
+ 1737 ( 2.9%): identifiera
+ 1411 ( 2.4%): värdera
+ 1180 ( 2.0%): genomföra
+Top 11 verbs cover  53.45% of all verb occurrences.
+---> Grundnivåexjobb
+  493 ( 9.0%): diskutera
+  400 ( 7.3%): redogöra
+  296 ( 5.4%): formulera
+  241 ( 4.4%): genomföra
+  233 ( 4.3%): analysera
+  222 ( 4.1%): värdera
+  197 ( 3.6%): söka
+  182 ( 3.3%): planera
+  182 ( 3.3%): identifiera
+  173 ( 3.2%): tillämpa
+  164 ( 3.0%): tolka
+Top 11 verbs cover  50.90% of all verb occurrences.
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+         (Level: -  ):     59     45     73     44     69     42       332
+                        17.8%  13.6%  22.0%  13.3%  20.8%  12.7%      0.3%
+
+         (Level: BXX):      1      0      3      0      2      0         6
+                        16.7%   0.0%  50.0%   0.0%  33.3%   0.0%      0.0%
+
+      (No level info):    561    898    662    522    657    370      3670
+                        15.3%  24.5%  18.0%  14.2%  17.9%  10.1%      3.2%
+
+       Avancerad nivå:   3662   8197   7097   6379   7229   4348     36912
+                         9.9%  22.2%  19.2%  17.3%  19.6%  11.8%     32.5%
+
+Avancerad nivå exjobb:   1083    918   1556   1352   1855   1608      8372
+                        12.9%  11.0%  18.6%  16.1%  22.2%  19.2%      7.4%
+
+            Grundnivå:   7053  16062  12659   8081   9082   5973     58910
+                        12.0%  27.3%  21.5%  13.7%  15.4%  10.1%     51.8%
+
+      Grundnivåexjobb:    490   1001   1153    845   1153    826      5468
+                         9.0%  18.3%  21.1%  15.5%  21.1%  15.1%      4.8%
+
+
+--------------------------------------------------------------------------
+     max Bloom/course:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+         (Level: -  ):      1      2      4      3     12     27        49
+                         2.0%   4.1%   8.2%   6.1%  24.5%  55.1%      0.4%
+
+         (Level: BXX):      0      0      1      0      1      0         2
+                           0%     0%  50.0%     0%  50.0%     0%      0.0%
+
+      (No level info):     14     20     36     58    206    199       533
+                         2.6%   3.8%   6.8%  10.9%  38.6%  37.3%      4.1%
+
+       Avancerad nivå:      7    119    282    468   1338   2347      4561
+                         0.2%   2.6%   6.2%  10.3%  29.3%  51.5%     35.1%
+
+Avancerad nivå exjobb:      0      2      2      1     23    592       620
+                           0%   0.3%   0.3%   0.2%   3.7%  95.5%      4.8%
+
+            Grundnivå:     50    311    699    776   1701   3296      6833
+                         0.7%   4.6%  10.2%  11.4%  24.9%  48.2%     52.6%
+
+      Grundnivåexjobb:      0      4      1      6     29    349       389
+                           0%   1.0%   0.3%   1.5%   7.5%  89.7%      3.0%
+
+
+
+--------------------------------------------------------------------------
+     min Bloom/course:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+         (Level: -  ):     28      9     11      1      0      0        49
+                        57.1%  18.4%  22.4%   2.0%     0%     0%      0.4%
+
+         (Level: BXX):      1      0      1      0      0      0         2
+                        50.0%     0%  50.0%     0%     0%     0%      0.0%
+
+      (No level info):    325    135     48     17      6      2       533
+                        61.0%  25.3%   9.0%   3.2%   1.1%   0.4%      4.1%
+
+       Avancerad nivå:   2229   1673    466    126     50     17      4561
+                        48.9%  36.7%  10.2%   2.8%   1.1%   0.4%     35.1%
+
+Avancerad nivå exjobb:    553     56      9      2      0      0       620
+                        89.2%   9.0%   1.5%   0.3%     0%     0%      4.8%
+
+            Grundnivå:   3580   2363    683    138     40     29      6833
+                        52.4%  34.6%  10.0%   2.0%   0.6%   0.4%     52.6%
+
+      Grundnivåexjobb:    279     92     16      2      0      0       389
+                        71.7%  23.7%   4.1%   0.5%     0%     0%      3.0%
+
+
+
+average mean Bloom per course: 
+                 (Level: -  ):  2.4 
+                 (Level: BXX):  2.0 
+              (No level info):  2.2 
+               Avancerad nivå:  2.5 
+        Avancerad nivå exjobb:  2.8 
+                    Grundnivå:  2.2 
+              Grundnivåexjobb:  2.7 
+
+average variance Bloom per course: 
+                     (Level: -  ):  1.8 
+                     (Level: BXX):  1.0 
+                  (No level info):  1.9 
+                   Avancerad nivå:  1.8 
+            Avancerad nivå exjobb:  2.6 
+                        Grundnivå:  1.7 
+                  Grundnivåexjobb:  2.3 
+
+
+average median Bloom per course: 
+                   (Level: -  ):  2.4 
+                   (Level: BXX):  2.0 
+                (No level info):  2.0 
+                 Avancerad nivå:  2.4 
+          Avancerad nivå exjobb:  3.0 
+                      Grundnivå:  2.1 
+                Grundnivåexjobb:  2.6 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                        (Level: -  ):   12.5    5.0   10.2    1.8   12.8    6.8     49.0
+                                       25.5%  10.2%  20.9%   3.6%  26.0%  13.8%      0.4%
+
+                        (Level: BXX):    0.5      0    1.0      0    0.5      0      2.0
+                                       25.0%     0%  50.0%     0%  25.0%     0%      0.0%
+
+                     (No level info):   82.2  149.7   98.7   63.7   99.3   39.3    533.0
+                                       15.4%  28.1%  18.5%  12.0%  18.6%   7.4%      4.1%
+
+                      Avancerad nivå:  269.9 1326.8  884.9  723.6  951.9  403.9   4561.0
+                                        5.9%  29.1%  19.4%  15.9%  20.9%   8.9%     35.1%
+
+               Avancerad nivå exjobb:   68.4   45.0   65.6   79.4  254.1  107.5    620.0
+                                       11.0%   7.3%  10.6%  12.8%  41.0%  17.3%      4.8%
+
+                           Grundnivå:  766.9 2342.1 1668.9  693.3  877.9  483.8   6833.0
+                                       11.2%  34.3%  24.4%  10.1%  12.8%   7.1%     52.6%
+
+                     Grundnivåexjobb:   18.3   67.0  132.4   40.9   86.6   43.8    389.0
+                                        4.7%  17.2%  34.0%  10.5%  22.3%  11.3%      3.0%
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+        #verbs/course:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+------------------------------------------------------------------------------------------------------------------------------------------------
+         (Level: -  ):      9      2      5      3     11      3      5      3      3      6      2      0      0      2      1      3        58
+                        15.5%   3.4%   8.6%   5.2%  19.0%   5.2%   8.6%   5.2%   5.2%  10.3%   3.4%     0%     0%   3.4%   1.7%   5.2%      0.4%
+
+         (Level: BXX):      2      0      1      0      1      0      0      0      0      0      0      0      0      0      0      0         4
+                        50.0%     0%  25.0%     0%  25.0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%      0.0%
+
+      (No level info):     74     34     27     33     44     71     99     73     37     24     20     11     11     12      5     32       607
+                        12.2%   5.6%   4.4%   5.4%   7.2%  11.7%  16.3%  12.0%   6.1%   4.0%   3.3%   1.8%   1.8%   2.0%   0.8%   5.3%      4.5%
+
+       Avancerad nivå:    135    102    231    418    476    493    463    401    344    314    251    197    146    104    111    510      4696
+                         2.9%   2.2%   4.9%   8.9%  10.1%  10.5%   9.9%   8.5%   7.3%   6.7%   5.3%   4.2%   3.1%   2.2%   2.4%  10.9%     34.9%
+
+Avancerad nivå exjobb:      0      0      3      8      7     11      6     20     10      8     41     46     72     55     53    280       620
+                           0%     0%   0.5%   1.3%   1.1%   1.8%   1.0%   3.2%   1.6%   1.3%   6.6%   7.4%  11.6%   8.9%   8.5%  45.2%      4.6%
+
+            Grundnivå:    236    169    423    644    684    740    699    548    474    330    305    270    242    181    166    958      7069
+                         3.3%   2.4%   6.0%   9.1%   9.7%  10.5%   9.9%   7.8%   6.7%   4.7%   4.3%   3.8%   3.4%   2.6%   2.3%  13.6%     52.6%
+
+      Grundnivåexjobb:      2      0      8      4     11     11     14     20     23     20     34     30     24     29     16    145       391
+                         0.5%     0%   2.0%   1.0%   2.8%   2.8%   3.6%   5.1%   5.9%   5.1%   8.7%   7.7%   6.1%   7.4%   4.1%  37.1%      2.9%
+
+
+
+--------------------------------------------------------------------------
+#verbs/course (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+--------------------------------------------------------------------------
+           (Level: -  ):         9        21        22         6        58
+                             15.5%     36.2%     37.9%     10.3%      0.4%
+
+           (Level: BXX):         2         2         0         0         4
+                             50.0%     50.0%        0%        0%      0.0%
+
+        (No level info):        74       138       324        71       607
+                             12.2%     22.7%     53.4%     11.7%      4.5%
+
+         Avancerad nivå:       135      1227      2266      1068      4696
+                              2.9%     26.1%     48.3%     22.7%     34.9%
+
+  Avancerad nivå exjobb:         0        18        96       506       620
+                                0%      2.9%     15.5%     81.6%      4.6%
+
+              Grundnivå:       236      1920      3096      1817      7069
+                              3.3%     27.2%     43.8%     25.7%     52.6%
+
+        Grundnivåexjobb:         2        23       122       244       391
+                              0.5%      5.9%     31.2%     62.4%      2.9%
+
+
+--------------------------------------------------------------------------
+       max Bloom/goal:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+         (Level: -  ):     33     27     38     23     52     40       213
+                        15.5%  12.7%  17.8%  10.8%  24.4%  18.8%      0.3%
+
+         (Level: BXX):      0      0      2      0      2      0         4
+                           0%     0%  50.0%     0%  50.0%     0%      0.0%
+
+      (No level info):    182    400    433    322    556    333      2226
+                         8.2%  18.0%  19.5%  14.5%  25.0%  15.0%      3.1%
+
+       Avancerad nivå:   1273   4378   3980   3658   5345   3985     22619
+                         5.6%  19.4%  17.6%  16.2%  23.6%  17.6%     31.7%
+
+Avancerad nivå exjobb:    197    475    360    357    997   1466      3852
+                         5.1%  12.3%   9.3%   9.3%  25.9%  38.1%      5.4%
+
+            Grundnivå:   3384   9978   8306   5393   6991   5538     39590
+                         8.5%  25.2%  21.0%  13.6%  17.7%  14.0%     55.5%
+
+      Grundnivåexjobb:    126    478    318    419    781    761      2883
+                         4.4%  16.6%  11.0%  14.5%  27.1%  26.4%      4.0%
+
+
+
+--------------------------------------------------------------------------
+       min Bloom/goal:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+         (Level: -  ):     57     35     59     22     17     23       213
+                        26.8%  16.4%  27.7%  10.3%   8.0%  10.8%      0.3%
+
+         (Level: BXX):      1      0      2      0      1      0         4
+                        25.0%     0%  50.0%     0%  25.0%     0%      0.0%
+
+      (No level info):    554    596    484    263    180    149      2226
+                        24.9%  26.8%  21.7%  11.8%   8.1%   6.7%      3.1%
+
+       Avancerad nivå:   3527   6452   5204   3165   2724   1547     22619
+                        15.6%  28.5%  23.0%  14.0%  12.0%   6.8%     31.7%
+
+Avancerad nivå exjobb:   1066    461    963    455    647    260      3852
+                        27.7%  12.0%  25.0%  11.8%  16.8%   6.7%      5.4%
+
+            Grundnivå:   6728  12866   9289   4315   3817   2575     39590
+                        17.0%  32.5%  23.5%  10.9%   9.6%   6.5%     55.5%
+
+      Grundnivåexjobb:    477    702    762    370    354    218      2883
+                        16.5%  24.3%  26.4%  12.8%  12.3%   7.6%      4.0%
+
+
+
+---------------------------------------------------------------------------------
+diff. max and min Bloom/goal:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------
+                (Level: -  ):     13     28     13     23     10      3        90
+                               14.4%  31.1%  14.4%  25.6%  11.1%   3.3%      0.3%
+
+                (Level: BXX):      0      0      2      0      0      0         2
+                                  0%     0%  100.0%     0%     0%     0%      0.0%
+
+             (No level info):    115    232    193    195    235     32      1002
+                               11.5%  23.2%  19.3%  19.5%  23.5%   3.2%      3.4%
+
+              Avancerad nivå:   1800   2459   2250   2236    826    532     10103
+                               17.8%  24.3%  22.3%  22.1%   8.2%   5.3%     34.2%
+
+       Avancerad nivå exjobb:    346    512    366    783    224    291      2522
+                               13.7%  20.3%  14.5%  31.0%   8.9%  11.5%      8.5%
+
+                   Grundnivå:   2814   3862   2879   3133   1028    552     14268
+                               19.7%  27.1%  20.2%  22.0%   7.2%   3.9%     48.3%
+
+             Grundnivåexjobb:    198    365    312    432    142    121      1570
+                               12.6%  23.2%  19.9%  27.5%   9.0%   7.7%      5.3%
+
+
+
+average mean Bloom per goal: 
+               (Level: -  ):  2.3 
+               (Level: BXX):  2.5 
+            (No level info):  2.2 
+             Avancerad nivå:  2.4 
+      Avancerad nivå exjobb:  2.8 
+                  Grundnivå:  2.2 
+            Grundnivåexjobb:  2.6 
+
+
+average variance Bloom per goal: 
+                   (Level: -  ):  0.53 
+                   (Level: BXX):  0.5 
+                (No level info):  0.67 
+                 Avancerad nivå:  0.54 
+          Avancerad nivå exjobb:  0.91 
+                      Grundnivå:  0.4 
+                Grundnivåexjobb:  0.75 
+
+average median Bloom per goal: 
+                 (Level: -  ):  2.3 
+                 (Level: BXX):  2.5 
+              (No level info):  2.2 
+               Avancerad nivå:  2.4 
+        Avancerad nivå exjobb:  2.8 
+                    Grundnivå:  2.2 
+              Grundnivåexjobb:  2.7 
+
+---------------------------------------------------------------------------------------
+most common Bloom level (per goal):      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------------
+                      (Level: -  ):   43.5   30.5   48.0   22.8   37.3   30.8    213.0
+                                     20.4%  14.3%  22.5%  10.7%  17.5%  14.5%      0.3%
+
+                      (Level: BXX):    0.5      0    2.0      0    1.5      0      4.0
+                                     12.5%     0%  50.0%     0%  37.5%     0%      0.0%
+
+                   (No level info):  323.2  538.7  466.4  311.3  351.4  235.0   2226.0
+                                     14.5%  24.2%  21.0%  14.0%  15.8%  10.6%      3.1%
+
+                    Avancerad nivå: 2188.1 5453.3 4639.8 3608.5 4183.3 2546.0  22619.0
+                                      9.7%  24.1%  20.5%  16.0%  18.5%  11.3%     31.7%
+
+             Avancerad nivå exjobb:  505.5  445.9  663.9  583.2  935.5  718.1   3852.0
+                                     13.1%  11.6%  17.2%  15.1%  24.3%  18.6%      5.4%
+
+                         Grundnivå: 4781.4 11546.1 8955.8 5006.8 5487.7 3812.2  39590.0
+                                     12.1%  29.2%  22.6%  12.6%  13.9%   9.6%     55.5%
+
+                   Grundnivåexjobb:  254.5  573.7  565.0  424.8  630.9  434.1   2883.0
+                                      8.8%  19.9%  19.6%  14.7%  21.9%  15.1%      4.0%
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+          #verbs/goal:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+------------------------------------------------------------------------------------------------------------------------------------------------
+         (Level: -  ):     74    123     68     16      5      1      0      0      0      0      0      0      0      0      0      0       287
+                        25.8%  42.9%  23.7%   5.6%   1.7%   0.3%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%      0.3%
+
+         (Level: BXX):      9      2      2      0      0      0      0      0      0      0      0      0      0      0      0      0        13
+                        69.2%  15.4%  15.4%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%      0.0%
+
+      (No level info):    657   1224    624    327     40     10      0      1      0      0      0      0      0      0      0      0      2883
+                        22.8%  42.5%  21.6%  11.3%   1.4%   0.3%     0%   0.0%     0%     0%     0%     0%     0%     0%     0%     0%      3.4%
+
+       Avancerad nivå:   4233  12516   7178   2067    636    133     59     13      3      0      4      4      2      3      1      0     26852
+                        15.8%  46.6%  26.7%   7.7%   2.4%   0.5%   0.2%   0.0%   0.0%     0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     31.5%
+
+Avancerad nivå exjobb:    861   1330   1225    740    461     78     12      1      0      0      1      0      3      1      0      0      4713
+                        18.3%  28.2%  26.0%  15.7%   9.8%   1.7%   0.3%   0.0%     0%     0%   0.0%     0%   0.1%   0.0%     0%     0%      5.5%
+
+            Grundnivå:   7550  25322  10695   2597    700    165     56     31      8      8      3      1      1      2      1      0     47140
+                        16.0%  53.7%  22.7%   5.5%   1.5%   0.4%   0.1%   0.1%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     55.2%
+
+      Grundnivåexjobb:    594   1313    899    443    151     65      5      0      2      2      0      1      2      0      0      0      3477
+                        17.1%  37.8%  25.9%  12.7%   4.3%   1.9%   0.1%     0%   0.1%   0.1%     0%   0.0%   0.1%     0%     0%     0%      4.1%
+
+
+
+------------------------------------------------------------------------
+#verbs/goal (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+------------------------------------------------------------------------
+         (Level: -  ):        74       212         1         0       287
+                           25.8%     73.9%      0.3%        0%      0.3%
+
+         (Level: BXX):         9         4         0         0        13
+                           69.2%     30.8%        0%        0%      0.0%
+
+      (No level info):       657      2215        11         0      2883
+                           22.8%     76.8%      0.4%        0%      3.4%
+
+       Avancerad nivå:      4233     22397       212        10     26852
+                           15.8%     83.4%      0.8%      0.0%     31.5%
+
+Avancerad nivå exjobb:       861      3756        92         4      4713
+                           18.3%     79.7%      2.0%      0.1%      5.5%
+
+            Grundnivå:      7550     39314       271         5     47140
+                           16.0%     83.4%      0.6%      0.0%     55.2%
+
+      Grundnivåexjobb:       594      2806        74         3      3477
+                           17.1%     80.7%      2.1%      0.1%      4.1%
+
+
+
+---------- Statistics per SCB grouped----------
+(No SCB)
+   497 courses   1973 goals  3.97 goals per course.   2564 verbs  5.16 verbs per course  1.30 verbs per goal
+Humaniora och teologi
+  3068 courses  19667 goals  6.41 goals per course.  24858 verbs  8.10 verbs per course  1.26 verbs per goal
+Juridik och samhällsvetenskap
+  3946 courses  26964 goals  6.83 goals per course.  35504 verbs  9.00 verbs per course  1.32 verbs per goal
+Konstnärligt område
+   241 courses   1231 goals  5.11 goals per course.   1415 verbs  5.87 verbs per course  1.15 verbs per goal
+Medicin och odontologi
+   307 courses   3399 goals  11.07 goals per course.   3835 verbs  12.49 verbs per course  1.13 verbs per goal
+Naturvetenskap
+  1959 courses  10842 goals  5.53 goals per course.  14669 verbs  7.49 verbs per course  1.35 verbs per goal
+Teknik
+  2541 courses  15295 goals  6.02 goals per course.  21503 verbs  8.46 verbs per course  1.41 verbs per goal
+Vård och omsorg
+   544 courses   4175 goals  7.67 goals per course.   6654 verbs  12.23 verbs per course  1.59 verbs per goal
+Övrigt område
+   342 courses   1819 goals  5.32 goals per course.   2668 verbs  7.80 verbs per course  1.47 verbs per goal
+
+---------- Course levels per SCB-group ----------
+                                (Level: -  )   (Level: BXX)   (No level info)   Avancerad nivå   Avancerad nivå exjobb   Grundnivå   Grundnivåexjobb      Summa
+                Övrigt område              0              0                 0              133                      17         182                10        342
+                                        0.0%           0.0%              0.0%            38.9%                    5.0%       53.2%              2.9% 
+
+                       Teknik              4              2                 1             1151                     200        1102                81       2541
+                                        0.2%           0.1%              0.0%            45.3%                    7.9%       43.4%              3.2% 
+
+        Humaniora och teologi              3              0                10              737                     140        2059               119       3068
+                                        0.1%           0.0%              0.3%            24.0%                    4.6%       67.1%              3.9% 
+
+               Naturvetenskap             14              0                 7              805                     125         961                47       1959
+                                        0.7%           0.0%              0.4%            41.1%                    6.4%       49.1%              2.4% 
+
+Juridik och samhällsvetenskap              5              1                83             1396                     109        2240               112       3946
+                                        0.1%           0.0%              2.1%            35.4%                    2.8%       56.8%              2.8% 
+
+                                           0              0               497                0                       0           0                 0        497
+                                        0.0%           0.0%            100.0%             0.0%                    0.0%        0.0%              0.0% 
+
+       Medicin och odontologi              6              0                 0              135                       2         158                 6        307
+                                        2.0%           0.0%              0.0%            44.0%                    0.7%       51.5%              2.0% 
+
+              Vård och omsorg             24              1                 9              293                      27         180                10        544
+                                        4.4%           0.2%              1.7%            53.9%                    5.0%       33.1%              1.8% 
+
+          Konstnärligt område              2              0                 0               46                       0         187                 6        241
+                                        0.8%           0.0%              0.0%            19.1%                    0.0%       77.6%              2.5% 
+
+
+--------------------------------------
+                                Grundnivå   Grundnivåexjobb   Avancerad nivå   Avancerad nivå exjobb      Summa
+        Humaniora och teologi        2059               119              737                     140       3055
+                                    67.4%              3.9%            24.1%                    4.6% 
+
+Juridik och samhällsvetenskap        2240               112             1396                     109       3857
+                                    58.1%              2.9%            36.2%                    2.8% 
+
+               Naturvetenskap         961                47              805                     125       1938
+                                    49.6%              2.4%            41.5%                    6.4% 
+
+                       Teknik        1102                81             1151                     200       2534
+                                    43.5%              3.2%            45.4%                    7.9% 
+
+
+---------- Most common verbs ----------
+---> (No SCB)
+  301 (11.7%): diskutera
+  145 ( 5.7%): presentera
+  141 ( 5.5%): identifiera
+  135 ( 5.3%): analysera
+  132 ( 5.1%): förklara
+  129 ( 5.0%): reflektera
+  127 ( 5.0%): tillämpa
+  119 ( 4.6%): redogöra
+  115 ( 4.5%): beskriva
+  101 ( 3.9%): kritiskt granska
+   62 ( 2.4%): använda
+Top 11 verbs cover  58.78% of all verb occurrences.
+---> Humaniora och teologi
+ 3431 (13.8%): redogöra
+ 2163 ( 8.7%): diskutera
+ 1705 ( 6.9%): analysera
+ 1197 ( 4.8%): tillämpa
+  944 ( 3.8%): använda
+  851 ( 3.4%): identifiera
+  847 ( 3.4%): reflektera
+  717 ( 2.9%): värdera
+  680 ( 2.7%): beskriva
+  526 ( 2.1%): formulera
+  426 ( 1.7%): planera
+Top 11 verbs cover  54.26% of all verb occurrences.
+---> Juridik och samhällsvetenskap
+ 3428 ( 9.7%): redogöra
+ 2660 ( 7.5%): analysera
+ 2513 ( 7.1%): diskutera
+ 1805 ( 5.1%): reflektera
+ 1595 ( 4.5%): tillämpa
+ 1379 ( 3.9%): identifiera
+ 1232 ( 3.5%): värdera
+ 1212 ( 3.4%): beskriva
+  875 ( 2.5%): genomföra
+  842 ( 2.4%): använda
+  840 ( 2.4%): förklara
+Top 11 verbs cover  51.77% of all verb occurrences.
+---> Konstnärligt område
+  131 ( 9.3%): tillämpa
+  128 ( 9.0%): redogöra
+   82 ( 5.8%): reflektera
+   66 ( 4.7%): genomföra
+   64 ( 4.5%): analysera
+   61 ( 4.3%): använda
+   42 ( 3.0%): förklara
+   41 ( 2.9%): presentera
+   41 ( 2.9%): planera
+   40 ( 2.8%): beskriva
+   37 ( 2.6%): utföra
+Top 11 verbs cover  51.80% of all verb occurrences.
+---> Medicin och odontologi
+  399 (10.4%): redogöra
+  270 ( 7.0%): beskriva
+  229 ( 6.0%): tillämpa
+  206 ( 5.4%): förklara
+  159 ( 4.1%): reflektera
+  150 ( 3.9%): identifiera
+  145 ( 3.8%): värdera
+  134 ( 3.5%): analysera
+  126 ( 3.3%): bedöma
+  106 ( 2.8%): genomföra
+  102 ( 2.7%): diskutera
+Top 11 verbs cover  52.83% of all verb occurrences.
+---> Naturvetenskap
+ 1762 (12.0%): redogöra
+  730 ( 5.0%): tillämpa
+  720 ( 4.9%): beskriva
+  713 ( 4.9%): analysera
+  704 ( 4.8%): förklara
+  542 ( 3.7%): genomföra
+  524 ( 3.6%): använda
+  486 ( 3.3%): diskutera
+  440 ( 3.0%): lösa
+  410 ( 2.8%): presentera
+  381 ( 2.6%): planera
+Top 11 verbs cover  50.53% of all verb occurrences.
+---> Teknik
+ 1508 ( 7.0%): redogöra
+ 1244 ( 5.8%): analysera
+ 1144 ( 5.3%): beskriva
+ 1112 ( 5.2%): förklara
+  903 ( 4.2%): tillämpa
+  848 ( 3.9%): använda
+  800 ( 3.7%): diskutera
+  776 ( 3.6%): utvärdera
+  635 ( 3.0%): identifiera
+  555 ( 2.6%): planera
+  541 ( 2.5%): genomföra
+Top 11 verbs cover  46.81% of all verb occurrences.
+---> Vård och omsorg
+  497 ( 7.5%): tillämpa
+  418 ( 6.3%): värdera
+  414 ( 6.2%): redogöra
+  407 ( 6.1%): beskriva
+  366 ( 5.5%): analysera
+  365 ( 5.5%): reflektera
+  345 ( 5.2%): förklara
+  319 ( 4.8%): identifiera
+  218 ( 3.3%): diskutera
+  196 ( 2.9%): bedöma
+  179 ( 2.7%): planera
+Top 11 verbs cover  55.97% of all verb occurrences.
+---> Övrigt område
+  271 (10.2%): redogöra
+  159 ( 6.0%): reflektera
+  155 ( 5.8%): diskutera
+  136 ( 5.1%): beskriva
+  134 ( 5.0%): analysera
+  129 ( 4.8%): tillämpa
+  107 ( 4.0%): förklara
+   97 ( 3.6%): identifiera
+   82 ( 3.1%): värdera
+   73 ( 2.7%): genomföra
+   59 ( 2.2%): presentera
+Top 11 verbs cover  52.55% of all verb occurrences.
+
+----------------------------------------------------------------------------------
+        Verbs per Bloom level:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------------------
+                     (No SCB):    472    607    450    330    456    249      2564
+                                18.4%  23.7%  17.6%  12.9%  17.8%   9.7%      2.3%
+
+        Humaniora och teologi:   2523   6918   4569   4297   3990   2561     24858
+                                10.1%  27.8%  18.4%  17.3%  16.1%  10.3%     21.9%
+
+Juridik och samhällsvetenskap:   3591   8316   6047   6065   7507   3978     35504
+                                10.1%  23.4%  17.0%  17.1%  21.1%  11.2%     31.2%
+
+          Konstnärligt område:    148    254    442    149    183    239      1415
+                                10.5%  18.0%  31.2%  10.5%  12.9%  16.9%      1.2%
+
+       Medicin och odontologi:    490    930    951    405    735    324      3835
+                                12.8%  24.3%  24.8%  10.6%  19.2%   8.4%      3.4%
+
+               Naturvetenskap:   1450   4147   3709   1715   1851   1797     14669
+                                 9.9%  28.3%  25.3%  11.7%  12.6%  12.3%     12.9%
+
+                       Teknik:   3041   3969   5278   2951   3030   3234     21503
+                                14.1%  18.5%  24.5%  13.7%  14.1%  15.0%     18.9%
+
+              Vård och omsorg:    826   1312   1327    889   1751    549      6654
+                                12.4%  19.7%  19.9%  13.4%  26.3%   8.3%      5.9%
+
+                Övrigt område:    368    668    430    422    544    236      2668
+                                13.8%  25.0%  16.1%  15.8%  20.4%   8.8%      2.3%
+
+
+----------------------------------------------------------------------------------
+             max Bloom/course:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------------------
+                     (No SCB):     14     14     33     51    166    145       423
+                                 3.3%   3.3%   7.8%  12.1%  39.2%  34.3%      3.3%
+
+        Humaniora och teologi:     13    131    229    391    798   1374      2936
+                                 0.4%   4.5%   7.8%  13.3%  27.2%  46.8%     22.6%
+
+Juridik och samhällsvetenskap:     17     96    163    394   1092   2066      3828
+                                 0.4%   2.5%   4.3%  10.3%  28.5%  54.0%     29.5%
+
+          Konstnärligt område:      3      6     38     17     33    134       231
+                                 1.3%   2.6%  16.5%   7.4%  14.3%  58.0%      1.8%
+
+       Medicin och odontologi:      5     20     22     18     88    152       305
+                                 1.6%   6.6%   7.2%   5.9%  28.9%  49.8%      2.3%
+
+               Naturvetenskap:      2    133    308    173    367    953      1936
+                                 0.1%   6.9%  15.9%   8.9%  19.0%  49.2%     14.9%
+
+                       Teknik:     13     42    211    202    444   1551      2463
+                                 0.5%   1.7%   8.6%   8.2%  18.0%  63.0%     19.0%
+
+              Vård och omsorg:      1      7     16     16    188    299       527
+                                 0.2%   1.3%   3.0%   3.0%  35.7%  56.7%      4.1%
+
+                Övrigt område:      4      9      5     50    134    136       338
+                                 1.2%   2.7%   1.5%  14.8%  39.6%  40.2%      2.6%
+
+
+
+----------------------------------------------------------------------------------
+             min Bloom/course:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------------------
+                     (No SCB):    270     90     43     13      5      2       423
+                                63.8%  21.3%  10.2%   3.1%   1.2%   0.5%      3.3%
+
+        Humaniora och teologi:   1389   1190    239     76     27     15      2936
+                                47.3%  40.5%   8.1%   2.6%   0.9%   0.5%     22.6%
+
+Juridik och samhällsvetenskap:   2032   1313    333    100     43      7      3828
+                                53.1%  34.3%   8.7%   2.6%   1.1%   0.2%     29.5%
+
+          Konstnärligt område:     98     70     49      6      2      6       231
+                                42.4%  30.3%  21.2%   2.6%   0.9%   2.6%      1.8%
+
+       Medicin och odontologi:    186     87     28      2      2      0       305
+                                61.0%  28.5%   9.2%   0.7%   0.7%     0%      2.3%
+
+               Naturvetenskap:    894    816    197     20      6      3      1936
+                                46.2%  42.1%  10.2%   1.0%   0.3%   0.2%     14.9%
+
+                       Teknik:   1565    531    290     53      9     15      2463
+                                63.5%  21.6%  11.8%   2.2%   0.4%   0.6%     19.0%
+
+              Vård och omsorg:    366    132     24      4      1      0       527
+                                69.4%  25.0%   4.6%   0.8%   0.2%     0%      4.1%
+
+                Övrigt område:    195     99     31     12      1      0       338
+                                57.7%  29.3%   9.2%   3.6%   0.3%     0%      2.6%
+
+
+
+average mean Bloom per course: 
+                     (No SCB):  2.1 
+        Humaniora och teologi:  2.3 
+Juridik och samhällsvetenskap:  2.5 
+          Konstnärligt område:  2.4 
+       Medicin och odontologi:  2.1 
+               Naturvetenskap:  2.1 
+                       Teknik:  2.4 
+              Vård och omsorg:  2.4 
+                Övrigt område:  2.3 
+
+average variance Bloom per course: 
+                         (No SCB):  1.9 
+            Humaniora och teologi:  1.7 
+    Juridik och samhällsvetenskap:  1.8 
+              Konstnärligt område:  1.7 
+           Medicin och odontologi:  1.7 
+                   Naturvetenskap:  1.6 
+                           Teknik:  2.0 
+                  Vård och omsorg:  1.9 
+                    Övrigt område:  1.8 
+
+
+average median Bloom per course: 
+                       (No SCB):  2.0 
+          Humaniora och teologi:  2.2 
+  Juridik och samhällsvetenskap:  2.4 
+            Konstnärligt område:  2.3 
+         Medicin och odontologi:  2.0 
+                 Naturvetenskap:  2.0 
+                         Teknik:  2.3 
+                Vård och omsorg:  2.4 
+                  Övrigt område:  2.2 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                            (No SCB):   80.0  102.2   76.6   50.6   79.8   33.7    423.0
+                                       18.9%  24.2%  18.1%  12.0%  18.9%   8.0%      3.3%
+
+               Humaniora och teologi:  259.2 1066.9  540.2  422.6  443.9  203.3   2936.0
+                                        8.8%  36.3%  18.4%  14.4%  15.1%   6.9%     22.6%
+
+       Juridik och samhällsvetenskap:  279.6 1120.0  627.2  624.5  916.5  260.3   3828.0
+                                        7.3%  29.3%  16.4%  16.3%  23.9%   6.8%     29.5%
+
+                 Konstnärligt område:   24.4   44.8   88.2   16.5   21.8   35.3    231.0
+                                       10.6%  19.4%  38.2%   7.1%   9.4%  15.3%      1.8%
+
+              Medicin och odontologi:   34.8  103.5   96.7   11.8   48.6    9.6    305.0
+                                       11.4%  33.9%  31.7%   3.9%  15.9%   3.1%      2.3%
+
+                      Naturvetenskap:  120.9  719.3  586.3  137.9  177.5  194.0   1936.0
+                                        6.2%  37.2%  30.3%   7.1%   9.2%  10.0%     14.9%
+
+                              Teknik:  331.4  522.2  712.5  254.2  323.8  319.0   2463.0
+                                       13.5%  21.2%  28.9%  10.3%  13.1%  13.0%     19.0%
+
+                     Vård och omsorg:   46.7  146.6   82.4   40.0  197.6   13.6    527.0
+                                        8.9%  27.8%  15.6%   7.6%  37.5%   2.6%      4.1%
+
+                       Övrigt område:   41.8  109.9   51.7   44.6   73.6   16.3    338.0
+                                       12.4%  32.5%  15.3%  13.2%  21.8%   4.8%      2.6%
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+                #verbs/course:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+                     (No SCB):     74     32     19     30     35     57     90     65     31     15     13     10      7      8      3      8       497
+                                14.9%   6.4%   3.8%   6.0%   7.0%  11.5%  18.1%  13.1%   6.2%   3.0%   2.6%   2.0%   1.4%   1.6%   0.6%   1.6%      3.7%
+
+        Humaniora och teologi:    132     87    218    405    334    345    247    171    145     86    121     91     62     82     61    481      3068
+                                 4.3%   2.8%   7.1%  13.2%  10.9%  11.2%   8.1%   5.6%   4.7%   2.8%   3.9%   3.0%   2.0%   2.7%   2.0%  15.7%     22.8%
+
+Juridik och samhällsvetenskap:    118     74    163    292    356    380    385    352    253    223    203    159    131    111     95    651      3946
+                                 3.0%   1.9%   4.1%   7.4%   9.0%   9.6%   9.8%   8.9%   6.4%   5.7%   5.1%   4.0%   3.3%   2.8%   2.4%  16.5%     29.3%
+
+          Konstnärligt område:     10      8     19     33     32     24     32     19     19     12      9      5      6      4      1      8       241
+                                 4.1%   3.3%   7.9%  13.7%  13.3%  10.0%  13.3%   7.9%   7.9%   5.0%   3.7%   2.1%   2.5%   1.7%   0.4%   3.3%      1.8%
+
+       Medicin och odontologi:      2      8     13     10     20     16     18     13     20     12     19     20     18     12     12     94       307
+                                 0.7%   2.6%   4.2%   3.3%   6.5%   5.2%   5.9%   4.2%   6.5%   3.9%   6.2%   6.5%   5.9%   3.9%   3.9%  30.6%      2.3%
+
+               Naturvetenskap:     23     49    148    165    191    217    222    169    132     95     79     87    119     57     55    151      1959
+                                 1.2%   2.5%   7.6%   8.4%   9.7%  11.1%  11.3%   8.6%   6.7%   4.8%   4.0%   4.4%   6.1%   2.9%   2.8%   7.7%     14.6%
+
+                       Teknik:     78     44    103    136    201    214    227    209    217    192    165    139    113     72     89    342      2541
+                                 3.1%   1.7%   4.1%   5.4%   7.9%   8.4%   8.9%   8.2%   8.5%   7.6%   6.5%   5.5%   4.4%   2.8%   3.5%  13.5%     18.9%
+
+              Vård och omsorg:     17      1      6     10     30     30     30     32     43     42     35     26     25     31     26    160       544
+                                 3.1%   0.2%   1.1%   1.8%   5.5%   5.5%   5.5%   5.9%   7.9%   7.7%   6.4%   4.8%   4.6%   5.7%   4.8%  29.4%      4.0%
+
+                Övrigt område:      4      4      9     29     35     46     35     35     31     25      9     17     14      6     10     33       342
+                                 1.2%   1.2%   2.6%   8.5%  10.2%  13.5%  10.2%  10.2%   9.1%   7.3%   2.6%   5.0%   4.1%   1.8%   2.9%   9.6%      2.5%
+
+
+
+--------------------------------------------------------------------------------
+      #verbs/course (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+--------------------------------------------------------------------------------
+                     (No SCB):        74       116       271        36       497
+                                   14.9%     23.3%     54.5%      7.2%      3.7%
+
+        Humaniora och teologi:       132      1044      1115       777      3068
+                                    4.3%     34.0%     36.3%     25.3%     22.8%
+
+Juridik och samhällsvetenskap:       118       885      1796      1147      3946
+                                    3.0%     22.4%     45.5%     29.1%     29.3%
+
+          Konstnärligt område:        10        92       115        24       241
+                                    4.1%     38.2%     47.7%     10.0%      1.8%
+
+       Medicin och odontologi:         2        51        98       156       307
+                                    0.7%     16.6%     31.9%     50.8%      2.3%
+
+               Naturvetenskap:        23       553       914       469      1959
+                                    1.2%     28.2%     46.7%     23.9%     14.6%
+
+                       Teknik:        78       484      1224       755      2541
+                                    3.1%     19.0%     48.2%     29.7%     18.9%
+
+              Vård och omsorg:        17        47       212       268       544
+                                    3.1%      8.6%     39.0%     49.3%      4.0%
+
+                Övrigt område:         4        77       181        80       342
+                                    1.2%     22.5%     52.9%     23.4%      2.5%
+
+
+----------------------------------------------------------------------------------
+               max Bloom/goal:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------------------
+                     (No SCB):    144    267    309    211    406    221      1558
+                                 9.2%  17.1%  19.8%  13.5%  26.1%  14.2%      2.2%
+
+        Humaniora och teologi:   1039   4161   2952   2772   3102   2434     16460
+                                 6.3%  25.3%  17.9%  16.8%  18.8%  14.8%     23.1%
+
+Juridik och samhällsvetenskap:   1248   4412   3168   3650   5541   3652     21671
+                                 5.8%  20.4%  14.6%  16.8%  25.6%  16.9%     30.4%
+
+          Konstnärligt område:     90    162    316     88    150    210      1016
+                                 8.9%  15.9%  31.1%   8.7%  14.8%  20.7%      1.4%
+
+       Medicin och odontologi:    213    633    479    220    542    308      2395
+                                 8.9%  26.4%  20.0%   9.2%  22.6%  12.9%      3.4%
+
+               Naturvetenskap:    595   2713   2294    886   1300   1603      9391
+                                 6.3%  28.9%  24.4%   9.4%  13.8%  17.1%     13.2%
+
+                       Teknik:   1417   2381   3061   1698   2031   2954     13542
+                                10.5%  17.6%  22.6%  12.5%  15.0%  21.8%     19.0%
+
+              Vård och omsorg:    255    660    635    385   1247    526      3708
+                                 6.9%  17.8%  17.1%  10.4%  33.6%  14.2%      5.2%
+
+                Övrigt område:    194    347    223    262    405    215      1646
+                                11.8%  21.1%  13.5%  15.9%  24.6%  13.1%      2.3%
+
+
+
+----------------------------------------------------------------------------------
+               min Bloom/goal:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------------------
+                     (No SCB):    466    355    342    184    111    100      1558
+                                29.9%  22.8%  22.0%  11.8%   7.1%   6.4%      2.2%
+
+        Humaniora och teologi:   2406   5509   3491   2157   1634   1263     16460
+                                14.6%  33.5%  21.2%  13.1%   9.9%   7.7%     23.1%
+
+Juridik och samhällsvetenskap:   3459   6561   4303   3039   2973   1336     21671
+                                16.0%  30.3%  19.9%  14.0%  13.7%   6.2%     30.4%
+
+          Konstnärligt område:    141    214    360    100     79    122      1016
+                                13.9%  21.1%  35.4%   9.8%   7.8%  12.0%      1.4%
+
+       Medicin och odontologi:    454    716    666    192    281     86      2395
+                                19.0%  29.9%  27.8%   8.0%  11.7%   3.6%      3.4%
+
+               Naturvetenskap:   1414   3338   2670    792    682    495      9391
+                                15.1%  35.5%  28.4%   8.4%   7.3%   5.3%     13.2%
+
+                       Teknik:   2943   2961   3776   1466   1258   1138     13542
+                                21.7%  21.9%  27.9%  10.8%   9.3%   8.4%     19.0%
+
+              Vård och omsorg:    774    953    856    439    537    149      3708
+                                20.9%  25.7%  23.1%  11.8%  14.5%   4.0%      5.2%
+
+                Övrigt område:    353    505    299    221    185     83      1646
+                                21.4%  30.7%  18.2%  13.4%  11.2%   5.0%      2.3%
+
+
+
+----------------------------------------------------------------------------------
+ diff. max and min Bloom/goal:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------------------
+                     (No SCB):     65    165    118    115    219     18       700
+                                 9.3%  23.6%  16.9%  16.4%  31.3%   2.6%      2.4%
+
+        Humaniora och teologi:   1303   1439   1426   1401    328    268      6165
+                                21.1%  23.3%  23.1%  22.7%   5.3%   4.3%     20.9%
+
+Juridik och samhällsvetenskap:   1644   2338   1934   2326    813    566      9621
+                                17.1%  24.3%  20.1%  24.2%   8.5%   5.9%     32.6%
+
+          Konstnärligt område:     61     66     52     75     22     13       289
+                                21.1%  22.8%  18.0%  26.0%   7.6%   4.5%      1.0%
+
+       Medicin och odontologi:    237    252    196    210     68     47      1010
+                                23.5%  25.0%  19.4%  20.8%   6.7%   4.7%      3.4%
+
+               Naturvetenskap:    667    918    648    821    320    192      3566
+                                18.7%  25.7%  18.2%  23.0%   9.0%   5.4%     12.1%
+
+                       Teknik:    780   1606   1133   1259    466    269      5513
+                                14.1%  29.1%  20.6%  22.8%   8.5%   4.9%     18.7%
+
+              Vård och omsorg:    388    508    387    408    168    130      1989
+                                19.5%  25.5%  19.5%  20.5%   8.4%   6.5%      6.7%
+
+                Övrigt område:    141    166    121    187     61     28       704
+                                20.0%  23.6%  17.2%  26.6%   8.7%   4.0%      2.4%
+
+
+
+  average mean Bloom per goal: 
+                     (No SCB):  2.2 
+        Humaniora och teologi:  2.3 
+Juridik och samhällsvetenskap:  2.4 
+          Konstnärligt område:  2.4 
+       Medicin och odontologi:  2.1 
+               Naturvetenskap:  2.1 
+                       Teknik:  2.3 
+              Vård och omsorg:  2.4 
+                Övrigt område:  2.2 
+
+
+average variance Bloom per goal: 
+                       (No SCB):  0.74 
+          Humaniora och teologi:  0.41 
+  Juridik och samhällsvetenskap:  0.56 
+            Konstnärligt område:  0.35 
+         Medicin och odontologi:  0.45 
+                 Naturvetenskap:  0.45 
+                         Teknik:  0.48 
+                Vård och omsorg:  0.65 
+                  Övrigt område:  0.51 
+
+average median Bloom per goal: 
+                     (No SCB):  2.1 
+        Humaniora och teologi:  2.3 
+Juridik och samhällsvetenskap:  2.4 
+          Konstnärligt område:  2.4 
+       Medicin och odontologi:  2.1 
+               Naturvetenskap:  2.1 
+                       Teknik:  2.3 
+              Vård och omsorg:  2.4 
+                Övrigt område:  2.2 
+
+---------------------------------------------------------------------------------------
+most common Bloom level (per goal):      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------------
+                          (No SCB):  267.1  358.1  328.5  208.1  236.0  160.2   1558.0
+                                     17.1%  23.0%  21.1%  13.4%  15.1%  10.3%      2.2%
+
+             Humaniora och teologi: 1620.4 4879.3 3211.6 2605.5 2435.8 1707.4  16460.0
+                                      9.8%  29.6%  19.5%  15.8%  14.8%  10.4%     23.1%
+
+     Juridik och samhällsvetenskap: 2099.2 5519.3 3811.0 3527.0 4430.1 2284.4  21671.0
+                                      9.7%  25.5%  17.6%  16.3%  20.4%  10.5%     30.4%
+
+               Konstnärligt område:  110.5  189.4  343.8  100.5  109.2  162.6   1016.0
+                                     10.9%  18.6%  33.8%   9.9%  10.8%  16.0%      1.4%
+
+            Medicin och odontologi:  308.0  677.3  591.7  217.9  434.2  166.0   2395.0
+                                     12.9%  28.3%  24.7%   9.1%  18.1%   6.9%      3.4%
+
+                    Naturvetenskap:  914.8 3014.8 2540.6  934.0 1018.8  967.9   9391.0
+                                      9.7%  32.1%  27.1%   9.9%  10.8%  10.3%     13.2%
+
+                            Teknik: 2054.1 2692.5 3470.4 1674.4 1723.8 1926.8  13542.0
+                                     15.2%  19.9%  25.6%  12.4%  12.7%  14.2%     19.0%
+
+                   Vård och omsorg:  468.1  827.8  772.7  440.1  933.9  265.4   3708.0
+                                     12.6%  22.3%  20.8%  11.9%  25.2%   7.2%      5.2%
+
+                     Övrigt område:  254.4  429.7  270.7  250.0  305.7  135.6   1646.0
+                                     15.5%  26.1%  16.4%  15.2%  18.6%   8.2%      2.3%
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+                  #verbs/goal:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+                     (No SCB):    415    858    424    251     22      2      0      1      0      0      0      0      0      0      0      0      1973
+                                21.0%  43.5%  21.5%  12.7%   1.1%   0.1%     0%   0.1%     0%     0%     0%     0%     0%     0%     0%     0%      2.3%
+
+        Humaniora och teologi:   3207  10295   4521   1163    415     40     16      9      0      0      0      0      0      1      0      0     19667
+                                16.3%  52.3%  23.0%   5.9%   2.1%   0.2%   0.1%   0.0%     0%     0%     0%     0%     0%   0.0%     0%     0%     23.0%
+
+Juridik och samhällsvetenskap:   5293  12050   6724   2029    632    138     64      7      7      5      5      4      5      1      0      0     26964
+                                19.6%  44.7%  24.9%   7.5%   2.3%   0.5%   0.2%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     0%     31.6%
+
+          Konstnärligt område:    215    727    219     44     18      6      0      1      0      1      0      0      0      0      0      0      1231
+                                17.5%  59.1%  17.8%   3.6%   1.5%   0.5%     0%   0.1%     0%   0.1%     0%     0%     0%     0%     0%     0%      1.4%
+
+       Medicin och odontologi:   1004   1385    725    195     52     29      2      6      1      0      0      0      0      0      0      0      3399
+                                29.5%  40.7%  21.3%   5.7%   1.5%   0.9%   0.1%   0.2%   0.0%     0%     0%     0%     0%     0%     0%     0%      4.0%
+
+               Naturvetenskap:   1451   5825   2404    814    267     40     23      5      2      0      1      1      3      4      2      0     10842
+                                13.4%  53.7%  22.2%   7.5%   2.5%   0.4%   0.2%   0.0%   0.0%     0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     12.7%
+
+                       Teknik:   1753   8029   3812   1170    366    137     13     12      0      2      0      1      0      0      0      0     15295
+                                11.5%  52.5%  24.9%   7.6%   2.4%   0.9%   0.1%   0.1%     0%   0.0%     0%   0.0%     0%     0%     0%     0%     17.9%
+
+              Vård och omsorg:    467   1719   1372    378    171     50      9      5      2      2      0      0      0      0      0      0      4175
+                                11.2%  41.2%  32.9%   9.1%   4.1%   1.2%   0.2%   0.1%   0.0%   0.0%     0%     0%     0%     0%     0%     0%      4.9%
+
+                Övrigt område:    173    942    490    146     50     10      5      0      1      0      2      0      0      0      0      0      1819
+                                 9.5%  51.8%  26.9%   8.0%   2.7%   0.5%   0.3%     0%   0.1%     0%   0.1%     0%     0%     0%     0%     0%      2.1%
+
+
+
+--------------------------------------------------------------------------------
+        #verbs/goal (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+--------------------------------------------------------------------------------
+                     (No SCB):       415      1555         3         0      1973
+                                   21.0%     78.8%      0.2%        0%      2.3%
+
+        Humaniora och teologi:      3207     16394        65         1     19667
+                                   16.3%     83.4%      0.3%      0.0%     23.0%
+
+Juridik och samhällsvetenskap:      5293     21435       226        10     26964
+                                   19.6%     79.5%      0.8%      0.0%     31.6%
+
+          Konstnärligt område:       215      1008         8         0      1231
+                                   17.5%     81.9%      0.6%        0%      1.4%
+
+       Medicin och odontologi:      1004      2357        38         0      3399
+                                   29.5%     69.3%      1.1%        0%      4.0%
+
+               Naturvetenskap:      1451      9310        71        10     10842
+                                   13.4%     85.9%      0.7%      0.1%     12.7%
+
+                       Teknik:      1753     13377       164         1     15295
+                                   11.5%     87.5%      1.1%      0.0%     17.9%
+
+              Vård och omsorg:       467      3640        68         0      4175
+                                   11.2%     87.2%      1.6%        0%      4.9%
+
+                Övrigt område:       173      1628        18         0      1819
+                                    9.5%     89.5%      1.0%        0%      2.1%
+
+
+
+---------- Statistics per CourseLevel----------
+
+   607 courses   2883 goals  4.75 goals per course.   3670 verbs  6.05 verbs per course  1.27 verbs per goal
+-  
+    58 courses    287 goals  4.95 goals per course.    332 verbs  5.72 verbs per course  1.16 verbs per goal
+A1E
+   134 courses   1010 goals  7.54 goals per course.   1702 verbs  12.70 verbs per course  1.69 verbs per goal
+A1F
+   953 courses   5132 goals  5.39 goals per course.   7334 verbs  7.70 verbs per course  1.43 verbs per goal
+A1N
+  1849 courses   9157 goals  4.95 goals per course.  12626 verbs  6.83 verbs per course  1.38 verbs per goal
+A2E
+   486 courses   3703 goals  7.62 goals per course.   6670 verbs  13.72 verbs per course  1.80 verbs per goal
+AXX
+  1894 courses  12563 goals  6.63 goals per course.  16952 verbs  8.95 verbs per course  1.35 verbs per goal
+BXX
+     4 courses     13 goals  3.25 goals per course.      6 verbs  1.50 verbs per course  0.46 verbs per goal
+G1E
+    28 courses    190 goals  6.79 goals per course.    270 verbs  9.64 verbs per course  1.42 verbs per goal
+G1F
+  1991 courses  12376 goals  6.22 goals per course.  16484 verbs  8.28 verbs per course  1.33 verbs per goal
+G1N
+  4033 courses  27934 goals  6.93 goals per course.  33267 verbs  8.25 verbs per course  1.19 verbs per goal
+G2E
+   363 courses   3287 goals  9.06 goals per course.   5198 verbs  14.32 verbs per course  1.58 verbs per goal
+G2F
+   787 courses   4996 goals  6.35 goals per course.   6691 verbs  8.50 verbs per course  1.34 verbs per goal
+GXX
+   258 courses   1834 goals  7.11 goals per course.   2468 verbs  9.57 verbs per course  1.35 verbs per goal
+
+---------- Most common verbs ----------
+---> 
+  370 (10.1%): diskutera
+  261 ( 7.1%): redogöra
+  210 ( 5.7%): analysera
+  185 ( 5.0%): tillämpa
+  185 ( 5.0%): identifiera
+  182 ( 5.0%): reflektera
+  166 ( 4.5%): presentera
+  147 ( 4.0%): beskriva
+  142 ( 3.9%): förklara
+  131 ( 3.6%): kritiskt granska
+   94 ( 2.6%): använda
+Top 11 verbs cover  56.49% of all verb occurrences.
+---> -  
+   30 ( 9.0%): redogöra
+   27 ( 8.1%): värdera
+   21 ( 6.3%): tillämpa
+   21 ( 6.3%): analysera
+   19 ( 5.7%): beskriva
+   17 ( 5.1%): reflektera
+   13 ( 3.9%): identifiera
+   10 ( 3.0%): planera
+   10 ( 3.0%): förklara
+    8 ( 2.4%): genomföra
+    7 ( 2.1%): diskutera
+Top 11 verbs cover  55.12% of all verb occurrences.
+---> A1E
+  115 ( 6.8%): diskutera
+   90 ( 5.3%): redogöra
+   84 ( 4.9%): genomföra
+   83 ( 4.9%): identifiera
+   82 ( 4.8%): värdera
+   82 ( 4.8%): analysera
+   78 ( 4.6%): planera
+   75 ( 4.4%): formulera
+   73 ( 4.3%): tillämpa
+   61 ( 3.6%): bedöma
+   48 ( 2.8%): kritiskt granska
+Top 11 verbs cover  51.18% of all verb occurrences.
+---> A1F
+  532 ( 7.3%): analysera
+  484 ( 6.6%): redogöra
+  395 ( 5.4%): tillämpa
+  313 ( 4.3%): diskutera
+  306 ( 4.2%): beskriva
+  266 ( 3.6%): förklara
+  258 ( 3.5%): identifiera
+  243 ( 3.3%): reflektera
+  242 ( 3.3%): utvärdera
+  194 ( 2.6%): värdera
+  173 ( 2.4%): använda
+Top 11 verbs cover  46.44% of all verb occurrences.
+---> A1N
+ 1288 (10.2%): redogöra
+ 1183 ( 9.4%): analysera
+  861 ( 6.8%): diskutera
+  728 ( 5.8%): tillämpa
+  544 ( 4.3%): beskriva
+  521 ( 4.1%): identifiera
+  508 ( 4.0%): reflektera
+  461 ( 3.7%): förklara
+  442 ( 3.5%): värdera
+  300 ( 2.4%): bedöma
+  259 ( 2.1%): formulera
+Top 11 verbs cover  56.19% of all verb occurrences.
+---> A2E
+  438 ( 6.6%): diskutera
+  437 ( 6.6%): analysera
+  425 ( 6.4%): genomföra
+  420 ( 6.3%): identifiera
+  411 ( 6.2%): utvärdera
+  366 ( 5.5%): planera
+  355 ( 5.3%): redogöra
+  348 ( 5.2%): bedöma
+  301 ( 4.5%): hantera
+  291 ( 4.4%): integrera
+  261 ( 3.9%): identifiera * *ytterlig
+Top 11 verbs cover  60.76% of all verb occurrences.
+---> AXX
+ 1243 ( 7.3%): analysera
+  954 ( 5.6%): redogöra
+  901 ( 5.3%): diskutera
+  796 ( 4.7%): tillämpa
+  692 ( 4.1%): förklara
+  684 ( 4.0%): beskriva
+  566 ( 3.3%): värdera
+  534 ( 3.2%): reflektera
+  487 ( 2.9%): utvärdera
+  452 ( 2.7%): genomföra
+  451 ( 2.7%): identifiera
+Top 11 verbs cover  45.78% of all verb occurrences.
+---> BXX
+    1 (16.7%): utnyttja
+    1 (16.7%): uppskatta
+    1 (16.7%): lösa
+    1 (16.7%): fördela
+    1 (16.7%): definiera
+    1 (16.7%): bedöma
+Top 6 verbs cover  100.00% of all verb occurrences.
+---> G1E
+   20 ( 7.4%): analysera
+   19 ( 7.0%): presentera
+   17 ( 6.3%): tillämpa
+   13 ( 4.8%): redogöra
+   13 ( 4.8%): planera
+   13 ( 4.8%): genomföra
+   13 ( 4.8%): formulera
+   12 ( 4.4%): granska
+   11 ( 4.1%): diskutera
+    8 ( 3.0%): värdera
+    8 ( 3.0%): kritiskt granska
+Top 11 verbs cover  54.44% of all verb occurrences.
+---> G1F
+ 1899 (11.5%): redogöra
+  938 ( 5.7%): tillämpa
+  927 ( 5.6%): analysera
+  896 ( 5.4%): beskriva
+  819 ( 5.0%): diskutera
+  797 ( 4.8%): använda
+  670 ( 4.1%): förklara
+  530 ( 3.2%): reflektera
+  496 ( 3.0%): identifiera
+  311 ( 1.9%): genomföra
+  304 ( 1.8%): värdera
+Top 11 verbs cover  52.09% of all verb occurrences.
+---> G1N
+ 4675 (14.1%): redogöra
+ 1947 ( 5.9%): diskutera
+ 1739 ( 5.2%): analysera
+ 1730 ( 5.2%): beskriva
+ 1719 ( 5.2%): tillämpa
+ 1442 ( 4.3%): reflektera
+ 1285 ( 3.9%): förklara
+ 1274 ( 3.8%): använda
+ 1001 ( 3.0%): identifiera
+  896 ( 2.7%): värdera
+  670 ( 2.0%): genomföra
+Top 11 verbs cover  55.24% of all verb occurrences.
+---> G2E
+  482 ( 9.3%): diskutera
+  387 ( 7.4%): redogöra
+  283 ( 5.4%): formulera
+  228 ( 4.4%): genomföra
+  214 ( 4.1%): värdera
+  213 ( 4.1%): analysera
+  192 ( 3.7%): söka
+  177 ( 3.4%): identifiera
+  169 ( 3.3%): planera
+  160 ( 3.1%): tolka
+  156 ( 3.0%): tillämpa
+Top 11 verbs cover  51.19% of all verb occurrences.
+---> G2F
+  754 (11.3%): redogöra
+  411 ( 6.1%): analysera
+  349 ( 5.2%): tillämpa
+  349 ( 5.2%): diskutera
+  289 ( 4.3%): reflektera
+  247 ( 3.7%): beskriva
+  238 ( 3.6%): använda
+  198 ( 3.0%): förklara
+  179 ( 2.7%): identifiera
+  163 ( 2.4%): genomföra
+  149 ( 2.2%): värdera
+Top 11 verbs cover  49.71% of all verb occurrences.
+---> GXX
+  270 (10.9%): redogöra
+  155 ( 6.3%): diskutera
+  137 ( 5.6%): analysera
+  110 ( 4.5%): tillämpa
+  101 ( 4.1%): reflektera
+  100 ( 4.1%): beskriva
+   98 ( 4.0%): använda
+   70 ( 2.8%): presentera
+   64 ( 2.6%): förklara
+   62 ( 2.5%): värdera
+   61 ( 2.5%): identifiera
+Top 11 verbs cover  49.76% of all verb occurrences.
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+                     :    561    898    662    522    657    370      3670
+                        15.3%  24.5%  18.0%  14.2%  17.9%  10.1%      3.2%
+
+                  -  :     59     45     73     44     69     42       332
+                        17.8%  13.6%  22.0%  13.3%  20.8%  12.7%      0.3%
+
+                  A1E:    176    247    300    283    413    283      1702
+                        10.3%  14.5%  17.6%  16.6%  24.3%  16.6%      1.5%
+
+                  A1F:    747   1429   1540   1186   1473    959      7334
+                        10.2%  19.5%  21.0%  16.2%  20.1%  13.1%      6.5%
+
+                  A1N:   1299   3200   2033   2350   2569   1175     12626
+                        10.3%  25.3%  16.1%  18.6%  20.3%   9.3%     11.1%
+
+                  A2E:    907    671   1256   1069   1442   1325      6670
+                        13.6%  10.1%  18.8%  16.0%  21.6%  19.9%      5.9%
+
+                  AXX:   1616   3568   3524   2843   3187   2214     16952
+                         9.5%  21.0%  20.8%  16.8%  18.8%  13.1%     14.9%
+
+                  BXX:      1      0      3      0      2      0         6
+                        16.7%   0.0%  50.0%   0.0%  33.3%   0.0%      0.0%
+
+                  G1E:     44     35     57     50     45     39       270
+                        16.3%  13.0%  21.1%  18.5%  16.7%  14.4%      0.2%
+
+                  G1F:   2139   4035   3864   2201   2396   1849     16484
+                        13.0%  24.5%  23.4%  13.4%  14.5%  11.2%     14.5%
+
+                  G1N:   3861   9868   6916   4512   5065   3045     33267
+                        11.6%  29.7%  20.8%  13.6%  15.2%   9.2%     29.3%
+
+                  G2E:    446    966   1096    795   1108    787      5198
+                         8.6%  18.6%  21.1%  15.3%  21.3%  15.1%      4.6%
+
+                  G2F:    675   1638   1380    977   1189    832      6691
+                        10.1%  24.5%  20.6%  14.6%  17.8%  12.4%      5.9%
+
+                  GXX:    378    521    499    391    432    247      2468
+                        15.3%  21.1%  20.2%  15.8%  17.5%  10.0%      2.2%
+
+
+---------------------------------------------------------------------
+max Bloom/course:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------
+                :     14     20     36     58    206    199       533
+                    2.6%   3.8%   6.8%  10.9%  38.6%  37.3%      4.1%
+
+             -  :      1      2      4      3     12     27        49
+                    2.0%   4.1%   8.2%   6.1%  24.5%  55.1%      0.4%
+
+             A1E:      0      0      1      0      3    130       134
+                      0%     0%   0.7%     0%   2.2%  97.0%      1.0%
+
+             A1F:      2     21     61     77    246    532       939
+                    0.2%   2.2%   6.5%   8.2%  26.2%  56.7%      7.2%
+
+             A1N:      2     59    125    263    650    733      1832
+                    0.1%   3.2%   6.8%  14.4%  35.5%  40.0%     14.1%
+
+             A2E:      0      2      1      1     20    462       486
+                      0%   0.4%   0.2%   0.2%   4.1%  95.1%      3.7%
+
+             AXX:      3     39     96    128    442   1082      1790
+                    0.2%   2.2%   5.4%   7.2%  24.7%  60.4%     13.8%
+
+             BXX:      0      0      1      0      1      0         2
+                      0%     0%  50.0%     0%  50.0%     0%      0.0%
+
+             G1E:      0      0      0      1      1     26        28
+                      0%     0%     0%   3.6%   3.6%  92.9%      0.2%
+
+             G1F:     13     61    237    222    402   1012      1947
+                    0.7%   3.1%  12.2%  11.4%  20.6%  52.0%     15.0%
+
+             G1N:     32    224    370    461   1027   1736      3850
+                    0.8%   5.8%   9.6%  12.0%  26.7%  45.1%     29.6%
+
+             G2E:      0      4      1      5     28    323       361
+                      0%   1.1%   0.3%   1.4%   7.8%  89.5%      2.8%
+
+             G2F:      2     18     76     68    195    421       780
+                    0.3%   2.3%   9.7%   8.7%  25.0%  54.0%      6.0%
+
+             GXX:      3      8     16     25     77    127       256
+                    1.2%   3.1%   6.2%   9.8%  30.1%  49.6%      2.0%
+
+
+
+---------------------------------------------------------------------
+min Bloom/course:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------
+                :    325    135     48     17      6      2       533
+                   61.0%  25.3%   9.0%   3.2%   1.1%   0.4%      4.1%
+
+             -  :     28      9     11      1      0      0        49
+                   57.1%  18.4%  22.4%   2.0%     0%     0%      0.4%
+
+             A1E:    116     14      4      0      0      0       134
+                   86.6%  10.4%   3.0%     0%     0%     0%      1.0%
+
+             A1F:    447    326    115     36     11      4       939
+                   47.6%  34.7%  12.2%   3.8%   1.2%   0.4%      7.2%
+
+             A1N:    779    773    187     60     28      5      1832
+                   42.5%  42.2%  10.2%   3.3%   1.5%   0.3%     14.1%
+
+             A2E:    437     42      5      2      0      0       486
+                   89.9%   8.6%   1.0%   0.4%     0%     0%      3.7%
+
+             AXX:   1003    574    164     30     11      8      1790
+                   56.0%  32.1%   9.2%   1.7%   0.6%   0.4%     13.8%
+
+             BXX:      1      0      1      0      0      0         2
+                   50.0%     0%  50.0%     0%     0%     0%      0.0%
+
+             G1E:     24      4      0      0      0      0        28
+                   85.7%  14.3%     0%     0%     0%     0%      0.2%
+
+             G1F:   1079    555    259     38      8      8      1947
+                   55.4%  28.5%  13.3%   2.0%   0.4%   0.4%     15.0%
+
+             G1N:   1951   1436    336     83     26     18      3850
+                   50.7%  37.3%   8.7%   2.2%   0.7%   0.5%     29.6%
+
+             G2E:    255     88     16      2      0      0       361
+                   70.6%  24.4%   4.4%   0.6%     0%     0%      2.8%
+
+             G2F:    389    302     68     13      5      3       780
+                   49.9%  38.7%   8.7%   1.7%   0.6%   0.4%      6.0%
+
+             GXX:    161     70     20      4      1      0       256
+                   62.9%  27.3%   7.8%   1.6%   0.4%     0%      2.0%
+
+
+
+average mean Bloom per course: 
+                             :  2.2 
+                          -  :  2.4 
+                          A1E:  2.8 
+                          A1F:  2.5 
+                          A1N:  2.4 
+                          A2E:  2.8 
+                          AXX:  2.5 
+                          BXX:  2.0 
+                          G1E:  2.6 
+                          G1F:  2.2 
+                          G1N:  2.1 
+                          G2E:  2.7 
+                          G2F:  2.4 
+                          GXX:  2.2 
+
+average variance Bloom per course: 
+                                 :  1.9 
+                              -  :  1.8 
+                              A1E:  2.5 
+                              A1F:  1.8 
+                              A1N:  1.7 
+                              A2E:  2.7 
+                              AXX:  1.9 
+                              BXX:  1.0 
+                              G1E:  2.8 
+                              G1F:  1.7 
+                              G1N:  1.6 
+                              G2E:  2.3 
+                              G2F:  1.8 
+                              GXX:  2.0 
+
+
+average median Bloom per course: 
+                               :  2.0 
+                            -  :  2.4 
+                            A1E:  2.9 
+                            A1F:  2.5 
+                            A1N:  2.4 
+                            A2E:  3.0 
+                            AXX:  2.4 
+                            BXX:  2.0 
+                            G1E:  2.8 
+                            G1F:  2.1 
+                            G1N:  2.0 
+                            G2E:  2.6 
+                            G2F:  2.3 
+                            GXX:  2.1 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                                    :   82.2  149.7   98.7   63.7   99.3   39.3    533.0
+                                       15.4%  28.1%  18.5%  12.0%  18.6%   7.4%      4.1%
+
+                                 -  :   12.5    5.0   10.2    1.8   12.8    6.8     49.0
+                                       25.5%  10.2%  20.9%   3.6%  26.0%  13.8%      0.4%
+
+                                 A1E:    4.9   21.9   14.2   23.9   47.4   21.8    134.0
+                                        3.6%  16.4%  10.6%  17.9%  35.3%  16.2%      1.0%
+
+                                 A1F:   57.6  215.8  204.7  135.2  224.2  101.5    939.0
+                                        6.1%  23.0%  21.8%  14.4%  23.9%  10.8%      7.2%
+
+                                 A1N:  110.9  594.2  264.5  327.3  408.5  126.6   1832.0
+                                        6.1%  32.4%  14.4%  17.9%  22.3%   6.9%     14.1%
+
+                                 A2E:   63.5   23.1   51.5   55.5  206.7   85.8    486.0
+                                       13.1%   4.7%  10.6%  11.4%  42.5%  17.7%      3.7%
+
+                                 AXX:  101.4  516.8  415.8  261.1  319.2  175.7   1790.0
+                                        5.7%  28.9%  23.2%  14.6%  17.8%   9.8%     13.8%
+
+                                 BXX:    0.5      0    1.0      0    0.5      0      2.0
+                                       25.0%     0%  50.0%     0%  25.0%     0%      0.0%
+
+                                 G1E:    4.0    1.4    5.2    5.0    7.2    5.2     28.0
+                                       14.1%   5.2%  18.6%  17.9%  25.7%  18.6%      0.2%
+
+                                 G1F:  223.1  560.2  562.0  180.6  248.2  172.8   1947.0
+                                       11.5%  28.8%  28.9%   9.3%  12.7%   8.9%     15.0%
+
+                                 G1N:  431.6 1469.9  879.4  395.3  461.5  212.3   3850.0
+                                       11.2%  38.2%  22.8%  10.3%  12.0%   5.5%     29.6%
+
+                                 G2E:   14.3   65.5  127.2   35.9   79.4   38.6    361.0
+                                        4.0%  18.1%  35.2%   9.9%  22.0%  10.7%      2.8%
+
+                                 G2F:   70.1  242.6  173.2   88.9  120.0   85.3    780.0
+                                        9.0%  31.1%  22.2%  11.4%  15.4%  10.9%      6.0%
+
+                                 GXX:   42.1   69.4   54.3   28.6   48.2   13.4    256.0
+                                       16.4%  27.1%  21.2%  11.2%  18.8%   5.3%      2.0%
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+#verbs/course:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+----------------------------------------------------------------------------------------------------------------------------------------
+             :     74     34     27     33     44     71     99     73     37     24     20     11     11     12      5     32       607
+                12.2%   5.6%   4.4%   5.4%   7.2%  11.7%  16.3%  12.0%   6.1%   4.0%   3.3%   1.8%   1.8%   2.0%   0.8%   5.3%      4.5%
+
+          -  :      9      2      5      3     11      3      5      3      3      6      2      0      0      2      1      3        58
+                15.5%   3.4%   8.6%   5.2%  19.0%   5.2%   8.6%   5.2%   5.2%  10.3%   3.4%     0%     0%   3.4%   1.7%   5.2%      0.4%
+
+          A1E:      0      0      1      4      1      4      3      9      6      2     16     10      8     17     19     34       134
+                   0%     0%   0.7%   3.0%   0.7%   3.0%   2.2%   6.7%   4.5%   1.5%  11.9%   7.5%   6.0%  12.7%  14.2%  25.4%      1.0%
+
+          A1F:     14     22     54     92    106     94     92     79     67     76     76     27     17     18     28     91       953
+                 1.5%   2.3%   5.7%   9.7%  11.1%   9.9%   9.7%   8.3%   7.0%   8.0%   8.0%   2.8%   1.8%   1.9%   2.9%   9.5%      7.1%
+
+          A1N:     17     46    115    237    253    241    220    179    117     80     75     59     37     22     23    128      1849
+                 0.9%   2.5%   6.2%  12.8%  13.7%  13.0%  11.9%   9.7%   6.3%   4.3%   4.1%   3.2%   2.0%   1.2%   1.2%   6.9%     13.8%
+
+          A2E:      0      0      2      4      6      7      3     11      4      6     25     36     64     38     34    246       486
+                   0%     0%   0.4%   0.8%   1.2%   1.4%   0.6%   2.3%   0.8%   1.2%   5.1%   7.4%  13.2%   7.8%   7.0%  50.6%      3.6%
+
+          AXX:    104     34     62     89    117    158    151    143    160    158    100    111     92     64     60    291      1894
+                 5.5%   1.8%   3.3%   4.7%   6.2%   8.3%   8.0%   7.6%   8.4%   8.3%   5.3%   5.9%   4.9%   3.4%   3.2%  15.4%     14.1%
+
+          BXX:      2      0      1      0      1      0      0      0      0      0      0      0      0      0      0      0         4
+                50.0%     0%  25.0%     0%  25.0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%      0.0%
+
+          G1E:      0      0      0      0      3      3      6      6      0      1      2      2      0      0      1      4        28
+                   0%     0%     0%     0%  10.7%  10.7%  21.4%  21.4%     0%   3.6%   7.1%   7.1%     0%     0%   3.6%  14.3%      0.2%
+
+          G1F:     44     39    108    156    207    231    241    166    151     82     85     91     53     39     45    253      1991
+                 2.2%   2.0%   5.4%   7.8%  10.4%  11.6%  12.1%   8.3%   7.6%   4.1%   4.3%   4.6%   2.7%   2.0%   2.3%  12.7%     14.8%
+
+          G1N:    183     99    265    386    382    387    354    302    246    195    178    153    146    114     91    552      4033
+                 4.5%   2.5%   6.6%   9.6%   9.5%   9.6%   8.8%   7.5%   6.1%   4.8%   4.4%   3.8%   3.6%   2.8%   2.3%  13.7%     30.0%
+
+          G2E:      2      0      8      4      8      8      8     14     23     19     32     28     24     29     15    141       363
+                 0.6%     0%   2.2%   1.1%   2.2%   2.2%   2.2%   3.9%   6.3%   5.2%   8.8%   7.7%   6.6%   8.0%   4.1%  38.8%      2.7%
+
+          G2F:      7     26     34     84     71     86     75     59     68     45     34     17     25     21     17    118       787
+                 0.9%   3.3%   4.3%  10.7%   9.0%  10.9%   9.5%   7.5%   8.6%   5.7%   4.3%   2.2%   3.2%   2.7%   2.2%  15.0%      5.9%
+
+          GXX:      2      5     16     18     24     36     29     21      9      8      8      9     18      7     13     35       258
+                 0.8%   1.9%   6.2%   7.0%   9.3%  14.0%  11.2%   8.1%   3.5%   3.1%   3.1%   3.5%   7.0%   2.7%   5.0%  13.6%      1.9%
+
+
+
+--------------------------------------------------------------------------
+#verbs/course (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+--------------------------------------------------------------------------
+                       :        74       138       324        71       607
+                             12.2%     22.7%     53.4%     11.7%      4.5%
+
+                    -  :         9        21        22         6        58
+                             15.5%     36.2%     37.9%     10.3%      0.4%
+
+                    A1E:         0         6        40        88       134
+                                0%      4.5%     29.9%     65.7%      1.0%
+
+                    A1F:        14       274       484       181       953
+                              1.5%     28.8%     50.8%     19.0%      7.1%
+
+                    A1N:        17       651       912       269      1849
+                              0.9%     35.2%     49.3%     14.5%     13.8%
+
+                    A2E:         0        12        56       418       486
+                                0%      2.5%     11.5%     86.0%      3.6%
+
+                    AXX:       104       302       870       618      1894
+                              5.5%     15.9%     45.9%     32.6%     14.1%
+
+                    BXX:         2         2         0         0         4
+                             50.0%     50.0%        0%        0%      0.0%
+
+                    G1E:         0         3        18         7        28
+                                0%     10.7%     64.3%     25.0%      0.2%
+
+                    G1F:        44       510       956       481      1991
+                              2.2%     25.6%     48.0%     24.2%     14.8%
+
+                    G1N:       183      1132      1662      1056      4033
+                              4.5%     28.1%     41.2%     26.2%     30.0%
+
+                    G2E:         2        20       104       237       363
+                              0.6%      5.5%     28.7%     65.3%      2.7%
+
+                    G2F:         7       215       367       198       787
+                              0.9%     27.3%     46.6%     25.2%      5.9%
+
+                    GXX:         2        63       111        82       258
+                              0.8%     24.4%     43.0%     31.8%      1.9%
+
+
+-------------------------------------------------------------------
+max Bloom/goal:      0      1      2      3      4      5     Total
+-------------------------------------------------------------------
+              :    182    400    433    322    556    333      2226
+                  8.2%  18.0%  19.5%  14.5%  25.0%  15.0%      3.1%
+
+           -  :     33     27     38     23     52     40       213
+                 15.5%  12.7%  17.8%  10.8%  24.4%  18.8%      0.3%
+
+           A1E:     36     94    107     96    248    266       847
+                  4.3%  11.1%  12.6%  11.3%  29.3%  31.4%      1.2%
+
+           A1F:    270    728    900    621   1047    874      4440
+                  6.1%  16.4%  20.3%  14.0%  23.6%  19.7%      6.2%
+
+           A1N:    412   1689   1172   1471   1968   1072      7784
+                  5.3%  21.7%  15.1%  18.9%  25.3%  13.8%     10.9%
+
+           A2E:    161    381    253    261    749   1200      3005
+                  5.4%  12.7%   8.4%   8.7%  24.9%  39.9%      4.2%
+
+           AXX:    591   1961   1908   1566   2330   2039     10395
+                  5.7%  18.9%  18.4%  15.1%  22.4%  19.6%     14.6%
+
+           BXX:      0      0      2      0      2      0         4
+                    0%     0%  50.0%     0%  50.0%     0%      0.0%
+
+           G1E:     22      8     32     32     35     38       167
+                 13.2%   4.8%  19.2%  19.2%  21.0%  22.8%      0.2%
+
+           G1F:   1049   2259   2541   1503   1819   1705     10876
+                  9.6%  20.8%  23.4%  13.8%  16.7%  15.7%     15.2%
+
+           G1N:   1875   6495   4624   3058   3983   2833     22868
+                  8.2%  28.4%  20.2%  13.4%  17.4%  12.4%     32.0%
+
+           G2E:    104    470    286    387    746    723      2716
+                  3.8%  17.3%  10.5%  14.2%  27.5%  26.6%      3.8%
+
+           G2F:    286    899    843    586    873    774      4261
+                  6.7%  21.1%  19.8%  13.8%  20.5%  18.2%      6.0%
+
+           GXX:    174    325    298    246    316    226      1585
+                 11.0%  20.5%  18.8%  15.5%  19.9%  14.3%      2.2%
+
+
+
+-------------------------------------------------------------------
+min Bloom/goal:      0      1      2      3      4      5     Total
+-------------------------------------------------------------------
+              :    554    596    484    263    180    149      2226
+                 24.9%  26.8%  21.7%  11.8%   8.1%   6.7%      3.1%
+
+           -  :     57     35     59     22     17     23       213
+                 26.8%  16.4%  27.7%  10.3%   8.0%  10.8%      0.3%
+
+           A1E:    173    161    209    102    122     80       847
+                 20.4%  19.0%  24.7%  12.0%  14.4%   9.4%      1.2%
+
+           A1F:    719   1130   1133    610    548    300      4440
+                 16.2%  25.5%  25.5%  13.7%  12.3%   6.8%      6.2%
+
+           A1N:   1251   2523   1495   1101    972    442      7784
+                 16.1%  32.4%  19.2%  14.1%  12.5%   5.7%     10.9%
+
+           A2E:    893    300    754    353    525    180      3005
+                 29.7%  10.0%  25.1%  11.7%  17.5%   6.0%      4.2%
+
+           AXX:   1557   2799   2576   1454   1204    805     10395
+                 15.0%  26.9%  24.8%  14.0%  11.6%   7.7%     14.6%
+
+           BXX:      1      0      2      0      1      0         4
+                 25.0%     0%  50.0%     0%  25.0%     0%      0.0%
+
+           G1E:     44     27     42     30      6     18       167
+                 26.3%  16.2%  25.1%  18.0%   3.6%  10.8%      0.2%
+
+           G1F:   2046   3122   2808   1113   1005    782     10876
+                 18.8%  28.7%  25.8%  10.2%   9.2%   7.2%     15.2%
+
+           G1N:   3669   8040   5148   2464   2213   1334     22868
+                 16.0%  35.2%  22.5%  10.8%   9.7%   5.8%     32.0%
+
+           G2E:    433    675    720    340    348    200      2716
+                 15.9%  24.9%  26.5%  12.5%  12.8%   7.4%      3.8%
+
+           G2F:    653   1290    996    512    449    361      4261
+                 15.3%  30.3%  23.4%  12.0%  10.5%   8.5%      6.0%
+
+           GXX:    360    414    337    226    150     98      1585
+                 22.7%  26.1%  21.3%  14.3%   9.5%   6.2%      2.2%
+
+
+
+---------------------------------------------------------------------------------
+diff. max and min Bloom/goal:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------
+                            :    115    232    193    195    235     32      1002
+                               11.5%  23.2%  19.3%  19.5%  23.5%   3.2%      3.4%
+
+                         -  :     13     28     13     23     10      3        90
+                               14.4%  31.1%  14.4%  25.6%  11.1%   3.3%      0.3%
+
+                         A1E:    103     87     86    124     41     70       511
+                               20.2%  17.0%  16.8%  24.3%   8.0%  13.7%      1.7%
+
+                         A1F:    354    452    469    449    166    126      2016
+                               17.6%  22.4%  23.3%  22.3%   8.2%   6.2%      6.8%
+
+                         A1N:    657    804    842    758    308    154      3523
+                               18.6%  22.8%  23.9%  21.5%   8.7%   4.4%     11.9%
+
+                         A2E:    243    425    280    659    183    221      2011
+                               12.1%  21.1%  13.9%  32.8%   9.1%  11.0%      6.8%
+
+                         AXX:    789   1203    939   1029    352    252      4564
+                               17.3%  26.4%  20.6%  22.5%   7.7%   5.5%     15.4%
+
+                         BXX:      0      0      2      0      0      0         2
+                                  0%     0%  100.0%     0%     0%     0%      0.0%
+
+                         G1E:      5     13     18     22     12      4        74
+                                6.8%  17.6%  24.3%  29.7%  16.2%   5.4%      0.3%
+
+                         G1F:    719   1143    852    883    317    176      4090
+                               17.6%  27.9%  20.8%  21.6%   7.8%   4.3%     13.8%
+
+                         G1N:   1674   2077   1549   1732    542    245      7819
+                               21.4%  26.6%  19.8%  22.2%   6.9%   3.1%     26.5%
+
+                         G2E:    193    352    294    410    130    117      1496
+                               12.9%  23.5%  19.7%  27.4%   8.7%   7.8%      5.1%
+
+                         G2F:    285    461    372    379    111    100      1708
+                               16.7%  27.0%  21.8%  22.2%   6.5%   5.9%      5.8%
+
+                         GXX:    136    181    106    139     58     31       651
+                               20.9%  27.8%  16.3%  21.4%   8.9%   4.8%      2.2%
+
+
+
+average mean Bloom per goal: 
+                           :  2.2 
+                        -  :  2.3 
+                        A1E:  2.8 
+                        A1F:  2.5 
+                        A1N:  2.4 
+                        A2E:  2.8 
+                        AXX:  2.5 
+                        BXX:  2.5 
+                        G1E:  2.4 
+                        G1F:  2.2 
+                        G1N:  2.1 
+                        G2E:  2.7 
+                        G2F:  2.4 
+                        GXX:  2.2 
+
+
+average variance Bloom per goal: 
+                               :  0.67 
+                            -  :  0.53 
+                            A1E:  0.89 
+                            A1F:  0.57 
+                            A1N:  0.54 
+                            A2E:  0.91 
+                            AXX:  0.53 
+                            BXX:  0.5 
+                            G1E:  0.78 
+                            G1F:  0.43 
+                            G1N:  0.37 
+                            G2E:  0.75 
+                            G2F:  0.47 
+                            GXX:  0.48 
+
+average median Bloom per goal: 
+                             :  2.2 
+                          -  :  2.3 
+                          A1E:  2.8 
+                          A1F:  2.5 
+                          A1N:  2.4 
+                          A2E:  2.8 
+                          AXX:  2.5 
+                          BXX:  2.5 
+                          G1E:  2.4 
+                          G1F:  2.2 
+                          G1N:  2.1 
+                          G2E:  2.7 
+                          G2F:  2.4 
+                          GXX:  2.2 
+
+---------------------------------------------------------------------------------------
+most common Bloom level (per goal):      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------------
+                                  :  323.2  538.7  466.4  311.3  351.4  235.0   2226.0
+                                     14.5%  24.2%  21.0%  14.0%  15.8%  10.6%      3.1%
+
+                               -  :   43.5   30.5   48.0   22.8   37.3   30.8    213.0
+                                     20.4%  14.3%  22.5%  10.7%  17.5%  14.5%      0.3%
+
+                               A1E:   84.7  131.6  151.2  124.3  208.0  147.1    847.0
+                                     10.0%  15.5%  17.9%  14.7%  24.6%  17.4%      1.2%
+
+                               A1F:  457.2  932.2 1023.3  656.2  828.1  543.0   4440.0
+                                     10.3%  21.0%  23.0%  14.8%  18.7%  12.2%      6.2%
+
+                               A1N:  753.1 2126.2 1339.0 1355.6 1522.0  688.2   7784.0
+                                      9.7%  27.3%  17.2%  17.4%  19.6%   8.8%     10.9%
+
+                               A2E:  420.7  314.3  512.6  458.9  727.5  571.0   3005.0
+                                     14.0%  10.5%  17.1%  15.3%  24.2%  19.0%      4.2%
+
+                               AXX:  977.8 2395.0 2277.5 1596.6 1833.2 1314.9  10395.0
+                                      9.4%  23.0%  21.9%  15.4%  17.6%  12.6%     14.6%
+
+                               BXX:    0.5      0    2.0      0    1.5      0      4.0
+                                     12.5%     0%  50.0%     0%  37.5%     0%      0.0%
+
+                               G1E:   31.6   17.7   38.2   32.1   21.4   26.0    167.0
+                                     18.9%  10.6%  22.9%  19.2%  12.8%  15.6%      0.2%
+
+                               G1F: 1463.3 2743.2 2736.8 1358.7 1410.9 1163.2  10876.0
+                                     13.5%  25.2%  25.2%  12.5%  13.0%  10.7%     15.2%
+
+                               G1N: 2640.1 7315.8 4967.6 2831.8 3135.9 1976.8  22868.0
+                                     11.5%  32.0%  21.7%  12.4%  13.7%   8.6%     32.0%
+
+                               G2E:  222.9  555.9  526.8  392.7  609.5  408.2   2716.0
+                                      8.2%  20.5%  19.4%  14.5%  22.4%  15.0%      3.8%
+
+                               G2F:  427.9 1115.6  926.1  577.4  691.4  522.6   4261.0
+                                     10.0%  26.2%  21.7%  13.6%  16.2%  12.3%      6.0%
+
+                               GXX:  250.1  371.5  325.3  238.9  249.5  149.7   1585.0
+                                     15.8%  23.4%  20.5%  15.1%  15.7%   9.4%      2.2%
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#verbs/goal:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+--------------------------------------------------------------------------------------------------------------------------------------
+           :    657   1224    624    327     40     10      0      1      0      0      0      0      0      0      0      0      2883
+              22.8%  42.5%  21.6%  11.3%   1.4%   0.3%     0%   0.0%     0%     0%     0%     0%     0%     0%     0%     0%      3.4%
+
+        -  :     74    123     68     16      5      1      0      0      0      0      0      0      0      0      0      0       287
+              25.8%  42.9%  23.7%   5.6%   1.7%   0.3%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%      0.3%
+
+        A1E:    163    336    295    109     94     11      1      0      0      0      0      0      1      0      0      0      1010
+              16.1%  33.3%  29.2%  10.8%   9.3%   1.1%   0.1%     0%     0%     0%     0%     0%   0.1%     0%     0%     0%      1.2%
+
+        A1F:    692   2424   1375    456    149     24      8      4      0      0      0      0      0      0      0      0      5132
+              13.5%  47.2%  26.8%   8.9%   2.9%   0.5%   0.2%   0.1%     0%     0%     0%     0%     0%     0%     0%     0%      6.0%
+
+        A1N:   1373   4261   2569    705    183     37     20      6      0      0      0      3      0      0      0      0      9157
+              15.0%  46.5%  28.1%   7.7%   2.0%   0.4%   0.2%   0.1%     0%     0%     0%   0.0%     0%     0%     0%     0%     10.7%
+
+        A2E:    698    994    930    631    367     67     11      1      0      0      1      0      2      1      0      0      3703
+              18.8%  26.8%  25.1%  17.0%   9.9%   1.8%   0.3%   0.0%     0%     0%   0.0%     0%   0.1%   0.0%     0%     0%      4.3%
+
+        AXX:   2168   5831   3234    906    304     72     31      3      3      0      4      1      2      3      1      0     12563
+              17.3%  46.4%  25.7%   7.2%   2.4%   0.6%   0.2%   0.0%   0.0%     0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     14.7%
+
+        BXX:      9      2      2      0      0      0      0      0      0      0      0      0      0      0      0      0        13
+              69.2%  15.4%  15.4%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%      0.0%
+
+        G1E:     23     93     50     20      3      1      0      0      0      0      0      0      0      0      0      0       190
+              12.1%  48.9%  26.3%  10.5%   1.6%   0.5%     0%     0%     0%     0%     0%     0%     0%     0%     0%     0%      0.2%
+
+        G1F:   1500   6786   2989    803    222     52     12      7      3      2      0      0      0      0      0      0     12376
+              12.1%  54.8%  24.2%   6.5%   1.8%   0.4%   0.1%   0.1%   0.0%   0.0%     0%     0%     0%     0%     0%     0%     14.5%
+
+        G1N:   5066  15049   6008   1321    343     83     36     13      5      5      1      1      1      1      1      0     27934
+              18.1%  53.9%  21.5%   4.7%   1.2%   0.3%   0.1%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     32.7%
+
+        G2E:    571   1220    849    423    148     64      5      0      2      2      0      1      2      0      0      0      3287
+              17.4%  37.1%  25.8%  12.9%   4.5%   1.9%   0.2%     0%   0.1%   0.1%     0%   0.0%   0.1%     0%     0%     0%      3.9%
+
+        G2F:    735   2553   1223    338    105     22      6     10      0      1      2      0      0      1      0      0      4996
+              14.7%  51.1%  24.5%   6.8%   2.1%   0.4%   0.1%   0.2%     0%   0.0%   0.0%     0%     0%   0.0%     0%     0%      5.9%
+
+        GXX:    249    934    475    135     30      8      2      1      0      0      0      0      0      0      0      0      1834
+              13.6%  50.9%  25.9%   7.4%   1.6%   0.4%   0.1%   0.1%     0%     0%     0%     0%     0%     0%     0%     0%      2.1%
+
+
+
+------------------------------------------------------------------------
+#verbs/goal (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+------------------------------------------------------------------------
+                     :       657      2215        11         0      2883
+                           22.8%     76.8%      0.4%        0%      3.4%
+
+                  -  :        74       212         1         0       287
+                           25.8%     73.9%      0.3%        0%      0.3%
+
+                  A1E:       163       834        12         1      1010
+                           16.1%     82.6%      1.2%      0.1%      1.2%
+
+                  A1F:       692      4404        36         0      5132
+                           13.5%     85.8%      0.7%        0%      6.0%
+
+                  A1N:      1373      7718        63         3      9157
+                           15.0%     84.3%      0.7%      0.0%     10.7%
+
+                  A2E:       698      2922        80         3      3703
+                           18.8%     78.9%      2.2%      0.1%      4.3%
+
+                  AXX:      2168     10275       113         7     12563
+                           17.3%     81.8%      0.9%      0.1%     14.7%
+
+                  BXX:         9         4         0         0        13
+                           69.2%     30.8%        0%        0%      0.0%
+
+                  G1E:        23       166         1         0       190
+                           12.1%     87.4%      0.5%        0%      0.2%
+
+                  G1F:      1500     10800        76         0     12376
+                           12.1%     87.3%      0.6%        0%     14.5%
+
+                  G1N:      5066     22721       143         4     27934
+                           18.1%     81.3%      0.5%      0.0%     32.7%
+
+                  G2E:       571      2640        73         3      3287
+                           17.4%     80.3%      2.2%      0.1%      3.9%
+
+                  G2F:       735      4219        41         1      4996
+                           14.7%     84.4%      0.8%      0.0%      5.9%
+
+                  GXX:       249      1574        11         0      1834
+                           13.6%     85.8%      0.6%        0%      2.1%
+
+
+
+---------- Statistics per CourseType----------
+forskarutbildning
+   841 courses   2896 goals  3.44 goals per course.   3666 verbs  4.36 verbs per course  1.27 verbs per goal
+grundutbildning
+ 12604 courses  82469 goals  6.54 goals per course. 110004 verbs  8.73 verbs per course  1.33 verbs per goal
+
+---------- Most common verbs ----------
+---> forskarutbildning
+  363 ( 9.9%): diskutera
+  197 ( 5.4%): beskriva
+  189 ( 5.2%): analysera
+  184 ( 5.0%): redogöra
+  183 ( 5.0%): presentera
+  176 ( 4.8%): förklara
+  166 ( 4.5%): tillämpa
+  166 ( 4.5%): identifiera
+  154 ( 4.2%): reflektera
+  119 ( 3.2%): kritiskt granska
+   90 ( 2.5%): värdera
+Top 11 verbs cover  54.20% of all verb occurrences.
+---> grundutbildning
+11276 (10.3%): redogöra
+ 6966 ( 6.3%): analysera
+ 6405 ( 5.8%): diskutera
+ 5372 ( 4.9%): tillämpa
+ 4527 ( 4.1%): beskriva
+ 3896 ( 3.5%): reflektera
+ 3684 ( 3.3%): identifiera
+ 3679 ( 3.3%): förklara
+ 3358 ( 3.1%): använda
+ 3001 ( 2.7%): värdera
+ 2766 ( 2.5%): genomföra
+Top 11 verbs cover  49.93% of all verb occurrences.
+
+--------------------------------------------------------------------------
+Verbs per Bloom level:      0      1      2      3      4      5     Total
+--------------------------------------------------------------------------
+    forskarutbildning:    630    875    631    506    671    353      3666
+                        17.2%  23.9%  17.2%  13.8%  18.3%   9.6%      3.2%
+
+      grundutbildning:  12279  26246  22572  16717  19376  12814    110004
+                        11.2%  23.9%  20.5%  15.2%  17.6%  11.6%     96.8%
+
+
+----------------------------------------------------------------------
+ max Bloom/course:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+forskarutbildning:     15     24     58     79    279    212       667
+                     2.2%   3.6%   8.7%  11.8%  41.8%  31.8%      5.1%
+
+  grundutbildning:     57    434    967   1233   3031   6598     12320
+                     0.5%   3.5%   7.8%  10.0%  24.6%  53.6%     94.9%
+
+
+
+----------------------------------------------------------------------
+ min Bloom/course:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+forskarutbildning:    381    175     75     21     10      5       667
+                    57.1%  26.2%  11.2%   3.1%   1.5%   0.7%      5.1%
+
+  grundutbildning:   6614   4153   1159    265     86     43     12320
+                    53.7%  33.7%   9.4%   2.2%   0.7%   0.3%     94.9%
+
+
+
+average mean Bloom per course: 
+            forskarutbildning:  2.2 
+              grundutbildning:  2.3 
+
+average variance Bloom per course: 
+                forskarutbildning:  1.8 
+                  grundutbildning:  1.8 
+
+
+average median Bloom per course: 
+              forskarutbildning:  2.1 
+                grundutbildning:  2.3 
+
+-----------------------------------------------------------------------------------------
+most common Bloom level (per course):      0      1      2      3      4      5     Total
+-----------------------------------------------------------------------------------------
+                   forskarutbildning:  113.0  165.1  125.9   85.9  128.9   48.2    667.0
+                                       16.9%  24.8%  18.9%  12.9%  19.3%   7.2%      5.1%
+
+                     grundutbildning: 1105.7 3770.4 2736.0 1516.8 2154.1 1036.9  12320.0
+                                        9.0%  30.6%  22.2%  12.3%  17.5%   8.4%     94.9%
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+    #verbs/course:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+--------------------------------------------------------------------------------------------------------------------------------------------
+forskarutbildning:    174     54     61     87     60     83    110     82     41     17     25     15      8     11      4      9       841
+                    20.7%   6.4%   7.3%  10.3%   7.1%   9.9%  13.1%   9.8%   4.9%   2.0%   3.0%   1.8%   1.0%   1.3%   0.5%   1.1%      6.3%
+
+  grundutbildning:    284    253    637   1023   1174   1246   1176    983    850    685    628    539    487    372    348   1919     12604
+                     2.3%   2.0%   5.1%   8.1%   9.3%   9.9%   9.3%   7.8%   6.7%   5.4%   5.0%   4.3%   3.9%   3.0%   2.8%  15.2%     93.7%
+
+
+
+--------------------------------------------------------------------------
+#verbs/course (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+--------------------------------------------------------------------------
+      forskarutbildning:       174       262       358        47       841
+                             20.7%     31.2%     42.6%      5.6%      6.3%
+
+        grundutbildning:       284      3087      5568      3665     12604
+                              2.3%     24.5%     44.2%     29.1%     93.7%
+
+
+----------------------------------------------------------------------
+   max Bloom/goal:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+forskarutbildning:    217    421    428    321    584    309      2280
+                     9.5%  18.5%  18.8%  14.1%  25.6%  13.6%      3.2%
+
+  grundutbildning:   4978  15315  13009   9851  14140  11814     69107
+                     7.2%  22.2%  18.8%  14.3%  20.5%  17.1%     96.8%
+
+
+
+----------------------------------------------------------------------
+   min Bloom/goal:      0      1      2      3      4      5     Total
+----------------------------------------------------------------------
+forskarutbildning:    616    559    472    284    217    132      2280
+                    27.0%  24.5%  20.7%  12.5%   9.5%   5.8%      3.2%
+
+  grundutbildning:  11794  20553  16291   8306   7523   4640     69107
+                    17.1%  29.7%  23.6%  12.0%  10.9%   6.7%     96.8%
+
+
+
+---------------------------------------------------------------------------------
+diff. max and min Bloom/goal:      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------
+           forskarutbildning:    120    229    185    181    234     32       981
+                               12.2%  23.3%  18.9%  18.5%  23.9%   3.3%      3.3%
+
+             grundutbildning:   5166   7229   5830   6621   2231   1499     28576
+                               18.1%  25.3%  20.4%  23.2%   7.8%   5.2%     96.7%
+
+
+
+average mean Bloom per goal: 
+          forskarutbildning:  2.2 
+            grundutbildning:  2.3 
+
+
+average variance Bloom per goal: 
+              forskarutbildning:  0.65 
+                grundutbildning:  0.49 
+
+average median Bloom per goal: 
+            forskarutbildning:  2.1 
+              grundutbildning:  2.3 
+
+---------------------------------------------------------------------------------------
+most common Bloom level (per goal):      0      1      2      3      4      5     Total
+---------------------------------------------------------------------------------------
+                 forskarutbildning:  374.8  536.7  455.6  316.8  380.3  215.7   2280.0
+                                     16.4%  23.5%  20.0%  13.9%  16.7%   9.5%      3.2%
+
+                   grundutbildning: 7721.8 18051.4 14885.4 9640.6 11247.2 7560.7  69107.0
+                                     11.2%  26.1%  21.5%  14.0%  16.3%  10.9%     96.8%
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+      #verbs/goal:      0      1      2      3      4      5      6      7      8      9     10     11     12     13     14     15+    Total
+--------------------------------------------------------------------------------------------------------------------------------------------
+forskarutbildning:    616   1299    635    303     35      3      2      3      0      0      0      0      0      0      0      0      2896
+                    21.3%  44.9%  21.9%  10.5%   1.2%   0.1%   0.1%   0.1%     0%     0%     0%     0%     0%     0%     0%     0%      3.4%
+
+  grundutbildning:  13362  40531  20056   5887   1958    449    130     43     13     10      8      6      8      6      2      0     82469
+                    16.2%  49.1%  24.3%   7.1%   2.4%   0.5%   0.2%   0.1%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%   0.0%     0%     96.6%
+
+
+
+------------------------------------------------------------------------
+#verbs/goal (grouped):  0 (  0 )  1 (1-4 )  2 (5-10)  3 ( 11+)     Total
+------------------------------------------------------------------------
+    forskarutbildning:       616      2272         8         0      2896
+                           21.3%     78.5%      0.3%        0%      3.4%
+
+      grundutbildning:     13362     68432       653        22     82469
+                           16.2%     83.0%      0.8%      0.0%     96.6%
+
+
+
+------------------------------
+---------- Significance testing ----------
+Testing average Bloom level of Grundkurs vs. Avancerad kurs
+6833 4561
+Ttest_indResult(statistic=-17.67425788185817, pvalue=5.49687053654038e-69)
+
+Testing average Bloom level of Grundkurs Exjobb vs. Avancerad kurs exjobb
+389 620
+Ttest_indResult(statistic=-4.6583607536167335, pvalue=3.6144211455553174e-06)
+
+Testing average Bloom level of Grundkurs vs. Grundkurs exjobb
+6833 389
+Ttest_indResult(statistic=-12.00470921941478, pvalue=6.892455198880907e-33)
+
+Testing average Bloom level of Avancerad kurs vs. Avancerad kurs exjobb
+4561 620
+Ttest_indResult(statistic=-11.52280133146334, pvalue=2.3676508702335743e-30)
+------------------------------
+---------- Significance testing ----------
+Testing #GOALS for Grundkurs vs. Avancerad kurs
+7069 4696
+Ttest_indResult(statistic=10.021617650452812, pvalue=1.522241560246111e-23)
+
+Testing #GOALS for Grundkurs Exjobb vs. Avancerad kurs exjobb
+391 620
+Ttest_indResult(statistic=5.013175971078577, pvalue=6.3210245845863e-07)
+
+Testing #GOALS for Grundkurs vs. Grundkurs exjobb
+7069 391
+Ttest_indResult(statistic=-7.616199675709281, pvalue=2.934020936477473e-14)
+
+Testing #GOALS for Avancerad kurs vs. Avancerad kurs exjobb
+4696 620
+Ttest_indResult(statistic=-11.4338982036085, pvalue=6.321072363597419e-30)
+
+Testing #GOALS for Not Exjobb vs. Exjobb
+11765 1011
+Ttest_indResult(statistic=-11.08715868010462, pvalue=1.9520882769311755e-28)
+------------------------------
+---------- Significance testing ----------
+Testing #VERBS/GOAL for Grundkurs vs. Avancerad kurs
+7069 4696
+Ttest_indResult(statistic=-9.781332637758409, pvalue=1.6498811608941577e-22)
+
+Testing #VERBS/GOAL for Grundkurs Exjobb vs. Avancerad kurs exjobb
+391 620
+Ttest_indResult(statistic=-5.313137544409265, pvalue=1.3259411161826577e-07)
+
+Testing #VERBS/GOAL for Grundkurs vs. Grundkurs exjobb
+7069 391
+Ttest_indResult(statistic=-10.087671251028885, pvalue=8.895322774186752e-24)
+
+Testing #VERBS/GOAL for Avancerad kurs vs. Avancerad kurs exjobb
+4696 620
+Ttest_indResult(statistic=-12.09949528451593, pvalue=2.8992042933624075e-33)
+
+Testing #VERBS/GOAL for Not Exjobb vs. Exjobb
+11765 1011
+Ttest_indResult(statistic=-17.44395882602723, pvalue=2.304656402062287e-67)
+------------------------------
+---------- Significance testing ----------
+Testing number of GOALS per course for 0-5 HP vs. 5.5-10 HP
+593 5211
+Ttest_indResult(statistic=-5.255077172445258, pvalue=1.5324778637889874e-07)
+
+Testing number of GOALS per course for 5.5-10 HP vs. 10.5-15 HP
+5211 1533
+Ttest_indResult(statistic=-18.435596883143276, pvalue=4.401018682273238e-74)
+
+Testing number of GOALS per course for 10.5-15 HP vs. 15+ HP
+1533 1327
+Ttest_indResult(statistic=-23.027811392363862, pvalue=8.87739534380088e-108)
+------------------------------
+---------- Significance testing ----------
+Testing number of VERBS per course for 0-5 HP vs. 5.5-10 HP
+593 5211
+Ttest_indResult(statistic=-4.955787930931874, pvalue=7.408309167181058e-07)
+
+Testing number of VERBS per course for 5.5-10 HP vs. 10.5-15 HP
+5211 1533
+Ttest_indResult(statistic=-21.731595194994224, pvalue=2.887437357203264e-101)
+
+Testing number of VERBS per course for 10.5-15 HP vs. 15+ HP
+1533 1327
+Ttest_indResult(statistic=-23.692694918006023, pvalue=1.880012809434964e-113)
+------------------------------
+---------- Significance testing ----------
+Testing number of VERBS / GOAL for 0-5 HP vs. 5.5-10 HP
+593 5211
+Ttest_indResult(statistic=-0.5589096648346569, pvalue=0.5762449435122736)
+
+Testing number of VERBS / GOAL for 5.5-10 HP vs. 10.5-15 HP
+5211 1533
+Ttest_indResult(statistic=-4.720460237973304, pvalue=2.4006369793881524e-06)
+
+Testing number of VERBS / GOAL for 10.5-15 HP vs. 15+ HP
+1533 1327
+Ttest_indResult(statistic=0.6147914209023736, pvalue=0.538741417917258)
+------------------------------
+---------- Significance testing ----------
+Testing average Bloom level of 0-5 HP vs. 5.5-10 HP
+569 5048
+Ttest_indResult(statistic=-2.5595654778945423, pvalue=0.010506272349772234)
+
+Testing average Bloom level of 5.5-10 HP vs. 10.5-15 HP
+5048 1489
+Ttest_indResult(statistic=-10.572448997700688, pvalue=6.469538585832108e-26)
+
+Testing average Bloom level of 10.5-15 HP vs. 15+ HP
+1489 1294
+Ttest_indResult(statistic=-2.914760932214001, pvalue=0.0035880458726850997)
+------------------------------
+---------- Significance testing ----------
+Testing number of GOALS per course for KTH vs. UMU
+2723 2661
+Ttest_indResult(statistic=-25.11670808579635, pvalue=9.766373301117289e-132)
+------------------------------
+---------- Significance testing ----------
+Testing number of VERBS/GOAL per course for KTH vs. UMU
+2723 2661
+Ttest_indResult(statistic=4.522725034200844, pvalue=6.235968847131843e-06)
