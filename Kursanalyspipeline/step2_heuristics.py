@@ -414,7 +414,7 @@ arabicListExpWrap12345 = re.compile(r'1\s*[).]\s*(.*)2\s*[).]\s*(.*)3\s*[).]\s*(
 arabicListExp12345 = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]((([^0-9 \n][^0-9\n])|(\n[^\n])|( [^0-9 ])|( [0-9]+[^0-9().])|([^0-9 ][0-9])|( ?[0-9A-F]+\s*((till)|[-–])\s*[0-9]+)){8,}[a-zåäö]?))', re.S)
 
 # arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,}))', re.S)
-arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*(((Kunskap och förståelse)|(Värdering och förhållningssätt)|(Färdighet och förmåga))?\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,})))', re.S)
+arabicListExp = re.compile(r'\(?\s*[0-9]+\s*[).]\s*(((Kunskap och förståelse)|(Värdering och förhållningssätt)|(Färdighete?r? och förmåga?o?r?))?\s*([^0-9 ](([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,})))', re.S)
 arabicListExpWrap = re.compile(r'\(?\s*[0-9]+\s*[).]\s*([^0-9 ]|([0-9][^).])|( [^0-9 ])){8,}(\s*\(?\s*[0-9]+\s*[).]\s*([^0-9 \n]|([0-9][^).])|( [^0-9 ])|(\n[^\n])){8,})+', re.S)
 
 arabicListExpB = re.compile(r'\(?\s*[0-9]+\s*[).]?\s+([^0-9 ]([^h]|(h[^p])){8,}?)(?=$|\n|(\s\s)|(\(?[0-9]))', re.S)
@@ -544,6 +544,12 @@ efterSkaKunnaExpWrap = re.compile("(Efter[^\n]*ska[^\n]*((studenten)|(kunna))[^\
 
 efterSkaKunnaExp2Wrap = re.compile("(För[^\n]*godkän[^\n]*ska[^\n]*((stude)|(kunna))[^\n]*)\n\s*(([a-zåäö][^\n]{4,}\n)\s*){3,}?([a-zåäö][^\n]{4,}?(?=$|(\n$)|(\n\n)|(Efter )|(För )|(Modul )|(Moment )))", re.S)
 
+efterSkaKunnaExp3Wrap = re.compile("(Efter[^\n]*ska[^\n]*((studenten)|(kunna))[^\n]*)(\n\s*([a-zåäö][^\n]{4,})\s*){1,}?((?=$|(\n$)|(\n\n)|\n*(Efter )|\n*(För )|\n*(Modul )|\n*(Kunskap )|\n*(Färdighete?r? )|\n*(Värderingsförmåga )|\n*(Moment )))", re.S)
+
+efterAvslutadKursExp = re.compile("\s*\n\s*[-o•*·–]?\s*([a-zåäö][^\n]{4,}?)(?=$|\n|(Efter)|(För godk)|(\(?[Mm]odul)|(\(?[Mm]oment))", re.S)
+efterAvslutadKursExpWrap = re.compile("(Ef?ter\s*avslutad\s*kurs\s*ska\s[^\s]*\s*kunna:?[^\n]*)(\n\s*[-o•*·–]?\s*([a-zåäö][^\n]{4,})\s*){1,}?((?=$|(\n$)|(\n\n)|\n*(Efter )|\n*(För )|\n*(Modul )|\n*(Kunskap )|\n*(Färdighete?r? )|\n*(Värderingsförmåga )|\n*(Moment )))", re.S)
+
+
 borKunnaExp = re.compile("([A-ZÅÄÖa-zåäö][^\n]{4,}?)(?=$|(\n$)|\n|<|(\n\n)|(Efter )|(För )|(Modul )|(Moment ))", re.S)
 borKunnaExpWrap = re.compile("[Bb]ör[^\n]*((studenten)|(kunna))([^\n]{4,}?(?=$|(\n$)|\n|<|(\n\n)|(Efter )|(För )|(Modul )|(Moment )))", re.S)
 
@@ -568,7 +574,7 @@ kunnaNLExp5Wrap = re.compile("[Kk]unna([^\n]*att)?:?\s*((\n\s*(visa[^\n]{4,}))(\
 kunnaDoubleSpaceExp = re.compile("  (([^ ]|( [^ ])){4,})(?=(  )|$|\n)", re.S)
 kunnaDoubleSpaceExpWrap = re.compile("(([Ff]örvänta)|([Ss]tudent)|([Ss]ka)([Kk]unna))([^ ]|( [^ ]))*:?(  ([^ ]|( [^ ])){4,}){3,}", re.S)
 
-denStuderandeSakLinesExp = re.compile("\n(((visa)|(kunna)|(ha)|(kritiskt)|(vara))[^\n]{4,}?)(?=\n|$|(Färdighet och förmåga)|(Kunskap och förståelse)|(Värderingsförmåga och för)|(Delkurs)|(Färdigheter och förmåga)|(Den studerande))", re.S)
+denStuderandeSakLinesExp = re.compile("\n(((visa)|(kunna)|(ha)|(kritiskt)|(vara))[^\n]{4,}?)(?=\n|$|(Färdighete?r? och förmåga?o?r?)|(Kunskap och förståelse)|(Värderingsförmåga och för)|(Delkurs)|(Färdigheter och förmåga)|(Den studerande))", re.S)
 denStuderandeSakLinesExpWrap = re.compile("[Dd]en studerande ska ?:? ?(\n((visa)|(kunna)|(ha)|(kritiskt)|(vara))[^\n]{4,}){5,}(.*[Dd]en studerande ska ?:? ?(\n((visa)|(kunna)|(ha)|(kritiskt)|(vara))[^\n]{4,}){1,})*", re.S)
 
 
@@ -582,9 +588,8 @@ skaEfterAvslutadRevExp = re.compile("[Ee]fter avslutad .* ska[^\s]* (.{10,}?)(?=
 skaEfterAvslutadRevExpWrap = re.compile("([Ee]fter avslutad .* ska[^\s]* (.{15,}?))(?=[.]|$|(\n\n))", re.S)
 
 
-umuNLHaExp = re.compile("\n\s*((.*?)(([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Vv]isa)|([Bb]esitta)|([Bb]eskriva)|([Kk]änna)|([Ff]örstå)|([Mm]ed\shjälp\sav)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([A-ZÅÄÖa-zåäö][a-zåäö]+a)|([Vv]ad)|([Ss]jälv(ständigt))|([Aa]tt)|([Ss]chematiskt)),?\s.{4,}?)(?=((;?\n)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
-umuNLHaExpWrap = re.compile("((godkän)|(efter))[^\n]*(\n((ha)|(kunna)|(vara)|(besitta)|(beskriva)|(förstå)|(känna)|(med\shjälp\sav)|(redogöra)|(genom)|(genomföra)|(arbeta)|(jämföra)|(planera)|(exemplifiera)|(förklara)|(modellera)|(göra)|(formulera)|(identifiera)|(utifrån)|(dokumentera)|(tillämpa)|(upprätta)|(värdera)|(använda)|([a-zåäö]+a)|(vad)|(själv(ständigt))|([Aa]tt)|([Ss]chematiskt)),?\s([^\n]*?)){2,}(?=((\n\n)|$|(\s\sFör\s)|\n|(Efter )))", re.S + re.I)
-
+umuNLHaExp = re.compile("\n\s*((.*?)(([Hh]a)|([Ii]\s)|([Gg]e)|([Kk]unna)|([Vv]ara)|([Vv]isa)|([Bb]esitta)|([Bb]eskriva)|([Kk]änna)|([Ff]örstå)|([Mm]ed\shjälp\sav)|([Rr]edogöra)|([Gg]enom)|([Gg]enomföra)|([Aa]rbeta)|([Jj]ämföra)|([Pp]lanera)|([Ee]xemplifiera)|([Ff]örklara)|([Mm]odellera)|([Gg]öra)|([Ff]ormulera)|([Ii]dentifiera)|([Uu]tifrån)|([Dd]okumentera)|([Tt]illämpa)|([Uu]pprätta)|([Vv]ärdera)|([Aa]nvända)|([A-ZÅÄÖa-zåäö][a-zåäö]+a)|([Vv]ad)|([Ss]jälv(ständigt))|([Aa]tt)|([Ss]chematiskt)|([Kk]ritiskt?)|([Mm]untligt?)|([Ss]kriftligt?)|([Ii]\s*[Ss]amråd)|([Kk]orrekt)|([Ss]tudenten)|([Ii]\s*sin)|([Gg]e)),?\s.{4,}?)(?=((;?\n)|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
+umuNLHaExpWrap = re.compile("((godkän)|(efter))[^\n]*(\n((ha)|(kunna)|(vara)|(besitta)|(beskriva)|(förstå)|(känna)|(med\shjälp\sav)|(redogöra)|(genom)|(genomföra)|(arbeta)|(jämföra)|(planera)|(exemplifiera)|(förklara)|(modellera)|(göra)|(formulera)|(identifiera)|(utifrån)|(återge)|(dokumentera)|(tillämpa)|(upprätta)|(värdera)|(använda)|([a-zåäö]+a)|(vad)|(själv(ständigt))|([Aa]tt)|([Ss]chematiskt)|([Kk]ritiskt?)|([Mm]untligt?)|([Ss]kriftligt?)|([Ii]\s*[Ss]amråd)|([Kk]orrekt)|([Ss]tudenten)|([Ii]\s*sin)|([Gg]e)|([Ee]fter förberedelser?)),?\s([^\n]*?)){2,}(?=((\n\n)|(\n$)|$|(\s\sFör\s)|\n|(Efter )))", re.S + re.I)
 
 umuAstExp = re.compile("((\\n?[*]\\s?(.{4,}?))|(kunna:?\\s.{10,}?))(?=(\\n|[*]|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
 umuAstExpWrap = re.compile(r'((godkän)|(efter)).*([*]\s?.{4,}){2,}', re.S + re.I)
@@ -614,7 +619,7 @@ miunWSexpWrap = re.compile("(\n\s{3,}[^\n]{4,}){3,}")
 
 
 umuCatchallExp = re.compile("(.{4,}?)(?=(\n|(Moment)|$|(Färdighet)|(Kunskap)|(Värdering)|(Modul)|(För god)|(Område [0-9])))", re.S)
-umuCatchallExpWrap = re.compile("((godkän)|(efter)).*?kunskap och förståelse(.*färdighet och förmåga.*)", re.S)
+umuCatchallExpWrap = re.compile("((godkän)|(efter)).*?kunskap och förståelse(.*färdighete?r? och förmåga?o?r?.*)", re.S)
 
 oneparExp = re.compile("(kunna.{4,}?)<\/p>", re.S + re.I)
 oneparExpWrap = re.compile("<p>([^<>]*ska[^<>]*(<\/p><p>)?[^<>]*kunna[^<>]{4,})<\/p>", re.S + re.I)
@@ -1092,10 +1097,13 @@ def extractGoals(c):
     
     sv, en = matchAndConsume(attStudentenKanExpWrap, attStudentenKanExp, sv, attStudentenKanExpWrap, attStudentenKanExp, en, "att-studentenkan-list", iloList, iloListEn)
     
+    sv, en = matchAndConsume(umuNLHaExpWrap, umuNLHaExp, sv, umuNLHaExpWrap, umuNLHaExp, en, "umu-NL-ha-list", iloList, iloListEn)
+
     sv, en = matchAndConsume(efterSkaKunnaExpWrap, efterSkaKunnaExp, sv, efterSkaKunnaExpWrap, efterSkaKunnaExp, en, "efter-ska-kunna-exp", iloList, iloListEn)
     sv, en = matchAndConsume(efterSkaKunnaExp2Wrap, efterSkaKunnaExp, sv, efterSkaKunnaExp2Wrap, efterSkaKunnaExp, en, "efter-ska-kunna-exp2", iloList, iloListEn)
+    sv, en = matchAndConsume(efterSkaKunnaExp3Wrap, efterSkaKunnaExp, sv, efterSkaKunnaExp3Wrap, efterSkaKunnaExp, en, "efter-ska-kunna-exp3", iloList, iloListEn)
 
-    sv, en = matchAndConsume(umuNLHaExpWrap, umuNLHaExp, sv, umuNLHaExpWrap, umuNLHaExp, en, "umu-NL-ha-list", iloList, iloListEn)
+    sv, en = matchAndConsume(efterAvslutadKursExpWrap, efterAvslutadKursExp, sv, efterAvslutadKursExpWrap, efterAvslutadKursExp, en, "efter-avslutad-kurs-exp", iloList, iloListEn)
 
     if not momentArabicListExp12345.search(sv):
        sv, en = matchAndConsume(arabicListExpWrap12345, arabicListExp12345, sv, arabicListExpWrap12345, arabicListExp12345, en, "arabic-list-12345", iloList, iloListEn)
@@ -1356,8 +1364,10 @@ def extractGoals(c):
         iloFix = re.sub("(\s)RHYPHEN([A-ZÅÄÖa-zåäö])", "\\1R-\\2", iloFix)
         iloFix = re.sub("metaHYPHEN([a-zåäö])", "meta-\\1", iloFix)
 
+        exp = re.compile(".*kunna[^a-zåäö]*$", re.I)
         if not iloFix in goalStoplist:
-            tmp.append(iloFix)
+            if not exp.search(iloFix):
+                tmp.append(iloFix)
     iloList = tmp
     
     return (iloList, iloListEn)
@@ -1367,6 +1377,8 @@ goalStoplist2 = {
     "Kunskap och förståelse .":1,		      
     "Kunskap och förmåga .":1,
     "Färdighet och förmåga .":1,
+    "Färdigheter och förmåga .":1,
+    "Färdigheter och förmågor .":1,
     "Värderingsförmåga och förhållningssätt .":1,
     "studenten kunna: .":1, "studenten kunna .":1,
     "Med hänsyn till kunskap och förståelse":1,
@@ -1378,7 +1390,8 @@ goalStoplist2 = {
     "Med hänsyn till värderingsförmåga och förhållningssätt":1,
     "Med hänsyn till värderingsförmåga och förhållningssätt .":1,
     "Med hänsyn till värderingsförmåga och förhållningssätt;":1,
-    "Studenten kunna":1
+    "Studenten kunna":1,
+    "visa":1
 }
 goalStoplist = {}
 for g in goalStoplist2:
@@ -1498,7 +1511,7 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
     
     return (sv, en)
 
-goalHeadingsETC = re.compile("(Färdighet och förmåga)|(Kunskap och förståelse)|(Värderingsförmåga och förhållningssätt)|(Delkurs)|(Färdigheter och förmåga)")
+goalHeadingsETC = re.compile("(Färdighet och förmåga)|(Kunskap och förståelse)|(Värderingsförmåga och förhållningssätt)|(Delkurs)|(Färdigheter och förmåga)|(Färdigheter och förmågor)")
 
 def splitGoalsThatLookTooLarge(g):
     res = []
@@ -1540,7 +1553,7 @@ def matchAndConsumeSpecial(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, l
         head = ""
         for gg in range(1, len(m.groups())):
             g = m.group(gg)
-            if len(g) and g[0] != "<":
+            if g and len(g) and g[0] != "<":
                 head = g.strip()
                 break
         
