@@ -139,6 +139,7 @@ framlägga * abstrakt
 framlägga * synpunkt
 förskriva
 hålla * anförande
+hålla * anföranden
 hålla * föredrag
 tillaga
 driftsoptimera
