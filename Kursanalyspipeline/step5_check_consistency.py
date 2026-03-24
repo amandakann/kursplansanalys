@@ -852,7 +852,7 @@ def printBloomStats():
             n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2} from {1: >1} courses with at least one verb.".format(m, n))
+    print ("{0: .2} from {1: >1} courses with at least one verb.".format(float(m), n))
         
     print ("-"*10, "Average Variance in Bloom level per course", "-"*10)
     m = 0
@@ -863,7 +863,7 @@ def printBloomStats():
             n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2} from {1: >1} courses with at least one verb.".format(m, n))
+    print ("{0: .2} from {1: >1} courses with at least one verb.".format(float(m), n))
 
     print ("-"*10, "Median Bloom level per course", "-"*10)
     tmp = 0
@@ -1017,7 +1017,7 @@ def printBloomStats():
             n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2f} from {1: >1} goals with at least one verb.".format(m, n))
+    print ("{0: .2f} from {1: >1} goals with at least one verb.".format(float(m), n))
         
     print ("-"*10, "Average Variance in Bloom level per goal", "-"*10)
     m = 0
@@ -1028,7 +1028,7 @@ def printBloomStats():
             n += 1
     if n > 0:
         m = m / n
-    print ("{0: .2f} from {1: >1} goals with at least one verb.".format(m, n))
+    print ("{0: .2f} from {1: >1} goals with at least one verb.".format(float(m), n))
     
     print ("-"*10, "Median Bloom level per goal", "-"*10)
     tmp = 0
@@ -1139,12 +1139,20 @@ def printBloomStats():
                     if "goalCounts" in lex[k] and "tot" in lex[k]["goalCounts"] and "N" in lex[k]["goalCounts"]:
                         totGoals = lex[k]["goalCounts"]["tot"]
                         totCourses = lex[k]["goalCounts"]["N"]
-                        totVerbs = lex[k]["verbCounts"]["N"]
-                        if totCourses > 0:
-                            tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course. {4: >6} verbs {5: 3.2f} verbs per course {6: 3.2f} verbs per goal\n".format(k, totCourses, totGoals, totGoals/float(totCourses), totVerbs, totVerbs/float(totCourses), totVerbs/float(totGoals))
+                        if "N" in lex[k]["verbCounts"]:
+                            totVerbs = lex[k]["verbCounts"]["N"]
                         else:
-                            tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.f2} goals per course.\n".format(k, totCourses, totGoals, 0)
-
+                            totVerbs = 0
+                        if totGoals > 0:
+                            if totCourses > 0:
+                                tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course. {4: >6} verbs {5: 3.2f} verbs per course {6: 3.2f} verbs per goal\n".format(k, totCourses, totGoals, totGoals/float(totCourses), totVerbs, totVerbs/float(totCourses), totVerbs/float(totGoals))
+                            else:
+                                tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.f2} goals per course.\n".format(k, totCourses, totGoals, 0)
+                        else:
+                            if totCourses > 0:
+                                tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.2f} goals per course. {4: >6} verbs {5: 3.2f} verbs per course {6: 3.2f} verbs per goal\n".format(k, totCourses, totGoals, totGoals/float(totCourses), totVerbs, totVerbs/float(totCourses), 0)
+                            else:
+                                tab += "{0:}\n {1: >5} courses {2: >6} goals {3: 3.f2} goals per course.\n".format(k, totCourses, totGoals, 0)
                     else:
                         tab += "No goalCounts for label " + label + " key " + k + "\n"
                         tab +=  str(lex.keys()) + "\n"
@@ -1206,6 +1214,8 @@ def printBloomStats():
                     s += "{: >10}\n".format("Summa")
                     tab += s
                     for scb in lss:
+                        if not scb in scbLevCounts:
+                            continue
                         tot = 0
                         s = ("{0: >" + str(longestS) + "} ").format(scb)
                         sp = ("{0: >" + str(longestS) + "} ").format(" ")
@@ -1427,7 +1437,9 @@ def printBloomStats():
                                 n += 1
                         if n > 0:
                             m = m / n
-                        s += "{0: .2} ".format(m)
+                        else:
+                            m = float(m)
+                        s += "{0: .2} ".format(float(m))
                     else:
                         s += "{0: >5} ".format(0)
                     tab += (s + "\n")
@@ -1462,7 +1474,9 @@ def printBloomStats():
                                 n += 1
                         if n > 0:
                             m = m / n
-                        s += "{0: .2} ".format(m)
+                        else:
+                            m = float(m)
+                        s += "{0: .2} ".format(float(m))
                     else:
                         s += "{0: >5} ".format(0)
                     tab += (s + "\n")
@@ -1498,7 +1512,9 @@ def printBloomStats():
                                 n += 1
                         if n > 0:
                             m = m / n
-                        s += "{0: .2} ".format(m)
+                        else:
+                            m = float(m)
+                        s += "{0: .2} ".format(float(m))
                     else:
                         s += "{0: >5} ".format(0)
                     print (s)
@@ -1552,7 +1568,7 @@ def printBloomStats():
                                 n += 1
                         if n > 0:
                             m = m / n
-                        s += "{0: .2} ".format(m)
+                        s += "{0: .2} ".format(float(m))
                     else:
                         s += "{0: >5} ".format(0)
                     tab += (s + "\n")
@@ -1588,7 +1604,7 @@ def printBloomStats():
                                 n += 1
                         if n > 0:
                             m = m / n
-                        s += "{0: .2} ".format(m)
+                        s += "{0: .2} ".format(float(m))
                     else:
                         s += "{0: >5} ".format(0)
                     print (s)
@@ -1621,7 +1637,7 @@ def printBloomStats():
                                 n += 1
                         if n > 0:
                             m = m / n
-                        s += "{0: .2} ".format(m)
+                        s += "{0: .2} ".format(float(m))
                     else:
                         s += "{0: >5} ".format(0)
                     print (s)
@@ -1731,8 +1747,9 @@ def printBloomHelper2(f, label, lex):
     cats = []
     tmp = {}
     for row in lex:
-        for cat in lex[row][f]:
-            tmp[cat] = 1
+        if f in lex[row]:
+            for cat in lex[row][f]:
+                tmp[cat] = 1
     for cat in tmp:
         cats.append(cat)
     cats.sort()
