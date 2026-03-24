@@ -530,8 +530,9 @@ umuHypHaExpWrap = re.compile("(([Gg]odkän)|([Ee]fter))([^.–\-]*)([–\-]\s{0,
 umuFSRexp = re.compile('FSR\s*[0-9]+[.]?\s*(.{4,}?)(?=((FSR)|(Modul)|(\n\n)|$|(Förvänt)|(Efter)))', re.S)
 umuFSRexpWrap = re.compile('(FSR\s*[0-9]+[.]?\s*.{4,})(.*(FSR\s*[0-9]+[.]?\s*.{4,}))+', re.S)
 
-efterSkallExp = re.compile("((För.*?)?(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*((förväntas)|(ska))[ A-Za-zåäöÅÄÖ]*\s((kunna)|(ha)|(också))\s*(.*?))(?=$|(\s\s)|\n|[–•*·….])")
-efterSkallExpWrap = re.compile("(För.*?)?(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*\s((förväntas)|(ska))[ A-Za-zåäöÅÄÖ]*\s((kunna)|(ha)|(också))\s *[a-zåäöA-ZÅÄÖ][a-zåäöA-ZÅÄÖ, \-]{4,}?(?=$|(\n$)|(  )|(\n[^a-zåäöA-ZÅÄÖ])|[–•*·….])")
+efterSkallExp = re.compile("((För.*?)?(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*((förväntas)|(ska))[ A-Za-zåäöÅÄÖ]*\s((kunna)|(ha)|(också)|(visa))\s*(.*?))(?=$|(\s\s)|\n|[–•*·….]|(</p>))", re.I)
+efterSkallExpWrap = re.compile("(För.*?)?(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*\s((förväntas)|(ska))[ A-Za-zåäöÅÄÖ]*\s((kunna)|(ha)|(också)|(visa))\s*[a-zåäöA-ZÅÄÖ][a-zåäöA-ZÅÄÖ, \-:]{4,}?(?=$|(\n$)|(  )|(\n[^a-zåäöA-ZÅÄÖ])|[–•*·….]|(</p>))")
+
 
 efterSkallExp2 = re.compile("((För.*?)?((förväntas)|(ska))[ A-Za-zåäöÅÄÖ]*(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*\s((kunna)|(ha)|(också)|(få))\s*(.*?))(?=$|(\s\s)|\n|[–•*·….])")
 efterSkallExp2Wrap = re.compile("(För.*?)?((förväntas)|([^a-zåäö]ska))[ A-Za-zåäöÅÄÖ]*(([Ee]fter\s)|([Ss]tudent)|([Vv]idar)|([Gg]odkän))[ A-Za-zåäöÅÄÖ]*\s((kunna)|(ha)|(också)|(få))\s *[a-zåäöA-ZÅÄÖ][a-zåäöA-ZÅÄÖ, \-]{4,}?(?=$|(\n$)|(  )|(\n[^a-zåäöA-ZÅÄÖ])|[–•*·….])")
@@ -894,6 +895,8 @@ def cleanCommonWritingProblems(text):
     res = re.sub("studentenha", "studenten ha", res)
     res = re.sub("studentenvisa", "studenten visa", res)
     res = re.sub("kursha", "kurs ha", res)
+    res = re.sub("tidsramargenomföra", "tidsramar genomföra", res)
+    res = re.sub("slutsater", "slutsatser", res)
     res = re.sub("([a-z][.])ha", "\\1 Ha", res)
     
     return res
@@ -1414,7 +1417,8 @@ def matchAndConsume(allExp, goalExp, sv, allExpEn, goalExpEn, en, name, lsS, lsE
     # log("matchAndConsume starting!", name)
 
     #if(name == "dot-list" or name == "efter-ska-kunna-exp" and name == "arabic-list-12345" and name == "arabic-list-123"):
-    # if name == "ska-kunna-list":
+    # if name == "efter-ska-exp":
+    #     log("Extra logging for: ", name)
     #     log("TEXT:", sv)
     #     log("MATCH:", allExp.search(sv))
     
